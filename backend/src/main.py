@@ -6,25 +6,59 @@
 #sources
 
 #from entities.exam import Exam,ExamSchema
-from entities.database import employee,project
+from entities.database import employee,project,authUser
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
 from entities.sample_data import create_sample_employee,create_sample_project
+
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from datetime import time
 import datetime
-app = Flask(__name__)
-CORS(app)
 from sqlalchemy.ext.serializer import loads, dumps
+
+app = Flask(__name__)
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+jwt = JWTManager(app)
+CORS(app)
+
 
 # generate database schema
 Base.metadata.create_all(engine)
 create_sample_employee()
 create_sample_project()
 
+
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+
+    print(username)
+    print(password)
+    if username==None or password==None:
+        return jsonify({"error:":"incorrect username or password"}), 500
+
+    session = Session()
+    auth_object = session.query(authUser).filter(authUser.username == username, authUser.password == password).first()
+    print(auth_object)
+    if not auth_object:
+        return jsonify({"error":"Username or password is incorrect"}), 400
+    
+    # if username != "test" or password != "test":
+    #     return jsonify({"msg": "Bad username or password"}), 401
+
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token)
+
+
 @app.route('/employees')
+@jwt_required()
 def employees():
     session = Session()
     emp_objects = session.query(employee).all()
@@ -33,7 +67,9 @@ def employees():
     session.close()
     return (jsonify(serialized_obj))
 
+
 @app.route('/projects')
+@jwt_required()
 def projects():
     session = Session()
     project_objects = session.query(project).all()
@@ -45,7 +81,9 @@ def projects():
     session.close()
     return (jsonify(serialized_obj))
 
+
 @app.route('/addEmployee', methods=['POST'])
+@jwt_required()
 def addEmployee():
     data = request.get_json()
     emp_data = employee(first_name=data["first_name"] , 
@@ -74,6 +112,7 @@ def addEmployee():
 
 
 @app.route('/addProject', methods=['POST'])
+@jwt_required()
 def addProject():
     data = request.get_json()
     project_data = project(project_id=data["project_id"] , 
@@ -87,6 +126,8 @@ def addProject():
     session.commit()
     project_data.to_dict()
     return jsonify(project_data.to_dict()), 201
+
+
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0',port = 5000,debug = True)

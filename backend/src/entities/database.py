@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import create_engine, Column, String, Integer, DateTime
+from sqlalchemy import create_engine, Column, String, Integer, DateTime,ARRAY,VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import pyodbc
@@ -20,6 +20,7 @@ class authUser(Base):
     emp_id = Column(String)
     username = Column(String)
     password = Column(String)
+    roles = Column(VARCHAR(2000))
     
 class employee(Base):
     __tablename__ = 'employee'
