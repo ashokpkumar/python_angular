@@ -20,6 +20,7 @@ class authUser(Base):
     emp_id = Column(String)
     username = Column(String)
     password = Column(String)
+    roles = Column(list)
     
 class employee(Base):
     __tablename__ = 'employee'

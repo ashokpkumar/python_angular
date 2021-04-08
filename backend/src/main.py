@@ -16,6 +16,11 @@ from entities.auth_jwt import admin_required
 from flask_cors import CORS
 from datetime import time
 import datetime
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
 app = Flask(__name__)
 CORS(app)
 from sqlalchemy.ext.serializer import loads, dumps
@@ -24,6 +29,20 @@ from sqlalchemy.ext.serializer import loads, dumps
 Base.metadata.create_all(engine)
 create_sample_employee()
 create_sample_project()
+
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+jwt = JWTManager(app)
+
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+
+    if username != "test" or password != "test":
+        return jsonify({"msg": "Bad username or password"}), 401
+
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token)
 
 @app.route('/employees')
 def employees():
@@ -44,10 +63,21 @@ def projects():
     #                     "project_start_date":obj.project_start_date,
     #                     "project_status":obj.project_status} for obj in project_objects]
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj)
+
+#@app.route("/who_am_i", methods=["GET"])
+#@jwt_required()
+#def protected():
+    # We can now access our sqlalchemy User object via `current_user`.
+#    return jsonify(
+#        id=current_user.id,
+#        username=current_user.username,
+#        password=current_user.password,
+#   )
+
 
 @app.route('/addEmployee', methods=['POST'])
-@admin_required()
+@jwt_required()
 def addEmployee():
     data = request.get_json()
     emp_data = employee(first_name=data["first_name"] , 
