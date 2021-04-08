@@ -79,14 +79,26 @@ def addProject():
     project_data = project(project_id=data["project_id"] , 
                         project_title = data["project_title"], 
                         project_start_date= datetime.datetime.now(),
-                        project_status= data["status"], 
-                        
+                        project_status= data["status"],    
                         )
     session = Session()
     session.add(project_data)
     session.commit()
     project_data.to_dict()
     return jsonify(project_data.to_dict()), 201
+
+@app.route('/resource_info', methods=['POST'])
+def resource_info():
+    data = request.get_json()
+    project_data = project(project_id=data["project_id"] , 
+                        emp_id = data["emp_id"], 
+                        )
+    session = Session()
+    session.add(project_data)
+    session.commit()
+    project_data.to_dict()
+    return jsonify(project_data.to_dict()), 201
+
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0',port = 5000,debug = True)

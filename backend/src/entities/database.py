@@ -20,6 +20,7 @@ class authUser(Base):
     emp_id = Column(String)
     username = Column(String)
     password = Column(String)
+    roles = Column(String)
     
 class employee(Base):
     __tablename__ = 'employee'
@@ -174,6 +175,7 @@ class project(Base):
     geography = Column(String)
     solution_category = Column(String)
     financial_year = Column(String)
+    resource_info = Column(String)
 
     def to_dict(self, show=None, _hide=[], _path=None):
         """Return a dictionary representation of this model."""
@@ -311,3 +313,25 @@ def serialize_all(data_obj):
         serialized.append(serial_dict)
     return serialized 
     
+
+class time_master(Base):
+    __tablename__ = 'time_master'
+    id = Column(Integer, primary_key=True)
+    emp_id = Column(String)
+    month =  Column(String)
+    year = Column(DateTime)
+    timedata = Column(DateTime)
+
+    
+class time_submissions(Base):
+    __tablename__ = 'time_submissions'
+    id = Column(Integer, primary_key=True)
+    from_date = Column(String)
+    to_date = Column(String)
+    user_name = Column(String)
+    manager_name = Column(String)
+    time_type = Column(String)
+
+    submission_id = from_date + to_date + user_name + manager_name
+
+    status = Column(String)
