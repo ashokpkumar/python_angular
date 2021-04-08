@@ -6,7 +6,56 @@
 
     <button mat-button color="primary" (click)="addEmployee()">Add Employee</button>
 </div> -->
-<h1>Add Project</h1>
+
+<div>
+  <div>
+    <label>Client Name: </label>
+    <input [(ngModel)]="project.clientname" />
+  </div>
+  <div>
+    <label>projectCode: </label>
+    <input [(ngModel)]="project.projectcode" />
+  </div>
+  <div>
+    <label>Project Name: </label>
+    <input [(ngModel)]="project.projectname" />
+  </div>
+  <div>
+    <label>Project Start Date: </label>
+    <input [(ngModel)]="project.projectstartdate" />
+  </div>
+  <div>
+    <label>Project Status: </label>
+    <input [(ngModel)]="project.projectstatus" />
+  </div>
+  <div>
+    <label>Billing Type: </label>
+    <input [(ngModel)]="project.billingtype" />
+  </div>
+  <div>
+    <label>Segment: </label>
+    <input [(ngModel)]="project.segment" />
+  </div>
+  <div>
+    <label>Geography: </label>
+    <input [(ngModel)]="project.geography" />
+  </div>
+  <div>
+    <label>Solution category: </label>
+    <input [(ngModel)]="project.solutioncategory" />
+  </div>
+  <div>
+    <label>Financial year: </label>
+    <input [(ngModel)]="project.financialyear" />
+  </div>
+  
+
+  <div>
+    <button (click)="onSubmit()">Add</button>
+  </div>
+</div>
+
+<!-- <h1>Add Project</h1>
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <p>
         <label>
@@ -77,7 +126,7 @@
             <input type="text" formControlName="financialyear">
           </label>
       </p>
-<!--       
+     
       <p>
         <label>
             Employee Start Date:
@@ -104,8 +153,8 @@
             Employee project end Date:
             <input type="text" formControlName="empprojectenddate">
           </label>
-      </p> -->
+      </p> 
       
     <button type="submit" [disabled]="!profileForm.valid">Submit</button>
-  </form>
+  </form> -->
 

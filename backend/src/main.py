@@ -58,7 +58,7 @@ def login():
 
 
 @app.route('/employees')
-@jwt_required()
+# @jwt_required()
 def employees():
     session = Session()
     emp_objects = session.query(employee).all()
@@ -69,7 +69,7 @@ def employees():
 
 
 @app.route('/projects')
-@jwt_required()
+# @jwt_required()
 def projects():
     session = Session()
     project_objects = session.query(project).all()
@@ -83,9 +83,10 @@ def projects():
 
 
 @app.route('/addEmployee', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def addEmployee():
     data = request.get_json()
+    print(data)
     emp_data = employee(first_name=data["first_name"] , 
                         last_name = data["last_name"], 
                         sur_name= data["sur_name"], 
@@ -112,20 +113,34 @@ def addEmployee():
 
 
 @app.route('/addProject', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def addProject():
     data = request.get_json()
-    project_data = project(project_id=data["project_id"] , 
-                        project_title = data["project_title"], 
-                        project_start_date= datetime.datetime.now(),
-                        project_status= data["status"], 
-                        
-                        )
-    session = Session()
-    session.add(project_data)
-    session.commit()
-    project_data.to_dict()
-    return jsonify(project_data.to_dict()), 201
+    
+    print(data)
+    print(type(data))
+    print(data.get("clientname"))
+    try:     
+        project_data = project(client_name = data.get("clientname"),
+                                project_code=data.get("projectcode"),
+                                project_name=data.get("projectname"),
+                                project_start_date=datetime.datetime.now(),
+                                project_status=data.get("projectstatus"),
+                                billing_type=data.get("billingtype"),
+                                segment=data.get("segment"),
+                                geography=data.get("geography"),
+                                solution_category =data.get("solutioncategory"),
+                                financial_year = data.get("financialyear")
+        
+        )
+        session = Session()
+        session.add(project_data)
+        session.commit()
+        session.close()
+        return jsonify({"msg":"added data to the table successfully"}), 201
+    except:
+        return jsonify({"error":"Something happened while adding the data to the table, please check the data and try again"}), 500
+    
 
 
 

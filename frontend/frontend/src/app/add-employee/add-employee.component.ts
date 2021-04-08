@@ -1,6 +1,8 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import {  FormGroup,FormControl } from '@angular/forms';
+import {employee} from './employees';
+import { addEmployeeService } from './add-employee.service';
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
@@ -8,7 +10,7 @@ import {  FormGroup,FormControl } from '@angular/forms';
 })
 
 export class AddEmployeeComponent implements OnInit {
-
+  employee = new employee();
   profileForm = new FormGroup({
     firstName: new FormControl(''),
     lastname: new FormControl(''),
@@ -28,7 +30,7 @@ export class AddEmployeeComponent implements OnInit {
   });
   public employee_fields_list:any 
   name = new FormControl('');
-  constructor() { }
+  constructor(private apiService:addEmployeeService) { }
 
   ngOnInit(): void {
   
@@ -41,8 +43,9 @@ export class AddEmployeeComponent implements OnInit {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    
-    console.warn(this.profileForm.value);
+    console.log(this.employee);
+    this.apiService.addEmployee(this.employee).subscribe(data=>{console.log(data)})
+    //console.warn(this.profileForm.value);
   }
 }
 
