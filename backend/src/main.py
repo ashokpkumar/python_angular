@@ -12,6 +12,7 @@ from entities.database import serialize_all
 from entities.sample_data import create_sample_employee,create_sample_project
 
 from flask import Flask, jsonify, request
+from entities.auth_jwt import admin_required
 from flask_cors import CORS
 from datetime import time
 import datetime
@@ -46,6 +47,7 @@ def projects():
     return (jsonify(serialized_obj))
 
 @app.route('/addEmployee', methods=['POST'])
+@admin_required()
 def addEmployee():
     data = request.get_json()
     emp_data = employee(first_name=data["first_name"] , 
@@ -74,6 +76,7 @@ def addEmployee():
 
 
 @app.route('/addProject', methods=['POST'])
+@admin_required()
 def addProject():
     data = request.get_json()
     project_data = project(project_id=data["project_id"] , 
