@@ -6,7 +6,7 @@
 #sources
 
 #from entities.exam import Exam,ExamSchema
-from entities.database import employee,project,authUser
+from entities.database import employee,project,authUser,timesubmissions
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
 from entities.sample_data import create_sample_employee,create_sample_project
@@ -21,6 +21,7 @@ from flask_cors import CORS
 from datetime import time
 import datetime
 from sqlalchemy.ext.serializer import loads, dumps
+from sqlalchemy.ext.hybrid import hybrid_property
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
@@ -30,10 +31,12 @@ CORS(app)
 
 # generate database schema
 Base.metadata.create_all(engine)
-create_sample_employee()
-create_sample_project()
-
-
+#create_sample_employee()
+#create_sample_project()
+#@hybrid_property
+#def submission_id(self):
+#        return self.from_date + self.to_date + self.user_name + self.manager_name
+    
 @app.route("/login", methods=["POST"])
 def login():
     username = request.json.get("username", None)
@@ -56,6 +59,14 @@ def login():
     access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token)
 
+@app.route('/timesubmissions')
+@jwt_required()
+def timesubmissions():
+    session = Session()
+    sub_objects = session.query(timesubmissions).all()
+    serialized_obj = serialize_all(sub_objects)
+    session.close()
+    return (jsonify(serialized_obj))
 
 @app.route('/employees')
 @jwt_required()
@@ -81,6 +92,28 @@ def projects():
     session.close()
     return (jsonify(serialized_obj))
 
+@app.route('/addtimesubmissions', methods=['POST'])
+#@jwt_required()
+def addtimesubmissions():
+    data = request.get_json()
+    print(data)
+    sub_data = timesubmissions( from_date = data.get('fromdate'),
+                                to_date = data.get('todate'),
+                                user_name = data.get('username'),
+                                manager_name = data.get('managername'),
+                                time_type = data.get('timetype'),
+                                status = 'submitted-pending approval',
+                                submission_id = data.get('fromdate') 
+                                                + data.get('todate')
+                                                + data.get('username')
+                                                + data.get('managername')
+                                                + data.get('timetype')
+                               )
+    session = Session()
+    session.add(sub_data)
+    session.commit()
+    return jsonify({'msg':'success'}),200
+                               
 
 @app.route('/addEmployee', methods=['POST'])
 @jwt_required()

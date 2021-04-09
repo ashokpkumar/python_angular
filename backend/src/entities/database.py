@@ -4,6 +4,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import pyodbc
 from sqlalchemy.orm.attributes import QueryableAttribute
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import column_property
 
 #db_url = 'localhost:5432'
 #db_name = 'online-exam'
@@ -21,6 +23,17 @@ class authUser(Base):
     username = Column(String)
     password = Column(String)
     roles = Column(VARCHAR(2000))
+
+class timesubmissions(Base):
+    __tablename__='timesubmissions'
+    from_date = Column(String )
+    to_date   = Column(String)
+    user_name = Column(String)
+    manager_name = Column(String)
+    time_type  = Column(String)
+    #submission_id = column_property(from_date +" " + to_date +" "+ user_name +" "+ manager_name)
+    status = Column(String)
+    submission_id=Column(String,primary_key=True)
     
 class employee(Base):
     __tablename__ = 'employee'
