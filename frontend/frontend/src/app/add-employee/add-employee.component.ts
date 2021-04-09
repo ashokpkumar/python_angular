@@ -1,8 +1,10 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
-
 import {  FormGroup,FormControl } from '@angular/forms';
 import {employee} from './employees';
 import { addEmployeeService } from './add-employee.service';
+import {CookieService} from 'ngx-cookie-service';
+import {Router} from "@angular/router"
+
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
@@ -30,10 +32,11 @@ export class AddEmployeeComponent implements OnInit {
   });
   public employee_fields_list:any 
   name = new FormControl('');
-  constructor(private apiService:addEmployeeService) { }
+  constructor(private apiService:addEmployeeService,private router: Router,private cookieService: CookieService) { }
 
   ngOnInit(): void {
-  
+    if (this.cookieService.get('login')=='false')
+    {this.router.navigate(['/login']); }
   }
   // addEmployee(){
   //  console.log("name",this.name);

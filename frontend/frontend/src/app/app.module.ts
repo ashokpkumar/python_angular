@@ -2,9 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ReactiveFormsModule } from '@angular/forms';
+import {CookieService} from 'ngx-cookie-service';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { ExamsComponent } from './exams/exams.component';
 import { ExamsApiService } from './exams/exams.service';
 import { EmployeesComponent } from './employees/employees.component';
@@ -15,10 +18,11 @@ import { AddProjectsComponent } from './add-projects/add-projects.component';
 import { AssignProjectResourceComponent } from './assign-project-resource/assign-project-resource.component';
 import { AssignResourceProjectComponent } from './assign-resource-project/assign-resource-project.component';
 import { projectsApiService } from './projects/projects.services';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavigationComponent } from './navigation/navigation.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import {loginService} from './login/login.service'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +38,7 @@ import { LoginComponent } from './login/login.component';
     LoginComponent,
    
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -42,7 +47,8 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     FontAwesomeModule
   ],
-  providers: [ExamsApiService,employeesApiService,projectsApiService],
+  
+  providers: [ExamsApiService,employeesApiService,projectsApiService,loginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

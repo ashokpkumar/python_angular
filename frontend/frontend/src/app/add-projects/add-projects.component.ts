@@ -3,6 +3,9 @@ import {  FormGroup,FormControl } from '@angular/forms';
 import { projectsApiService } from '../projects/projects.services';
 import { addProjectApiService } from './add-projects.service';
 import {project} from './projects';
+import {CookieService} from 'ngx-cookie-service';
+import {Router} from "@angular/router"
+
 @Component({
   selector: 'app-add-projects',
   templateUrl: './add-projects.component.html',
@@ -25,18 +28,17 @@ export class AddProjectsComponent implements OnInit {
     financialyear: new FormControl(''),
         
   });
-  constructor(private apiService:addProjectApiService,private projectApi: projectsApiService) { }
+  constructor(private router: Router,private cookieService: CookieService,private apiService:addProjectApiService,private projectApi: projectsApiService) { }
 
   ngOnInit(): void {
+    if (this.cookieService.get('login')=='false')
+    {this.router.navigate(['/login']); }
   }
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-
+    
     console.log(this.project)
     
     this.apiService.addProject(this.project)
     .subscribe(data=>{console.log(data)})
-   // console.warn(this.profileForm.value);
-    //this.projectApi.getProjects().subscribe(res=>{this.project_list=res;console.log(res)},console.error) ;
-  }
+    }
 }

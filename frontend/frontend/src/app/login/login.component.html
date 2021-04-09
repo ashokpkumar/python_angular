@@ -1,4 +1,4 @@
-<div>
+<div *ngIf = "login === false">
     <div>
       <label>User name: </label>
       <input [(ngModel)]="project.username" />
@@ -11,4 +11,11 @@
     <div>
       <button (click)="onSubmit()">Login</button> <button (click)="onSubmit()">Forgot Password</button>
     </div>
+</div>
+
+<div *ngIf = "login === true">
+ 
+  <div>
+    <button (click)="logout()">Logout</button> 
   </div>
+</div>

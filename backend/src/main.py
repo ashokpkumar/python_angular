@@ -38,23 +38,17 @@ create_sample_project()
 def login():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
-
-    print(username)
-    print(password)
+    login=False
     if username==None or password==None:
         return jsonify({"error:":"incorrect username or password"}), 500
-
     session = Session()
     auth_object = session.query(authUser).filter(authUser.username == username, authUser.password == password).first()
-    print(auth_object)
     if not auth_object:
-        return jsonify({"error":"Username or password is incorrect"}), 400
-    
-    # if username != "test" or password != "test":
-    #     return jsonify({"msg": "Bad username or password"}), 401
-
+        return jsonify({"error":"Username or password is incorrect"}), 400 
+    roles=auth_object.roles
+    login=True
     access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token)
+    return jsonify(access_token=access_token,username=username,roles=roles,login=login)
 
 
 @app.route('/employees')
