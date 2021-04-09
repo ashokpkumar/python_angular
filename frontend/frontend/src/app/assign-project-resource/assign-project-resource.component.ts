@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CookieService} from 'ngx-cookie-service';
+import {Router} from "@angular/router"
 
 @Component({
   selector: 'app-assign-project-resource',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssignProjectResourceComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router,private cookieService: CookieService) { }
 
   ngOnInit(): void {
+    if (this.cookieService.get('login')=='false')
+    {this.router.navigate(['/login']); }
   }
 
 }

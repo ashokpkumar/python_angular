@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import {EmployeesComponent} from './employees/employees.component';
 import {AddEmployeeComponent} from './add-employee/add-employee.component';
 import {ViewProjectsComponent} from './projects/view-projects.component';
