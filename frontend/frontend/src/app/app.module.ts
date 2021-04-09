@@ -15,7 +15,9 @@ import { AddProjectsComponent } from './add-projects/add-projects.component';
 import { AssignProjectResourceComponent } from './assign-project-resource/assign-project-resource.component';
 import { AssignResourceProjectComponent } from './assign-resource-project/assign-resource-project.component';
 import { projectsApiService } from './projects/projects.services';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NavigationComponent } from './navigation/navigation.component';
+import { HomeComponent } from './home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +28,8 @@ import { projectsApiService } from './projects/projects.services';
     AddProjectsComponent,
     AssignProjectResourceComponent,
     AssignResourceProjectComponent,
+    NavigationComponent,
+    HomeComponent,
    
   ],
   imports: [
@@ -33,7 +37,8 @@ import { projectsApiService } from './projects/projects.services';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ],
   providers: [ExamsApiService,employeesApiService,projectsApiService],
   bootstrap: [AppComponent]

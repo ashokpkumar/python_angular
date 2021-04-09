@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ExamsComponent } from './exams/exams.component';
 
+import {EmployeesComponent} from './employees/employees.component';
+import {AddEmployeeComponent} from './add-employee/add-employee.component';
+import {ViewProjectsComponent} from './projects/view-projects.component';
+import {AddProjectsComponent} from './add-projects/add-projects.component';
+import {HomeComponent} from './home/home.component'
 const routes: Routes = [
-  // { path: '', redirectTo: 'home', pathMatch: 'full'},
- // { path: 'exams', component: ExamsComponent },
-  // { path: 'route', component: ExamsComponent },
+  { path: '', component: HomeComponent },
+  { path: 'employee', component: EmployeesComponent },
+  { path: 'addemployee', component: AddEmployeeComponent },
+  { path: 'project', component: ViewProjectsComponent },
+  { path: 'addproject', component: AddProjectsComponent },
 ];
 
 @NgModule({
