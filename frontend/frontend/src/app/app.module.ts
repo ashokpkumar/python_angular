@@ -18,6 +18,7 @@ import { projectsApiService } from './projects/projects.services';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavigationComponent } from './navigation/navigation.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,7 @@ import { HomeComponent } from './home/home.component';
     AssignResourceProjectComponent,
     NavigationComponent,
     HomeComponent,
+    LoginComponent,
    
   ],
   imports: [
