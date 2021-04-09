@@ -38,17 +38,12 @@ export class AddEmployeeComponent implements OnInit {
     if (this.cookieService.get('login')=='false')
     {this.router.navigate(['/login']); }
   }
-  // addEmployee(){
-  //  console.log("name",this.name);
-  //  // console.log("adding employee");
-    
-  // }
-
+ 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
+
     console.log(this.employee);
     this.apiService.addEmployee(this.employee).subscribe(data=>{console.log(data)})
-    //console.warn(this.profileForm.value);
+   
   }
 }
 

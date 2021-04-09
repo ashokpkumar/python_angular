@@ -2,7 +2,7 @@ import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { Component, OnInit } from '@angular/core';
 import {Subscription} from 'rxjs';
 import { ExamsApiService } from './exams.service';
-//import {ExamsApiService} from '.exams.service';
+
 
 @Component({
   selector: 'app-exams',

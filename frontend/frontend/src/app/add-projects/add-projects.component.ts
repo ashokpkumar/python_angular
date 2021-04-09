@@ -13,7 +13,7 @@ import {Router} from "@angular/router"
 })
 
 export class AddProjectsComponent implements OnInit {
-  //public project_list: any;
+
   project = new project();
   profileForm = new FormGroup({
     clientname: new FormControl(''),

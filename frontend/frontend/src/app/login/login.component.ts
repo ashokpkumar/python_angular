@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     }else{
         this.login=false;
     }
-    //this.login=this.cookieService.get('login');
+ 
   }
   onSubmit() {
     this.apiService.addProject(this.project)
