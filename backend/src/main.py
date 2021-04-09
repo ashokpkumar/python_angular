@@ -58,7 +58,7 @@ def login():
 
 
 @app.route('/employees')
-@jwt_required()
+# @jwt_required()
 def employees():
     session = Session()
     emp_objects = session.query(employee).all()
@@ -69,7 +69,7 @@ def employees():
 
 
 @app.route('/projects')
-@jwt_required()
+# @jwt_required()
 def projects():
     session = Session()
     project_objects = session.query(project).all()
@@ -83,25 +83,32 @@ def projects():
 
 
 @app.route('/addEmployee', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def addEmployee():
     data = request.get_json()
-    emp_data = employee(first_name=data["first_name"] , 
-                        last_name = data["last_name"], 
-                        sur_name= data["sur_name"], 
-                        initial= data["initial"], 
-                        salutation= data["salutation"], 
-                        project_id= data["project_id"], 
-                        dept= data["dept"], 
+    print(data)
+    emp_data = employee(emp_id=data.get("emp_id") , 
+                        first_name = data.get("first_name"), 
+                        last_name= data.get("last_name"), 
+                        sur_name= data.get("sur_name"), 
+                        initial= data.get("initial"), 
+                        salutation= data.get("salutation"), 
+                        project_code= data.get("project_code"), 
+                        dept= data.get("dept"),
 
                         emp_start_date= datetime.datetime.now(),
                         emp_last_working_date=datetime.datetime.now(),
                         emp_project_assigned_date=datetime.datetime.now(),
                         emp_project_end_date=datetime.datetime.now(),
 
-                        employment_status=data["employment_status"], 
-                        manager_name=data["manager_name"], 
-                        manager_dept=data["manager_dept"], 
+                        employment_status=data.get("employment_status"), 
+                        manager_name=data.get("manager_name"), 
+                        manager_dept=data.get("manager_dept"), 
+                        resource_status=data.get("resource_status"),
+                        delivery_type=data.get("delivery_type"),
+                        additional_allocation=data.get("additional_allocation"),
+                        skills=data.get("skills"),
+                        roles=data.get("roles"),
 
                         )
     session = Session()
@@ -112,20 +119,34 @@ def addEmployee():
 
 
 @app.route('/addProject', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def addProject():
     data = request.get_json()
-    project_data = project(project_id=data["project_id"] , 
-                        project_title = data["project_title"], 
-                        project_start_date= datetime.datetime.now(),
-                        project_status= data["status"], 
-                        
-                        )
-    session = Session()
-    session.add(project_data)
-    session.commit()
-    project_data.to_dict()
-    return jsonify(project_data.to_dict()), 201
+    
+    print(data)
+    print(type(data))
+    print(data.get("clientname"))
+    try:     
+        project_data = project(client_name = data.get("clientname"),
+                                project_code=data.get("projectcode"),
+                                project_name=data.get("projectname"),
+                                project_start_date=datetime.datetime.now(),
+                                project_status=data.get("projectstatus"),
+                                billing_type=data.get("billingtype"),
+                                segment=data.get("segment"),
+                                geography=data.get("geography"),
+                                solution_category =data.get("solutioncategory"),
+                                financial_year = data.get("financialyear")
+        
+        )
+        session = Session()
+        session.add(project_data)
+        session.commit()
+        session.close()
+        return jsonify({"msg":"added data to the table successfully"}), 201
+    except:
+        return jsonify({"error":"Something happened while adding the data to the table, please check the data and try again"}), 500
+    
 
 
 
