@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#" routerLink="/">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+                
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false">Employee</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#" routerLink="/addemployee">Add Employee</a>
+                <a class="dropdown-item" href="#" routerLink="/employee">View Employee</a>
+                <a class="dropdown-item" href="#">Add project to Resource</a>
+            </div>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false">Projects</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#" routerLink="/addproject">Add Project</a>
+                <a class="dropdown-item" href="#" routerLink="/project">View Projects</a>
+                <a class="dropdown-item" href="#">Add Resource to Project</a>
+            </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" routerLink="/login"><fa-icon [icon]='faUser'></fa-icon></a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
