@@ -87,22 +87,28 @@ def projects():
 def addEmployee():
     data = request.get_json()
     print(data)
-    emp_data = employee(first_name=data["first_name"] , 
-                        last_name = data["last_name"], 
-                        sur_name= data["sur_name"], 
-                        initial= data["initial"], 
-                        salutation= data["salutation"], 
-                        project_id= data["project_id"], 
-                        dept= data["dept"], 
+    emp_data = employee(emp_id=data.get("emp_id") , 
+                        first_name = data.get("first_name"), 
+                        last_name= data.get("last_name"), 
+                        sur_name= data.get("sur_name"), 
+                        initial= data.get("initial"), 
+                        salutation= data.get("salutation"), 
+                        project_code= data.get("project_code"), 
+                        dept= data.get("dept"),
 
                         emp_start_date= datetime.datetime.now(),
                         emp_last_working_date=datetime.datetime.now(),
                         emp_project_assigned_date=datetime.datetime.now(),
                         emp_project_end_date=datetime.datetime.now(),
 
-                        employment_status=data["employment_status"], 
-                        manager_name=data["manager_name"], 
-                        manager_dept=data["manager_dept"], 
+                        employment_status=data.get("employment_status"), 
+                        manager_name=data.get("manager_name"), 
+                        manager_dept=data.get("manager_dept"), 
+                        resource_status=data.get("resource_status"),
+                        delivery_type=data.get("delivery_type"),
+                        additional_allocation=data.get("additional_allocation"),
+                        skills=data.get("skills"),
+                        roles=data.get("roles"),
 
                         )
     session = Session()
