@@ -3,6 +3,7 @@ import {Subscription} from 'rxjs';
 import { projectsApiService } from './projects.services';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-view-projects',
