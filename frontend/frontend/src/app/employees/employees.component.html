@@ -5,6 +5,7 @@
     <table>
         <thead>
             <tr>
+                <th data-field="employee ID" data-checkbox="true">Emp ID</th>
                 <th data-field="First Name" data-checkbox="true">First Name</th>
                 <th data-field="Last Name" data-filter-control="input" data-sortable="true">Last Name</th>
                 <th data-field="Sur Name" data-filter-control="select" data-sortable="true">Sur Name</th>
@@ -24,6 +25,7 @@
         <tbody>
        
                 <tr *ngFor="let item of employee_list">
+                    <td>{{item.emp_id}}</td>
                     <td>{{item.first_name}}</td>
                     <td>{{item.last_name}}</td>
                     <td>{{item.sur_name}}</td>
@@ -31,7 +33,7 @@
                     <td>{{item.salutation}}</td>
                     <td>{{item.manager_name}}</td>
                     <td>{{item.manager_dept}}</td>
-                    <td>{{item.project_id}}</td>
+                    <td>{{item.project_code}}</td>
                     <td>{{item.employment_status}}</td>
                     <td>{{item.dept}}</td>
                     <td>{{item.emp_start_date}}</td>

@@ -12,6 +12,7 @@
                 <th data-field="Solution Category" data-filter-control="select" data-sortable="true">Solution Category</th>
                 <th data-field="Financial year" data-filter-control="select" data-sortable="true">Financial year</th>
                 <th data-field="Project Code" data-filter-control="select" data-sortable="true">Project Code</th>
+                <th data-field="Resource Info" data-filter-control="select" data-sortable="true">Resource Info</th>
                 
             </tr>
         </thead>
@@ -26,6 +27,8 @@
                     <td>{{item.solution_category}}</td>
                     <td>{{item.financial_year}}</td>
                     <td>{{item.project_code}}</td>
+                    <td><button (click)="addResource(item.project_code)">Add</button> {{item.resource_info}} </td>
+                    
                 </tr>
           
         </tbody>

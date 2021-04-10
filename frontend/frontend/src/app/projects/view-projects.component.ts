@@ -12,6 +12,7 @@ import {Router} from "@angular/router"
 export class ViewProjectsComponent implements OnInit {
   public project_list: any;
   projectListSubs: Subscription;
+  public projectResource:string;
   constructor(private router: Router,private projectApi: projectsApiService,private cookieService: CookieService) { }
 
   ngOnInit(): void {
@@ -28,6 +29,9 @@ export class ViewProjectsComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     
+  }
+  addResource(projectResource){
+  console.log(projectResource);
   }
 
 }
