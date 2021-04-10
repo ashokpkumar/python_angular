@@ -18,7 +18,7 @@ class authUser(Base):
     __tablename__ = 'authUser'
     id = Column(Integer, primary_key=True)
     emp_id = Column(String)
-    username = Column(String)
+    email = Column(String)
     password = Column(String)
     roles = Column(VARCHAR(2000))
     
@@ -26,6 +26,7 @@ class employee(Base):
     __tablename__ = 'employee'
     id = Column(Integer, primary_key=True)
     emp_id = Column(String)
+    email = Column(String)
     first_name = Column(String)
     last_name = Column(String)
     sur_name = Column(String)

@@ -1,5 +1,6 @@
 export class employee{
-    emp_id:number
+    emp_id:string
+    email: string
     first_name:string
     last_name:string
     sur_name:string

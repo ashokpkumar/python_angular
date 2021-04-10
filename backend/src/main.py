@@ -30,8 +30,8 @@ CORS(app)
 
 # generate database schema
 Base.metadata.create_all(engine)
-create_sample_employee()
-create_sample_project()
+# create_sample_employee()
+# create_sample_project()
 
 
 @app.route("/login", methods=["POST"])
@@ -81,35 +81,46 @@ def projects():
 def addEmployee():
     data = request.get_json()
     print(data)
-    emp_data = employee(emp_id=data.get("emp_id") , 
-                        first_name = data.get("first_name"), 
-                        last_name= data.get("last_name"), 
-                        sur_name= data.get("sur_name"), 
-                        initial= data.get("initial"), 
-                        salutation= data.get("salutation"), 
-                        project_code= data.get("project_code"), 
-                        dept= data.get("dept"),
+    try: 
+        emp_data = employee(emp_id=data.get("emp_id") , 
+                            email = data.get("email") , 
+                            first_name = data.get("first_name"), 
+                            last_name= data.get("last_name"), 
+                            sur_name= data.get("sur_name"), 
+                            initial= data.get("initial"), 
+                            salutation= data.get("salutation"), 
+                            project_code= data.get("project_code"), 
+                            dept= data.get("dept"),
 
-                        emp_start_date= datetime.datetime.now(),
-                        emp_last_working_date=datetime.datetime.now(),
-                        emp_project_assigned_date=datetime.datetime.now(),
-                        emp_project_end_date=datetime.datetime.now(),
+                            emp_start_date= datetime.datetime.now(),
+                            emp_last_working_date=datetime.datetime.now(),
+                            emp_project_assigned_date=datetime.datetime.now(),
+                            emp_project_end_date=datetime.datetime.now(),
 
-                        employment_status=data.get("employment_status"), 
-                        manager_name=data.get("manager_name"), 
-                        manager_dept=data.get("manager_dept"), 
-                        resource_status=data.get("resource_status"),
-                        delivery_type=data.get("delivery_type"),
-                        additional_allocation=data.get("additional_allocation"),
-                        skills=data.get("skills"),
-                        roles=data.get("roles"),
+                            employment_status=data.get("employment_status"), 
+                            manager_name=data.get("manager_name"), 
+                            manager_dept=data.get("manager_dept"), 
+                            resource_status=data.get("resource_status"),
+                            delivery_type=data.get("delivery_type"),
+                            additional_allocation=data.get("additional_allocation"),
+                            skills=data.get("skills"),
+                            roles=data.get("roles"),
 
-                        )
-    session = Session()
-    session.add(emp_data)
-    session.commit()
-    emp_data.to_dict()
-    return jsonify(emp_data.to_dict()), 201
+                            )
+        session = Session()
+        session.add(emp_data)
+        session.commit()
+        auth_data = authUser(emp_id = data.get("emp_id"),
+                            email=data.get("email"),
+                            roles=data.get("roles"))
+        session = Session()
+        session.add(auth_data)
+        session.commit()     
+        return jsonify({"msg":"successfully added employee {}".format(data.get("emp_id"))}),200     
+    except:
+        return jsonify({"msg":"Some error happened in adding the employee"}),500
+    #emp_data.to_dict()
+    #return jsonify(emp_data.to_dict()), 201
 
 
 @app.route('/addProject', methods=['POST'])

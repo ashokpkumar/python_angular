@@ -5,6 +5,8 @@ import { addEmployeeService } from './add-employee.service';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
 
+
+//https://www.itsolutionstuff.com/post/how-to-use-toaster-notification-in-angular-8example.html
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
@@ -12,6 +14,7 @@ import {Router} from "@angular/router"
 })
 
 export class AddEmployeeComponent implements OnInit {
+  durationInSeconds = 5;
   employee = new employee();
   profileForm = new FormGroup({
     firstName: new FormControl(''),
@@ -40,11 +43,10 @@ export class AddEmployeeComponent implements OnInit {
   }
  
   onSubmit() {
-
+    
     console.log(this.employee);
-    this.apiService.addEmployee(this.employee).subscribe(data=>{console.log(data)})
+    this.apiService.addEmployee(this.employee).subscribe(data=>{console.log(data['msg']),this.apiService.showSuccess(data['msg'],"Success")})
    
   }
 }
-
 
