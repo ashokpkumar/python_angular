@@ -81,6 +81,17 @@ def projects():
 def addEmployee():
     data = request.get_json()
     print(data)
+    session = Session()
+    existing_emp = session.query(employee).filter(employee.emp_id==data.get("emp_id")).first()
+    if existing_emp:
+        session.close()
+        return jsonify({'warning':'User ID: {} already exist !'.format(data.get("emp_id"))})
+    
+    existing_emp = session.query(employee).filter(employee.email==data.get("email")).first()
+    if existing_emp:
+        session.close()
+        return jsonify({'warning':'Email ID: {} already exist !'.format(data.get("email"))})
+
     try: 
         emp_data = employee(emp_id=data.get("emp_id") , 
                             email = data.get("email") , 
@@ -91,7 +102,7 @@ def addEmployee():
                             salutation= data.get("salutation"), 
                             project_code= data.get("project_code"), 
                             dept= data.get("dept"),
-
+                            designation = data.get("designation"),
                             emp_start_date= datetime.datetime.now(),
                             emp_last_working_date=datetime.datetime.now(),
                             emp_project_assigned_date=datetime.datetime.now(),
@@ -116,18 +127,80 @@ def addEmployee():
         session = Session()
         session.add(auth_data)
         session.commit()     
-        return jsonify({"msg":"successfully added employee {}".format(data.get("emp_id"))}),200     
+        return jsonify({"success":"successfully added employee {}".format(data.get("emp_id"))}),200     
     except:
-        return jsonify({"msg":"Some error happened in adding the employee"}),500
-    #emp_data.to_dict()
-    #return jsonify(emp_data.to_dict()), 201
+        return jsonify({"error":"Some error happened in adding the employee"}),500
+
+
+@app.route('/addProjectResource', methods=['POST'])
+# @jwt_required()
+def addProjectResource():
+    session = Session()
+    data = request.get_json()
+    resource_id = data.get("emp_id")
+    project_code = data.get("projectcode")
+    print(resource_id)
+    print(project_code)
+
+    existing_emp = session.query(employee).filter(employee.emp_id==data.get("emp_id")).first()
+    if existing_emp==None:
+        return jsonify({'success':'Employee with ID: {} Does not Exist !'.format(data.get("emp_id"))})
+    
+    existing_project = session.query(project).filter(project.project_code==data.get("projectcode")).first()
+    if existing_project==None:
+        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(data.get("projectcode"))})
+
+    existing_emp.project_code=data.get("projectcode")
+    session.add(existing_emp)
+    session.commit()
+
+    print(existing_project.resource_info)
+    if existing_project.resource_info == None:
+        existing_project.resource_info=data.get("emp_id") 
+        session.add(existing_project)
+        session.commit()
+    
+    else:
+        print("coming here")
+        existing_resource = existing_project.resource_info
+        existing_resource_list = existing_resource.split(",")
+        print(existing_resource_list)
+        for i in existing_resource_list:
+            if i=="":
+                existing_resource_list.remove(i)
+        print(existing_resource_list)
+        if data.get("emp_id") in existing_resource_list:
+            return jsonify({'error':'resource exist already in the project'})
+        existing_resource_list.append(data.get("emp_id") )
+        print(existing_resource_list)
+        
+        out_resource =''
+        for i in existing_resource_list:
+            print(i)
+            out_resource = i + "," + out_resource
+        print(out_resource)
+        existing_project.resource_info = out_resource[:-1]
+        session.add(existing_project)
+        session.commit()
+
+    session.close()
+    return jsonify({"success":"Employee {} and Project {} Linked".format(data.get("emp_id"),data.get("projectcode"))})
+
+    
+    
 
 
 @app.route('/addProject', methods=['POST'])
 # @jwt_required()
 def addProject():
     data = request.get_json()
-    
+
+    session = Session()
+    existing_project = session.query(project).filter(project.project_code==data.get("projectcode")).first()
+    if existing_project:
+        session.close()
+        return jsonify({'warning':'Project with ID: {} already exist !'.format(data.get("projectcode"))})
+
     print(data)
     print(type(data))
     print(data.get("clientname"))
@@ -148,7 +221,7 @@ def addProject():
         session.add(project_data)
         session.commit()
         session.close()
-        return jsonify({"msg":"added data to the table successfully"}), 201
+        return jsonify({"success":"added data to the table successfully"}), 201
     except:
         return jsonify({"error":"Something happened while adding the data to the table, please check the data and try again"}), 500
     

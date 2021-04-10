@@ -11,9 +11,20 @@ export class addEmployeeService{
     constructor(public toastr: ToastrService, private http: HttpClient) {
     }
    
-    showSuccess(message, title){
-        this.toastr.success(message, title)
+    showMessage(message, title){
+        if (title=='success'){
+            this.toastr.success(message, title)
+        }else if (title=='error'){
+            this.toastr.error(message, title)
+        }
+        else if (title=='info'){
+            this.toastr.info(message, title)
+        }
+        else if (title=='warning'){
+            this.toastr.warning(message, title)
+        }    
     } 
+    
     addEmployee(employee:employee):Observable<any>{
         const headers = { 'content-type': 'application/json'}  
         const body=JSON.stringify(employee);

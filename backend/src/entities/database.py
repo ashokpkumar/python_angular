@@ -34,7 +34,8 @@ class employee(Base):
     salutation = Column(String) #mr,ms, Miss, Mrs
     project_code = Column(String)
     dept = Column(String)
-
+    designation = Column(String)
+    
     emp_start_date = Column(DateTime)
     emp_last_working_date = Column(DateTime)
     emp_project_assigned_date = Column(DateTime)
@@ -176,6 +177,7 @@ class project(Base):
     geography = Column(String)
     solution_category = Column(String)
     financial_year = Column(String)
+    resource_info = Column(String)
 
     def to_dict(self, show=None, _hide=[], _path=None):
         """Return a dictionary representation of this model."""

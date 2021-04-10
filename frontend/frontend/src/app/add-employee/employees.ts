@@ -9,6 +9,7 @@ export class employee{
     project_code:string
     geography:string
     dept:string
+    designation:string
 
     emp_start_date:string
     emp_last_working_date:string

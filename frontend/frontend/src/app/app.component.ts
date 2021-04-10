@@ -12,7 +12,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'frontend';
   examsListSubs: Subscription;
   
-
+  
   ngOnInit() {
   
   }

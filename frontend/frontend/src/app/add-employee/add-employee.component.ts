@@ -16,23 +16,23 @@ import {Router} from "@angular/router"
 export class AddEmployeeComponent implements OnInit {
   durationInSeconds = 5;
   employee = new employee();
-  profileForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastname: new FormControl(''),
-    surname: new FormControl(''),
-    initial: new FormControl(''),
-    salutation: new FormControl(''),
-    managername: new FormControl(''),
-    managerdept: new FormControl(''),
-    projectid: new FormControl(''),
-    empstatus: new FormControl(''),
-    dept: new FormControl(''),
-    empstartdate: new FormControl(''),
-    emplwd: new FormControl(''),
-    empprojectassigneddate: new FormControl(''),
-    empprojectenddate: new FormControl(''),
+  // profileForm = new FormGroup({
+  //   firstName: new FormControl(''),
+  //   lastname: new FormControl(''),
+  //   surname: new FormControl(''),
+  //   initial: new FormControl(''),
+  //   salutation: new FormControl(''),
+  //   managername: new FormControl(''),
+  //   managerdept: new FormControl(''),
+  //   projectid: new FormControl(''),
+  //   empstatus: new FormControl(''),
+  //   dept: new FormControl(''),
+  //   empstartdate: new FormControl(''),
+  //   emplwd: new FormControl(''),
+  //   empprojectassigneddate: new FormControl(''),
+  //   empprojectenddate: new FormControl(''),
     
-  });
+  // });
   public employee_fields_list:any 
   name = new FormControl('');
   constructor(private apiService:addEmployeeService,private router: Router,private cookieService: CookieService) { }
@@ -45,7 +45,7 @@ export class AddEmployeeComponent implements OnInit {
   onSubmit() {
     
     console.log(this.employee);
-    this.apiService.addEmployee(this.employee).subscribe(data=>{console.log(data['msg']),this.apiService.showSuccess(data['msg'],"Success")})
+    this.apiService.addEmployee(this.employee).subscribe(data=>{this.apiService.showMessage(Object.values(data),Object.keys(data))})
    
   }
 }
