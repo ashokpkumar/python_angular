@@ -18,7 +18,7 @@ class authUser(Base):
     __tablename__ = 'authUser'
     id = Column(Integer, primary_key=True)
     emp_id = Column(String)
-    username = Column(String)
+    email = Column(String)
     password = Column(String)
     roles = Column(VARCHAR(2000))
     
@@ -26,6 +26,7 @@ class employee(Base):
     __tablename__ = 'employee'
     id = Column(Integer, primary_key=True)
     emp_id = Column(String)
+    email = Column(String)
     first_name = Column(String)
     last_name = Column(String)
     sur_name = Column(String)
@@ -33,7 +34,8 @@ class employee(Base):
     salutation = Column(String) #mr,ms, Miss, Mrs
     project_code = Column(String)
     dept = Column(String)
-
+    designation = Column(String)
+    
     emp_start_date = Column(DateTime)
     emp_last_working_date = Column(DateTime)
     emp_project_assigned_date = Column(DateTime)
@@ -175,6 +177,7 @@ class project(Base):
     geography = Column(String)
     solution_category = Column(String)
     financial_year = Column(String)
+    resource_info = Column(String)
 
     def to_dict(self, show=None, _hide=[], _path=None):
         """Return a dictionary representation of this model."""

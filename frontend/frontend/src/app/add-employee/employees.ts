@@ -1,5 +1,6 @@
 export class employee{
-    emp_id:number
+    emp_id:string
+    email: string
     first_name:string
     last_name:string
     sur_name:string
@@ -8,6 +9,7 @@ export class employee{
     project_code:string
     geography:string
     dept:string
+    designation:string
 
     emp_start_date:string
     emp_last_working_date:string
