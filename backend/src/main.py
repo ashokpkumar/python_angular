@@ -33,22 +33,48 @@ Base.metadata.create_all(engine)
 # create_sample_employee()
 # create_sample_project()
 
+@app.route("/setpassword", methods=["POST"])
+def setpassword():
+    session = Session()
+    print(request.get_json())
+    emp_id = request.json.get("emp_id", None)
+    print(emp_id)
+    password = request.json.get("password", None)
+    auth_object = session.query(authUser).filter(authUser.emp_id == emp_id).first()
+    if auth_object is None:
+        return jsonify({'error':'User not found, This user is not added yet'}),200
+    auth_object.password=password
+    session.add(auth_object)
+    session.commit()
+    session.close()
+    return jsonify({'success':'password set successfully ! Please login with your new password'}),200
 
 @app.route("/login", methods=["POST"])
 def login():
-    username = request.json.get("username", None)
+    print(request.get_json())
+    emp_id = request.json.get("emp_id", None)
     password = request.json.get("password", None)
     login=False
-    if username==None or password==None:
-        return jsonify({"error:":"incorrect username or password"}), 500
+    print(emp_id)
+    print(password)
+    if emp_id==None or password==None:
+        return jsonify({"error:":"incorrect username or password"}), 200
     session = Session()
-    auth_object = session.query(authUser).filter(authUser.username == username, authUser.password == password).first()
-    if not auth_object:
-        return jsonify({"error":"Username or password is incorrect"}), 400 
+    print("pass here")
+
+    auth_object = session.query(authUser).filter(authUser.emp_id == emp_id).first()
+    if auth_object and auth_object.password==None:
+            return jsonify({"warning":"Password Not set Please set password"}), 200 
+
+    auth_object = session.query(authUser).filter(authUser.emp_id == emp_id, authUser.password == password).first()
+    if auth_object==None:
+        return jsonify({"error":"Username or password is incorrect"}), 200 
+    emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
+    employee_name = emp_obj.salutation + " " + emp_obj.first_name + " " + emp_obj.last_name
     roles=auth_object.roles
     login=True
-    access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token,username=username,roles=roles,login=login)
+    access_token = create_access_token(identity=emp_id)
+    return jsonify(access_token=access_token,username=emp_id,roles=roles,login=login,employee_name = employee_name)
 
 
 @app.route('/employees')
