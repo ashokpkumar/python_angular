@@ -27,10 +27,42 @@
                     <td>{{item.solution_category}}</td>
                     <td>{{item.financial_year}}</td>
                     <td>{{item.project_code}}</td>
-                    <td><button (click)="addResource(item.project_code)">Add</button> {{item.resource_info}} </td>
+                    <td><button (click)="open(content,item.project_code)">Add</button> {{item.resource_info}} </td>
+                    <!-- <td><button (click)="addResource(item.project_code)">Add</button> {{item.resource_info}} </td> -->
                     
                 </tr>
           
         </tbody>
     </table>
     </div>
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p> Add Resource to this project : </p>
+          <div>
+            <label>Project ID: </label>
+            <input [(ngModel)]="projectResource.project_id" />
+          </div>
+          <div>
+            <label>Employee ID: </label>
+            <select [(ngModel)]="projectResource.emp_id" >
+
+                <option *ngFor="let item of employee_list" value={{item.emp_id}}>{{item.emp_id}}</option>
+           
+            </select>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+        </div>
+      </ng-template>
+      
+      <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+      

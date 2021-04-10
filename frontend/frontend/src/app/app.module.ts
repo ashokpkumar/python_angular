@@ -24,7 +24,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import {loginService} from './login/login.service'
-
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +49,8 @@ import {loginService} from './login/login.service'
     FormsModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatSelectModule
   ],
   
   providers: [ExamsApiService,employeesApiService,projectsApiService,loginService],
