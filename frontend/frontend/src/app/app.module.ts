@@ -25,6 +25,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import {loginService} from './login/login.service'
 import {MatSelectModule} from '@angular/material/select';
+import { ShowTimeComponent } from './show-time/show-time.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import {MatSelectModule} from '@angular/material/select';
     NavigationComponent,
     HomeComponent,
     LoginComponent,
+    ShowTimeComponent,
    
   ],
 
