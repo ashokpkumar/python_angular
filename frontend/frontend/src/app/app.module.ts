@@ -26,6 +26,20 @@ import { LoginComponent } from './login/login.component';
 import {loginService} from './login/login.service'
 import {MatSelectModule} from '@angular/material/select';
 import { ShowTimeComponent } from './show-time/show-time.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { FullCalendarModule } from '@fullcalendar/angular'; 
+import dayGridPlugin from '@fullcalendar/daygrid'; 
+import interactionPlugin from '@fullcalendar/interaction'; 
+import { MatNativeDateModule } from '@angular/material/core';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+FullCalendarModule.registerPlugins([ 
+  dayGridPlugin,
+  interactionPlugin
+]);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,10 +66,19 @@ import { ShowTimeComponent } from './show-time/show-time.component';
     FontAwesomeModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    MatSelectModule
+    MatSelectModule,
+    FullCalendarModule ,
+    MatDatepickerModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatNativeDateModule, 
+    MatDatepickerModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
   ],
   
-  providers: [ExamsApiService,employeesApiService,projectsApiService,loginService],
+  providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

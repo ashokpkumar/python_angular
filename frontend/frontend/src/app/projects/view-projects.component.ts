@@ -16,10 +16,10 @@ import {MatSelectModule} from '@angular/material/select';
 })
 export class ViewProjectsComponent implements OnInit {
   projectResource = new projectResource();
-  toppings = new FormControl();
+  // toppings = new FormControl();
   public project_list: any;
   public employee_list: any;
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  // toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
   
   projectListSubs: Subscription;
   //public projectResource:string;
