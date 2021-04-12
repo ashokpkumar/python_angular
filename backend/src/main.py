@@ -4,7 +4,7 @@
 #https://medium.com/@anushkamehra16/connecting-to-sql-database-using-sqlalchemy-in-python-2be2cf883f85
 #https://medium.com/@alanhamlett/part-1-sqlalchemy-models-to-json-de398bc2ef47#:~:text=To%20add%20a%20serialization%20method,columns%20and%20returns%20a%20dictionary.&text=def%20to_dict(self%2C%20show%3D,of%20this%20model.%22%22%22
 #sources
-
+import logging
 #from entities.exam import Exam,ExamSchema
 from entities.database import employee,project,authUser
 from entities.database import Session, engine, Base
@@ -34,20 +34,42 @@ Base.metadata.create_all(engine)
 # create_sample_project()
 
 @app.route("/setpassword", methods=["POST"])
-def setpassword():
-    session = Session()
-    print(request.get_json())
-    emp_id = request.json.get("emp_id", None)
-    print(emp_id)
-    password = request.json.get("password", None)
-    auth_object = session.query(authUser).filter(authUser.emp_id == emp_id).first()
-    if auth_object is None:
-        return jsonify({'error':'User not found, This user is not added yet'}),200
-    auth_object.password=password
-    session.add(auth_object)
-    session.commit()
-    session.close()
-    return jsonify({'success':'password set successfully ! Please login with your new password'}),200
+def setpassword(self):
+    try:
+        logging.info("Set password Request")
+        session = Session()
+        if request.json.get("emp_id") is None:
+            logging.error("setpassword:: emp_id is a required field")
+            self.response.status = 400
+            return self.response.write({
+                "status": "error",
+                "message": "emp_id is required field"
+            })
+
+        if request.json.get("password") is None:
+            logging.error("setpassword:: password is a required field")
+            self.response.status = 400
+            return self.response.write({
+                "status": "error",
+                "message": "password is required field"
+            })
+        emp_id = request.json.get("emp_id")
+        password = request.json.get("password")
+        try:
+            auth_object = session.query(authUser).filter(authUser.emp_id == emp_id).first()
+            if auth_object is None:
+                return jsonify({'error':'User not found, This user is not added yet'}),200
+        except:
+            return jsonify({'error':'User not found, This user is not added yet'}),400
+
+        auth_object.password =password
+        session.add(auth_object)
+        session.commit()
+        session.close()
+        return jsonify({'success':'password set successfully ! Please login with your new password'}),200
+    except:
+        logging.exception(
+            "could not reset the password for this - {}".format(emp_id))
 
 @app.route("/login", methods=["POST"])
 def login():
