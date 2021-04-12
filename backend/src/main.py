@@ -167,7 +167,7 @@ def addProjectResource():
     project_code = data.get("project_id")
     print(resource_id)
     print(project_code)
-
+    
     existing_emp = session.query(employee).filter(employee.emp_id==resource_id).first()
     if existing_emp==None:
         return jsonify({'success':'Employee with ID: {} Does not Exist !'.format(resource_id)})
