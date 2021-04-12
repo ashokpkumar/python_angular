@@ -12,8 +12,10 @@ export class AssignProjectResourceComponent implements OnInit {
   constructor(private router: Router,private cookieService: CookieService) { }
 
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='false')
-    {this.router.navigate(['/login']); }
+    if (this.cookieService.get('login')=='true'){}
+    else{
+      this.router.navigate(['/login']);
+    }
   }
 
 }

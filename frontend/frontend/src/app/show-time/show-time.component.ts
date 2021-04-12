@@ -2,7 +2,8 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular'; 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {FormGroup, FormControl} from '@angular/forms';
-
+import {CookieService} from 'ngx-cookie-service';
+import {Router} from "@angular/router";
 declare var $: any;
 
 @Component({
@@ -21,7 +22,7 @@ export class ShowTimeComponent implements OnInit {
       { title: 'event 2', date: '2020-06-30' }
     ]
   };
-  constructor(private modalService: NgbModal) {
+  constructor(private router: Router,private cookieService: CookieService,private modalService: NgbModal) {
 
     const today = new Date();
     const month = today.getMonth();
@@ -32,7 +33,10 @@ export class ShowTimeComponent implements OnInit {
   @ViewChild('content')
   private defaultTabButtonsTpl: TemplateRef<any>;
   ngOnInit(): void {
-   
+    if (this.cookieService.get('login')=='true'){}
+    else{
+      this.router.navigate(['/login']);
+    }
  
   }
   handleDateClick(arg) {

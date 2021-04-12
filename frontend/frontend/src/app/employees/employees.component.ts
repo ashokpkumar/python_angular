@@ -20,19 +20,22 @@ export class EmployeesComponent implements OnInit {
   constructor(private modalService: NgbModal,private empApi: employeesApiService,private router: Router,private cookieService: CookieService) { }
 
   ngOnInit()  {
-    if (this.cookieService.get('login')=='false'){
+    if (this.cookieService.get('login')=='true'){
+      this.empListSubs = this.empApi
+      .getExams()
+      .subscribe(res=>{this.employee_list=res;console.log(res)},console.error) ;
+      this.projectListSubs = this.empApi
+.getProjects()
+.subscribe(res=>{this.project_list=res;
+console.log(res)
+},
+
+) ;
+    }
+    else{
       this.router.navigate(['/login']);
     }
-    this.empListSubs = this.empApi
-                            .getExams()
-                            .subscribe(res=>{this.employee_list=res;console.log(res)},console.error) ;
-                            this.projectListSubs = this.empApi
-      .getProjects()
-      .subscribe(res=>{this.project_list=res;
-         console.log(res)
-      },
-   
-      ) ;
+    
   }
   addResource(projectResource){
     console.log(projectResource.emp_id);

@@ -3,7 +3,8 @@ import {  FormGroup,FormControl } from '@angular/forms';
 import {employee} from './employees';
 import { addEmployeeService } from './add-employee.service';
 import {CookieService} from 'ngx-cookie-service';
-import {Router} from "@angular/router"
+import {Router} from "@angular/router";
+
 
 
 //https://www.itsolutionstuff.com/post/how-to-use-toaster-notification-in-angular-8example.html
@@ -38,8 +39,10 @@ export class AddEmployeeComponent implements OnInit {
   constructor(private apiService:addEmployeeService,private router: Router,private cookieService: CookieService) { }
 
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='false')
-    {this.router.navigate(['/login']); }
+    if (this.cookieService.get('login')=='true'){}
+    else{
+      this.router.navigate(['/login']);
+    }
   }
  
   onSubmit() {

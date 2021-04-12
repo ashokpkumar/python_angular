@@ -29,9 +29,9 @@ export class NavigationComponent implements OnInit {
   constructor(public toastr: ToastrService,private cookieService: CookieService) { }
 
   public ngOnInit(): void {
-    this.cookieService.set('cookie-name','our cookie value');
-    this.cookieValue = this.cookieService.get('cookie-name');
-    console.log("Cookie value", this.cookieValue);
+    // this.cookieService.set('cookie-name','our cookie value');
+    // this.cookieValue = this.cookieService.get('cookie-name');
+    // console.log("Cookie value", this.cookieValue);
   }
 
 }

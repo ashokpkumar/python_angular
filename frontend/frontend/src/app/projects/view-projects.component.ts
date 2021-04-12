@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import {Subscription} from 'rxjs';
 import { projectsApiService } from './projects.services';
 import {CookieService} from 'ngx-cookie-service';
-import {Router} from "@angular/router"
+import {Router} from "@angular/router";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {projectResource} from './assign';
 import {FormControl} from '@angular/forms';
