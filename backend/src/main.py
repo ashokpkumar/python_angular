@@ -164,25 +164,25 @@ def addProjectResource():
     session = Session()
     data = request.get_json()
     resource_id = data.get("emp_id")
-    project_code = data.get("projectcode")
+    project_code = data.get("project_id")
     print(resource_id)
     print(project_code)
-
-    existing_emp = session.query(employee).filter(employee.emp_id==data.get("emp_id")).first()
-    if existing_emp==None:
-        return jsonify({'success':'Employee with ID: {} Does not Exist !'.format(data.get("emp_id"))})
     
-    existing_project = session.query(project).filter(project.project_code==data.get("projectcode")).first()
+    existing_emp = session.query(employee).filter(employee.emp_id==resource_id).first()
+    if existing_emp==None:
+        return jsonify({'success':'Employee with ID: {} Does not Exist !'.format(resource_id)})
+    
+    existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project==None:
-        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(data.get("projectcode"))})
+        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
 
-    existing_emp.project_code=data.get("projectcode")
+    existing_emp.project_code=project_code
     session.add(existing_emp)
     session.commit()
 
     print(existing_project.resource_info)
     if existing_project.resource_info == None:
-        existing_project.resource_info=data.get("emp_id") 
+        existing_project.resource_info=resource_id
         session.add(existing_project)
         session.commit()
     
@@ -195,9 +195,9 @@ def addProjectResource():
             if i=="":
                 existing_resource_list.remove(i)
         print(existing_resource_list)
-        if data.get("emp_id") in existing_resource_list:
+        if resource_id in existing_resource_list:
             return jsonify({'error':'resource exist already in the project'})
-        existing_resource_list.append(data.get("emp_id") )
+        existing_resource_list.append(resource_id )
         print(existing_resource_list)
         
         out_resource =''
@@ -210,7 +210,7 @@ def addProjectResource():
         session.commit()
 
     session.close()
-    return jsonify({"success":"Employee {} and Project {} Linked".format(data.get("emp_id"),data.get("projectcode"))})
+    return jsonify({"success":"Employee {} and Project {} Linked".format(resource_id,project_code)})
 
     
     

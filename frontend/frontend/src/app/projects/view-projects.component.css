@@ -14,3 +14,8 @@ h1 {
     border: 1px solid #ddd;
     padding: 8px;
   }
+
+  .example-additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+  }

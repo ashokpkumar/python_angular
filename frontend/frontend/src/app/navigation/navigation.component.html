@@ -13,7 +13,8 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="#" routerLink="/addemployee">Add Employee</a>
                 <a class="dropdown-item" href="#" routerLink="/employee">View Employee</a>
-                <a class="dropdown-item" href="#">Add project to Resource</a>
+                <a class="dropdown-item" href="#" routerLink="/addresourceproject">Add project to Resource</a>
+                <a class="dropdown-item" href="#" >View Time Submissions</a>
             </div>
         </li>
 
@@ -23,12 +24,22 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="#" routerLink="/addproject">Add Project</a>
                 <a class="dropdown-item" href="#" routerLink="/project">View Projects</a>
-                <a class="dropdown-item" href="#">Add Resource to Project</a>
+                <a class="dropdown-item" href="#" routerLink="/addresourceproject">Add Resource to Project</a>
             </div>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+          aria-expanded="false">Account</a>
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="#" >My Account</a>
+              <a class="dropdown-item" href="#" routerLink="/time" >Time</a>
+              <a class="dropdown-item" href="#" routerLink="/login" >Login/Logout</a>
+          </div>
+      </li>
         <li class="nav-item">
           <a class="nav-link" href="#" routerLink="/login"><fa-icon [icon]='faUser'></fa-icon></a>
         </li>
+        
 
       </ul>
     </div>
