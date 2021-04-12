@@ -1,3 +1,64 @@
 .nav-item{
     float: right;
 }
+.header_navbar{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 10% 10% 10% auto;
+}
+.login_icon{
+    display: grid;
+    justify-content: end;
+}
+.header_menu > p {
+    color: #ffffff !important;
+    display: grid;
+    align-self: center;
+    text-align: center;
+    cursor: pointer;
+}
+.header_menu >a{
+    color: #ffffff !important;
+}
+.header_menu  {
+    display: grid;
+    align-self: center;
+}
+/* .dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+} */
+.dropbtn{
+    margin: 0;
+    font-size: 19px;
+}
+.dropbtn:focus{
+    outline: 0;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  background-color: #5D96AC;
+  top: 42px;
+}
+.dropdown-content a {
+  color: #ffffff;
+  padding: 12px 16px;
+  font-weight: 700;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px solid #ddd;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.dropdown a:hover {background-color: #0AC2B9;}
+
+.show {display: block;}
