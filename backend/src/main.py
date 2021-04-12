@@ -6,10 +6,10 @@
 #sources
 import logging
 #from entities.exam import Exam,ExamSchema
-from entities.database import employee,project,authUser
+from entities.database import employee,project,authUser,timesubmissions
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
-from entities.sample_data import create_sample_employee,create_sample_project
+from entities.sample_data import create_sample_employee,create_sample_project,time_master
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -32,6 +32,7 @@ CORS(app)
 Base.metadata.create_all(engine)
 # create_sample_employee()
 # create_sample_project()
+time_master()
 
 @app.route("/setpassword", methods=["POST"])
 def setpassword(self):
@@ -99,6 +100,15 @@ def login():
     return jsonify(access_token=access_token,username=emp_id,roles=roles,login=login,employee_name = employee_name)
 
 
+@app.route('/timesubmissions')
+# @jwt_required()
+def timesubmission():
+    session = Session()
+    sub_objects = session.query(timesubmissions).all()
+    serialized_obj = serialize_all(sub_objects)
+    session.close()
+    return (jsonify(serialized_obj))
+
 @app.route('/employees')
 # @jwt_required()
 def employees():
@@ -123,6 +133,43 @@ def projects():
     session.close()
     return (jsonify(serialized_obj))
 
+@app.route('/addtimesubmissions', methods=['POST'])
+#@jwt_required()
+def addtimesubmissions():    
+    data = request.get_json()
+    print(data)
+    sub_data = timesubmissions( from_date = datetime.datetime.now(),
+                                    to_date = datetime.datetime.now(),
+                                    user_name = data.get('user_name'),
+                                    manager_name = data.get('manager_name'),
+                                    time_type = data.get('time_type'),
+                                    status = 'submitted-pending approval',
+                                    submission_id = data.get('from_date') 
+                                                    + data.get('to_date')
+                                                    + data.get('user_name')
+                                                    + data.get('manager_name')
+                                                    + data.get('time_type'),                 
+                               )
+    session = Session()
+    session.add(sub_data)
+    session.commit()
+    return jsonify({'msg':'success'}),200
+
+
+@app.route('/view_submissions', methods=['POST'])
+#@jwt_required()
+def view_submissions():
+    session = Session()
+    data = request.get_json()
+    manager_name = data.get("user_name")
+    print(data)
+    
+    existing_submissions = session.query(timesubmissions).filter(timesubmissions.manager_name==manager_name).all()
+    if existing_submissions:
+        serialized_obj = serialize_all(existing_submissions)
+        return jsonify(serialized_obj),200
+    return jsonify({'info':'No submission available for you'}),200
+  
 
 @app.route('/addEmployee', methods=['POST'])
 # @jwt_required()
@@ -277,4 +324,5 @@ def addProject():
 
 
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0',port = 5000,debug = True)
+    #app.run(host = '0.0.0.0',port = 5000,debug = True)
+    app.run(debug = True)

@@ -21,6 +21,17 @@ class authUser(Base):
     email = Column(String)
     password = Column(String)
     roles = Column(VARCHAR(2000))
+
+
+class timesubmissions(Base):
+    __tablename__="timesubmissions"
+    from_date = Column(DateTime,primary_key =True)
+    to_date = Column(DateTime)
+    user_name = Column(String)
+    manager_name = Column(String)
+    time_type = Column(String)
+    submission_id = Column(String)
+    status = Column(String)
     
 class employee(Base):
     __tablename__ = 'employee'
@@ -313,5 +324,13 @@ def serialize_all(data_obj):
         for i in range(1,len(data_dict_keys)):
             serial_dict[data_dict_keys[i]]=data_dict[data_dict_keys[i]]
         serialized.append(serial_dict)
-    return serialized 
-    
+    return serialized
+
+
+class TimeMaster(Base):
+    __tablename__ = 'TimeMaster'
+    id = Column(Integer, primary_key=True)
+    emp_id = Column(String)
+    month = Column(String)
+    year = Column(String)
+    timedata = Column(VARCHAR(3000))
