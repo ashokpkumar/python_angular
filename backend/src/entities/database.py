@@ -21,6 +21,17 @@ class authUser(Base):
     email = Column(String)
     password = Column(String)
     roles = Column(VARCHAR(2000))
+
+
+class timesubmissions(Base):
+    __tablename__="timesubmissions"
+    from_date = Column(DateTime,primary_key =True)
+    to_date = Column(DateTime)
+    user_name = Column(String)
+    manager_name = Column(String)
+    time_type = Column(String)
+    submission_id = Column(String)
+    status = Column(String)
     
 class employee(Base):
     __tablename__ = 'employee'
