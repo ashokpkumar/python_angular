@@ -34,8 +34,13 @@
                     <td>{{item.manager_name}}</td>
                     <td>{{item.manager_dept}}</td>
                     <td>
-                      <button (click)="open(content,item.emp_id)">Add</button>
-                      {{item.project_code}}
+                      <div *ngIf="item.project_code">
+                        <button (click)="open(content,item.emp_id)">Change</button>  {{item.project_code}}
+                      </div>
+                      <div *ngIf="!item.project_code">
+                        <button (click)="open(content,item.emp_id)">Add</button>  {{item.project_code}}
+                      </div>
+                      
                     </td>
                     <td>{{item.employment_status}}</td>
                     <td>{{item.dept}}</td>

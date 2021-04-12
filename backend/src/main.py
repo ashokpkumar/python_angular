@@ -3,6 +3,7 @@
 # sources
 #https://medium.com/@anushkamehra16/connecting-to-sql-database-using-sqlalchemy-in-python-2be2cf883f85
 #https://medium.com/@alanhamlett/part-1-sqlalchemy-models-to-json-de398bc2ef47#:~:text=To%20add%20a%20serialization%20method,columns%20and%20returns%20a%20dictionary.&text=def%20to_dict(self%2C%20show%3D,of%20this%20model.%22%22%22
+#https://pythonhosted.org/Flask-Mail/
 #sources
 
 #from entities.exam import Exam,ExamSchema
@@ -15,6 +16,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from flask_mail import Mail,Message
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -23,15 +25,37 @@ import datetime
 from sqlalchemy.ext.serializer import loads, dumps
 
 app = Flask(__name__)
+
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 jwt = JWTManager(app)
 CORS(app)
-
+mail_settings = {
+    "MAIL_SERVER": 'smtp.office365.com',
+    "MAIL_PORT": 587,
+    "MAIL_USE_TLS": True,
+    "MAIL_USE_SSL": False,
+    "MAIL_USERNAME": 'ashokkumar.p@indiumsoft.com',
+    "MAIL_PASSWORD": 'Indium'
+    #"MAIL_USERNAME": os.environ['EMAIL_USER'],
+    #"MAIL_PASSWORD": os.environ['EMAIL_PASSWORD']
+}
+app.config.update(mail_settings)
+mail = Mail(app)
 
 # generate database schema
 Base.metadata.create_all(engine)
 # create_sample_employee()
 # create_sample_project()
+@app.route("/mail")
+def index():
+    msg = Message(subject='Subject',
+              sender='ashokkumar.p@indiumsoft.com',
+              recipients='ashokkumar.p@indiumsoft.com',
+              body='Hello')
+    msg.msgId = msg.msgId.split('@')[0] + '@short_string'  # for instance your domain name
+    mail.send(msg)
+
+    return jsonify({"msg":"msg sent"})
 
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
@@ -167,20 +191,22 @@ def addProjectResource():
     project_code = data.get("project_id")
     print(resource_id)
     print(project_code)
-    
+    # add project ID to Employee record
     existing_emp = session.query(employee).filter(employee.emp_id==resource_id).first()
     if existing_emp==None:
-        return jsonify({'success':'Employee with ID: {} Does not Exist !'.format(resource_id)})
+        return jsonify({'success':'Employee with ID: {} Does not Exist !'.format(resource_id)}),200
+    
     
     existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project==None:
-        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
+        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)}),200
 
     existing_emp.project_code=project_code
     session.add(existing_emp)
     session.commit()
 
-    print(existing_project.resource_info)
+    #print(existing_project.resource_info)
+    # add Emp ID to Project record
     if existing_project.resource_info == None:
         existing_project.resource_info=resource_id
         session.add(existing_project)
@@ -196,7 +222,7 @@ def addProjectResource():
                 existing_resource_list.remove(i)
         print(existing_resource_list)
         if resource_id in existing_resource_list:
-            return jsonify({'error':'resource exist already in the project'})
+            return jsonify({'warning':' Project added to Emp ID,Resource exist already in the project'}),200
         existing_resource_list.append(resource_id )
         print(existing_resource_list)
         
@@ -210,7 +236,7 @@ def addProjectResource():
         session.commit()
 
     session.close()
-    return jsonify({"success":"Employee {} and Project {} Linked".format(resource_id,project_code)})
+    return jsonify({"success":"Employee {} and Project {} Linked".format(resource_id,project_code)}),200
 
     
     

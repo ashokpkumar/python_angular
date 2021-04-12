@@ -42,12 +42,16 @@ console.log(res)
     console.log(projectResource.project_id);
     this.empApi.addProjectResource(this.projectResource)
   .subscribe(data=>{
-    // console.log(data),
-    this.empApi.showMessage(Object.values(data),Object.keys(data))});
+    console.log('Coming here from data',data),
+    this.empApi.showMessage(Object.values(data),Object.keys(data))
     this.router.navigate(['/employee']);
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/employee']);
+  });
+    
+    
+
   }
   open(content,project_code) {
     this.projectResource.emp_id = project_code;

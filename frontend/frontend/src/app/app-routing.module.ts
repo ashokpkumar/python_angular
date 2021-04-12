@@ -8,6 +8,7 @@ import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {AssignResourceProjectComponent} from './assign-resource-project/assign-resource-project.component';
 import {ShowTimeComponent} from './show-time/show-time.component';
+import {AccountComponent} from './account/account.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'addresourceproject', component: AssignResourceProjectComponent },
   { path: 'time', component: ShowTimeComponent },
+  { path: 'account', component: AccountComponent },
 ];
 
 @NgModule({
