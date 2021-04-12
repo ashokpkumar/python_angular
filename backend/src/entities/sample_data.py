@@ -1,5 +1,5 @@
 from entities.database import Session, engine, Base, serialize_all
-from entities.database import employee,project,authUser
+from entities.database import employee,project,authUser,TimeMaster
 import datetime
 
 def create_sample_employee(): 
@@ -53,5 +53,19 @@ def create_sample_project():
                             
                             )
         session.add(project_objects)
+        session.commit()
+        session.close()
+
+
+def time_master():
+    session = Session()
+    time_objects = session.query(TimeMaster).first()
+    if not time_objects:
+        time_objects = TimeMaster(emp_id="i3128",
+                                  month="01",
+                                  year="2021",
+                                  timedata=""
+                                  )
+        session.add(time_objects)
         session.commit()
         session.close()

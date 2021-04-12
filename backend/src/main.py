@@ -9,7 +9,7 @@
 from entities.database import employee,project,authUser
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
-from entities.sample_data import create_sample_employee,create_sample_project
+from entities.sample_data import create_sample_employee,create_sample_project,time_master
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -32,6 +32,7 @@ CORS(app)
 Base.metadata.create_all(engine)
 # create_sample_employee()
 # create_sample_project()
+time_master()
 
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
