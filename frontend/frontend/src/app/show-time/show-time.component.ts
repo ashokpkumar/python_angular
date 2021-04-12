@@ -1,55 +1,41 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/angular'; 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {FormGroup, FormControl} from '@angular/forms';
-
-declare var $: any;
-
+import {timeData} from './time';
+import {Subscription} from 'rxjs';
+import {showTimeApiService} from './showtime.service';
 @Component({
   selector: 'app-show-time',
   templateUrl: './show-time.component.html',
   styleUrls: ['./show-time.component.css']
 })
 export class ShowTimeComponent implements OnInit {
-
-
-  calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    dateClick: this.handleDateClick.bind(this), // bind is important!
-    events: [
-      { title: 'event 1', date: '2020-06-27' },
-      { title: 'event 2', date: '2020-06-30' }
-    ]
-  };
-  constructor(private modalService: NgbModal) {
-
-    const today = new Date();
-    const month = today.getMonth();
-    const year = today.getFullYear();
+  timeData = new timeData();
+  projectListSubs: Subscription;
+  constructor(private timeApi: showTimeApiService,private modalService: NgbModal,) {
 
     
    }
-  @ViewChild('content')
-  private defaultTabButtonsTpl: TemplateRef<any>;
+
   ngOnInit(): void {
    
  
   }
-  handleDateClick(arg) {
-    console.log("Date clicked ",arg.dateStr);
-    //this.projectResource.project_id = project_code;
-    // console.log('Project Code: ',project_code);
-    this.modalService.open(this.defaultTabButtonsTpl, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      //this.closeResult = `Closed with: ${result}`;
-      // console.log(this.closeResult);
-       //console.log("Project resource",this.projectResource);
-      //this.addResource(this.projectResource);
+  addResource(content){
+console.log(content)
+
+this.projectListSubs = this.timeApi.addProjectResource(content).subscribe(data=>{ this.timeApi.showMessage(Object.values(data),Object.keys(data)); },err=>{this.timeApi.showMessage(Object.values(err),Object.keys(err));} );
+  }
+  open(content) {
+    
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.timeData.manager_name='nataraj';
+      this.timeData.user_name = 'i3228';
+     this.addResource(this.timeData);
     }, (reason) => {
-      //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      // console.log(this.closeResult);
-      // console.log(this.projectResource);
+      
     });
   }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -59,4 +45,7 @@ export class ShowTimeComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+  
+ 
+
 }

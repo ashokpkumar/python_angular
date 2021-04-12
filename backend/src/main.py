@@ -115,22 +115,35 @@ def projects():
 def addtimesubmissions():    
     data = request.get_json()
     print(data)
+    from_date = request.json.get("from_date", None)
+    to_date = request.json.get("to_date", None)
+    time_type = request.json.get("time_type", None)
+    hours = request.json.get("hours", None)
+    remarks = request.json.get("remarks", None)
+    manager_name = request.json.get("manager_name", None)
+    user_name = request.json.get("user_name", None)
+
+    print(from_date)
+    print(to_date)
+    print(time_type)
+    print(hours)
+    print(remarks)
+    print(manager_name)
+    print(user_name)
+    
+
     sub_data = timesubmissions( from_date = datetime.datetime.now(),
                                     to_date = datetime.datetime.now(),
-                                    user_name = data.get('user_name'),
-                                    manager_name = data.get('manager_name'),
-                                    time_type = data.get('time_type'),
+                                    user_name = user_name,
+                                    manager_name = manager_name,
+                                    time_type = time_type,
                                     status = 'submitted-pending approval',
-                                    submission_id = data.get('from_date') 
-                                                    + data.get('to_date')
-                                                    + data.get('user_name')
-                                                    + data.get('manager_name')
-                                                    + data.get('time_type'),                 
+                                    submission_id = user_name + manager_name + time_type +  from_date +  to_date         
                                )
     session = Session()
     session.add(sub_data)
     session.commit()
-    return jsonify({'msg':'success'}),200
+    return jsonify({'info':'Time has been submitted !'}),200
 
 
 @app.route('/view_submissions', methods=['POST'])

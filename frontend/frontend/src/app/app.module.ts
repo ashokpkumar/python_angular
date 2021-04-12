@@ -31,7 +31,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid'; 
 import interactionPlugin from '@fullcalendar/interaction'; 
 import { MatNativeDateModule } from '@angular/material/core';
-
+import {showTimeApiService} from './show-time/showtime.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
@@ -78,7 +78,7 @@ FullCalendarModule.registerPlugins([
     MatNativeDateModule,
   ],
   
-  providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule],
+  providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule,showTimeApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
