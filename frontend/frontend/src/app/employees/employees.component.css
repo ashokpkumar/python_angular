@@ -14,3 +14,19 @@ h1 {
     border: 1px solid #ddd;
     padding: 8px;
   }
+  .emp_list_th > th {
+    background-color: #86AEC1;
+    border: 1px solid black;
+  }
+  .emp_list_th > td
+  {
+    background-color: #C9DBE3;
+    border: 1px solid black;
+    color: black;
+    font-size: 15px;
+  }
+  .emp_list_heading{
+    font-size: 30px;
+    font-weight: 600;
+    font-family: 'Times New Roman', Times, serif;
+  }

@@ -1,49 +1,50 @@
-
-
-<div>
-  <div>
-    <label>Client Name: </label>
-    <input [(ngModel)]="project.clientname" />
-  </div>
-  <div>
-    <label>projectCode: </label>
-    <input [(ngModel)]="project.projectcode" />
-  </div>
-  <div>
-    <label>Project Name: </label>
-    <input [(ngModel)]="project.projectname" />
-  </div>
-  <div>
-    <label>Project Start Date: </label>
-    <input [(ngModel)]="project.projectstartdate" />
-  </div>
-  <div>
-    <label>Project Status: </label>
-    <input [(ngModel)]="project.projectstatus" />
-  </div>
-  <div>
-    <label>Billing Type: </label>
-    <input [(ngModel)]="project.billingtype" />
-  </div>
-  <div>
-    <label>Segment: </label>
-    <input [(ngModel)]="project.segment" />
-  </div>
-  <div>
-    <label>Geography: </label>
-    <input [(ngModel)]="project.geography" />
-  </div>
-  <div>
-    <label>Solution category: </label>
-    <input [(ngModel)]="project.solutioncategory" />
-  </div>
-  <div>
-    <label>Financial year: </label>
-    <input [(ngModel)]="project.financialyear" />
-  </div>
-  
-
-  <div>
-    <button (click)="onSubmit()">Add</button>
+<div class="add_project_bg">
+  <div class="container card">
+    <p class="add_project_heading"> Add Project</p>
+    <div class="add_project_align container_bg">
+      <div>
+        <p>Client Name: </p>
+        <input [(ngModel)]="project.clientname" />
+      </div>
+      <div>
+        <p>ProjectCode: </p>
+        <input [(ngModel)]="project.projectcode" />
+      </div>
+      <div>
+        <p>Project Name: </p>
+        <input [(ngModel)]="project.projectname" />
+      </div>
+      <div>
+        <p>Project Start Date: </p>
+        <input [(ngModel)]="project.projectstartdate" />
+      </div>
+      <div>
+        <p>Project Status: </p>
+        <input [(ngModel)]="project.projectstatus" />
+      </div>
+      <div>
+        <p>Billing Type: </p>
+        <input [(ngModel)]="project.billingtype" />
+      </div>
+      <div>
+        <p>Segment: </p>
+        <input [(ngModel)]="project.segment" />
+      </div>
+      <div>
+        <p>Geography: </p>
+        <input [(ngModel)]="project.geography" />
+      </div>
+      <div>
+        <p>Solution category: </p>
+        <input [(ngModel)]="project.solutioncategory" />
+      </div>
+      <div>
+        <p>Financial year: </p>
+        <input [(ngModel)]="project.financialyear" />
+      </div>
+      <div class="add_project_btn">
+        <button (click)="onSubmit()">Add</button>
+      </div>
+    </div>
   </div>
 </div>
