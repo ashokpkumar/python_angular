@@ -1,104 +1,105 @@
-<div class="add_employee_bg">
-  <div class="container card">
-    <p class="add_emp_heading"> Add Employee</p>
-    <div class="add_employee_align container_bg">
-      <div>
-        <p>Employee ID: </p>
-        <input [(ngModel)]="employee.emp_id" />
-      </div>
-      <div>
-        <p>Email: </p>
-        <input [(ngModel)]="employee.email" />
-        <span style="font-size: 20px;">@indiumsoft.com </span>
-      </div>
-      <div>
-        <p>First Name: </p>
-        <input [(ngModel)]="employee.first_name" />
-      </div>
-      <div>
-        <p>Last Name: </p>
-        <input [(ngModel)]="employee.last_name" />
-      </div>
-      <div>
-        <p>Sur name: </p>
-        <input [(ngModel)]="employee.sur_name" />
-      </div>
-      <div>
-        <p>Initial: </p>
-        <input [(ngModel)]="employee.initial" />
-      </div>
-      <div>
-        <p>Salutation: </p>
-        <input [(ngModel)]="employee.salutation" />
-      </div>
-      <div>
-        <p>Designation: </p>
-        <input [(ngModel)]="employee.designation" />
-      </div>
-      <div>
-        <p>Project Code: </p>
-        <input [(ngModel)]="employee.project_code" />
-      </div>
-      <div>
-        <p>Geography: </p>
-        <input [(ngModel)]="employee.geography" />
-      </div>
-      <div>
-        <p>Department: </p>
-        <input [(ngModel)]="employee.dept" />
-      </div>
-      <div>
-        <p>Emp Start date: </p>
-        <input [(ngModel)]="employee.emp_start_date" />
-      </div>
 
-      <div>
-        <p>Emp Last Working Date: </p>
-        <input [(ngModel)]="employee.emp_last_working_date" />
-      </div>
-      <div>
-        <p>Emp Project assigned Date: </p>
-        <input [(ngModel)]="employee.emp_project_assigned_date" />
-      </div>
-      <div>
-        <p>Emp project End date: </p>
-        <input [(ngModel)]="employee.emp_project_end_date" />
-      </div>
-      <div>
-        <p>Employment Status: </p>
-        <input [(ngModel)]="employee.employment_status" />
-      </div>
-      <div>
-        <p>Manager Name: </p>
-        <input [(ngModel)]="employee.manager_name" />
-      </div>
-      <div>
-        <p>Manager Dept: </p>
-        <input [(ngModel)]="employee.manager_dept" />
-      </div>
-      <div>
-        <p>Resource Status: </p>
-        <input [(ngModel)]="employee.resource_status" />
-      </div>
-      <div>
-        <p>Delivery Type: </p>
-        <input [(ngModel)]="employee.delivery_type" />
-      </div>
-      <div>
-        <p>Additional Allocation: </p>
-        <input [(ngModel)]="employee.additional_allocation" />
-      </div>
-      <div>
-        <p>Skills: </p>
-        <input [(ngModel)]="employee.skills" />
-      </div>
-      <div>
-        <p>Roles: </p>
-        <input [(ngModel)]="employee.roles" />
-      </div>
-      <div class="add_btn-emp">
-        <button (click)="onSubmit()">Add</button>
-      </div>
-    </div>
+<h1>Add Employee</h1>
+<div>
+  <div>
+    <label>Employee ID: </label>
+    <input [(ngModel)]="employee.emp_id" />
+  </div>
+  <div>
+    <label>Email: </label>
+    <input [(ngModel)]="employee.email" />
+    <label>@indiumsoft.com </label>
+  </div>
+  <div>
+    <label>First Name: </label>
+    <input [(ngModel)]="employee.first_name" />
+  </div>
+  <div>
+    <label>Last Name: </label>
+    <input [(ngModel)]="employee.last_name" />
+  </div>
+  <div>
+    <label>Sur name: </label>
+    <input [(ngModel)]="employee.sur_name" />
+  </div>
+  <div>
+    <label>Initial: </label>
+    <input [(ngModel)]="employee.initial" />
+  </div>
+  <div>
+    <label>Salutation: </label>
+    <input [(ngModel)]="employee.salutation" />
+  </div>
+  <div>
+    <label>Designation: </label>
+    <input [(ngModel)]="employee.designation" />
+  </div>
+  <div>
+    <label>Project Code: </label>
+    <input [(ngModel)]="employee.project_code" />
+  </div>
+  <div>
+    <label>Geography: </label>
+    <input [(ngModel)]="employee.geography" />
+  </div>
+  <div>
+    <label>Department: </label>
+    <input [(ngModel)]="employee.dept" />
+  </div>
+  <div>
+    <label>Emp Start date: </label>
+    <input [(ngModel)]="employee.emp_start_date" />
+  </div>
+
+  <div>
+    <label>Emp Last Working Date: </label>
+    <input [(ngModel)]="employee.emp_last_working_date" />
+  </div>
+  <div>
+    <label>Emp Project assigned Date: </label>
+    <input [(ngModel)]="employee.emp_project_assigned_date" />
+  </div>
+  <div>
+    <label>Emp project End date: </label>
+    <input [(ngModel)]="employee.emp_project_end_date" />
+  </div>
+  <div>
+    <label>Employment Status: </label>
+    <input [(ngModel)]="employee.employment_status" />
+  </div>
+  <div>
+    <label>Manager Name: </label>
+    <input [(ngModel)]="employee.manager_name" />
+  </div>
+  <div>
+    <label>Manager Dept: </label>
+    <input [(ngModel)]="employee.manager_dept" />
+  </div>
+  <div>
+    <label>Resource Status: </label>
+    <input [(ngModel)]="employee.resource_status" />
+  </div>
+  <div>
+    <label>Delivery Type: </label>
+    <input [(ngModel)]="employee.delivery_type" />
+  </div>
+  <div>
+    <label>Additional Allocation: </label>
+    <input [(ngModel)]="employee.additional_allocation" />
+  </div>
+  <div>
+    <label>Skills: </label>
+    <input [(ngModel)]="employee.skills" />
+  </div>
+  <div>
+    <label>Roles: </label>
+    <input [(ngModel)]="employee.roles" />
+  </div>
+  
+
+  <div>
+    <button (click)="onSubmit()">Add</button>
   </div>
 </div>
+
+
