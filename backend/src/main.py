@@ -6,6 +6,8 @@
 #sources
 import logging
 #from entities.exam import Exam,ExamSchema
+from urllib import response
+
 from entities.database import employee,project,authUser,timesubmissions
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
@@ -34,13 +36,13 @@ Base.metadata.create_all(engine)
 
 
 @app.route("/setpassword", methods=["POST"])
-def setpassword(self):
+def setpassword():
     logging.info("Set password Request")
     session = Session()
     if request.json.get("emp_id") is None:
         logging.error("setpassword:: emp_id is a required field")
-        self.response.status = 400
-        return self.response.write({
+        response.status = 400
+        return response.write({
             "status": "error",
             "message": "emp_id is required field"
         })
@@ -71,11 +73,11 @@ def setpassword(self):
 
 
 @app.route("/login", methods=["POST"])
-def login(self):
+def login():
     if request.json.get("emp_id") and request.json.get("password") is None:
         logging.error("login:: emp_id and password is a required field")
-        self.response.status = 400
-        return self.response.write({
+        response.status = 400
+        return response.write({
             "status": "error",
             "message": "emp_id and password is wrong"
         })
@@ -127,7 +129,7 @@ def employees():
         serialized_obj = serialize_all(emp_objects)
         #serialized_obj = [{"title":obj.title,"description":obj.description} for obj in emp_objects]
         session.close()
-        return (jsonify(serialized_obj))
+        return jsonify(serialized_obj)
     except:
         return jsonify({"error": "Unable to connect with DB"}), 400
 
@@ -253,13 +255,13 @@ def addEmployee():
 
 @app.route('/addProjectResource', methods=['POST'])
 # @jwt_required()
-def addProjectResource(self):
+def addProjectResource():
     session = Session()
     data = request.get_json()
     if request.json.get("emp_id") and request.json.get("project_id") is None:
         logging.error("login:: emp_id and project_id is a required field")
-        self.response.status = 400
-        return self.response.write({
+        response.status = 400
+        return response.write({
             "status": "error",
             "message": "emp_id and project_id wrong"
         })
