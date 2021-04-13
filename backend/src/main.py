@@ -32,6 +32,7 @@ Base.metadata.create_all(engine)
 # create_sample_project()
 # time_master()
 
+
 @app.route("/setpassword", methods=["POST"])
 def setpassword(self):
     logging.info("Set password Request")
@@ -76,7 +77,7 @@ def login(self):
         self.response.status = 400
         return self.response.write({
             "status": "error",
-            "message": "emp_id and password wrong is required field"
+            "message": "emp_id and password is wrong"
         })
 
     emp_id = request.json.get("emp_id")
@@ -103,6 +104,7 @@ def login(self):
     except:
         return jsonify({"error": "Username or password is incorrect"}), 400
 
+
 @app.route('/timesubmissions')
 # @jwt_required()
 def timesubmission():
@@ -114,6 +116,7 @@ def timesubmission():
         return jsonify(serialized_obj)
     except:
         return jsonify({"error": "Unable to connect with DB"}), 400
+
 
 @app.route('/employees')
 # @jwt_required()
@@ -170,6 +173,7 @@ def addtimesubmissions():
         return jsonify({'msg':'success'}),200
     except:
         return jsonify({"error": "Unable to query from DB. please check DB connection"}), 400
+
 
 @app.route('/view_submissions', methods=['POST'])
 #@jwt_required()
@@ -249,9 +253,16 @@ def addEmployee():
 
 @app.route('/addProjectResource', methods=['POST'])
 # @jwt_required()
-def addProjectResource():
+def addProjectResource(self):
     session = Session()
     data = request.get_json()
+    if request.json.get("emp_id") and request.json.get("project_id") is None:
+        logging.error("login:: emp_id and project_id is a required field")
+        self.response.status = 400
+        return self.response.write({
+            "status": "error",
+            "message": "emp_id and project_id wrong"
+        })
     resource_id = data.get("emp_id")
     project_code = data.get("project_id")
 
