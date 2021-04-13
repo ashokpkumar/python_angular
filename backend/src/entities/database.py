@@ -324,5 +324,13 @@ def serialize_all(data_obj):
         for i in range(1,len(data_dict_keys)):
             serial_dict[data_dict_keys[i]]=data_dict[data_dict_keys[i]]
         serialized.append(serial_dict)
-    return serialized 
-    
+    return serialized
+
+
+class TimeMaster(Base):
+    __tablename__ = 'TimeMaster'
+    id = Column(Integer, primary_key=True)
+    emp_id = Column(String)
+    month = Column(String)
+    year = Column(String)
+    timedata = Column(VARCHAR(3000))
