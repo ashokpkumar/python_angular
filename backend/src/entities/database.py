@@ -25,10 +25,11 @@ class authUser(Base):
 
 class timesubmissions(Base):
     __tablename__="timesubmissions"
+    id = Column(Integer, primary_key=True)
     from_date = Column(DateTime,primary_key =True)
     to_date = Column(DateTime)
-    user_name = Column(String)
-    manager_name = Column(String)
+    user_id = Column(String)
+    manager_id = Column(Integer)
     time_type = Column(String)
     submission_id = Column(String)
     status = Column(String)
