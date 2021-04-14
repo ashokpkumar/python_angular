@@ -34,6 +34,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { PersonalSummaryComponent } from './personal-summary/personal-summary.component';
+import { ProfessionalSummaryComponent } from './professional-summary/professional-summary.component';
+import { TimeSummaryComponent } from './time-summary/time-summary.component';
+import { AccountSummaryComponent } from './account-summary/account-summary.component';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -54,6 +58,10 @@ FullCalendarModule.registerPlugins([
     HomeComponent,
     LoginComponent,
     ShowTimeComponent,
+    PersonalSummaryComponent,
+    ProfessionalSummaryComponent,
+    TimeSummaryComponent,
+    AccountSummaryComponent,
    
   ],
 
