@@ -1,4 +1,66 @@
-<full-calendar [options]="calendarOptions"></full-calendar>
+<!-- <div class="col-sm-3">
+  <p *ngIf="userData.first_name"> 
+    <i class="glyphicon glyphicon-user"></i>
+    {{userData.full_name}}
+  </p>
+  <p *ngIf="userData.manager_name">
+    <i class="glyphicon glyphicon-user"></i>
+    {{userData.manager_name}}
+  </p>
+  <p *ngIf="userData.project_code">
+    <i class="glyphicon glyphicon-user"></i>
+    {{userData.project_code}}
+  </p>
+  <p *ngIf="userData.employment_status">
+    <i class="glyphicon glyphicon-user"></i>
+    {{userData.employment_status}}
+  </p>
+  
+</div> -->
+
+<table id="customers">
+  <tr>
+    <th>Description</th>
+    <th>Info</th>
+  </tr>
+
+  <tr *ngIf="userData.full_name">
+    <td>Full Name</td>
+    <td>{{userData.full_name}}</td>
+  </tr>
+
+  <tr *ngIf="userData.designation">
+    <td>Designation</td>
+    <td>{{userData.designation}}</td>
+  </tr>
+
+  <tr *ngIf="userData.emp_id">
+    <td>Employee ID</td>
+    <td>{{userData.emp_id}}</td>
+  </tr>
+
+  <tr *ngIf="userData.project_name">
+    <td>Project Name</td>
+    <td>{{userData.project_name}}</td>
+  </tr>
+
+  <tr *ngIf="userData.project_code">
+    <td>project ID</td>
+    <td>{{userData.project_code}}</td>
+  </tr>
+  
+  <tr *ngIf="userData.manager_name">
+    <td>Reporting Manager</td>
+    <td>{{userData.manager_name}}</td>
+  </tr>
+
+  <tr *ngIf="userData.client_name">
+    <td>Client Name</td>
+    <td>{{userData.client_name}}</td>
+  </tr>
+
+
+</table>
 
 <ng-template #content let-modal>
     <div class="modal-header">

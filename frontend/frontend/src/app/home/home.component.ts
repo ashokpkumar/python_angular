@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { faSearch, faBell, faUser,faCoffee  } from '@fortawesome/free-solid-svg-icons';
+
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
-
+import { faSearch, faBell, faUser, faCoffee,faHome,faAddressCard,faToolbox,faTools,faClock} from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -13,6 +13,11 @@ export class HomeComponent implements OnInit {
   faBell = faBell;
   faUser = faUser;
   faCoffee  = faCoffee ;
+  faHome = faHome;
+  faAddressCard=faAddressCard;
+  faToolbox=faToolbox;
+  faTools=faTools;
+  faClock=faClock;
   constructor(private router: Router,private cookieService: CookieService) { }
 
   ngOnInit(): void {

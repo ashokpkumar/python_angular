@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { faSearch, faBell, faUser } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit,HostListener } from '@angular/core';
+import { faSearch, faBell, faUser, faHome } from '@fortawesome/free-solid-svg-icons';
 import {CookieService} from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 @Component({
@@ -26,6 +26,7 @@ export class NavigationComponent implements OnInit {
   faSearch = faSearch;
   faBell = faBell;
   faUser = faUser;
+  faHome = faHome;
   constructor(public toastr: ToastrService,private cookieService: CookieService) { }
 
   public ngOnInit(): void {
@@ -33,5 +34,31 @@ export class NavigationComponent implements OnInit {
     this.cookieValue = this.cookieService.get('cookie-name');
     console.log("Cookie value", this.cookieValue);
   }
+
+  myFunction(className){
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+  }
+document.getElementById(className).classList.toggle("show");
+}
+@HostListener('document:click', ['$event'])
+onDocumentClick(event: MouseEvent) {
+  var ele=<Element>event.target;
+  if (!ele.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 
 }

@@ -299,6 +299,24 @@ def addProject():
         return jsonify({"error":"Something happened while adding the data to the table, please check the data and try again"}), 500
     
 
+@app.route("/viewEmpInfo", methods=["POST"])
+def viewEmpInfo():
+    emp_id = request.json.get("emp_id", None)
+    if emp_id is None:
+        return jsonify({"error":"Employee ID is empty"}), 201
+    session = Session()
+    emp_objects = session.query(employee).filter(employee.emp_id==emp_id).all()
+    if emp_objects is None:
+        return jsonify({"error":"Employee Not found !"}), 201
+    emp_serialized = serialize_all(emp_objects)
+    emp_dict = emp_serialized[0]
+    project_objects = session.query(project).filter(project.project_code==emp_serialized[0]['project_code']).all()
+    if project_objects:
+        project_serialized = serialize_all(project_objects)
+        proj_dict = project_serialized[0]
+        emp_dict.update(proj_dict)
+    emp_dict['full_name'] = emp_dict['salutation'] + emp_dict['first_name'] + emp_dict['last_name'] 
+    return jsonify(emp_dict), 201
 
 
 if __name__ == '__main__':

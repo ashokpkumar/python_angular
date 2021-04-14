@@ -1,10 +1,12 @@
 
   <!-- https://codepen.io/AurelieT/pen/JGxMgo -->
-<p>Employees List</p>   
+<!-- <p>Employees List</p>    -->
   <div class="container">   
+    <p class="emp_list_heading">Employees List</p>
     <table>
         <thead>
-            <tr>
+          <tr class="emp_list_th">
+            <!-- <tr> -->
                 <th data-field="employee ID" data-checkbox="true">Emp ID</th>
                 <th data-field="First Name" data-checkbox="true">First Name</th>
                 <th data-field="Last Name" data-filter-control="input" data-sortable="true">Last Name</th>
@@ -23,8 +25,8 @@
             </tr>
         </thead>
         <tbody>
-       
-                <tr *ngFor="let item of employee_list">
+                    <tr class="emp_list_th" *ngFor="let item of employee_list">
+                <!-- <tr *ngFor="let item of employee_list"> -->
                     <td>{{item.emp_id}}</td>
                     <td>{{item.first_name}}</td>
                     <td>{{item.last_name}}</td>
