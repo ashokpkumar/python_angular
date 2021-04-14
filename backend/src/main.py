@@ -115,11 +115,32 @@ def employees():
 
 @app.route('/events')
 def events():
-    events_data = [{'title':'Casual leave','start':'2021-04-29'},
-                    {'title':'Holiday','start':'2021-04-21'},
-                    {'title':'WFH','start':'2021-04-22'},
-                    {'title':'WFH','start':'2021-04-18'},
-                    {'title':'WFH','start':'2021-04-01'},]
+    session = Session()
+    time_objects = session.query(timesubmissions).all()
+    serialized_obj = serialize_all(time_objects)
+    print(serialized_obj)
+    events_data = []
+
+    for event in serialized_obj:
+        eve={}
+        eve["title"]=str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
+        eve["start"]=event["date_info"]
+        events_data.append(eve)
+    
+
+       
+
+
+        
+
+    # events_data = [{'title':'Casual leave','start':'2021-04-29'},
+    #                 {'title':'Holiday','start':'2021-04-21'},
+    #                 {'title':'WFH','start':'2021-04-22'},
+    #                 {'title':'WFH','start':'2021-04-18'},
+    #                 {'title':'WFH','start':'2021-04-01'},]
+    print("##############")
+    print(events_data)
+    
     return jsonify(events_data)
 
 
@@ -141,22 +162,25 @@ def projects():
 def addtimesubmissions():    
     data = request.get_json()
     print(data)
-    sub_data = timesubmissions( from_date = datetime.datetime.now(),
-                                    to_date = datetime.datetime.now(),
+    # sub_data = timesubmissions(date_info = "date",
+    #                             user_name = "username",
+    #                             manager_name = "manager",
+    #                             time_type = "time",
+    #                             submission_id = "submission",
+    #                             status = "status"   
+    # )
+    sub_data = timesubmissions( date_info = data.get('date'),
+                                    hours = data.get('hours'),
                                     user_name = data.get('user_name'),
                                     manager_name = data.get('manager_name'),
                                     time_type = data.get('time_type'),
                                     status = 'submitted-pending approval',
-                                    submission_id = data.get('from_date') 
-                                                    + data.get('to_date')
-                                                    + data.get('user_name')
-                                                    + data.get('manager_name')
-                                                    + data.get('time_type'),                 
+                                    submission_id = data.get('user_name') + data.get('user_name') + data.get('time_type')     
                                )
     session = Session()
     session.add(sub_data)
     session.commit()
-    return jsonify({'msg':'success'}),200
+    return jsonify({'success':'Your Time has been  submitted for: {}'.format(data.get('date'))}),200
 
 
 @app.route('/view_submissions', methods=['POST'])

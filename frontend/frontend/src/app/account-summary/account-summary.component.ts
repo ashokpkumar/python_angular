@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { CalendarOptions } from '@fullcalendar/angular';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {timeInfo} from './account';
+import {Router} from "@angular/router";
 declare var $: any;
 @Component({
   selector: 'app-account-summary',
@@ -26,7 +27,7 @@ export class AccountSummaryComponent implements OnInit {
   userInfo = new userInfo();
   userData = new userData();
   timeInfo = new timeInfo();
-  constructor(private modalService: NgbModal,private http: HttpClient, private apiService:accountService,private cookieService: CookieService) { }
+  constructor(private router: Router,private modalService: NgbModal,private http: HttpClient, private apiService:accountService,private cookieService: CookieService) { }
   @ViewChild('content')
   private defaultTabButtonsTpl: TemplateRef<any>;
 
@@ -103,7 +104,7 @@ export class AccountSummaryComponent implements OnInit {
     this.professional = false;
     this.personal = false;
     this.time = true;
-    
+    console.log("Time Show");
     document.getElementById("mySidenav").style.width="0px";
     document.getElementById("main").style.marginLeft="0px";
 
@@ -130,8 +131,27 @@ export class AccountSummaryComponent implements OnInit {
   
     this.modalService.open(this.defaultTabButtonsTpl, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       console.log("Time Info",this.timeInfo);
- 
+      this.timeInfo['user_name']=this.cookieService.get('username');;
+      this.timeInfo['manager_name']=this.cookieService.get('username');;
+
+      this.apiService.addTimeSubmissions(this.timeInfo)
+    .subscribe(data=>{console.log("Employee Data: ",data),
+    this.userData = data,
+    this.apiService.showMessage(Object.values(data),Object.keys(data)),
   
+
+    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    // this.router.onSameUrlNavigation = 'reload';
+    this.timeShow();
+    this.apiService.getEvents().subscribe(res=>{    console.log("146",res)        
+      for (let value of res){this.posts.push(value);}
+    },) ;
+    //this.router.navigate(['/account']);
+    this.timeShow();
+
+  });
+
+    
     }, (reason) => {
 
     });

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
- import {userInfo} from './account';
+ import {userInfo,timeInfo} from './account';
 import {API_URL} from '../env';
 import { ToastrService } from 'ngx-toastr';
 
@@ -35,5 +35,11 @@ export class accountService {
 getEvents():Observable<any>{
     return this.http.get(`${API_URL}/events`);
 }
+addTimeSubmissions(timeInfo:timeInfo): Observable<any> {
+    const headers = { 'content-type': 'application/json'}  
+    const body=JSON.stringify(timeInfo);
+    console.log(body)
+    return this.http.post(`${API_URL}/addtimesubmissions`, body,{'headers':headers})
+  }
 
 }
