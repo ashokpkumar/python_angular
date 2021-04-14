@@ -38,6 +38,7 @@ import { PersonalSummaryComponent } from './personal-summary/personal-summary.co
 import { ProfessionalSummaryComponent } from './professional-summary/professional-summary.component';
 import { TimeSummaryComponent } from './time-summary/time-summary.component';
 import { AccountSummaryComponent } from './account-summary/account-summary.component';
+import { TimesubmissionsComponent } from './timesubmissions/timesubmissions.component';
 
 
 FullCalendarModule.registerPlugins([ 
@@ -63,6 +64,7 @@ FullCalendarModule.registerPlugins([
     ProfessionalSummaryComponent,
     TimeSummaryComponent,
     AccountSummaryComponent,
+    TimesubmissionsComponent,
    
   ],
 

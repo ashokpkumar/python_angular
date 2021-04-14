@@ -12,6 +12,7 @@ import {AccountSummaryComponent} from './account-summary/account-summary.compone
 import {PersonalSummaryComponent} from './personal-summary/personal-summary.component';
 import {ProfessionalSummaryComponent} from './professional-summary/professional-summary.component';
 import {TimeSummaryComponent} from './time-summary/time-summary.component';
+import {TimesubmissionsComponent} from './timesubmissions/timesubmissions.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,7 +26,7 @@ const routes: Routes = [
   { path: 'professional', component: ProfessionalSummaryComponent },
   { path: 'personal', component: PersonalSummaryComponent },
   { path: 'account', component: AccountSummaryComponent },
-
+  { path: 'timesubmission', component: TimesubmissionsComponent },
 ];
 
 @NgModule({
