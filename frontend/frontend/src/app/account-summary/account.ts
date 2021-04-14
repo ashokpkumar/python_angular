@@ -3,6 +3,14 @@ export class userInfo{
   
   }
 
+  export class timeInfo{
+    date:Date
+    time_type:string
+    hours:string
+    comments:string
+  
+  }
+
   export class userData{
     additional_allocation:string
     billing_type:string

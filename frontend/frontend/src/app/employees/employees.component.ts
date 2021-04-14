@@ -25,7 +25,10 @@ export class EmployeesComponent implements OnInit {
     }
     this.empListSubs = this.empApi
                             .getExams()
-                            .subscribe(res=>{this.employee_list=res;console.log(res)},console.error) ;
+                            .subscribe(res=>{this.employee_list=res;
+                              
+                              console.log(this.employee_list);
+                            },console.error) ;
                             this.projectListSubs = this.empApi
       .getProjects()
       .subscribe(res=>{this.project_list=res;

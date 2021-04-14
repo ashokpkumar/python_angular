@@ -93,9 +93,34 @@ def employees():
     session = Session()
     emp_objects = session.query(employee).all()
     serialized_obj = serialize_all(emp_objects)
-    #serialized_obj = [{"title":obj.title,"description":obj.description} for obj in emp_objects]
+    serialed_out = []
+    for dictionary in serialized_obj:
+        dictionary['full_name'] = dictionary['first_name'] + dictionary['last_name']
+        serialed_out.append(dictionary)
+
+    project_objects = session.query(project).all()
+    serialized_project = serialize_all(project_objects)
+    for dictionary in serialed_out:
+        emp_id = dictionary["project_code"]
+        for proj_item in serialized_project:
+            if proj_item["project_code"]==emp_id:
+                dictionary.update(proj_item)
+                break
+
+
+    print(serialed_out)
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialed_out))
+
+
+@app.route('/events')
+def events():
+    events_data = [{'title':'Casual leave','start':'2021-04-29'},
+                    {'title':'Holiday','start':'2021-04-21'},
+                    {'title':'WFH','start':'2021-04-22'},
+                    {'title':'WFH','start':'2021-04-18'},
+                    {'title':'WFH','start':'2021-04-01'},]
+    return jsonify(events_data)
 
 
 @app.route('/projects')

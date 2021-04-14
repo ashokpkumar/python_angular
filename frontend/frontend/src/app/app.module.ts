@@ -39,6 +39,7 @@ import { ProfessionalSummaryComponent } from './professional-summary/professiona
 import { TimeSummaryComponent } from './time-summary/time-summary.component';
 import { AccountSummaryComponent } from './account-summary/account-summary.component';
 
+
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin

@@ -8,43 +8,43 @@
           <tr class="emp_list_th">
             <!-- <tr> -->
                 <th data-field="employee ID" data-checkbox="true">Emp ID</th>
-                <th data-field="First Name" data-checkbox="true">First Name</th>
-                <th data-field="Last Name" data-filter-control="input" data-sortable="true">Last Name</th>
-                <th data-field="Sur Name" data-filter-control="select" data-sortable="true">Sur Name</th>
-                <th data-field="Initial" data-filter-control="select" data-sortable="true">Initial</th>
-                <th data-field="Salutation" data-filter-control="select" data-sortable="true">Salutation</th>
-                <th data-field="Manager Name" data-filter-control="select" data-sortable="true">Manager Name</th>
-                <th data-field="Manager Dept" data-filter-control="select" data-sortable="true">Manager Dept</th>
+                <th data-field="Salutation" data-checkbox="true">Salutation</th>
+                <th data-field="Full Name" data-filter-control="input" data-sortable="true">Full Name</th>
+                <th data-field="Project Name" data-filter-control="input" data-sortable="true">Project Name</th>
                 <th data-field="Project ID" data-filter-control="select" data-sortable="true">Project ID</th>
-                <th data-field="Status" data-filter-control="select" data-sortable="true">Status</th>
-                <th data-field="Dept" data-filter-control="select" data-sortable="true">Dept</th>
-                <th data-field="Employee Start Date" data-filter-control="select" data-sortable="true">Employee Start Date</th>
-                <th data-field="Employee Last working Date" data-filter-control="select" data-sortable="true">Employee Last working Date</th>
-                <th data-field="Employee project Assigned Date" data-filter-control="select" data-sortable="true">Employee project Assigned Date</th>
-                <th data-field="Employee project End Date" data-filter-control="select" data-sortable="true">Employee project End Date</th>
+                <th data-field="assigned Date" data-filter-control="select" data-sortable="true">Project Assigned Date</th>
+                <th data-field="end Date" data-filter-control="select" data-sortable="true">Project End Date</th>
+                <th data-field="Resource Status" data-filter-control="input" data-sortable="true">Resource Status</th>
+                <th data-field="Manager Name" data-filter-control="select" data-sortable="true">Manager Name</th>
+                <th data-field="Client Name" data-filter-control="select" data-sortable="true">Client Name</th>
+                <th data-field="Delivery Type" data-filter-control="select" data-sortable="true">Delivery Type</th>
+                <th data-field="Additional Allocation" data-filter-control="select" data-sortable="true">Additional Allocation</th>
+                <th data-field="Skills" data-filter-control="select" data-sortable="true">Skills</th>
             </tr>
         </thead>
         <tbody>
                     <tr class="emp_list_th" *ngFor="let item of employee_list">
                 <!-- <tr *ngFor="let item of employee_list"> -->
                     <td>{{item.emp_id}}</td>
-                    <td>{{item.first_name}}</td>
-                    <td>{{item.last_name}}</td>
-                    <td>{{item.sur_name}}</td>
-                    <td>{{item.initial}}</td>
                     <td>{{item.salutation}}</td>
-                    <td>{{item.manager_name}}</td>
-                    <td>{{item.manager_dept}}</td>
+                    <td>{{item.full_name}}</td>
+                    <td>{{item.project_name}}</td>
                     <td>
                       <button (click)="open(content,item.emp_id)">Add</button>
                       {{item.project_code}}
                     </td>
-                    <td>{{item.employment_status}}</td>
-                    <td>{{item.dept}}</td>
-                    <td>{{item.emp_start_date}}</td>
-                    <td>{{item.emp_last_working_date}}</td>
+
                     <td>{{item.emp_project_assigned_date}}</td>
                     <td>{{item.emp_project_end_date}}</td>
+
+                    <td>{{item.resource_status}}</td>
+                    <td>{{item.manager_name}}</td>
+                    <td>{{item.client_name}}</td>
+                    <td>{{item.delivery_type}}</td>
+                    
+                    <td>{{item.additional_allocation}}</td>
+                    <td>{{item.skills}}</td>
+                  
                 </tr>
          
         </tbody>

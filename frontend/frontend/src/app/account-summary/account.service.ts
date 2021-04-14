@@ -32,4 +32,8 @@ export class accountService {
     }    
 } 
 
+getEvents():Observable<any>{
+    return this.http.get(`${API_URL}/events`);
+}
+
 }
