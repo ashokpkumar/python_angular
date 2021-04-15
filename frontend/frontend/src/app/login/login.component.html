@@ -11,9 +11,9 @@
         </div>
         <div>
           <p>Password: </p>
-          <input [(ngModel)]="project.password" />
+          <input [(ngModel)]="project.password" type="password"/>
           <div class="forgot_password">
-            <p>
+            <p (click)="forgot()">
               Forgot Password?
             </p>
           </div>

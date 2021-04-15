@@ -15,6 +15,7 @@ export class ExamsComponent implements OnInit {
   constructor(private examsApi: ExamsApiService) { }
 
   ngOnInit(){
+    
     this.examsListSubs = this.examsApi
     .getExams()
     .subscribe(res => {

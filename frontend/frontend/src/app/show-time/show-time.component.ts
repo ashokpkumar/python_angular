@@ -4,6 +4,8 @@ import {FormGroup, FormControl} from '@angular/forms';
 import {showTimeApiService} from './showtime.service';
 import {userInfo,userData} from './time';
 import {CookieService} from 'ngx-cookie-service';
+import {Router} from "@angular/router"
+
 declare var $: any;
 
 @Component({
@@ -15,12 +17,16 @@ export class ShowTimeComponent implements OnInit {
   userInfo = new userInfo();
   userData = new userData()
 
-  constructor(private cookieService: CookieService,private apiService:showTimeApiService, private modalService: NgbModal) {
+  constructor(private router: Router,private cookieService: CookieService,private apiService:showTimeApiService, private modalService: NgbModal) {
     
    }
   @ViewChild('content')
   private defaultTabButtonsTpl: TemplateRef<any>;
   ngOnInit(): void {
+    if (this.cookieService.get('login')=='true'){}
+    else{
+      this.router.navigate(['/login']);
+    }
     this.userInfo.emp_id = this.cookieService.get('username');
     this.apiService.onSubmit(this.userInfo)
     .subscribe(data=>{console.log("Employee Data: ",data),

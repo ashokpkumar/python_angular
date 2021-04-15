@@ -6,7 +6,7 @@
 #sources
 
 #from entities.exam import Exam,ExamSchema
-from entities.database import employee,project,authUser,timesubmissions
+from entities.database import employee,project,authUser,timesubmissions,TimeMaster
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
 from entities.sample_data import create_sample_employee,create_sample_project,time_master
@@ -20,6 +20,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from datetime import time
 import datetime
+import json
 from sqlalchemy.ext.serializer import loads, dumps
 
 app = Flask(__name__)
@@ -74,7 +75,6 @@ def login():
 
 
 @app.route('/employees')
-# @jwt_required()
 def employees():
     session = Session()
     emp_objects = session.query(employee).all()
@@ -102,17 +102,26 @@ def events():
     time_objects = session.query(timesubmissions).all()
     serialized_obj = serialize_all(time_objects)
     events_data = []
-
+    #Time Submissions
     for event in serialized_obj:
         eve={}
-        eve["title"]=str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
+        eve["title"]="*" + str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
         eve["start"]=event["date_info"]
-        events_data.append(eve)    
+        events_data.append(eve)   
+
+    # time_master_obj = session.query(TimeMaster).all()
+    # time_master_serialized_obj = serialize_all(time_master_obj)
+
+    # for event in time_master_serialized_obj:
+    #     eve = {}
+    #     eve["title"]=str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
+    #     eve["start"]=event["date_info"]
+    #     events_data.append(eve) 
+
     return jsonify(events_data)
 
 
 @app.route('/projects')
-# @jwt_required()
 def projects():
     session = Session()
     project_objects = session.query(project).all()
@@ -122,7 +131,6 @@ def projects():
 
 
 @app.route('/addtimesubmissions', methods=['POST'])
-#@jwt_required()
 def addtimesubmissions():    
     data = request.get_json()
     sub_data = timesubmissions( date_info = data.get('date'),
@@ -140,20 +148,24 @@ def addtimesubmissions():
 
 
 @app.route('/view_submissions', methods=['POST'])
-#@jwt_required()
 def view_submissions():
     session = Session()
     data = request.get_json()
-    manager_name = data.get("user_name")    
+    print(">>>>>>>>>>>>>>>>>>>>>")
+    print(data)
+    #manager_name = data.get("user_name")  
+    manager_name = data   
     existing_submissions = session.query(timesubmissions).filter(timesubmissions.manager_name==manager_name).all()
+    print(existing_submissions)
     if existing_submissions:
+        print("Coming here>>>>>>>>>>>>>>")
         serialized_obj = serialize_all(existing_submissions)
+        print(serialized_obj)
         return jsonify(serialized_obj),200
     return jsonify({'info':'No submission available for you'}),200
   
 
 @app.route('/timesubmissions')
-# @jwt_required()
 def timesubmission():
     session = Session()
     sub_objects = session.query(timesubmissions).all()
@@ -163,13 +175,87 @@ def timesubmission():
 
 
 @app.route('/review_time', methods=['POST'])
-# @jwt_required()
 def review_time():
-    pass
+    data = request.get_json()
+    print(">>>>>>>>>>>>>>>>>>>")
+    print(data)
+    if data['reviewd']==True:
+        username = data['user_name']
+        date = data['date']
+        time_type = data['time_type']
+        hours = data['hours']
+        session = Session()
+        #a = '2010-01-31'
+        datee = datetime.datetime.strptime(date, "%Y-%m-%d")
+        month = datee.month
+        year = datee.year
+        existing_emp = session.query(TimeMaster).filter(TimeMaster.month==month,TimeMaster.year==year,TimeMaster.emp_id==username).first()
+        if existing_emp:
+            #month Information has been already added just need to add the date to the month data
+            print(existing_emp.timedata)
+            print(type(existing_emp.timedata))
+            timedata = json.loads(existing_emp.timedata)
+            print(timedata)
+            if date in timedata.keys():
+                print("Keys in Date")
+                session = Session()
+                del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_name==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+                session.delete(del_obj)
+                session.commit()
+                session.close()
+                return jsonify({"error":"Info already in the Data"}),200
+            else:
+                timedata[date] = [time_type,hours]
+                existing_emp.timedata = json.dumps(timedata)
+                session.add(existing_emp)
+                session.commit()
+                session.close()
+
+                session = Session()
+                del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_name==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+                session.delete(del_obj)
+                session.commit()
+                session.close()
+                
+                return jsonify({"success":"Time has been reviewed"})
+           
+        else:
+            #month information is not present already. hence create the month information along with the existing data
+            time_obj = TimeMaster(emp_id = username,
+                                  month = month , 
+                                  year = year,
+                                  timedata = json.dumps({date:[time_type,hours]})
+                )
+            session.add(time_obj)
+            session.commit()
+            session.close()
+
+            session = Session()
+            del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_name==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+            session.delete(del_obj)
+            session.commit()
+            session.close()
+
+            return jsonify({"success":"Time has been reviewed"})
+
+    elif data['reviewd']==False:
+        session = Session()
+        username = data['user_name']
+        date = data['date']
+        time_type = data['time_type']
+        hours = data['hours']
+        datee = datetime.datetime.strptime(date, "%Y-%m-%d")
+        month = datee.month
+        year = datee.year
+        time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_name == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
+        time_obj.status = "Rejected"
+        session.add(time_obj)
+        session.commit()
+        session.close()
+        return jsonify({"info":"Time has been reviewed"})
 
 
 @app.route('/addEmployee', methods=['POST'])
-# @jwt_required()
 def addEmployee():
     data = request.get_json()
     session = Session()
@@ -224,7 +310,6 @@ def addEmployee():
 
 
 @app.route('/addProjectResource', methods=['POST'])
-# @jwt_required()
 def addProjectResource():
     session = Session()
     data = request.get_json()
@@ -268,7 +353,6 @@ def addProjectResource():
 
 
 @app.route('/addProject', methods=['POST'])
-# @jwt_required()
 def addProject():
     data = request.get_json()
 

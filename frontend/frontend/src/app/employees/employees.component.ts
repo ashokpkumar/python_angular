@@ -20,7 +20,8 @@ export class EmployeesComponent implements OnInit {
   constructor(private modalService: NgbModal,private empApi: employeesApiService,private router: Router,private cookieService: CookieService) { }
 
   ngOnInit()  {
-    if (this.cookieService.get('login')=='false'){
+    if (this.cookieService.get('login')=='true'){}
+    else{
       this.router.navigate(['/login']);
     }
     this.empListSubs = this.empApi

@@ -32,6 +32,10 @@ export class AccountSummaryComponent implements OnInit {
   private defaultTabButtonsTpl: TemplateRef<any>;
 
   ngOnInit(): void {
+    if (this.cookieService.get('login')=='true'){}
+    else{
+      this.router.navigate(['/login']);
+    }
     this.userInfo.emp_id = this.cookieService.get('username');
     this.apiService.onSubmit(this.userInfo)
     .subscribe(data=>{console.log("Employee Data: ",data),
@@ -119,8 +123,10 @@ export class AccountSummaryComponent implements OnInit {
   //  }, 3000);
   }
   logout(){
+    this.cookieService.set('login','false');
     document.getElementById("mySidenav").style.width="0px";
     document.getElementById("main").style.marginLeft="0px";
+    this.router.navigate(['/login']);
   }
   handleDateClick(arg) {
     // alert('date click! ' + arg.dateStr)
