@@ -3,36 +3,42 @@
 <div>
   <div>
     <label>Employee ID: </label>
-    <input [(ngModel)]="employee.emp_id" />
+    <input [(ngModel)]="employee.emp_id"  maxlength="6"/>"
   </div>
   <div>
     <label>Email: </label>
-    <input [(ngModel)]="employee.email" />
+    <input [(ngModel)]="employee.email" type="email"/>
     <label>@indiumsoft.com </label>
   </div>
   <div>
     <label>First Name: </label>
-    <input [(ngModel)]="employee.first_name" />
+    <input [(ngModel)]="employee.first_name" type="text" pattern="[A-Za-z] "/>
   </div>
   <div>
     <label>Last Name: </label>
-    <input [(ngModel)]="employee.last_name" />
+    <input [(ngModel)]="employee.last_name" type ="text" pattern="[A-Za-z]"/>
   </div>
   <div>
     <label>Sur name: </label>
-    <input [(ngModel)]="employee.sur_name" />
+    <input [(ngModel)]="employee.sur_name" type="text" pattern="[A-Za-z]"/>
   </div>
   <div>
     <label>Initial: </label>
-    <input [(ngModel)]="employee.initial" />
+    <input [(ngModel)]="employee.initial"  maxlength="5"/>
   </div>
   <div>
     <label>Salutation: </label>
-    <input [(ngModel)]="employee.salutation" />
+    <input [(ngModel)]="employee.salutation" list="Salutation" />
+    <datalist id="Salutation">
+      <option value="Mr"></option>
+      <option value="Ms"></option>
+      <option value="Miss"></option>
+      <option value="Mrs"></option>
+    </datalist>
   </div>
   <div>
     <label>Designation: </label>
-    <input [(ngModel)]="employee.designation" />
+    <input [(ngModel)]="employee.designation" type="text"/>
   </div>
   <div>
     <label>Project Code: </label>
@@ -44,44 +50,55 @@
   </div>
   <div>
     <label>Department: </label>
-    <input [(ngModel)]="employee.dept" />
+    <input [(ngModel)]="employee.dept" list = "Dept"/>
+    <datalist id ="Dept">
+      <option value="Digital"></option>
+      <option value ="etc"></option>
+    </datalist>
   </div>
   <div>
     <label>Emp Start date: </label>
-    <input [(ngModel)]="employee.emp_start_date" />
+    <input [(ngModel)]="employee.emp_start_date" type="date" />
   </div>
-
   <div>
     <label>Emp Last Working Date: </label>
-    <input [(ngModel)]="employee.emp_last_working_date" />
+    <input [(ngModel)]="employee.emp_last_working_date" type="date" />
   </div>
   <div>
     <label>Emp Project assigned Date: </label>
-    <input [(ngModel)]="employee.emp_project_assigned_date" />
+    <input [(ngModel)]="employee.emp_project_assigned_date" type="date" />
   </div>
   <div>
     <label>Emp project End date: </label>
-    <input [(ngModel)]="employee.emp_project_end_date" />
+    <input [(ngModel)]="employee.emp_project_end_date" type="date" />
   </div>
   <div>
     <label>Employment Status: </label>
-    <input [(ngModel)]="employee.employment_status" />
+    <input [(ngModel)]="employee.employment_status" list="status"/>
+    <datalist id = "status">
+      <option  value= "New joinee"></option>
+      <option  value="Trainee Intern"></option>
+    </datalist>
   </div>
   <div>
     <label>Manager Name: </label>
-    <input [(ngModel)]="employee.manager_name" />
+    <input [(ngModel)]="employee.manager_name" type="text" pattern="[A-Za-z]"/>
   </div>
   <div>
     <label>Manager Dept: </label>
-    <input [(ngModel)]="employee.manager_dept" />
+    <input [(ngModel)]="employee.manager_dept" list= "manager_dept"/>
+    <datalist id = "manager_dept">
+      <option  value= "Digtal"></option>
+      <option  value="etc"></option>
+    </datalist>
   </div>
   <div>
     <label>Resource Status: </label>
-    <input [(ngModel)]="employee.resource_status" />
+    <input [(ngModel)]="employee.resource_status" type="text" />
   </div>
   <div>
     <label>Delivery Type: </label>
-    <input [(ngModel)]="employee.delivery_type" />
+    <input [(ngModel)]="employee.delivery_type" type="text"/>
   </div>
   <div>
     <label>Additional Allocation: </label>
@@ -89,11 +106,11 @@
   </div>
   <div>
     <label>Skills: </label>
-    <input [(ngModel)]="employee.skills" />
+    <input [(ngModel)]="employee.skills" type="text"/>
   </div>
   <div>
     <label>Roles: </label>
-    <input [(ngModel)]="employee.roles" />
+    <input [(ngModel)]="employee.roles" type="text"/>
   </div>
   
 
