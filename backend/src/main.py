@@ -37,9 +37,7 @@ time_master()
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
     session = Session()
-    print(request.get_json())
     emp_id = request.json.get("emp_id", None)
-    print(emp_id)
     password = request.json.get("password", None)
     auth_object = session.query(authUser).filter(authUser.emp_id == emp_id).first()
     if auth_object is None:
@@ -52,17 +50,12 @@ def setpassword():
 
 @app.route("/login", methods=["POST"])
 def login():
-    print(request.get_json())
     emp_id = request.json.get("emp_id", None)
     password = request.json.get("password", None)
     login=False
-    print(emp_id)
-    print(password)
     if emp_id==None or password==None:
         return jsonify({"error:":"incorrect username or password"}), 200
     session = Session()
-    print("pass here")
-
     auth_object = session.query(authUser).filter(authUser.emp_id == emp_id).first()
     if auth_object and auth_object.password==None:
             return jsonify({"warning":"Password Not set Please set password"}), 200 
@@ -78,14 +71,7 @@ def login():
     return jsonify(access_token=access_token,username=emp_id,roles=roles,login=login,employee_name = employee_name)
 
 
-@app.route('/timesubmissions')
-# @jwt_required()
-def timesubmission():
-    session = Session()
-    sub_objects = session.query(timesubmissions).all()
-    serialized_obj = serialize_all(sub_objects)
-    session.close()
-    return (jsonify(serialized_obj))
+
 
 @app.route('/employees')
 # @jwt_required()
@@ -106,9 +92,6 @@ def employees():
             if proj_item["project_code"]==emp_id:
                 dictionary.update(proj_item)
                 break
-
-
-    print(serialed_out)
     session.close()
     return (jsonify(serialed_out))
 
@@ -118,29 +101,13 @@ def events():
     session = Session()
     time_objects = session.query(timesubmissions).all()
     serialized_obj = serialize_all(time_objects)
-    print(serialized_obj)
     events_data = []
 
     for event in serialized_obj:
         eve={}
         eve["title"]=str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
         eve["start"]=event["date_info"]
-        events_data.append(eve)
-    
-
-       
-
-
-        
-
-    # events_data = [{'title':'Casual leave','start':'2021-04-29'},
-    #                 {'title':'Holiday','start':'2021-04-21'},
-    #                 {'title':'WFH','start':'2021-04-22'},
-    #                 {'title':'WFH','start':'2021-04-18'},
-    #                 {'title':'WFH','start':'2021-04-01'},]
-    print("##############")
-    print(events_data)
-    
+        events_data.append(eve)    
     return jsonify(events_data)
 
 
@@ -150,25 +117,14 @@ def projects():
     session = Session()
     project_objects = session.query(project).all()
     serialized_obj = serialize_all(project_objects)
-    # serialized_obj = [{"project_id":obj.project_id,
-    #                     "project_title":obj.project_title,
-    #                     "project_start_date":obj.project_start_date,
-    #                     "project_status":obj.project_status} for obj in project_objects]
     session.close()
     return (jsonify(serialized_obj))
+
 
 @app.route('/addtimesubmissions', methods=['POST'])
 #@jwt_required()
 def addtimesubmissions():    
     data = request.get_json()
-    print(data)
-    # sub_data = timesubmissions(date_info = "date",
-    #                             user_name = "username",
-    #                             manager_name = "manager",
-    #                             time_type = "time",
-    #                             submission_id = "submission",
-    #                             status = "status"   
-    # )
     sub_data = timesubmissions( date_info = data.get('date'),
                                     hours = data.get('hours'),
                                     user_name = data.get('user_name'),
@@ -188,9 +144,7 @@ def addtimesubmissions():
 def view_submissions():
     session = Session()
     data = request.get_json()
-    manager_name = data.get("user_name")
-    print(data)
-    
+    manager_name = data.get("user_name")    
     existing_submissions = session.query(timesubmissions).filter(timesubmissions.manager_name==manager_name).all()
     if existing_submissions:
         serialized_obj = serialize_all(existing_submissions)
@@ -198,11 +152,26 @@ def view_submissions():
     return jsonify({'info':'No submission available for you'}),200
   
 
+@app.route('/timesubmissions')
+# @jwt_required()
+def timesubmission():
+    session = Session()
+    sub_objects = session.query(timesubmissions).all()
+    serialized_obj = serialize_all(sub_objects)
+    session.close()
+    return (jsonify(serialized_obj))
+
+
+@app.route('/review_time', methods=['POST'])
+# @jwt_required()
+def review_time():
+    pass
+
+
 @app.route('/addEmployee', methods=['POST'])
 # @jwt_required()
 def addEmployee():
     data = request.get_json()
-    print(data)
     session = Session()
     existing_emp = session.query(employee).filter(employee.emp_id==data.get("emp_id")).first()
     if existing_emp:
@@ -261,9 +230,6 @@ def addProjectResource():
     data = request.get_json()
     resource_id = data.get("emp_id")
     project_code = data.get("project_id")
-    print(resource_id)
-    print(project_code)
-    
     existing_emp = session.query(employee).filter(employee.emp_id==resource_id).first()
     if existing_emp==None:
         return jsonify({'success':'Employee with ID: {} Does not Exist !'.format(resource_id)})
@@ -275,41 +241,30 @@ def addProjectResource():
     existing_emp.project_code=project_code
     session.add(existing_emp)
     session.commit()
-
-    print(existing_project.resource_info)
     if existing_project.resource_info == None:
         existing_project.resource_info=resource_id
         session.add(existing_project)
         session.commit()
     
     else:
-        print("coming here")
         existing_resource = existing_project.resource_info
         existing_resource_list = existing_resource.split(",")
-        print(existing_resource_list)
         for i in existing_resource_list:
             if i=="":
                 existing_resource_list.remove(i)
-        print(existing_resource_list)
         if resource_id in existing_resource_list:
             return jsonify({'error':'resource exist already in the project'})
         existing_resource_list.append(resource_id )
-        print(existing_resource_list)
         
         out_resource =''
         for i in existing_resource_list:
-            print(i)
             out_resource = i + "," + out_resource
-        print(out_resource)
         existing_project.resource_info = out_resource[:-1]
         session.add(existing_project)
         session.commit()
 
     session.close()
     return jsonify({"success":"Employee {} and Project {} Linked".format(resource_id,project_code)})
-
-    
-    
 
 
 @app.route('/addProject', methods=['POST'])
@@ -322,10 +277,6 @@ def addProject():
     if existing_project:
         session.close()
         return jsonify({'warning':'Project with ID: {} already exist !'.format(data.get("projectcode"))})
-
-    print(data)
-    print(type(data))
-    print(data.get("clientname"))
     try:     
         project_data = project(client_name = data.get("clientname"),
                                 project_code=data.get("projectcode"),

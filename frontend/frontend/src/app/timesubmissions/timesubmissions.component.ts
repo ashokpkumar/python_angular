@@ -17,5 +17,6 @@ export class TimesubmissionsComponent implements OnInit {
   }
   review(reviewd){
 console.log(reviewd);
+// console.log(username)
   }
 }
