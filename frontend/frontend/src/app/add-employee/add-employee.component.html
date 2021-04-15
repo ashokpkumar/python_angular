@@ -4,93 +4,111 @@
     <div class="add_employee_align container_bg">
       <div>
         <p>Employee ID: </p>
-        <input [(ngModel)]="employee.emp_id" />
+        <input [(ngModel)]="employee.emp_id" maxlength="6" required/>
       </div>
       <div>
         <p>Email: </p>
-        <input [(ngModel)]="employee.email" />
+        <input [(ngModel)]="employee.email" type="email" required/>
         <span style="font-size: 20px;"> </span>
       </div>
       <div>
         <p>First Name: </p>
-        <input [(ngModel)]="employee.first_name" />
+        <input [(ngModel)]="employee.first_name" type="text" pattern="[A-Za-z]" required/>
       </div>
       <div>
         <p>Last Name: </p>
-        <input [(ngModel)]="employee.last_name" />
+        <input [(ngModel)]="employee.last_name" type ="text" pattern="[A-Za-z]"/>
       </div>
       <div>
         <p>Sur name: </p>
-        <input [(ngModel)]="employee.sur_name" />
+        <input [(ngModel)]="employee.sur_name" type ="text" pattern="[A-Za-z]" required/>
       </div>
       <div>
         <p>Initial: </p>
-        <input [(ngModel)]="employee.initial" />
+        <input [(ngModel)]="employee.initial" maxlength="5"/>
       </div>
       <div>
         <p>Salutation: </p>
-        <input [(ngModel)]="employee.salutation" />
+        <input [(ngModel)]="employee.salutation" list="Salutation"/>
+        <datalist id="Salutation">
+          <option value="Mr">
+          <option value="Ms">
+          <option value="Miss">
+          <option value="Mrs">
+        </datalist>
       </div>
       <div>
         <p>Designation: </p>
-        <input [(ngModel)]="employee.designation" />
+        <input [(ngModel)]="employee.designation" type="text"/>
       </div>
       <div>
         <p>Project Code: </p>
-        <input [(ngModel)]="employee.project_code" />
+        <input [(ngModel)]="employee.project_code" type="text"maxlength="number"/>
       </div>
       <div>
         <p>Geography: </p>
-        <input [(ngModel)]="employee.geography" />
+        <input [(ngModel)]="employee.geography" type="text"maxlength="number"/>
       </div>
       <div>
         <p>Department: </p>
-        <input [(ngModel)]="employee.dept" />
+        <input [(ngModel)]="employee.dept" list = "Dept"/>
+        <datalist id ="Dept">
+          <option value="Digital">
+          <option value ="etc">
+        </datalist>
       </div>
       <div>
         <p>Emp Start date: </p>
-        <input [(ngModel)]="employee.emp_start_date" />
+        <input [(ngModel)]="employee.emp_start_date" type="date"/>
         
       </div>
 
       
       <div>
         <p>Emp Project assigned Date: </p>
-        <input [(ngModel)]="employee.emp_project_assigned_date" />
+        <input [(ngModel)]="employee.emp_project_assigned_date" type="date"/>
       </div>
       
       <div>
         <p>Employment Status: </p>
-        <input [(ngModel)]="employee.employment_status" />
+        <input [(ngModel)]="employee.employment_status" list="status" required/>
+        <datalist id = "status">
+          <option  value= "New joinee">
+          <option  value="Trainee Intern"> 
+        </datalist>
       </div>
       
       <div>
         <p>Manager Name: </p>
-        <input [(ngModel)]="employee.manager_name" />
+        <input [(ngModel)]="employee.manager_name"  type="text" pattern="[A-Za-z]"  required/>
       </div>
       <div>
         <p>Manager Dept: </p>
-        <input [(ngModel)]="employee.manager_dept" />
+        <input [(ngModel)]="employee.manager_dept" list= "manager_dept"/>
+        <datalist id = "manager_dept">
+          <option  value= "Digtal">
+          <option  value="etc"> 
+        </datalist>
       </div>
       <div>
         <p>Resource Status: </p>
-        <input [(ngModel)]="employee.resource_status" />
+        <input [(ngModel)]="employee.resource_status" type="text" required/>
       </div>
       <div>
         <p>Delivery Type: </p>
-        <input [(ngModel)]="employee.delivery_type" />
+        <input [(ngModel)]="employee.delivery_type" type="text" required/>
       </div>
       <div>
         <p>Additional Allocation: </p>
-        <input [(ngModel)]="employee.additional_allocation" />
+        <input [(ngModel)]="employee.additional_allocation" type="text"/>
       </div>
       <div>
         <p>Skills: </p>
-        <input [(ngModel)]="employee.skills" />
+        <input [(ngModel)]="employee.skills" type="text" required/>
       </div>
       <div>
         <p>Roles: </p>
-        <input [(ngModel)]="employee.roles" />
+        <input [(ngModel)]="employee.roles" type="text" required/>
       </div>
       <div class="add_btn-emp">
         <button (click)="onSubmit()">Add</button>
