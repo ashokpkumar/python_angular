@@ -1,0 +1,32 @@
+
+<table>
+    <thead>
+      <tr class="emp_list_th">
+        <!-- <tr> -->
+            <th data-field="dateInfo" data-checkbox="true">Date</th>
+            <th data-field="username" data-checkbox="true">username</th>
+            <th data-field="manager name" data-filter-control="input" data-sortable="true">Manager Name</th>
+            <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
+            <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
+            <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
+            <th data-field="Review" data-filter-control="select" data-sortable="true">Review</th>
+        </tr>
+    </thead>
+    <tbody>
+                <tr class="emp_list_th" *ngFor="let timeSubmissions of submissionList">
+            <!-- <tr *ngFor="let item of employee_list"> -->
+                <td>{{timeSubmissions.date_info}}</td>
+                <td>{{timeSubmissions.user_name}}</td>
+                <td>{{timeSubmissions.manager_name}}</td>
+                <td>{{timeSubmissions.time_type}}</td>
+                <td>{{timeSubmissions.hours}}</td>
+                <td>{{timeSubmissions.status}}</td>
+                <td>
+                  <button (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_name,timeSubmissions.time_type,timeSubmissions.hours)">Approve</button>
+                  <button (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_name,timeSubmissions.time_type,timeSubmissions.hours)">Reject</button>
+                </td>
+              
+            </tr>
+     
+    </tbody>
+</table>

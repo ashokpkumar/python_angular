@@ -1,40 +1,47 @@
 
-<h1>Projects List</h1>
-  <div class="container">   
-    <table>
-        <thead>
-            <tr>
-                <th data-field="Client Name" data-checkbox="true">Client Name</th>
-                <th data-field="Project Name" data-filter-control="input" data-sortable="true">Project Name</th>
-                <th data-field="Billing Type" data-filter-control="select" data-sortable="true">Billing Type</th>
-                <th data-field="Segment" data-filter-control="select" data-sortable="true">Segment</th>
-                <th data-field="Geography" data-filter-control="select" data-sortable="true">Geography</th>
-                <th data-field="Solution Category" data-filter-control="select" data-sortable="true">Solution Category</th>
-                <th data-field="Financial year" data-filter-control="select" data-sortable="true">Financial year</th>
-                <th data-field="Project Code" data-filter-control="select" data-sortable="true">Project Code</th>
-                <th data-field="Resource Info" data-filter-control="select" data-sortable="true">Resource Info</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-          
-                <tr *ngFor="let item of project_list">
-                    <td>{{item.client_name}}</td>
-                    <td>{{item.project_name}}</td>
-                    <td>{{item.billing_type}}</td>
-                    <td>{{item.segment}}</td>
-                    <td>{{item.geography}}</td>
-                    <td>{{item.solution_category}}</td>
-                    <td>{{item.financial_year}}</td>
-                    <td>{{item.project_code}}</td>
-                    <td><button (click)="open(content,item.project_code)">Add</button> {{item.resource_info}} </td>
-                    <!-- <td><button (click)="addResource(item.project_code)">Add</button> {{item.resource_info}} </td> -->
+<div class="add_project_bg">
+  <div class="container card">
+    <div class="add_project_align container_bg">
+      <div class="container">   
+        <table>
+            <thead>
+                <tr>
+                    <th data-field="Client Name" data-checkbox="true">Client Name</th>
+                    <th data-field="Project Name" data-filter-control="input" data-sortable="true">Project Name</th>
+                    <th data-field="Billing Type" data-filter-control="select" data-sortable="true">Billing Type</th>
+                    <th data-field="Segment" data-filter-control="select" data-sortable="true">Segment</th>
+                    <th data-field="Geography" data-filter-control="select" data-sortable="true">Geography</th>
+                    <th data-field="Solution Category" data-filter-control="select" data-sortable="true">Solution Category</th>
+                    <th data-field="Financial year" data-filter-control="select" data-sortable="true">Financial year</th>
+                    <th data-field="Project Code" data-filter-control="select" data-sortable="true">Project Code</th>
+                    <th data-field="Resource Info" data-filter-control="select" data-sortable="true">Resource Info</th>
                     
                 </tr>
-          
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+              
+                    <tr *ngFor="let item of project_list">
+                        <td>{{item.client_name}}</td>
+                        <td>{{item.project_name}}</td>
+                        <td>{{item.billing_type}}</td>
+                        <td>{{item.segment}}</td>
+                        <td>{{item.geography}}</td>
+                        <td>{{item.solution_category}}</td>
+                        <td>{{item.financial_year}}</td>
+                        <td>{{item.project_code}}</td>
+                        <td><button (click)="open(content,item.project_code)">Add</button> {{item.resource_info}} </td>
+                        <!-- <td><button (click)="addResource(item.project_code)">Add</button> {{item.resource_info}} </td> -->
+                        
+                    </tr>
+              
+            </tbody>
+        </table>
+      </div>
     </div>
+  </div>
+</div>
+  
+  
 
     <ng-template #content let-modal>
         <div class="modal-header">

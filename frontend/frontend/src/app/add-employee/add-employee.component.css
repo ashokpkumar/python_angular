@@ -11,6 +11,61 @@ h1 {
 }
 
 .container td, .container th {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.add_employee_bg{
+  background-color:#ffffff;
+  width: 100%;
+  height: auto;
+}
+.container_bg{
+  background-color: rgb(188,235,255);
+  border-radius: 10px;
+}
+.add_employee_align{
+  display: grid;
+  grid-template-columns: repeat(2,auto);
+  grid-row-gap: 45px;
+  grid-column-gap: 100px;
+  justify-content: center;
+  width: 100%;
+  padding: 30px;
+}
+.add_employee_align > div > p{
+  margin-bottom: 10px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+.add_employee_align > div > input{
+  box-sizing: border-box;
+  height: 40px !important;
+  width: 259px !important;
+  border: 1px solid #E4E4E4;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+}
+.add_employee_align > div > input:focus{
+  outline: 0;
+}
+.add_emp_heading{
+  font-size: 30px;
+  font-weight: 600;
+  font-family: 'Times New Roman', Times, serif;
+}
+.add_btn-emp > button{
+  height: 34px;
+  align-self: flex-end;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  text-transform: uppercase;
+  background-color: #05F04B;
+  border-radius: 20px;
+}
+.add_btn-emp{
+  display: grid;
+  width: 74%;
+}
