@@ -135,8 +135,8 @@ def addtimesubmissions():
     data = request.get_json()
     sub_data = timesubmissions( date_info = data.get('date'),
                                     hours = data.get('hours'),
-                                    user_name = data.get('user_name'),
-                                    manager_name = data.get('manager_name'),
+                                    user_id = data.get('user_name'),
+                                    manager_id = data.get('manager_name'),
                                     time_type = data.get('time_type'),
                                     status = 'submitted-pending approval',
                                     submission_id = data.get('user_name') + data.get('user_name') + data.get('time_type')     
@@ -155,7 +155,7 @@ def view_submissions():
     print(data)
     #manager_name = data.get("user_name")  
     manager_name = data   
-    existing_submissions = session.query(timesubmissions).filter(timesubmissions.manager_name==manager_name).all()
+    existing_submissions = session.query(timesubmissions).filter(timesubmissions.manager_id==manager_name).all()
     print(existing_submissions)
     if existing_submissions:
         print("Coming here>>>>>>>>>>>>>>")
@@ -199,7 +199,7 @@ def review_time():
             if date in timedata.keys():
                 print("Keys in Date")
                 session = Session()
-                del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_name==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+                del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
                 session.delete(del_obj)
                 session.commit()
                 session.close()
@@ -212,7 +212,7 @@ def review_time():
                 session.close()
 
                 session = Session()
-                del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_name==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+                del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
                 session.delete(del_obj)
                 session.commit()
                 session.close()
@@ -231,7 +231,7 @@ def review_time():
             session.close()
 
             session = Session()
-            del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_name==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+            del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
             session.delete(del_obj)
             session.commit()
             session.close()
@@ -247,7 +247,7 @@ def review_time():
         datee = datetime.datetime.strptime(date, "%Y-%m-%d")
         month = datee.month
         year = datee.year
-        time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_name == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
+        time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
         time_obj.status = "Rejected"
         session.add(time_obj)
         session.commit()

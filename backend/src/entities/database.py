@@ -27,8 +27,8 @@ class timesubmissions(Base):
     __tablename__="timesubmissions"
     id = Column(Integer, primary_key=True)
     date_info = Column(String)
-    user_name = Column(String)
-    manager_name = Column(String)
+    user_id = Column(String)
+    manager_id = Column(String)
     time_type = Column(String)
     submission_id = Column(String)
     status = Column(String)
