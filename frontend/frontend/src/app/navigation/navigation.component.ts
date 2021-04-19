@@ -1,5 +1,5 @@
 import { Component, OnInit,HostListener } from '@angular/core';
-import { faSearch, faBell, faUser, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faBell, faUser, faHome,faMapMarkerAlt,faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 import {CookieService} from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 @Component({
@@ -27,6 +27,8 @@ export class NavigationComponent implements OnInit {
   faBell = faBell;
   faUser = faUser;
   faHome = faHome;
+  faPhoneAlt = faPhoneAlt;
+  faMapMarkerAlt = faMapMarkerAlt
   constructor(public toastr: ToastrService,private cookieService: CookieService) { }
 
   public ngOnInit(): void {
@@ -35,7 +37,7 @@ export class NavigationComponent implements OnInit {
     console.log("Cookie value", this.cookieValue);
   }
 
-  myFunction(className){
+  menuHover(className){
     var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
@@ -45,6 +47,9 @@ export class NavigationComponent implements OnInit {
       }
   }
 document.getElementById(className).classList.toggle("show");
+}
+menuLeave(className){
+document.getElementById(className).classList.remove("show");
 }
 @HostListener('document:click', ['$event'])
 onDocumentClick(event: MouseEvent) {

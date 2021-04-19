@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-timesubmissions',
   templateUrl: './timesubmissions.component.html',
@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimesubmissionsComponent implements OnInit {
   submissionList = []
+  faCheck = faCheck
+  faTimes = faTimes
   constructor() { }
 
   ngOnInit(): void {

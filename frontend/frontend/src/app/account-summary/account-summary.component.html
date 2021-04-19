@@ -10,9 +10,9 @@
   <div id="main">
     <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776; Menu</span>
   </div>
-
+<div class="acc_summary_head">
   <div class = "tableInfo" id="personal" *ngIf="personal">
-    <h2>Personal info Summary</h2>
+    <p class="table_summary_heading">Personal info Summary</p>
     <table>
         <tr>
           <th>Full Name</th>
@@ -44,7 +44,7 @@
   </div>
 
   <div class = "tableInfo" id="professional" *ngIf="professional">
-    <h2>Professional info Summary</h2>
+    <p class="table_summary_heading">Professional info Summary</p>
     <table>
         <tr>
             <td>Full Name</td>
@@ -72,7 +72,7 @@
         </tr>
       </table>
   </div>
-
+</div>
   <div class = "tableInfo" id="Timeinfo" *ngIf="time">
     
     <full-calendar [options]="calendarOptions"></full-calendar>

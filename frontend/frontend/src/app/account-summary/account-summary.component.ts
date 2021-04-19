@@ -33,6 +33,7 @@ export class AccountSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInfo.emp_id = this.cookieService.get('username');
+    console.log("hhhdh",this.userInfo.emp_id);
     this.apiService.onSubmit(this.userInfo)
     .subscribe(data=>{console.log("Employee Data: ",data),
     this.userData = data,
