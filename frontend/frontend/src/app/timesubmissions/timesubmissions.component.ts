@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {Router} from "@angular/router"
-import {timeSubmissionsService} from './timesubmissions.service'
+import {Router} from "@angular/router";
+import {timeSubmissionsService} from './timesubmissions.service';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-timesubmissions',
   templateUrl: './timesubmissions.component.html',
@@ -9,6 +11,8 @@ import {timeSubmissionsService} from './timesubmissions.service'
 })
 export class TimesubmissionsComponent implements OnInit {
   submissionList = [];
+  faCheck = faCheck;
+  faTimes = faTimes;
   user_name : String;
   constructor(private router: Router,private cookieService: CookieService, private apiService:timeSubmissionsService) { }
 

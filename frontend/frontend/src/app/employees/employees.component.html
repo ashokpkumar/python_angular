@@ -1,83 +1,80 @@
-
-  <!-- https://codepen.io/AurelieT/pen/JGxMgo -->
+<!-- https://codepen.io/AurelieT/pen/JGxMgo -->
 <!-- <p>Employees List</p>    -->
-  <div class="container">   
-    <p class="emp_list_heading">Employees List</p>
-    <table>
-        <thead>
-          <tr class="emp_list_th">
-            <!-- <tr> -->
-                <th data-field="employee ID" data-checkbox="true">Emp ID</th>
-                <th data-field="Salutation" data-checkbox="true">Salutation</th>
-                <th data-field="Full Name" data-filter-control="input" data-sortable="true">Full Name</th>
-                <th data-field="Project Name" data-filter-control="input" data-sortable="true">Project Name</th>
-                <th data-field="Project ID" data-filter-control="select" data-sortable="true">Project ID</th>
-                <th data-field="assigned Date" data-filter-control="select" data-sortable="true">Project Assigned Date</th>
-                <th data-field="end Date" data-filter-control="select" data-sortable="true">Project End Date</th>
-                <th data-field="Resource Status" data-filter-control="input" data-sortable="true">Resource Status</th>
-                <th data-field="Manager Name" data-filter-control="select" data-sortable="true">Manager Name</th>
-                <th data-field="Client Name" data-filter-control="select" data-sortable="true">Client Name</th>
-                <th data-field="Delivery Type" data-filter-control="select" data-sortable="true">Delivery Type</th>
-                <th data-field="Additional Allocation" data-filter-control="select" data-sortable="true">Additional Allocation</th>
-                <th data-field="Skills" data-filter-control="select" data-sortable="true">Skills</th>
-            </tr>
-        </thead>
-        <tbody>
-                    <tr class="emp_list_th" *ngFor="let item of employee_list">
-                <!-- <tr *ngFor="let item of employee_list"> -->
-                    <td>{{item.emp_id}}</td>
-                    <td>{{item.salutation}}</td>
-                    <td>{{item.full_name}}</td>
-                    <td>{{item.project_name}}</td>
-                    <td>
-                      <button (click)="open(content,item.emp_id)">Add</button>
-                      {{item.project_code}}
-                    </td>
+<div class="container">
+  <p class="emp_list_heading">Employees List</p>
+  <table>
+    <thead>
+      <tr class="emp_list_th">
+        <!-- <tr> -->
+        <th data-field="employee ID" data-checkbox="true">Emp ID</th>
+        <th data-field="Salutation" data-checkbox="true">Salutation</th>
+        <th data-field="Full Name" data-filter-control="input" data-sortable="true">Full Name</th>
+        <th data-field="Project Name" data-filter-control="input" data-sortable="true">Project Name</th>
+        <th data-field="Project ID" data-filter-control="select" data-sortable="true">Project ID</th>
+        <th data-field="assigned Date" data-filter-control="select" data-sortable="true">Project Assigned Date</th>
+        <th data-field="end Date" data-filter-control="select" data-sortable="true">Project End Date</th>
+        <th data-field="Resource Status" data-filter-control="input" data-sortable="true">Resource Status</th>
+        <th data-field="Manager Name" data-filter-control="select" data-sortable="true">Manager Name</th>
+        <th data-field="Client Name" data-filter-control="select" data-sortable="true">Client Name</th>
+        <th data-field="Delivery Type" data-filter-control="select" data-sortable="true">Delivery Type</th>
+        <th data-field="Additional Allocation" data-filter-control="select" data-sortable="true">Additional Allocation
+        </th>
+        <th data-field="Skills" data-filter-control="select" data-sortable="true">Skills</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="emp_list_th" *ngFor="let item of employee_list">
+        <!-- <tr *ngFor="let item of employee_list"> -->
+        <td>{{item.emp_id}}</td>
+        <td>{{item.salutation}}</td>
+        <td>{{item.full_name}}</td>
+        <td>{{item.project_name}}</td>
+        <td>
+          <button (click)="open(content,item.emp_id)" type="button" class="add_employess">Add</button>
+          {{item.project_code}}
+        </td>
 
-                    <td>{{item.emp_project_assigned_date}}</td>
-                    <td>{{item.emp_project_end_date}}</td>
+        <td>{{item.emp_project_assigned_date}}</td>
+        <td>{{item.emp_project_end_date}}</td>
 
-                    <td>{{item.resource_status}}</td>
-                    <td>{{item.manager_name}}</td>
-                    <td>{{item.client_name}}</td>
-                    <td>{{item.delivery_type}}</td>
-                    
-                    <td>{{item.additional_allocation}}</td>
-                    <td>{{item.skills}}</td>
-                  
-                </tr>
-         
-        </tbody>
-    </table>
-    </div>
+        <td>{{item.resource_status}}</td>
+        <td>{{item.manager_name}}</td>
+        <td>{{item.client_name}}</td>
+        <td>{{item.delivery_type}}</td>
+
+        <td>{{item.additional_allocation}}</td>
+        <td>{{item.skills}}</td>
+
+      </tr>
+
+    </tbody>
+  </table>
+</div>
 
 
-    <ng-template #content let-modal>
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<ng-template #content let-modal>
+  <div class="modal-header profile_update_header">
+    <h4 class="modal-title add_res_title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body profile_update_body">
+    <p class="model_title"> Add Project to this Resource : </p>
+    <div class="model-body-content">
+      <div class="body_content_align">
+        <label>Employee ID: </label>
+        <input [(ngModel)]="projectResource.emp_id" />
       </div>
-      <div class="modal-body">
-        <p> Add Project to this resource : </p>
-        
-        <div>
-          
-          <label>Employee ID: </label>
-          <input [(ngModel)]="projectResource.emp_id" />
-        </div>
-        <div>
-          <label>Project ID: </label>
-          <select [(ngModel)]="projectResource.project_id" >
-
-            <option *ngFor="let item of project_list" value={{item.project_code}}>{{item.project_code}}</option>
-       
+      <div class="body_content_align">
+        <label>Project ID: </label>
+        <select [(ngModel)]="projectResource.project_id">
+          <option *ngFor="let item of project_list" value={{item.project_code}}>{{item.project_code}}</option>
         </select>
-        </div>
-        
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-      </div>
-    </ng-template>
+    </div>
+  </div>
+  <div class="modal-footer profile_update_header">
+    <button type="button" class="add_employess" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
