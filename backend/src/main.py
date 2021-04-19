@@ -61,7 +61,7 @@ def login():
     if auth_object==None:
         return jsonify({"error":"Username or password is incorrect"}), 200 
     emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
-    employee_name = emp_obj.salutation + " " + emp_obj.first_name + " " + emp_obj.last_name
+    employee_name = "Full Name"
     roles=auth_object.roles
     login=True
     access_token = create_access_token(identity=emp_id)
