@@ -5,7 +5,6 @@
 #https://medium.com/@alanhamlett/part-1-sqlalchemy-models-to-json-de398bc2ef47#:~:text=To%20add%20a%20serialization%20method,columns%20and%20returns%20a%20dictionary.&text=def%20to_dict(self%2C%20show%3D,of%20this%20model.%22%22%22
 #sources
 
-#from entities.exam import Exam,ExamSchema
 from entities.database import employee,project,authUser,timesubmissions,TimeMaster
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
@@ -28,12 +27,8 @@ app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 jwt = JWTManager(app)
 CORS(app)
 
-
-# generate database schema
 Base.metadata.create_all(engine)
-# create_sample_employee()
-# create_sample_project()
-time_master()
+#time_master()
 
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
@@ -48,6 +43,7 @@ def setpassword():
     session.commit()
     session.close()
     return jsonify({'success':'password set successfully ! Please login with your new password'}),200
+
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -70,8 +66,6 @@ def login():
     login=True
     access_token = create_access_token(identity=emp_id)
     return jsonify(access_token=access_token,username=emp_id,roles=roles,login=login,employee_name = employee_name)
-
-
 
 
 @app.route('/employees')
@@ -102,22 +96,11 @@ def events():
     time_objects = session.query(timesubmissions).all()
     serialized_obj = serialize_all(time_objects)
     events_data = []
-    #Time Submissions
     for event in serialized_obj:
         eve={}
         eve["title"]="*" + str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
         eve["start"]=event["date_info"]
         events_data.append(eve)   
-
-    # time_master_obj = session.query(TimeMaster).all()
-    # time_master_serialized_obj = serialize_all(time_master_obj)
-
-    # for event in time_master_serialized_obj:
-    #     eve = {}
-    #     eve["title"]=str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
-    #     eve["start"]=event["date_info"]
-    #     events_data.append(eve) 
-
     return jsonify(events_data)
 
 
@@ -151,14 +134,9 @@ def addtimesubmissions():
 def view_submissions():
     session = Session()
     data = request.get_json()
-    print(">>>>>>>>>>>>>>>>>>>>>")
-    print(data)
-    #manager_name = data.get("user_name")  
     manager_name = data   
     existing_submissions = session.query(timesubmissions).filter(timesubmissions.manager_id==manager_name).all()
-    print(existing_submissions)
     if existing_submissions:
-        print("Coming here>>>>>>>>>>>>>>")
         serialized_obj = serialize_all(existing_submissions)
         print(serialized_obj)
         return jsonify(serialized_obj),200
@@ -177,7 +155,6 @@ def timesubmission():
 @app.route('/review_time', methods=['POST'])
 def review_time():
     data = request.get_json()
-    print(">>>>>>>>>>>>>>>>>>>")
     print(data)
     if data['reviewd']==True:
         username = data['user_name']
@@ -185,27 +162,37 @@ def review_time():
         time_type = data['time_type']
         hours = data['hours']
         session = Session()
-        #a = '2010-01-31'
         datee = datetime.datetime.strptime(date, "%Y-%m-%d")
         month = datee.month
         year = datee.year
         existing_emp = session.query(TimeMaster).filter(TimeMaster.month==month,TimeMaster.year==year,TimeMaster.emp_id==username).first()
         if existing_emp:
             #month Information has been already added just need to add the date to the month data
-            print(existing_emp.timedata)
-            print(type(existing_emp.timedata))
             timedata = json.loads(existing_emp.timedata)
-            print(timedata)
             if date in timedata.keys():
-                print("Keys in Date")
-                session = Session()
-                del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
-                session.delete(del_obj)
-                session.commit()
-                session.close()
-                return jsonify({"error":"Info already in the Data"}),200
+                date_info = timedata[date]
+                print(">>>>>>>>>>>>>>>>>")
+                print(date_info)
+                if time_type in date_info.keys():
+                    print("time type already present")
+                    session = Session()
+                    del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+                    #session.delete(del_obj)
+                    session.commit()
+                    session.close()
+                    return jsonify({"error":"Info already in the Data"}),200
+                else:
+                    date_info[time_type]=hours
+                    timedata[date]=date_info
+                    existing_emp.timedata = json.dumps(timedata)
+                    #session = Session()
+                    session.add(existing_emp)
+                    session.commit()
+                    session.close()
+                    return jsonify({"success":"Time has been reviewed"})
+
             else:
-                timedata[date] = [time_type,hours]
+                timedata[date] = {time_type:hours}
                 existing_emp.timedata = json.dumps(timedata)
                 session.add(existing_emp)
                 session.commit()
@@ -213,7 +200,7 @@ def review_time():
 
                 session = Session()
                 del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
-                session.delete(del_obj)
+                #session.delete(del_obj)
                 session.commit()
                 session.close()
                 
@@ -224,7 +211,7 @@ def review_time():
             time_obj = TimeMaster(emp_id = username,
                                   month = month , 
                                   year = year,
-                                  timedata = json.dumps({date:[time_type,hours]})
+                                  timedata = json.dumps({date:{time_type:hours}})
                 )
             session.add(time_obj)
             session.commit()
@@ -232,7 +219,7 @@ def review_time():
 
             session = Session()
             del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
-            session.delete(del_obj)
+            #session.delete(del_obj)
             session.commit()
             session.close()
 

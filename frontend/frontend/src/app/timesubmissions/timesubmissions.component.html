@@ -16,14 +16,14 @@
                 <tr class="emp_list_th" *ngFor="let timeSubmissions of submissionList">
             <!-- <tr *ngFor="let item of employee_list"> -->
                 <td>{{timeSubmissions.date_info}}</td>
-                <td>{{timeSubmissions.user_name}}</td>
-                <td>{{timeSubmissions.manager_name}}</td>
+                <td>{{timeSubmissions.user_id}}</td>
+                <td>{{timeSubmissions.manager_id}}</td>
                 <td>{{timeSubmissions.time_type}}</td>
                 <td>{{timeSubmissions.hours}}</td>
                 <td>{{timeSubmissions.status}}</td>
                 <td>
-                  <button (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_name,timeSubmissions.time_type,timeSubmissions.hours)">Approve</button>
-                  <button (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_name,timeSubmissions.time_type,timeSubmissions.hours)">Reject</button>
+                  <button (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)">Approve</button>
+                  <button (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)">Reject</button>
                 </td>
               
             </tr>

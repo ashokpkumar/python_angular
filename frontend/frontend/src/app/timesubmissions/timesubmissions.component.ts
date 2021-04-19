@@ -28,13 +28,13 @@ export class TimesubmissionsComponent implements OnInit {
     // {'date':'20-04','username':'i3228','managername':'i3228','timetype':'WFH','hours':'4'}
     // ]
   }
-  review(reviewd,date,user_name,time_type,hours){
+  review(reviewd,date,user_id,time_type,hours){
 // console.log(reviewd);
 //  console.log(date);
 //  console.log(user_name);
 //  console.log(time_type);
 //  console.log(hours);
- this.apiService.reviewSubmission(reviewd,date,user_name,time_type,hours)
+ this.apiService.reviewSubmission(reviewd,date,user_id,time_type,hours)
  .subscribe(data=>{console.log(data);this.apiService.showMessage(Object.values(data),Object.keys(data))});
  this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   this.router.onSameUrlNavigation = 'reload';
