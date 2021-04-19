@@ -373,13 +373,18 @@ def addProject():
 @app.route("/viewEmpInfo", methods=["POST"])
 def viewEmpInfo():
     emp_id = request.json.get("emp_id", None)
+    print("????????????")
+    print(emp_id)
     if emp_id is None:
         return jsonify({"error":"Employee ID is empty"}), 201
     session = Session()
     emp_objects = session.query(employee).filter(employee.emp_id==emp_id).all()
-    if emp_objects is None:
+    print(">>>>>>>>>>>>")
+    print(emp_objects)
+    if emp_objects == []:
         return jsonify({"error":"Employee Not found !"}), 201
     emp_serialized = serialize_all(emp_objects)
+    print(emp_serialized)
     emp_dict = emp_serialized[0]
     project_objects = session.query(project).filter(project.project_code==emp_serialized[0]['project_code']).all()
     if project_objects:

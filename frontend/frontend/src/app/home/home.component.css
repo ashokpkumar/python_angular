@@ -1,50 +1,109 @@
 * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  
-  /* Style the header */
-  .header {
-    background-color: #f1f1f1;
-    padding: 30px;
-    text-align: center;
-    font-size: 35px;
-  }
-  
-  /* Create three equal columns that floats next to each other */
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+.header {
+  background-color: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+.footer {
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+}
+fa-icon{
+    color:#278ef1;
+    width: 100%;
+    font-size:150px;
+    align-items: center;
+    display: grid;
+    justify-content: center;
+
+}
+.svg-inline--fa {
+  cursor: pointer !important;
+}
+fa-icon:focus{
+  outline: none !important;
+}
+.divide_home_screen{
+  width: 100%;
+  display: grid;
+  grid-template-columns:450px auto;
+}
+.main_div_image{
+  display: grid;
+  grid-template-columns: repeat(3,33%);
+  height: 569px;
+  width: 100%;
+  align-items: center;
+}
+.bg_home_scr{
+  width: 100%;
+  height: calc(100vh - 56px);
+  padding: 0px;
+  background-color: #eaeaea;
+}
+.side_bar{
+  display: grid;
+  background-color: #278ef1;
+  width: 90%;
+  grid-template-rows: 10% 0% 90%;
+  border-radius: 20px;
+  place-self: center
+}
+.side_bar_bg{
+  height: 569px;
+  background-color:#eaeaea ;
+  display: grid;
+  align-items: center;
+}
+.side_bar > ul > li{
+  padding: 10px 0px;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #ffffff;
+}
+.side_bar > p{
+  padding: 10px 0px;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 0px;
+  text-align: center;
+}
+.side_bar > ul{
+  margin: 15px 0px;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media (max-width: 600px) {
   .column {
-    float: left;
-    width: 33.33%;
-    padding: 10px;
-    height: 300px; /* Should be removed. Only for demonstration */
+    width: 100%;
   }
-  
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  
-  /* Style the footer */
-  .footer {
-    background-color: #f1f1f1;
-    padding: 10px;
-    text-align: center;
-  }
-  fa-icon{
-      color:darkcyan;
-      width: 100%;
-      font-size:200px;
-      align-items: center;
-  }
-  
-  /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-  @media (max-width: 600px) {
-    .column {
-      width: 100%;
-    }
-  }
+}

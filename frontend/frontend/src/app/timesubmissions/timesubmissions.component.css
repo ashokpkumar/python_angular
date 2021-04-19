@@ -23,3 +23,36 @@ body {
     border: 3px solid #050800;
     padding: 10px;
   }
+
+  .time_submission_table{
+    display: grid;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+}
+.emp_list_th > th{
+    background-color: #86AEC1;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    border: 1px solid black;
+}
+.emp_list_th > td{
+    background-color: #C9DBE3;
+    border: 1px solid black;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    color: black;
+    font-size: 15px;
+}
+.emp_list_th > td:last-child{
+    padding: 10px;
+}
+.emp_list_th > td:last-child > button:nth-child(1){
+    margin-right: 10px;
+}
+.timesub_heading{
+    font-size: 30px;
+  font-weight: 600;
+  font-family: 'Times New Roman', Times, serif;
+}

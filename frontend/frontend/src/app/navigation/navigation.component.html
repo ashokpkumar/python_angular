@@ -45,36 +45,51 @@
     </div>
   </nav> -->
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="header_navbar">
-      <div class="header_menu dropdown">
-        
-                <p class="dropbtn" routerLink="/" (click)="myFunction('')"><fa-icon [icon]='faHome'></fa-icon></p>
-      </div>
-
-      <div class="header_menu dropdown">
-        <p class="dropbtn" (click)="myFunction('myDropdown_employee')">Employee</p>
-        <div id="myDropdown_employee" class="dropdown-content">
-          <a class="dropdown-item" href="#" routerLink="/addemployee">Add Employee</a>
-          <a class="dropdown-item" href="#" routerLink="/employee">View Employee</a>
-          <a class="dropdown-item" href="#" routerLink="/timesubmission">Time Submissions</a>
-        </div>
-      </div>
-  
-      <div class="header_menu dropdown">
-        <p class="dropbtn" (click)="myFunction('myDropdown_project')">Projects</p>
-        <div id="myDropdown_project" class="dropdown-content">
-          <a class="dropdown-item" href="#" routerLink="/addproject">Add Project</a>
-          <a class="dropdown-item" href="#" routerLink="/project">View Projects</a>
-          <!-- <a class="dropdown-item" href="#">Add Resource to Project</a> -->
-        </div>
-      </div>
-    
-
-      <div class="header_menu login_icon nav-item">
-        <a class="nav-link" href="#" routerLink="/account">
-          <fa-icon [icon]='faUser'></fa-icon>
-        </a>
+  <div>
+    <div class="top_bar">
+      <div class="top_bar_content">
+        <p>
+          <fa-icon style="color: #1E73BE;padding: 8px;" [icon]='faMapMarkerAlt'></fa-icon>
+          Cupertino, CA 95014-2358, USA   
+        </p>
+        <p>
+          <fa-icon style="color: #1E73BE;padding: 8px;" [icon]='faPhoneAlt'></fa-icon>
+          +1 (888) 207-5969                
+        </p>
       </div>
     </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="header_navbar">
+        <div class="header_menu dropdown">
+          <p class="dropbtn" routerLink="/" (click)="menuHover('')">
+            <img src="https://www.indiumsoftware.com/wp-content/uploads/2020/11/Indium-software-Logo-1.svg" alt="">
+                  </p>
+        </div>
+  
+        <div class="header_menu dropdown">
+          <p class="dropbtn" (mouseover)="menuHover('myDropdown_employee')">Employee</p>
+          <div  (mouseleave)="menuLeave('myDropdown_employee')" id="myDropdown_employee" class="dropdown-content">
+            <a class="dropdown-item" href="#" routerLink="/addemployee">Add Employee</a>
+            <a class="dropdown-item" href="#" routerLink="/employee">View Employee</a>
+            <a class="dropdown-item" href="#" routerLink="/timesubmission">Time Submissions</a>
+          </div>
+        </div>
+    
+        <div   class="header_menu dropdown">
+          <p class="dropbtn" (mouseover)="menuHover('myDropdown_project')">Projects</p>
+          <div (mouseleave)="menuLeave('myDropdown_project')" id="myDropdown_project" class="dropdown-content">
+            <a class="dropdown-item" href="#" routerLink="/addproject">Add Project</a>
+            <a class="dropdown-item" href="#" routerLink="/project">View Projects</a>
+            <!-- <a class="dropdown-item" href="#">Add Resource to Project</a> -->
+          </div>
+        </div>
+      
+  
+        <div class="header_menu login_icon nav-item">
+          <a class="nav-link" href="#" routerLink="/account">
+            <fa-icon [icon]='faUser'></fa-icon>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>

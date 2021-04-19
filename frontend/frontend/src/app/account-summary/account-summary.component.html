@@ -1,82 +1,82 @@
 
 <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-    <a (click)="personalShow()">Personal Summary</a>
-    <a   (click)="professionalShow()">Professional Summary</a>
-    <a   (click)="timeShow()">Time Summary</a>
-    <a   (click)="logout()">Logout</a>
+  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+  <a (click)="personalShow()">Personal Summary</a>
+  <a   (click)="professionalShow()">Professional Summary</a>
+  <a   (click)="timeShow()">Time Summary</a>
+  <a   (click)="logout()">Logout</a>
 </div>
+
+<div id="main">
+  <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776; Menu</span>
+</div>
+<div class="acc_summary_head">
+<div class = "tableInfo" id="personal" *ngIf="personal">
+  <p class="table_summary_heading">Personal info Summary</p>
+  <table>
+      <tr>
+        <th>Full Name</th>
+        <th>{{userData.full_name}}</th>
+      </tr>
+      <tr>
+        <td>Employee ID</td>
+        <td>{{userData.emp_id}}</td>
+      </tr>
+      <tr>
+          <td>Email</td>
+          <td>{{userData.email}}</td>
+      </tr>
+      <tr>
+          <td>Department</td>
+          <td>{{userData.dept}}</td>
+      </tr>
+      <tr>
+          <td>Designation</td>
+          <td>{{userData.designation}}</td>
+      </tr>
+      <tr>
+          <td>Work Location</td>
+          <td>{{userData.geography}}</td>
+      </tr>
+     
+      
+    </table>
+</div>
+
+<div class = "tableInfo" id="professional" *ngIf="professional">
+  <p class="table_summary_heading">Professional info Summary</p>
+  <table>
+      <tr>
+          <td>Full Name</td>
+          <td>{{userData.full_name}}</td>
+      </tr>
+      <tr>
+          <td>Reporting Manager</td>
+          <td>{{userData.manager_name}}</td>
+      </tr>
+      <tr>
+          <td>Employee Start Date</td>
+          <td>{{userData.emp_start_date}}</td>
+      </tr>
+      <tr>
+          <td>Project Assigned Date</td>
+          <td>{{userData.emp_project_assigned_date}}</td>
+      </tr>
+      <tr>
+          <td>Project Name</td>
+          <td>{{userData.project_name}}</td>
+      </tr>
+      <tr>
+          <td>Resource Status</td>
+          <td>{{userData.resource_status}}</td>
+      </tr>
+    </table>
+</div>
+</div>
+<div class = "tableInfo" id="Timeinfo" *ngIf="time">
   
-  <div id="main">
-    <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776; Menu</span>
-  </div>
-
-  <div class = "tableInfo" id="personal" *ngIf="personal">
-    <h2>Personal info Summary</h2>
-    <table>
-        <tr>
-          <th>Full Name</th>
-          <th>{{userData.full_name}}</th>
-        </tr>
-        <tr>
-          <td>Employee ID</td>
-          <td>{{userData.emp_id}}</td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>{{userData.email}}</td>
-        </tr>
-        <tr>
-            <td>Department</td>
-            <td>{{userData.dept}}</td>
-        </tr>
-        <tr>
-            <td>Designation</td>
-            <td>{{userData.designation}}</td>
-        </tr>
-        <tr>
-            <td>Work Location</td>
-            <td>{{userData.geography}}</td>
-        </tr>
-       
-        
-      </table>
-  </div>
-
-  <div class = "tableInfo" id="professional" *ngIf="professional">
-    <h2>Professional info Summary</h2>
-    <table>
-        <tr>
-            <td>Full Name</td>
-            <td>{{userData.full_name}}</td>
-        </tr>
-        <tr>
-            <td>Reporting Manager</td>
-            <td>{{userData.manager_name}}</td>
-        </tr>
-        <tr>
-            <td>Employee Start Date</td>
-            <td>{{userData.emp_start_date}}</td>
-        </tr>
-        <tr>
-            <td>Project Assigned Date</td>
-            <td>{{userData.emp_project_assigned_date}}</td>
-        </tr>
-        <tr>
-            <td>Project Name</td>
-            <td>{{userData.project_name}}</td>
-        </tr>
-        <tr>
-            <td>Resource Status</td>
-            <td>{{userData.resource_status}}</td>
-        </tr>
-      </table>
-  </div>
-
-  <div class = "tableInfo" id="Timeinfo" *ngIf="time">
-    
-    <full-calendar [options]="calendarOptions"></full-calendar>
-  </div>
+  <full-calendar [options]="calendarOptions"></full-calendar>
+</div>
 
   <ng-template #content let-modal>
     <div class="modal-header">

@@ -20,31 +20,31 @@ h1 {
   height: auto;
 }
 .container_bg{
-  background-color: rgb(188,235,255);
+  background-color: #2F2F2F;
   border-radius: 10px;
 }
 .add_employee_align{
   display: grid;
-  grid-template-columns: repeat(2,auto);
+  grid-template-columns: 100%;
   grid-row-gap: 45px;
   grid-column-gap: 100px;
   justify-content: center;
   width: 100%;
-  padding: 30px;
+  padding: 60px;
 }
 .add_employee_align > div > p{
   margin-bottom: 10px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family:Arial, Helvetica, sans-serif;
   font-size: 15px;
+  color: #fff;
   font-weight: 700;
 }
 .add_employee_align > div > input{
   box-sizing: border-box;
   height: 40px !important;
-  width: 259px !important;
+  width: 100% !important;
   border: 1px solid #E4E4E4;
-  border-radius: 4px;
-  background-color: #FFFFFF;
+  background-color: #F5F8FA;
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
 }
 .add_employee_align > div > input:focus{
@@ -53,19 +53,24 @@ h1 {
 .add_emp_heading{
   font-size: 30px;
   font-weight: 600;
-  font-family: 'Times New Roman', Times, serif;
+  font-family:Arial, Helvetica, sans-serif;
 }
+
 .add_btn-emp > button{
-  height: 34px;
-  align-self: flex-end;
-  border: none;
+  background: #f55e39;
+  border-color: #f55e39;
   color: #ffffff;
-  font-size: 20px;
-  text-transform: uppercase;
-  background-color: #05F04B;
-  border-radius: 20px;
+  font-size: 13px;
+  padding: 17px 0px;
+  line-height: 13px;
+  font-family: Poppins;
 }
 .add_btn-emp{
-  display: grid;
-  width: 74%;
+  grid-column: 1 ;
+display: grid;
+width: 120px;
+}
+.add_btn-emp > button:hover{
+  background: #f55e39;
+  border-color: #f55e39;
 }
