@@ -24,8 +24,6 @@ export class ExamsComponent implements OnInit {
       console.error
     );
 
-    // this.exam = [{"title":"sample title 1","description":"sample description 1"},
-    //              {"title":"sample title 2","description":"sample description 2"}];
     console.log("This is Exam", this.examsList);
   }
 

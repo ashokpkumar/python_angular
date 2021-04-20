@@ -43,7 +43,7 @@ export class EmployeesComponent implements OnInit {
     console.log(projectResource.project_id);
     this.empApi.addProjectResource(this.projectResource)
   .subscribe(data=>{
-    // console.log(data),
+
     this.empApi.showMessage(Object.values(data),Object.keys(data))});
     this.router.navigate(['/employee']);
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -57,9 +57,7 @@ export class EmployeesComponent implements OnInit {
  
       this.addResource(this.projectResource);
     }, (reason) => {
-      //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      // console.log(this.closeResult);
-      // console.log(this.projectResource);
+
     });
   }
 

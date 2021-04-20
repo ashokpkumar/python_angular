@@ -7,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 
 @Injectable({providedIn:'root'})
 export class accountService {
- // 
   constructor(public toastr: ToastrService,private http: HttpClient) {
   }
   

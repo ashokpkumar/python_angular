@@ -5,7 +5,7 @@ import {API_URL} from '../env';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({providedIn:'root'})
-export class timeSubmissionsService {
+export class timeService {
 
   constructor(public toastr: ToastrService,private http: HttpClient) {
   }

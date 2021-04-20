@@ -14,6 +14,8 @@ export class TimesubmissionsComponent implements OnInit {
   faCheck = faCheck;
   faTimes = faTimes;
   user_name : String;
+  timeDatas = [];
+  arr = [];
   constructor(private router: Router,private cookieService: CookieService, private apiService:timeSubmissionsService) { }
 
   ngOnInit(): void {
@@ -21,23 +23,24 @@ export class TimesubmissionsComponent implements OnInit {
     else{
       this.router.navigate(['/login']);
     }
-    this.user_name = "i3228";
+    this.user_name = "I3186";
+    // this.user_name = "I3228";
     this.apiService.getSubmissions(this.user_name)
-    .subscribe(data=>{console.log("Employee Data: ",data),
+    .subscribe(data=>{console.log("Employee Data: ",typeof(data)),
     this.submissionList = data,
     this.apiService.showMessage(Object.values(data),Object.keys(data))});
 
-    // this.submissionList = [{'date':'20-04','username':'i3228','managername':'i3228','timetype':'CL','hours':'8'},
-    // {'date':'20-04','username':'i3228','managername':'i3228','timetype':'SL','hours':'8'},
-    // {'date':'20-04','username':'i3228','managername':'i3228','timetype':'WFH','hours':'4'}
-    // ]
+    this.apiService.getTimeData(this.user_name)
+    .subscribe(data=>{console.log("Time Data: ",data),
+                 this.timeDatas = data.result,
+                   console.log(typeof( this.timeDatas)),
+                   console.log(this.timeDatas)
+
+
+                    
+                    });
   }
   review(reviewd,date,user_id,time_type,hours){
-// console.log(reviewd);
-//  console.log(date);
-//  console.log(user_name);
-//  console.log(time_type);
-//  console.log(hours);
  this.apiService.reviewSubmission(reviewd,date,user_id,time_type,hours)
  .subscribe(data=>{console.log(data);this.apiService.showMessage(Object.values(data),Object.keys(data))});
  this.router.routeReuseStrategy.shouldReuseRoute = () => false;

@@ -14,7 +14,7 @@ import {Router} from "@angular/router"
 
 export class LoginComponent implements OnInit {
   project = new login();
-  //login = new login();
+
   public cookie: string;
   public login: boolean;
   public forgotPass: boolean;

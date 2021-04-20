@@ -47,17 +47,13 @@ export class AccountSummaryComponent implements OnInit {
     this.time = false;
 
     setTimeout(() => {
-    
-    
-       
-          //this.posts.push(data);
           return this.apiService.getEvents().subscribe(res=>{
             console.log("Result",res);
             for (let value of res){
               console.log("Iteration",value)
               this.posts.push(value);
             }
-            //this.posts.push(res);
+ 
           },console.error) ;
           this.posts.push({'title':'This is your','start':'2021-04-29'});
           this.posts.push({'title':'This is your','start':'2021-04-21'});
@@ -111,16 +107,6 @@ export class AccountSummaryComponent implements OnInit {
     console.log("Time Show");
     document.getElementById("mySidenav").style.width="0px";
     document.getElementById("main").style.marginLeft="0px";
-
-  //   this.data = {'title':'This is your','start':'2021-04-29'};
-  //   this.posts.push(this.data);
-  //   setTimeout(() => {
-  //     this.calendarOptions = {
-  //    initialView: 'dayGridMonth',
-  //    dateClick: this.handleDateClick.bind(this), // bind is important!
-  //    events: this.posts
-  //    };
-  //  }, 3000);
   }
   logout(){
     this.cookieService.set('login','false');
@@ -129,7 +115,6 @@ export class AccountSummaryComponent implements OnInit {
     this.router.navigate(['/login']);
   }
   handleDateClick(arg) {
-    // alert('date click! ' + arg.dateStr)
     this.timeInfo.date = arg.dateStr;
     this.open(this.defaultTabButtonsTpl);
   }
@@ -144,15 +129,10 @@ export class AccountSummaryComponent implements OnInit {
     .subscribe(data=>{console.log("Employee Data: ",data),
     this.userData = data,
     this.apiService.showMessage(Object.values(data),Object.keys(data)),
-  
-
-    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    // this.router.onSameUrlNavigation = 'reload';
     this.timeShow();
     this.apiService.getEvents().subscribe(res=>{    console.log("146",res)        
       for (let value of res){this.posts.push(value);}
     },) ;
-    //this.router.navigate(['/account']);
     this.timeShow();
 
   });

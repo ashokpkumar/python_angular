@@ -29,7 +29,7 @@ CORS(app)
 
 Base.metadata.create_all(engine)
 #time_master()
-
+create_sample_employee()
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
     session = Session()
@@ -152,6 +152,47 @@ def timesubmission():
     return (jsonify(serialized_obj))
 
 
+@app.route('/timeData', methods=['POST'])
+def timeData():
+    manager_id = request.get_json()
+    session = Session()
+    emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_id).all()
+    emp_final = [emp[0].lower() for emp in emp_list]
+    time_master_obj = session.query(TimeMaster).all()
+    session.close()
+    serialized_obj = serialize_all(time_master_obj)
+    time_data = []
+    for time_info in serialized_obj:
+        if time_info["emp_id"].lower() in emp_final:
+            time_data.append(time_info)
+    time_final = []
+    for time in time_data:
+        user_id = time["emp_id"]
+        user_name = session.query(employee.first_name).filter(employee.emp_id==user_id).first()
+        project_time = 0
+        sl = 0
+        cl = 0
+        al = 0
+        bench = 0
+        month_info =  json.loads(time["timedata"])
+        for dates in month_info.keys():
+            hour_info_for_date = month_info[dates]
+            for time_types in hour_info_for_date:
+                if time_types == 'wfh':
+                    project_time = project_time + hour_info_for_date[time_types]
+                elif time_types == 'CL':
+                    cl = cl + hour_info_for_date[time_types]
+                elif time_types =='SL':
+                    sl = sl +hour_info_for_date[time_types]
+                elif time_types =='AL':
+                    al = al + hour_info_for_date[time_types]
+                elif time_types =='bench':
+                    bench = bench + hour_info_for_date[time_types]
+        
+        time_final.append({'user_id':user_id, 'user_name': user_name[0], 'project_time':project_time,'sl':sl,'cl':cl,'al':al,'bench':bench})
+    return (jsonify({'result':time_final}))
+
+
 @app.route('/review_time', methods=['POST'])
 def review_time():
     data = request.get_json()
@@ -258,6 +299,7 @@ def addEmployee():
 
     try: 
         emp_data = employee(emp_id=data.get("emp_id") , 
+                            manager_id = data.get("manager_id"),
                             email = data.get("email") , 
                             first_name = data.get("first_name"), 
                             last_name= data.get("last_name"), 

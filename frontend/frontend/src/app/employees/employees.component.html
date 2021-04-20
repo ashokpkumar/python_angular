@@ -6,22 +6,80 @@
     <thead>
       <tr class="emp_list_th">
         <!-- <tr> -->
-        <th data-field="employee ID" data-checkbox="true">Emp ID</th>
+        <th data-field="employee ID" data-checkbox="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+           </th>
+        <th data-field="Salutation" data-checkbox="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+        </th>
+        <th data-field="Full Name" data-filter-control="input" data-sortable="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+        </th>
+        <th data-field="Project Name" data-filter-control="input" data-sortable="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+        </th>
+        <th data-field="Project ID" data-filter-control="select" data-sortable="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+        </th>
+        <th data-field="assigned Date" data-filter-control="select" data-sortable="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+        </th>
+        <th data-field="end Date" data-filter-control="select" data-sortable="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+        </th>
+        <th data-field="Resource Status" data-filter-control="input" data-sortable="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+          </th>
+        <th data-field="Manager Name" data-filter-control="select" data-sortable="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+         </th>
+        <th data-field="Client Name" data-filter-control="select" data-sortable="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+         </th>
+        <th data-field="Delivery Type" data-filter-control="select" data-sortable="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+         </th>
+        <th data-field="Additional Allocation" data-filter-control="select" data-sortable="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+        </th>
+        <th data-field="Skills" data-filter-control="select" data-sortable="true">
+          <select name="" id=""><option value=Select>Select</option></select>
+        </th>
+      </tr>
+    </thead>
+    
+    <thead>
+      <tr class="emp_list_th">
+        <!-- <tr> -->
+        <th data-field="employee ID" data-checkbox="true">Emp ID  </th>
         <th data-field="Salutation" data-checkbox="true">Salutation</th>
         <th data-field="Full Name" data-filter-control="input" data-sortable="true">Full Name</th>
         <th data-field="Project Name" data-filter-control="input" data-sortable="true">Project Name</th>
         <th data-field="Project ID" data-filter-control="select" data-sortable="true">Project ID</th>
         <th data-field="assigned Date" data-filter-control="select" data-sortable="true">Project Assigned Date</th>
         <th data-field="end Date" data-filter-control="select" data-sortable="true">Project End Date</th>
-        <th data-field="Resource Status" data-filter-control="input" data-sortable="true">Resource Status</th>
-        <th data-field="Manager Name" data-filter-control="select" data-sortable="true">Manager Name</th>
-        <th data-field="Client Name" data-filter-control="select" data-sortable="true">Client Name</th>
-        <th data-field="Delivery Type" data-filter-control="select" data-sortable="true">Delivery Type</th>
-        <th data-field="Additional Allocation" data-filter-control="select" data-sortable="true">Additional Allocation
+        <th data-field="Resource Status" data-filter-control="input" data-sortable="true">
+          
+          Resource Status</th>
+        <th data-field="Manager Name" data-filter-control="select" data-sortable="true">
+         
+
+          Manager Name</th>
+        <th data-field="Client Name" data-filter-control="select" data-sortable="true">
+        
+          Client Name</th>
+        <th data-field="Delivery Type" data-filter-control="select" data-sortable="true">
+        
+          Delivery Type</th>
+        <th data-field="Additional Allocation" data-filter-control="select" data-sortable="true">
+        
+          Additional Allocation
         </th>
-        <th data-field="Skills" data-filter-control="select" data-sortable="true">Skills</th>
+        <th data-field="Skills" data-filter-control="select" data-sortable="true">
+          Skills</th>
       </tr>
     </thead>
+
     <tbody>
       <tr class="emp_list_th" *ngFor="let item of employee_list">
         <!-- <tr *ngFor="let item of employee_list"> -->

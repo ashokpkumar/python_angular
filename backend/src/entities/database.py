@@ -38,6 +38,7 @@ class employee(Base):
     __tablename__ = 'employee'
     id = Column(Integer, primary_key=True)
     emp_id = Column(String)
+    manager_id = Column(String)
     email = Column(String)
     first_name = Column(String)
     last_name = Column(String)

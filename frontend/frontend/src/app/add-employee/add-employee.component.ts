@@ -17,23 +17,7 @@ import {MatCalendarCellClassFunction} from '@angular/material/datepicker';
 export class AddEmployeeComponent implements OnInit {
   durationInSeconds = 5;
   employee = new employee();
-  // profileForm = new FormGroup({
-  //   firstName: new FormControl(''),
-  //   lastname: new FormControl(''),
-  //   surname: new FormControl(''),
-  //   initial: new FormControl(''),
-  //   salutation: new FormControl(''),
-  //   managername: new FormControl(''),
-  //   managerdept: new FormControl(''),
-  //   projectid: new FormControl(''),
-  //   empstatus: new FormControl(''),
-  //   dept: new FormControl(''),
-  //   empstartdate: new FormControl(''),
-  //   emplwd: new FormControl(''),
-  //   empprojectassigneddate: new FormControl(''),
-  //   empprojectenddate: new FormControl(''),
-    
-  // });
+
   public employee_fields_list:any 
   name = new FormControl('');
   constructor(private apiService:addEmployeeService,private router: Router,private cookieService: CookieService) { }

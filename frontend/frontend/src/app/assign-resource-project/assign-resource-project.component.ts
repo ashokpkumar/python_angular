@@ -20,9 +20,6 @@ export class AssignResourceProjectComponent implements OnInit {
     }
   }
   onSubmit() {
-    
-    //console.log(this.project)
-    
     this.apiService.onSubmit(this.projectResource)
     .subscribe(data=>{console.log(data),this.apiService.showMessage(Object.values(data),Object.keys(data))});
     }
