@@ -116,18 +116,25 @@ def projects():
 @app.route('/addtimesubmissions', methods=['POST'])
 def addtimesubmissions():    
     data = request.get_json()
-    sub_data = timesubmissions( date_info = data.get('date'),
+    session = Session()
+    existing_project = session.query(project,employee,).filter(project.project_code==data.get('project_code'),).filter(employee.emp_id !=data.get('emp_id')).first()
+
+    if existing_project:
+        sub_data = timesubmissions( emp_id = data.get('emp_id'),
+                                    date_info = data.get('date'),
                                     hours = data.get('hours'),
                                     user_id = data.get('user_name'),
                                     manager_id = data.get('manager_name'),
                                     time_type = data.get('time_type'),
                                     status = 'submitted-pending approval',
-                                    submission_id = data.get('user_name') + data.get('user_name') + data.get('time_type')     
+                                    submission_id = data.get('user_name') + data.get('user_name') + data.get('time_type'),     
+                                    project_code = data.get("project_code")
                                )
-    session = Session()
-    session.add(sub_data)
-    session.commit()
-    return jsonify({'success':'Your Time has been  submitted for: {}'.format(data.get('date'))}),200
+        session.add(sub_data)
+        session.commit()
+        return jsonify({'success':'Your Time has been  submitted for: {}'.format(data.get('date'))}),200
+    else:
+        return jsonify({'error':'Project Does not exist or user already in the project'}),200
 
 
 @app.route('/view_submissions', methods=['POST'])
@@ -161,11 +168,12 @@ def review_time():
         date = data['date']
         time_type = data['time_type']
         hours = data['hours']
+        project_code=data['project_code']
         session = Session()
         datee = datetime.datetime.strptime(date, "%Y-%m-%d")
         month = datee.month
         year = datee.year
-        existing_emp = session.query(TimeMaster).filter(TimeMaster.month==month,TimeMaster.year==year,TimeMaster.emp_id==username).first()
+        existing_emp = session.query(TimeMaster).filter(TimeMaster.month==month,TimeMaster.year==year,TimeMaster.emp_id==username,TimeMaster.project_code==project_code).first()
         if existing_emp:
             #month Information has been already added just need to add the date to the month data
             timedata = json.loads(existing_emp.timedata)
@@ -176,7 +184,7 @@ def review_time():
                 if time_type in date_info.keys():
                     print("time type already present")
                     session = Session()
-                    del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+                    del_obj = session.query(timesubmissions).filter(timesubmissions.emp_id==emp_id,timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours,timesubmissions.project_code==project_code).first()
                     #session.delete(del_obj)
                     session.commit()
                     session.close()
@@ -199,7 +207,7 @@ def review_time():
                 session.close()
 
                 session = Session()
-                del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+                del_obj = session.query(timesubmissions).filter(timesubmissions.emp_id==emp_id,timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours,timesubmissions.project_code==project_code).first()
                 #session.delete(del_obj)
                 session.commit()
                 session.close()
@@ -211,14 +219,15 @@ def review_time():
             time_obj = TimeMaster(emp_id = username,
                                   month = month , 
                                   year = year,
-                                  timedata = json.dumps({date:{time_type:hours}})
+                                  timedata = json.dumps({date:{time_type:hours}}),
+                                  project_code=project_code
                 )
             session.add(time_obj)
             session.commit()
             session.close()
 
             session = Session()
-            del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+            del_obj = session.query(timesubmissions).filter(timesubmissions.emp_id==emp_id,timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours,timesubmissions.project_code==project_code).first()
             #session.delete(del_obj)
             session.commit()
             session.close()
@@ -231,10 +240,11 @@ def review_time():
         date = data['date']
         time_type = data['time_type']
         hours = data['hours']
+        project_code= dat['project_code']
         datee = datetime.datetime.strptime(date, "%Y-%m-%d")
         month = datee.month
         year = datee.year
-        time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
+        time_obj = session.query(timesubmissions).filter(ttimesubmissions.emp_id==emp_id,imesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours,timesubmissions.project_code==project_code).first()
         time_obj.status = "Rejected"
         session.add(time_obj)
         session.commit()

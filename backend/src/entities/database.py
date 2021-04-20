@@ -26,6 +26,7 @@ class authUser(Base):
 class timesubmissions(Base):
     __tablename__="timesubmissions"
     id = Column(Integer, primary_key=True)
+    emp_id = Column(String)
     date_info = Column(String)
     user_id = Column(String)
     manager_id = Column(String)
@@ -33,6 +34,7 @@ class timesubmissions(Base):
     submission_id = Column(String)
     status = Column(String)
     hours = Column(Integer)
+    project_code=Column(String)
     
 class employee(Base):
     __tablename__ = 'employee'
@@ -335,3 +337,4 @@ class TimeMaster(Base):
     month = Column(String)
     year = Column(String)
     timedata = Column(VARCHAR(3000))
+    project_code = Column(String)
