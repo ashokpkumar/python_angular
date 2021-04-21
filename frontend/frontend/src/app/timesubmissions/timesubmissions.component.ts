@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,TemplateRef } from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router";
 import {timeSubmissionsService} from './timesubmissions.service';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-
+declare var $: any;
 @Component({
   selector: 'app-timesubmissions',
   templateUrl: './timesubmissions.component.html',
@@ -11,14 +11,23 @@ import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 })
 export class TimesubmissionsComponent implements OnInit {
   submissionList = [];
+  submissionClicked :any;
+  timeClicked :any;
   faCheck = faCheck;
   faTimes = faTimes;
   user_name : String;
   timeDatas = [];
+  totalTime = {};
+
   arr = [];
+  allUserUnapproved:boolean;
+  allUserapproved:boolean;
+  individualUnapproved:boolean;
+
   constructor(private router: Router,private cookieService: CookieService, private apiService:timeSubmissionsService) { }
 
   ngOnInit(): void {
+    this.allUserUnapproved = false;
     if (this.cookieService.get('login')=='true'){}
     else{
       this.router.navigate(['/login']);
@@ -26,19 +35,38 @@ export class TimesubmissionsComponent implements OnInit {
     this.user_name = "I3186";
     // this.user_name = "I3228";
     this.apiService.getSubmissions(this.user_name)
-    .subscribe(data=>{console.log("Employee Data: ",typeof(data)),
+    .subscribe(data=>{
     this.submissionList = data,
     this.apiService.showMessage(Object.values(data),Object.keys(data))});
 
     this.apiService.getTimeData(this.user_name)
-    .subscribe(data=>{console.log("Time Data: ",data),
+    .subscribe(data=>{
                  this.timeDatas = data.result,
-                   console.log(typeof( this.timeDatas)),
-                   console.log(this.timeDatas)
-
-
-                    
+                 this.totalTime = data.total                  
                     });
+  }
+  clickNumbers(user,type){
+
+console.log(user,type);
+if (type=='unapproved'){
+  this.apiService.getSubmissionsBy(user)
+  .subscribe(data=>{
+    
+    this.submissionClicked = data,
+    this.allUserUnapproved=true
+    this.allUserapproved=false
+  });
+
+}else{
+  this.apiService.getTimeBy(user,type)
+  .subscribe(data=>{
+    console.log("Employee Data: ",data),
+    this.timeClicked = data,
+    this.allUserapproved=true,
+    this.allUserUnapproved=false
+ 
+  });
+}
   }
   review(reviewd,date,user_id,time_type,hours){
  this.apiService.reviewSubmission(reviewd,date,user_id,time_type,hours)

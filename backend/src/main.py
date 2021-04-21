@@ -132,13 +132,18 @@ def addtimesubmissions():
 
 
 @app.route('/view_submissions', methods=['POST'])
-def view_submissions():
+def viewsubmissions():
     session = Session()
     data = request.get_json()
-    manager_name = data   
-    existing_submissions = session.query(timesubmissions).filter(timesubmissions.manager_id==manager_name).all()
-    if existing_submissions:
-        serialized_obj = serialize_all(existing_submissions)
+    manager_name = data  
+    print(manager_name)
+    emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_name).all()
+    emp_final = [emp[0].lower() for emp in emp_list]
+    print(emp_final)
+    submission_obj = session.query(timesubmissions).filter(timesubmissions.manager_id.in_(emp_final),timesubmissions.status=='submitted-pending approval' ).all()
+    print(submission_obj)
+    if submission_obj:
+        serialized_obj = serialize_all(submission_obj)
         print(serialized_obj)
         return jsonify(serialized_obj),200
     return jsonify({'info':'No submission available for you'}),200
@@ -152,6 +157,51 @@ def timesubmission():
     session.close()
     return (jsonify(serialized_obj))
 
+@app.route('/getSubmissionsBy', methods=['POST'])
+def getSubmissionsBy():
+    session = Session()
+    user = request.get_json()
+    if user == 'total':
+        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='submitted-pending approval').all()
+        serialized_obj = serialize_all(sub_objects)
+        session.close()
+        return (jsonify(serialized_obj)),200
+        
+    else:
+        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='submitted-pending approval', timesubmissions.user_id==user).all()
+        serialized_obj = serialize_all(sub_objects)
+        session.close()
+        return (jsonify(serialized_obj)),200
+
+
+@app.route('/getTimeBy', methods=['POST'])
+def getTimeBy():
+    session = Session()
+    data = request.get_json()
+    time_type = data['type']
+    user = data['user']
+    print(user)
+    print(time_type)
+    if user == 'total':
+        if time_type =="project":
+            time_type_list = ['wfh','REG']
+        else:
+            time_type_list = [time_type]
+        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='approved',timesubmissions.time_type.in_(time_type_list)).all()
+        serialized_obj = serialize_all(sub_objects)
+        session.close()
+        return (jsonify(serialized_obj)),200
+        
+    else:
+        if time_type =="project":
+            time_type_list = ['wfh','REG']
+        else:
+            time_type_list = [time_type]
+        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='approved',timesubmissions.time_type.in_(time_type_list),timesubmissions.user_id==user).all()
+        serialized_obj = serialize_all(sub_objects)
+        session.close()
+        return (jsonify(serialized_obj)),200
+           
 
 @app.route('/timeData', methods=['POST'])
 def timeData():
@@ -159,45 +209,64 @@ def timeData():
     session = Session()
     emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_id).all()
     emp_final = [emp[0].lower() for emp in emp_list]
-    time_master_obj = session.query(TimeMaster).all()
-    session.close()
-    serialized_obj = serialize_all(time_master_obj)
-    time_data = []
-    for time_info in serialized_obj:
-        if time_info["emp_id"].lower() in emp_final:
-            time_data.append(time_info)
     time_final = []
-    for time in time_data:
-        user_id = time["emp_id"]
-        user_name = session.query(employee.first_name).filter(employee.emp_id==user_id).first()
+    for emp in emp_final:
         project_time = 0
         sl = 0
-        cl = 0
-        al = 0
-        bench = 0
-        month_info =  json.loads(time["timedata"])
-        for dates in month_info.keys():
-            hour_info_for_date = month_info[dates]
-            for time_types in hour_info_for_date:
-                if time_types == 'wfh':
-                    project_time = project_time + hour_info_for_date[time_types]
-                elif time_types == 'CL':
-                    cl = cl + hour_info_for_date[time_types]
-                elif time_types =='SL':
-                    sl = sl +hour_info_for_date[time_types]
-                elif time_types =='AL':
-                    al = al + hour_info_for_date[time_types]
-                elif time_types =='bench':
-                    bench = bench + hour_info_for_date[time_types]
+        cl=0
+        al=0
+        bench=0
+        user_id = emp
+        unapproved=0
+
+        user_name = session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
+        submission_obj = session.query(timesubmissions).filter(timesubmissions.manager_id.in_(emp_final), timesubmissions.user_id==emp).all()
+        serialized_obj = serialize_all(submission_obj)
+        for time in serialized_obj:
+            #print(time)
+            if time['status']=='approved':
+                if time['time_type']=='wfh' or time['time_type']=='REG':
+                    project_time = project_time + time['hours']
+                elif time['time_type']=='sl':
+                    sl = sl + time['hours']
+                elif time['time_type']=='cl':
+                    cl = cl + time['hours']
+                elif time['time_type']=='al':
+                    al = al + time['hours']
+                elif time['time_type']=='bench':
+                    bench = bench + time['hours']
+            else:
+                unapproved = unapproved + time['hours']    
         
-        time_final.append({'user_id':user_id, 'user_name': user_name[0], 'project_time':project_time,'sl':sl,'cl':cl,'al':al,'bench':bench})
-    return (jsonify({'result':time_final}))
+        total_hrs = project_time + sl + cl + al + bench
+        time_final.append({'user_id':user_id, 'user_name': user_name, 'project_time':project_time,'sl':sl,'cl':cl,'al':al,'bench':bench,'unapproved':unapproved, 'total_hrs':total_hrs})
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    print(time_final)  
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    total_project = 0
+    total_sl = 0
+    total_cl = 0
+    total_al = 0
+    total_bench = 0
+    total_unapproved = 0
+
+    for emp_data in time_final:
+        total_project = total_project  + emp_data['project_time']
+        total_sl = total_sl  + emp_data['sl']
+        total_cl = total_cl  + emp_data['cl']
+        total_al = total_al  + emp_data['al']
+        total_bench = total_bench  + emp_data['bench']
+        total_unapproved = total_unapproved + emp_data['unapproved']
+    total_time_list = {'total_project':total_project,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_bench':total_bench,'total_unapproved':total_unapproved, }
+    print(total_time_list)
+    #time_final.append({'total_project':total_project,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_bench':total_bench,'total_unapproved':total_unapproved, })
+    return (jsonify({'result':time_final,'total':total_time_list}))
 
 
 @app.route('/review_time', methods=['POST'])
 def review_time():
     data = request.get_json()
-    print(data)
+    #print(data)
     if data['reviewd']==True:
         session = Session()
         username = data['user_name']

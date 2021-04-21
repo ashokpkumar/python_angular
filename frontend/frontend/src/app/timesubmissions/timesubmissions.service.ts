@@ -36,7 +36,20 @@ export class timeSubmissionsService {
     return this.http.post(`${API_URL}/review_time`, body,{'headers':headers})
   }
 
+  getSubmissionsBy(user){
+    const headers = { 'content-type': 'application/json'}  
+    const body=JSON.stringify(user);
+    console.log(body)
+    return this.http.post(`${API_URL}/getSubmissionsBy`, body,{'headers':headers})
+  }
 
+  getTimeBy(user,type){
+    const headers = { 'content-type': 'application/json'}  
+    const body=JSON.stringify({'user':user,'type':type});
+    console.log('Body : ',body);
+    return this.http.post(`${API_URL}/getTimeBy`, body,{'headers':headers})
+  }
+  
   showMessage(message, title){
     if (title=='success'){
         this.toastr.success(message, title)
