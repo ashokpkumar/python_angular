@@ -119,6 +119,7 @@ def addtimesubmissions():
     sub_data = timesubmissions( date_info = data.get('date'),
                                     hours = data.get('hours'),
                                     user_id = data.get('user_name'),
+                                    project_code = data.get('project_id'),
                                     manager_id = data.get('manager_name'),
                                     time_type = data.get('time_type'),
                                     status = 'submitted-pending approval',
@@ -198,73 +199,87 @@ def review_time():
     data = request.get_json()
     print(data)
     if data['reviewd']==True:
+        session = Session()
         username = data['user_name']
         date = data['date']
         time_type = data['time_type']
         hours = data['hours']
-        session = Session()
         datee = datetime.datetime.strptime(date, "%Y-%m-%d")
         month = datee.month
         year = datee.year
-        existing_emp = session.query(TimeMaster).filter(TimeMaster.month==month,TimeMaster.year==year,TimeMaster.emp_id==username).first()
-        if existing_emp:
-            #month Information has been already added just need to add the date to the month data
-            timedata = json.loads(existing_emp.timedata)
-            if date in timedata.keys():
-                date_info = timedata[date]
-                print(">>>>>>>>>>>>>>>>>")
-                print(date_info)
-                if time_type in date_info.keys():
-                    print("time type already present")
-                    session = Session()
-                    del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
-                    #session.delete(del_obj)
-                    session.commit()
-                    session.close()
-                    return jsonify({"error":"Info already in the Data"}),200
-                else:
-                    date_info[time_type]=hours
-                    timedata[date]=date_info
-                    existing_emp.timedata = json.dumps(timedata)
-                    #session = Session()
-                    session.add(existing_emp)
-                    session.commit()
-                    session.close()
-                    return jsonify({"success":"Time has been reviewed"})
+        time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
+        time_obj.status = "approved"
+        session.add(time_obj)
+        session.commit()
+        session.close()
+        return jsonify({"info":"Time has been reviewed"})
+        # username = data['user_name']
+        # date = data['date']
+        # time_type = data['time_type']
+        # hours = data['hours']
+        # session = Session()
+        # datee = datetime.datetime.strptime(date, "%Y-%m-%d")
+        # month = datee.month
+        # year = datee.year
+        # existing_emp = session.query(TimeMaster).filter(TimeMaster.month==month,TimeMaster.year==year,TimeMaster.emp_id==username).first()
+        # if existing_emp:
+        #     #month Information has been already added just need to add the date to the month data
+        #     timedata = json.loads(existing_emp.timedata)
+        #     if date in timedata.keys():
+        #         date_info = timedata[date]
+        #         print(">>>>>>>>>>>>>>>>>")
+        #         print(date_info)
+        #         if time_type in date_info.keys():
+        #             print("time type already present")
+        #             session = Session()
+        #             del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+        #             #session.delete(del_obj)
+        #             session.commit()
+        #             session.close()
+        #             return jsonify({"error":"Info already in the Data"}),200
+        #         else:
+        #             date_info[time_type]=hours
+        #             timedata[date]=date_info
+        #             existing_emp.timedata = json.dumps(timedata)
+        #             #session = Session()
+        #             session.add(existing_emp)
+        #             session.commit()
+        #             session.close()
+        #             return jsonify({"success":"Time has been reviewed"})
 
-            else:
-                timedata[date] = {time_type:hours}
-                existing_emp.timedata = json.dumps(timedata)
-                session.add(existing_emp)
-                session.commit()
-                session.close()
+        #     else:
+        #         timedata[date] = {time_type:hours}
+        #         existing_emp.timedata = json.dumps(timedata)
+        #         session.add(existing_emp)
+        #         session.commit()
+        #         session.close()
 
-                session = Session()
-                del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
-                #session.delete(del_obj)
-                session.commit()
-                session.close()
+        #         session = Session()
+        #         del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+        #         #session.delete(del_obj)
+        #         session.commit()
+        #         session.close()
                 
-                return jsonify({"success":"Time has been reviewed"})
+        #         return jsonify({"success":"Time has been reviewed"})
            
-        else:
-            #month information is not present already. hence create the month information along with the existing data
-            time_obj = TimeMaster(emp_id = username,
-                                  month = month , 
-                                  year = year,
-                                  timedata = json.dumps({date:{time_type:hours}})
-                )
-            session.add(time_obj)
-            session.commit()
-            session.close()
+        # else:
+        #     #month information is not present already. hence create the month information along with the existing data
+        #     time_obj = TimeMaster(emp_id = username,
+        #                           month = month , 
+        #                           year = year,
+        #                           timedata = json.dumps({date:{time_type:hours}})
+        #         )
+        #     session.add(time_obj)
+        #     session.commit()
+        #     session.close()
 
-            session = Session()
-            del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
-            #session.delete(del_obj)
-            session.commit()
-            session.close()
+        #     session = Session()
+        #     del_obj = session.query(timesubmissions).filter(timesubmissions.date_info==date,timesubmissions.user_id==username,timesubmissions.time_type==time_type,timesubmissions.hours==hours).first()
+        #     #session.delete(del_obj)
+        #     session.commit()
+        #     session.close()
 
-            return jsonify({"success":"Time has been reviewed"})
+        #     return jsonify({"success":"Time has been reviewed"})
 
     elif data['reviewd']==False:
         session = Session()
@@ -276,7 +291,7 @@ def review_time():
         month = datee.month
         year = datee.year
         time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
-        time_obj.status = "Rejected"
+        time_obj.status = "denied"
         session.add(time_obj)
         session.commit()
         session.close()

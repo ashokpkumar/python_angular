@@ -33,6 +33,7 @@ class timesubmissions(Base):
     submission_id = Column(String)
     status = Column(String)
     hours = Column(Integer)
+    project_code=Column(String)
     
 class employee(Base):
     __tablename__ = 'employee'

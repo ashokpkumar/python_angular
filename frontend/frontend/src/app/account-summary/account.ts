@@ -8,6 +8,7 @@ export class userInfo{
     time_type:string
     hours:string
     comments:string
+    project_id:string
     
   
   }
