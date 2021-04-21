@@ -22,7 +22,6 @@ class authUser(Base):
     password = Column(String)
     roles = Column(VARCHAR(2000))
 
-
 class timesubmissions(Base):
     __tablename__="timesubmissions"
     id = Column(Integer, primary_key=True)
@@ -33,6 +32,15 @@ class timesubmissions(Base):
     submission_id = Column(String)
     status = Column(String)
     hours = Column(Integer)
+
+
+class announcements(Base):
+    __tablename__="announcements"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(String)
+    announcement_info = Column(String)
+    announcement_category = Column(String)
+    date_logged = Column(DateTime)
     
 class employee(Base):
     __tablename__ = 'employee'
