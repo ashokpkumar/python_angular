@@ -14,6 +14,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from flask_expects_json import expects_json
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -371,7 +372,39 @@ def review_time():
         return jsonify({"info":"Time has been reviewed"})
 
 
+schema ={
+    "type": "object",
+    "properties": {
+      "emp_id":{"type":"string"},
+      "email": { "type": "string", "format": "email","pattern":"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"},
+      "first_name": { "type": "string", "minLength": 2, "maxLength": 50 },
+      "last_name": { "type": "string", "minLength": 2, "maxLength": 50 },
+      "sur_name": { "type": "string", "minLength": 2, "maxLength": 50 },
+      "initial": { "type": "string", "minLength": 2, "maxLength": 4 },
+      "salutation": { "type": "string", "minLength": 2,  },
+      "project_code": { "type": "string", "minLength": 2, "maxLength": 50 },
+      "dept": { "type": "string", "minLength": 2, "maxLength": 50 },
+      "designation": { "type": "string", "minLength": 2, "maxLength": 100 },
+      "emp_start_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
+      "emp_last_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
+      "emp_project_assigned_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
+      "emp_project_end_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
+      "employment_status": { "type": "boolean"},
+      "manager_name": { "type": "string", "minLength": 2, "maxLength": 50 },
+      "manager_dept": { "type": "string", "minLength": 2, "maxLength": 50 },
+      "resource-status": { "type": "string", "minLength": 2, "maxLength": 100 },
+      "delivery_type": { "type": "string", "minLength": 2, "maxLength": 50 },
+      "additional_allocation": { "type": "string", "minLength": 2, "maxLength": 100 },
+      "skills": { "type": "string", "minLength": 2, "maxLength": 100 },
+      "roles": { "type": "string", "minLength": 2, "maxLength": 100 },
+    },
+    "required": [ "emp_id", "email", "first_name","last_name","sur_name","initial","salutation","project_code",
+    "dept","designation","emp_last_working_date","emp_project_assigned_date","emp_project_end_date","employment_status",   
+    "manager_name","manager_dept","resource_status","delivery_type","additional_allocation","skills","roles"]
+  }
+
 @app.route('/addEmployee', methods=['POST'])
+@expects_json(schema)
 def addEmployee():
     data = request.get_json()
     session = Session()
