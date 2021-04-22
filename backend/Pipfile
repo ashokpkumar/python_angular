@@ -9,6 +9,7 @@ pyodbc = "*"
 marshmallow = "*"
 flask = "*"
 flask-cors = "*"
+flask-expects-json = "*"
 
 [dev-packages]
 
