@@ -58,13 +58,13 @@ fa-icon:focus{
 .main_div_image{
   display: grid;
   grid-template-columns: repeat(3,33%);
-  height: 569px;
+  height:calc(100vh - 61px);
   width: 100%;
   align-items: center;
 }
 .bg_home_scr{
   width: 100%;
-  height: calc(100vh - 56px);
+  height: calc(100vh - 61px);
   padding: 0px;
   background-color: #eaeaea;
 }
@@ -77,7 +77,7 @@ fa-icon:focus{
   place-self: center
 }
 .side_bar_bg{
-  height: 569px;
+    height:calc(100vh - 61px);
   background-color:#eaeaea ;
   display: grid;
   align-items: center;

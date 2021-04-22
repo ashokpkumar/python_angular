@@ -10,7 +10,7 @@ from sqlalchemy.orm.attributes import QueryableAttribute
 #db_user = 'postgres'
 #db_password = '0NLIN3-ex4m'
 #engine = create_engine(f'postgresql://{db_user}:{db_password}@{db_url}/{db_name}')
-engine = create_engine("mssql+pyodbc://localhost\SQLEXPRESS/master?driver=SQL Server?Trusted_Connection=yes")
+engine = create_engine("mssql+pyodbc://localhost/master?driver=SQL Server?Trusted_Connection=yes")
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
