@@ -1,8 +1,10 @@
-import { Component, OnInit,TemplateRef } from '@angular/core';
+import { Component, OnInit,TemplateRef ,ViewChild} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router";
 import {timeSubmissionsService} from './timesubmissions.service';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
 declare var $: any;
 @Component({
   selector: 'app-timesubmissions',
@@ -24,8 +26,14 @@ export class TimesubmissionsComponent implements OnInit {
   allUserapproved:boolean;
   individualUnapproved:boolean;
 
-  constructor(private router: Router,private cookieService: CookieService, private apiService:timeSubmissionsService) { }
+  constructor(private modalService: NgbModal,private router: Router,private cookieService: CookieService, private apiService:timeSubmissionsService) { }
+  @ViewChild('approved')
+  private defaultTabButtonsTpl1: TemplateRef<any>;
+  
+  @ViewChild('unapproved')
+  private defaultTabButtonsTpl2: TemplateRef<any>;
 
+  
   ngOnInit(): void {
     this.allUserUnapproved = false;
     if (this.cookieService.get('login')=='true'){}
@@ -51,9 +59,10 @@ console.log(user,type);
 if (type=='unapproved'){
   this.apiService.getSubmissionsBy(user)
   .subscribe(data=>{
-    
     this.submissionClicked = data,
-    this.allUserUnapproved=true
+    this.open(this.defaultTabButtonsTpl2),
+    
+    this.allUserUnapproved=true,
     this.allUserapproved=false
   });
 
@@ -62,6 +71,7 @@ if (type=='unapproved'){
   .subscribe(data=>{
     console.log("Employee Data: ",data),
     this.timeClicked = data,
+    this.open(this.defaultTabButtonsTpl1),
     this.allUserapproved=true,
     this.allUserUnapproved=false
  
@@ -74,5 +84,16 @@ if (type=='unapproved'){
  this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   this.router.onSameUrlNavigation = 'reload';
   this.router.navigate(['/timesubmission']);
+  }
+
+  open(content) {
+  console.log(this.timeClicked);
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      
+
+    
+    }, (reason) => {
+
+    });
   }
 }
