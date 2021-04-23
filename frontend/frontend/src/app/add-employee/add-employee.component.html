@@ -1,6 +1,7 @@
 <div class="add_employee_bg">
   <div class="container card">
     <p class="add_emp_heading"> Add Employee</p>
+    <div class="ps" style="position: relative; max-height: calc(100vh - 173px);" ></div>
     <div class="add_employee_align container_bg">
       <div>
         <p>Employee ID: </p>
@@ -49,21 +50,29 @@
       </div>
       <div>
         <p>Emp Start date: </p>
-        <input [(ngModel)]="employee.emp_start_date" />
-        
+        <mat-form-field>
+          <input matInput [matDatepicker] = "empStartDate" placeholder="Select Date">
+          <mat-datepicker-toggle matSuffix [for]="empStartDate"></mat-datepicker-toggle>
+          <mat-datepicker #empStartDate></mat-datepicker>
+        </mat-form-field>
+        <!-- <input [(ngModel)]="employee.emp_start_date" /> -->
       </div>
 
-      
       <div>
         <p>Emp Project assigned Date: </p>
-        <input [(ngModel)]="employee.emp_project_assigned_date" />
+        <mat-form-field>
+          <input matInput [matDatepicker] = "projectAssignedDate" placeholder="Select Date">
+          <mat-datepicker-toggle matSuffix [for]="projectAssignedDate"></mat-datepicker-toggle>
+          <mat-datepicker #projectAssignedDate></mat-datepicker>
+        </mat-form-field>
+        <!-- <input [(ngModel)]="employee.emp_project_assigned_date" /> -->
       </div>
-      
+
       <div>
         <p>Employment Status: </p>
         <input [(ngModel)]="employee.employment_status" />
       </div>
-      
+
       <div>
         <p>Manager Name: </p>
         <input [(ngModel)]="employee.manager_name" />
@@ -93,12 +102,11 @@
         <input [(ngModel)]="employee.roles" />
       </div>
       <div class="add_btn-emp">
-        <button (click)="onSubmit()" type="button" class="btn btn-success">Add</button>
+        <button (click)="onSubmit()" type="button" class="btn ">Add</button>
       </div>
     </div>
   </div>
 </div>
-
 
 <!-- <h1>Add Employee</h1>
 <div>
@@ -202,5 +210,3 @@
     <button (click)="onSubmit()">Add</button>
   </div>
 </div> -->
-
-

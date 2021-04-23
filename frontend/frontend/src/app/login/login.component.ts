@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.forgotPass=false
+    this.cookieService.set('login',"true")
     console.log("TOKEN from ngoninit",this.cookieService.get("access_token"));
     console.log("Username",this.cookieService.get('username'));
     console.log("roles",this.cookieService.get('roles'));

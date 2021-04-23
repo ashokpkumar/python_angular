@@ -20,31 +20,39 @@ h1 {
   height: auto;
 }
 .container_bg{
-  background-color: #2F2F2F;
+  background-color: #fff;
   border-radius: 10px;
+  border: 1px solid #cbd5e1;
 }
 .add_employee_align{
   display: grid;
-  grid-template-columns: 100%;
-  grid-row-gap: 45px;
-  grid-column-gap: 100px;
-  justify-content: center;
-  width: 100%;
-  padding: 60px;
+    grid-template-columns:repeat(3,1fr);
+    grid-row-gap: 45px;
+    grid-column-gap: 100px;
+    justify-content: center;
+    width: 100%;
+    padding: 54px;
+    overflow: scroll;
+    max-height: calc(100vh - 173px);
+    overflow-x: hidden;
+    overflow-y:scroll ;
 }
 .add_employee_align > div > p{
   margin-bottom: 10px;
   font-family:Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  color: #fff;
+  font-size: 12px;
+  color: #7f8fa4;
   font-weight: 700;
 }
 .add_employee_align > div > input{
   box-sizing: border-box;
-  height: 40px !important;
-  width: 100% !important;
-  border: 1px solid #E4E4E4;
-  background-color: #F5F8FA;
+  height: 34px !important;
+  width: 220px !important;
+  padding: 6px 12px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
 }
 .add_employee_align > div > input:focus{
@@ -57,20 +65,38 @@ h1 {
 }
 
 .add_btn-emp > button{
-  background: #f55e39;
-  border-color: #f55e39;
-  color: #ffffff;
-  font-size: 13px;
-  padding: 17px 0px;
-  line-height: 13px;
-  font-family: Poppins;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  min-width: 85px;
+  padding: 7px 14px;
+  font-family: Open Sans,sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #24a7f8;
+  margin: 15px;
+    border-color: #24a7f8;
+    background: #fff
 }
 .add_btn-emp{
-  grid-column: 1 ;
+  grid-column: 1/ -1 ;
+  justify-content: center;
 display: grid;
-width: 120px;
 }
 .add_btn-emp > button:hover{
-  background: #f55e39;
-  border-color: #f55e39;
+  background: #0895ec;
+  border-color: #0895ec;
+  color: #fff;
+}
+.add_btn-emp > button:active{
+  background: #0895ec !important;
+  border-color: #0895ec !important;
+  color: #fff !important;
+  outline: 0;
+}
+.add_btn-emp > button:focus{
+  background: #0895ec !important;
+  border-color: #0895ec !important;
+  color: #fff !important;
+  outline: 0;
 }

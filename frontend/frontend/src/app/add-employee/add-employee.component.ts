@@ -4,7 +4,7 @@ import {employee} from './employees';
 import { addEmployeeService } from './add-employee.service';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
-import {MatCalendarCellClassFunction} from '@angular/material/datepicker';
+import {MatCalendarCellClassFunction,MatDatepickerModule} from '@angular/material/datepicker';
 
 //https://www.itsolutionstuff.com/post/how-to-use-toaster-notification-in-angular-8example.html
 @Component({
@@ -13,6 +13,7 @@ import {MatCalendarCellClassFunction} from '@angular/material/datepicker';
   styleUrls: ['./add-employee.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
+
 
 export class AddEmployeeComponent implements OnInit {
   durationInSeconds = 5;
@@ -52,16 +53,16 @@ export class AddEmployeeComponent implements OnInit {
    
   }
 
-  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
-    // Only highligh dates inside the month view.
-    if (view === 'month') {
-      const date = cellDate.getDate();
+  // dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+  //   // Only highligh dates inside the month view.
+  //   if (view === 'month') {
+  //     const date = cellDate.getDate();
 
-      // Highlight the 1st and 20th day of each month.
-      return (date === 1 || date === 20) ? 'example-custom-date-class' : '';
-    }
+  //     // Highlight the 1st and 20th day of each month.
+  //     return (date === 1 || date === 20) ? 'example-custom-date-class' : '';
+  //   }
 
-    return '';
-  }
+  //   return '';
+  // }
 }
 

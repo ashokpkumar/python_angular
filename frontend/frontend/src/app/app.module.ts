@@ -26,12 +26,9 @@ import { LoginComponent } from './login/login.component';
 import {loginService} from './login/login.service'
 import {MatSelectModule} from '@angular/material/select';
 import { ShowTimeComponent } from './show-time/show-time.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import { FullCalendarModule } from '@fullcalendar/angular'; 
 import dayGridPlugin from '@fullcalendar/daygrid'; 
 import interactionPlugin from '@fullcalendar/interaction'; 
-import { MatNativeDateModule } from '@angular/material/core';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { PersonalSummaryComponent } from './personal-summary/personal-summary.component';
@@ -40,8 +37,9 @@ import { TimeSummaryComponent } from './time-summary/time-summary.component';
 import { AccountSummaryComponent } from './account-summary/account-summary.component';
 import { TimesubmissionsComponent } from './timesubmissions/timesubmissions.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
-
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatInputModule} from '@angular/material/input'
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
@@ -89,6 +87,7 @@ FullCalendarModule.registerPlugins([
     MatButtonModule,
     MatFormFieldModule,
     MatNativeDateModule,
+    MatInputModule
   ],
   
   providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule],
