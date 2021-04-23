@@ -16,7 +16,12 @@
       </div>
       <div>
         <p>Project Start Date: </p>
-        <input [(ngModel)]="project.projectstartdate" />
+        <mat-form-field>
+          <input matInput [matDatepicker] = "projStartDate" placeholder="Select Date">
+          <mat-datepicker-toggle matSuffix [for]="projStartDate"></mat-datepicker-toggle>
+          <mat-datepicker #projStartDate></mat-datepicker>
+        </mat-form-field>
+
       </div>
       <div>
         <p>Project Status: </p>

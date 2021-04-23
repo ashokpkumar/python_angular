@@ -1,7 +1,6 @@
-.nav-item{
+/* .nav-item{
   float: right;
 }
-
 .header_navbar{
   display: grid;
   width: 100%;
@@ -33,7 +32,7 @@
 /* .dropbtn:hover, .dropbtn:focus {
 background-color: #2980B9;
 } */
-.dropbtn{
+/*.dropbtn{
   margin: 0;
   font-size: 19px;
 }
@@ -44,7 +43,6 @@ background-color: #2980B9;
 position: relative;
 display: inline-block;
 }
-
 .dropdown-content {
 display: none;
 position: absolute;
@@ -55,6 +53,11 @@ z-index: 1;
 background-color: #1e73be ;
 top: 42px;
 }
+#mySidenav {
+  
+  top: 72px !important;
+  right: 0;
+}
 .dropdown-content a {
 color: #fff;
 padding: 12px 16px;
@@ -63,12 +66,8 @@ text-decoration: none;
 display: block ;
 font-family:Arial, Helvetica, sans-serif;
 }
-
-.dropdown:hover  .dropdown-content{
-display: block ;
-}
 .dropdown a:hover {background-color: #333;}
-
+.login_icon a:hover {background-color: #333;}
 .show {display: block;}
 .top_bar{
 background-color: #222;
@@ -90,4 +89,31 @@ font-family:Arial, Helvetica, sans-serif
 }
 .navbar-expand-lg{
 height: 110px;
+} */
+
+.header_bar{
+  width: 100%;
+  background: #fbfbfb;
+  height: auto;
+  min-height: 60px;
+  border-top:1px solid #dee4eb;
+  display: grid;
+  grid-template-columns: 200px auto;
+}
+.logo{
+  width: 100px;
+  padding: 10px;
+}
+.header_content{
+  border-bottom: 1px solid #dee4eb;
+  display: grid;
+  align-items: center;
+  justify-content: end;
+  padding-right: 20px;
+}
+.log_off_icon {
+  color: #7f8fa4;
+}
+.log_off_icon:hover{
+  color: #278ef1;
 }
