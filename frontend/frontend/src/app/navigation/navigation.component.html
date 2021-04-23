@@ -17,7 +17,6 @@
                 <a class="dropdown-item" href="#" >View Time Submissions</a>
             </div>
         </li>
-
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
             aria-expanded="false">Projects</a>
@@ -40,57 +39,69 @@
           <a class="nav-link" href="#" routerLink="/login"><fa-icon [icon]='faUser'></fa-icon></a>
         </li>
         
-
       </ul>
     </div>
   </nav> -->
 
-  <div>
-    <div class="top_bar">
-      <div class="top_bar_content">
-        <p>
-          <fa-icon style="color: #1E73BE;padding: 8px;" [icon]='faMapMarkerAlt'></fa-icon>
-          Cupertino, CA 95014-2358, USA   
+<!-- <div>
+  <div class="top_bar">
+    <div class="top_bar_content">
+      <p>
+        <fa-icon style="color: #1E73BE;padding: 8px;" [icon]='faMapMarkerAlt'></fa-icon>
+        Cupertino, CA 95014-2358, USA
+      </p>
+      <p>
+        <fa-icon style="color: #1E73BE;padding: 8px;" [icon]='faPhoneAlt'></fa-icon>
+        +1 (888) 207-5969
+      </p>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="header_navbar">
+      <div class="header_menu dropdown">
+        <p class="dropbtn" routerLink="/" (click)="menuHover('')">
+          <img src="https://www.indiumsoftware.com/wp-content/uploads/2020/11/Indium-software-Logo-1.svg" alt="">
         </p>
-        <p>
-          <fa-icon style="color: #1E73BE;padding: 8px;" [icon]='faPhoneAlt'></fa-icon>
-          +1 (888) 207-5969                
-        </p>
+      </div>
+      <div class="header_menu dropdown">
+        <p class="dropbtn" (mouseover)="menuHover('myDropdown_employee')">Employee</p>
+        <div (mouseleave)="menuLeave('myDropdown_employee')" id="myDropdown_employee" class="dropdown-content">
+          <a class="dropdown-item" href="#" routerLink="/addemployee">Add Employee</a>
+          <a class="dropdown-item" href="#" routerLink="/employee">View Employee</a>
+          <a class="dropdown-item" href="#" routerLink="/timesubmission">Time Submissions</a>
+        </div>
+      </div>
+      <div class="header_menu dropdown">
+        <p class="dropbtn" (mouseover)="menuHover('myDropdown_project')">Projects</p>
+        <div (mouseleave)="menuLeave('myDropdown_project')" id="myDropdown_project" class="dropdown-content">
+          <a class="dropdown-item" href="#" routerLink="/addproject">Add Project</a>
+          <a class="dropdown-item" href="#" routerLink="/project">View Projects</a>
+          <a class="dropdown-item" href="#">Add Resource to Project</a>
+        </div>
+      </div>
+      <div class="header_menu  login_icon nav-item">
+        <a class="nav-link" href="#" routerLink="/account">
+          <p class="dropbtn" (mouseover)="menuHover('mySidenav')">
+            <fa-icon [icon]='faUser'></fa-icon>
+          </p>
+        </a>
+        <div (mouseleave)="menuLeave('mySidenav')" id="mySidenav" class="dropdown-content">
+        <a class="dropdown-item" >Personal Summary</a>
+        <a class="dropdown-item" >Professional Summary</a>
+        <a class="dropdown-item" >Time Summary</a>
+        <a class="dropdown-item" >Logout</a>
       </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="header_navbar">
-        <div class="header_menu dropdown">
-          <p class="dropbtn" routerLink="/" (click)="menuHover('')">
-            <img src="https://www.indiumsoftware.com/wp-content/uploads/2020/11/Indium-software-Logo-1.svg" alt="">
-                  </p>
-        </div>
-  
-        <div class="header_menu dropdown">
-          <p class="dropbtn" (mouseover)="menuHover('myDropdown_employee')">Employee</p>
-          <div  (mouseleave)="menuLeave('myDropdown_employee')" id="myDropdown_employee" class="dropdown-content">
-            <a class="dropdown-item" href="#" routerLink="/addemployee">Add Employee</a>
-            <a class="dropdown-item" href="#" routerLink="/employee">View Employee</a>
-            <a class="dropdown-item" href="#" routerLink="/timesubmission">Time</a>
-            <!-- <a class="dropdown-item" href="#" routerLink="/individualTime">Time Info</a> -->
-          </div>
-        </div>
-    
-        <div   class="header_menu dropdown">
-          <p class="dropbtn" (mouseover)="menuHover('myDropdown_project')">Projects</p>
-          <div (mouseleave)="menuLeave('myDropdown_project')" id="myDropdown_project" class="dropdown-content">
-            <a class="dropdown-item" href="#" routerLink="/addproject">Add Project</a>
-            <a class="dropdown-item" href="#" routerLink="/project">View Projects</a>
-            <!-- <a class="dropdown-item" href="#">Add Resource to Project</a> -->
-          </div>
-        </div>
-      
-  
-        <div class="header_menu login_icon nav-item">
-          <a class="nav-link" href="#" routerLink="/account">
-            <fa-icon [icon]='faUser'></fa-icon>
-          </a>
-        </div>
-      </div>
-    </nav>
+</div>
+</nav>
+</div> -->
+<div class="main_bar">
+  <div class="header_bar">
+    <div class="logo">
+      <img width="100%" height="100%" src="https://www.indiumsoftware.com/wp-content/uploads/2020/11/Indium-software-Logo-1.svg" alt="">
+    </div>
+    <div class="header_content">
+      <fa-icon class="log_off_icon" [icon]='faPowerOff'></fa-icon>
+    </div>
   </div>
+</div>

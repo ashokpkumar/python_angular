@@ -1,6 +1,6 @@
 <div class="login_page_bg">
   <div class="login_style">
-    <div>
+    <form (onsubmit)="onSubmit()" >
       <p class="sign_reset" *ngIf="forgotPass === false && login === false">SIGN IN</p>
       <p class="sign_reset" *ngIf="forgotPass === true">Please set you password Here</p>
 
@@ -36,7 +36,7 @@
           <button (click)="logout()">Logout</button>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>
 

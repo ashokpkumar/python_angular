@@ -1,0 +1,4 @@
+.side_main_content{
+    display: grid;
+    grid-template-columns: 200px 0px  auto;
+}

@@ -40,7 +40,11 @@ import { TimeSummaryComponent } from './time-summary/time-summary.component';
 import { AccountSummaryComponent } from './account-summary/account-summary.component';
 import { TimesubmissionsComponent } from './timesubmissions/timesubmissions.component';
 import { IndividualTimeComponent } from './individual-time/individual-time.component';
+import { SideBarComponent } from './side-bar/side-bar.component';
 
+
+
+import {MatInputModule} from '@angular/material/input'
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -67,6 +71,7 @@ FullCalendarModule.registerPlugins([
     AccountSummaryComponent,
     TimesubmissionsComponent,
     IndividualTimeComponent,
+    SideBarComponent,
    
   ],
 
@@ -89,6 +94,7 @@ FullCalendarModule.registerPlugins([
     MatButtonModule,
     MatFormFieldModule,
     MatNativeDateModule,
+    MatInputModule
   ],
   
   providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule],

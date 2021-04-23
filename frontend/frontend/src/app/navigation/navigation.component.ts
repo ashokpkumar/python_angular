@@ -1,5 +1,5 @@
 import { Component, OnInit,HostListener } from '@angular/core';
-import { faSearch, faBell, faUser, faHome , faMapMarkerAlt,faPhoneAlt} from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faBell, faUser, faHome , faMapMarkerAlt,faPhoneAlt,faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import {CookieService} from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 @Component({
@@ -28,7 +28,8 @@ export class NavigationComponent implements OnInit {
   faUser = faUser;
   faHome = faHome;
   faPhoneAlt = faPhoneAlt;
-  faMapMarkerAlt = faMapMarkerAlt
+  faMapMarkerAlt = faMapMarkerAlt;
+  faPowerOff = faPowerOff;
 
   constructor(public toastr: ToastrService,private cookieService: CookieService) { }
 
