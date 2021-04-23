@@ -2,6 +2,7 @@ import { Component, OnInit,HostListener } from '@angular/core';
 import { faSearch, faBell, faUser, faHome , faMapMarkerAlt,faPhoneAlt,faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import {CookieService} from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
@@ -31,14 +32,19 @@ export class NavigationComponent implements OnInit {
   faMapMarkerAlt = faMapMarkerAlt;
   faPowerOff = faPowerOff;
 
-  constructor(public toastr: ToastrService,private cookieService: CookieService) { }
+  constructor(private router: Router,public toastr: ToastrService,private cookieService: CookieService) { }
 
   public ngOnInit(): void {
     this.cookieService.set('cookie-name','our cookie value');
     this.cookieValue = this.cookieService.get('cookie-name');
     console.log("Cookie value", this.cookieValue);
   }
-
+  logout(){
+    console.log("Logging out ")
+    this.cookieService.set('login','false');
+    
+    this.router.navigate(['/login']);
+  }
   menuHover(className){
     var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;

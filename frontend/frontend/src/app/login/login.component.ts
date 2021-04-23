@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
     
       }
   onSubmit() {
+    console.log("Project",this.project)
     this.apiService.addProject(this.project)
     .subscribe(data=>{
       console.log(Object.keys(data));
