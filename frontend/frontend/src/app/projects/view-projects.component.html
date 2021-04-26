@@ -2,7 +2,7 @@
 <div class="add_project_bg">
   <div class="container card">
     <div class="add_project_align">
-      <div class="container">   
+      <div class="container">
         <table>
             <thead>
                 <tr class="proj_list_th">
@@ -15,11 +15,11 @@
                     <th data-field="Financial year" data-filter-control="select" data-sortable="true">Financial year</th>
                     <th data-field="Project Code" data-filter-control="select" data-sortable="true">Project Code</th>
                     <th data-field="Resource Info" data-filter-control="select" data-sortable="true">Resource Info</th>
-                    
+
                 </tr>
             </thead>
             <tbody>
-              
+
                     <tr class="proj_list_th" *ngFor="let item of project_list">
                         <td>{{item.client_name}}</td>
                         <td>{{item.project_name}}</td>
@@ -31,17 +31,17 @@
                         <td>{{item.project_code}}</td>
                         <td><button (click)="open(content,item.project_code)" type="button" class="add_projects">Add</button> {{item.resource_info}} </td>
                         <!-- <td><button (click)="addResource(item.project_code)">Add</button> {{item.resource_info}} </td> -->
-                        
+
                     </tr>
-              
+
             </tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
-  
-  
+
+
 
     <ng-template #content let-modal>
         <div class="modal-header profile_update_header">
@@ -57,14 +57,14 @@
 
             <label>Project ID: </label>
             <input [(ngModel)]="projectResource.project_id" />
-            
+
           </div>
           <div class="body_content_align">
             <label>Employee ID: </label>
             <select [(ngModel)]="projectResource.emp_id" >
 
                 <option *ngFor="let item of employee_list" value={{item.emp_id}}>{{item.emp_id}}</option>
-           
+
             </select>
           </div>
         </div>
@@ -73,6 +73,6 @@
           <button type="button" class="add_projects" (click)="modal.close('Save click')">Save</button>
         </div>
       </ng-template>
-      
+
       <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
-      
+

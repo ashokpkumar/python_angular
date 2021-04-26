@@ -13,7 +13,7 @@
 <div class="acc_summary_head">
 <div class = "tableInfo" id="personal" *ngIf="personal">
   <p class="table_summary_heading">Personal info Summary</p>
-  <table>
+  <table *ngIf="roles=='RMG Admin'">
       <tr>
         <th>Full Name</th>
         <th>{{userData.full_name}}</th>
@@ -38,8 +38,8 @@
           <td>Work Location</td>
           <td>{{userData.geography}}</td>
       </tr>
-     
-      
+
+
     </table>
 </div>
 
@@ -74,7 +74,7 @@
 </div>
 </div>
 <div class = "tableInfo" id="Timeinfo" *ngIf="time">
-  
+
   <full-calendar [options]="calendarOptions"></full-calendar>
 </div>
 
@@ -86,7 +86,7 @@
       </button>
     </div>
     <div class="modal-body">
-      
+
       <div>
         <label>Date </label>
         <input [(ngModel)]="timeInfo.date" />
@@ -118,7 +118,7 @@
         <label>Comments: </label>
         <input [(ngModel)]="timeInfo.comments" />
       </div>
-      
+
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit Time info</button>

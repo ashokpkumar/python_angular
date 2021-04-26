@@ -21,8 +21,8 @@ export class projectsApiService {
     }
     else if (title=='warning'){
         this.toastr.warning(message, title)
-    }    
-} 
+    }
+}
   getProjects() {
     return this.http.get(`${API_URL}/projects`);
 }
@@ -30,7 +30,7 @@ getEmployees() {
   return this.http.get(`${API_URL}/employees`);
 }
 addProjectResource(projectResource:projectResource): Observable<any> {
-  const headers = { 'content-type': 'application/json'}  
+  const headers = { 'content-type': 'application/json'}
   const body=JSON.stringify(projectResource);
   console.log(body);
   return this.http.post(`${API_URL}/addProjectResource`, body,{'headers':headers})

@@ -17,17 +17,20 @@ export class EmployeesComponent implements OnInit {
   empListSubs: Subscription;
   projectListSubs: Subscription;
   projectResource = new projectResource();
+  
   constructor(private modalService: NgbModal,private empApi: employeesApiService,private router: Router,private cookieService: CookieService) { }
-
-  ngOnInit()  {
-    if (this.cookieService.get('login')=='true'){}
+  public roles="";
+  ngOnInit(): void {
+    if (this.cookieService.get('login')=='true'){
+    this.roles=this.cookieService.get('roles');
+    }
     else{
       this.router.navigate(['/login']);
     }
     this.empListSubs = this.empApi
                             .getExams()
                             .subscribe(res=>{this.employee_list=res;
-                              
+
                               console.log(this.employee_list);
                             },console.error) ;
                             this.projectListSubs = this.empApi
@@ -35,7 +38,7 @@ export class EmployeesComponent implements OnInit {
       .subscribe(res=>{this.project_list=res;
          console.log(res)
       },
-   
+
       ) ;
   }
   addResource(projectResource){
@@ -54,7 +57,7 @@ export class EmployeesComponent implements OnInit {
     this.projectResource.emp_id = project_code;
      console.log('Project Code: ',project_code);
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
- 
+
       this.addResource(this.projectResource);
     }, (reason) => {
 

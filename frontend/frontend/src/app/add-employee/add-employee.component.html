@@ -1,4 +1,4 @@
-<div class="add_employee_bg">
+<div class="add_employee_bg" *ngIf="roles=='RMG Admin'">
   <div class="container card">
     <p class="add_emp_heading"> Add Employee</p>
     <div class="ps" style="position: relative; max-height: calc(100vh - 173px);" ></div>
@@ -203,7 +203,7 @@
     <label>Roles: </label>
     <input [(ngModel)]="employee.roles" />
   </div>
-  
+
   <div>
     <button (click)="onSubmit()">Add</button>
   </div>

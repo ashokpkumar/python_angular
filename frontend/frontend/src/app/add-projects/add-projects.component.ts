@@ -26,20 +26,21 @@ export class AddProjectsComponent implements OnInit {
     geography: new FormControl(''),
     solutioncategory: new FormControl(''),
     financialyear: new FormControl(''),
-        
   });
   constructor(private router: Router,private cookieService: CookieService,private apiService:addProjectApiService,private projectApi: projectsApiService) { }
-
+  public roles=""
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){}
+    if (this.cookieService.get('login')=='true'){
+    this.roles=this.cookieService.get('roles');
+    }
     else{
       this.router.navigate(['/login']);
     }
   }
   onSubmit() {
-    
+
     console.log(this.project)
-    
+
     this.apiService.addProject(this.project)
     .subscribe(data=>{console.log(data),this.apiService.showMessage(Object.values(data),Object.keys(data))});
     this.router.navigate(["/project"]);

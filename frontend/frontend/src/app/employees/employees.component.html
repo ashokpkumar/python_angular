@@ -2,7 +2,7 @@
 <!-- <p>Employees List</p>    -->
 <div class="container">
   <p class="emp_list_heading">Employees List</p>
-  <table>
+  <table *ngIf="roles=='RMG Admin'">
     <thead>
       <tr class="emp_list_th">
         <!-- <tr> -->
@@ -47,7 +47,7 @@
         </th>
       </tr>
     </thead>
-    
+
     <thead>
       <tr class="emp_list_th">
         <!-- <tr> -->
@@ -59,20 +59,20 @@
         <th data-field="assigned Date" data-filter-control="select" data-sortable="true">Project Assigned Date</th>
         <th data-field="end Date" data-filter-control="select" data-sortable="true">Project End Date</th>
         <th data-field="Resource Status" data-filter-control="input" data-sortable="true">
-          
+
           Resource Status</th>
         <th data-field="Manager Name" data-filter-control="select" data-sortable="true">
-         
+
 
           Manager Name</th>
         <th data-field="Client Name" data-filter-control="select" data-sortable="true">
-        
+
           Client Name</th>
         <th data-field="Delivery Type" data-filter-control="select" data-sortable="true">
-        
+
           Delivery Type</th>
         <th data-field="Additional Allocation" data-filter-control="select" data-sortable="true">
-        
+
           Additional Allocation
         </th>
         <th data-field="Skills" data-filter-control="select" data-sortable="true">

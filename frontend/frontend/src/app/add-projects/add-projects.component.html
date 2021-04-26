@@ -1,4 +1,4 @@
-<div class="add_project_bg">
+<div class="add_project_bg" *ngIf="roles=='Sales Team'">
   <div class="container card">
     <p class="add_project_heading"> Add Project</p>
     <div class="add_project_align container_bg">
@@ -54,7 +54,7 @@
   </div>
 </div>
 
-<!-- 
+<!--
 
 <div>
   <div>
@@ -97,7 +97,7 @@
     <label>Financial year: </label>
     <input [(ngModel)]="project.financialyear" />
   </div>
-  
+
 
   <div>
     <button (click)="onSubmit()">Add</button>

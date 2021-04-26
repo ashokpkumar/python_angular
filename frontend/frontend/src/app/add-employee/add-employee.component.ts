@@ -38,9 +38,11 @@ export class AddEmployeeComponent implements OnInit {
   public employee_fields_list:any 
   name = new FormControl('');
   constructor(private apiService:addEmployeeService,private router: Router,private cookieService: CookieService) { }
-
+  public roles="";
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){}
+    if (this.cookieService.get('login')=='true'){
+    this.roles=this.cookieService.get('roles');
+    }
     else{
       this.router.navigate(['/login']);
     }

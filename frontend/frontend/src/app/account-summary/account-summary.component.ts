@@ -19,7 +19,7 @@ export class AccountSummaryComponent implements OnInit {
   posts = [];
   data = {};
   calendarOptions: CalendarOptions;
-  
+
   public personal:boolean = false;
   public professional:boolean = false;
   public time:boolean = false;
@@ -30,9 +30,11 @@ export class AccountSummaryComponent implements OnInit {
   constructor(private router: Router,private modalService: NgbModal,private http: HttpClient, private apiService:accountService,private cookieService: CookieService) { }
   @ViewChild('content')
   private defaultTabButtonsTpl: TemplateRef<any>;
-
+  public roles=""
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){}
+    if (this.cookieService.get('login')=='true'){
+    this.roles=this.cookieService.get('roles');
+    }
     else{
       this.router.navigate(['/login']);
     }
@@ -53,12 +55,12 @@ export class AccountSummaryComponent implements OnInit {
               console.log("Iteration",value)
               this.posts.push(value);
             }
- 
+
           },console.error) ;
           this.posts.push({'title':'This is your','start':'2021-04-29'});
           this.posts.push({'title':'This is your','start':'2021-04-21'});
-       
-     
+
+
       }, 2000);
       setTimeout(() => {
         this.calendarOptions = {
@@ -67,10 +69,10 @@ export class AccountSummaryComponent implements OnInit {
         events: this.posts
         };
       }, 3000);
-          
-      
 
-    
+
+
+
 
   }
 
@@ -119,7 +121,7 @@ export class AccountSummaryComponent implements OnInit {
     this.open(this.defaultTabButtonsTpl);
   }
   open(content) {
-  
+
     this.modalService.open(this.defaultTabButtonsTpl, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       console.log("Time Info",this.timeInfo);
       this.timeInfo['user_name']=this.cookieService.get('username');;
@@ -130,14 +132,14 @@ export class AccountSummaryComponent implements OnInit {
     this.userData = data,
     this.apiService.showMessage(Object.values(data),Object.keys(data)),
     this.timeShow();
-    this.apiService.getEvents().subscribe(res=>{    console.log("146",res)        
+    this.apiService.getEvents().subscribe(res=>{    console.log("146",res)
       for (let value of res){this.posts.push(value);}
     },) ;
     this.timeShow();
 
   });
 
-    
+
     }, (reason) => {
 
     });

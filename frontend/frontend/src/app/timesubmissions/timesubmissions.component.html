@@ -10,7 +10,7 @@
   </select>
 </div>
 <div class="container" *ngIf="timeDatas?.length > 0">
-  <div class="time_submission_table">
+  <div class="time_submission_table" *ngIf="roles=='Project Manager(PM)'">
   <table>
     <thead>
       <tr class="emp_list_th">
@@ -24,14 +24,14 @@
             <th data-field="Review" data-filter-control="select" data-sortable="true">AL</th>
             <th data-field="Review" data-filter-control="select" data-sortable="true">Total</th>
             <th data-field="Review" data-filter-control="select" data-sortable="true">Unapproved</th>
-            
+
         </tr>
     </thead>
     <tbody>
             <tr class="emp_list_th" *ngFor="let timedata of timeDatas">
-        
+
                 <td><a href="url">{{timedata.user_id}}</a></td>
-                
+
                 <td>{{timedata.user_name}}</td>
                 <td><a (click)="clickNumbers(timedata.user_id,'project')">{{timedata.project_time}}</a></td>
                 <td><a (click)="clickNumbers(timedata.user_id,'bench')">{{timedata.bench}}</a></td>
@@ -40,11 +40,11 @@
                 <td><a (click)="clickNumbers(timedata.user_id,'al')">{{timedata.al}}</a></td>
                 <td><a (click)="clickNumbers(timedata.user_id,'total')">{{timedata.total_hrs}}</a></td>
                 <td><a (click)="clickNumbers(timedata.user_id,'unapproved')">{{timedata.unapproved}}</a></td>
-                
+
             </tr>
-            
-           
-     
+
+
+
     </tbody>
     <tfoot>
       <tr>
@@ -59,7 +59,7 @@
         <td><a (click)="clickNumbers('total','unapproved')">{{totalTime['total_unapproved']}}</a></td>
       </tr>
     </tfoot>
-    
+
   </table>
 </div>
 </div>
@@ -71,7 +71,7 @@
     <table>
       <thead>
         <tr class="emp_list_th">
-           <tr> 
+           <tr>
               <th data-field="dateInfo" data-checkbox="true">Date</th>
               <th data-field="username" data-checkbox="true">username</th>
               <th data-field="manager name" data-filter-control="input" data-sortable="true">Manager Name</th>
@@ -83,7 +83,7 @@
       </thead>
       <tbody>
                   <tr class="emp_list_th" *ngFor="let timeSubmissions of submissionClicked">
-       
+
                   <td>{{timeSubmissions.date_info}}</td>
                   <td>{{timeSubmissions.user_id}}</td>
                   <td>{{timeSubmissions.manager_id}}</td>
@@ -94,9 +94,9 @@
                     <button (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)" type="button" class="btn btn-success"><fa-icon [icon]='faCheck'></fa-icon></button>
                     <button (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)" type="button" class="btn btn-danger"><fa-icon [icon]='faTimes'></fa-icon></button>
                   </td>
-                
+
               </tr>
-       
+
       </tbody>
   </table>
   </div>
@@ -116,22 +116,22 @@
               <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
               <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
               <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
-            
+
           </tr>
       </thead>
       <tbody>
                   <tr class="emp_list_th" *ngFor="let time of timeClicked">
-      
+
                   <td>{{time.date_info}}</td>
                   <td>{{time.user_id}}</td>
                   <td>{{time.manager_id}}</td>
                   <td>{{time.time_type}}</td>
                   <td>{{time.hours}}</td>
                   <td>{{time.status}}</td>
-                  
-                
+
+
               </tr>
-       
+
       </tbody>
   </table>
   </div>
@@ -175,17 +175,17 @@
                         <button (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)" type="button" class="btn btn-success"><fa-icon [icon]='faCheck'></fa-icon></button>
                         <button (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)" type="button" class="btn btn-danger"><fa-icon [icon]='faTimes'></fa-icon></button>
                       </td>
-                    
+
                   </tr>
-           
+
           </tbody>
       </table>
       </div>
     </div>
-    
+
   </div>
   <div class="modal-footer">
-    
+
   </div>
 </ng-template>
 
@@ -203,36 +203,36 @@
         <table>
           <thead>
             <tr class="emp_list_th">
-    
+
                   <th data-field="dateInfo" data-checkbox="true">Date</th>
                   <th data-field="username" data-checkbox="true">username</th>
                   <th data-field="manager name" data-filter-control="input" data-sortable="true">Manager Name</th>
                   <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
                   <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
                   <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
-                
+
               </tr>
           </thead>
           <tbody>
                       <tr class="emp_list_th" *ngFor="let time of timeClicked">
-          
+
                       <td>{{time.date_info}}</td>
                       <td>{{time.user_id}}</td>
                       <td>{{time.manager_id}}</td>
                       <td>{{time.time_type}}</td>
                       <td>{{time.hours}}</td>
                       <td>{{time.status}}</td>
-                      
-                    
+
+
                   </tr>
-           
+
           </tbody>
       </table>
       </div>
     </div>
-    
+
   </div>
   <div class="modal-footer">
-    
+
   </div>
 </ng-template>

@@ -20,7 +20,6 @@ export class TimesubmissionsComponent implements OnInit {
   user_name : String;
   timeDatas = [];
   totalTime = {};
-
   arr = [];
   allUserUnapproved:boolean;
   allUserapproved:boolean;
@@ -29,14 +28,16 @@ export class TimesubmissionsComponent implements OnInit {
   constructor(private modalService: NgbModal,private router: Router,private cookieService: CookieService, private apiService:timeSubmissionsService) { }
   @ViewChild('approved')
   private defaultTabButtonsTpl1: TemplateRef<any>;
-  
+
   @ViewChild('unapproved')
   private defaultTabButtonsTpl2: TemplateRef<any>;
 
-  
+
+  public roles="";
   ngOnInit(): void {
-    this.allUserUnapproved = false;
-    if (this.cookieService.get('login')=='true'){}
+    if (this.cookieService.get('login')=='true'){
+    this.roles=this.cookieService.get('roles');
+    }
     else{
       this.router.navigate(['/login']);
     }
@@ -50,7 +51,7 @@ export class TimesubmissionsComponent implements OnInit {
     this.apiService.getTimeData(this.user_name)
     .subscribe(data=>{
                  this.timeDatas = data.result,
-                 this.totalTime = data.total                  
+                 this.totalTime = data.total
                     });
   }
   clickNumbers(user,type){
@@ -61,7 +62,7 @@ if (type=='unapproved'){
   .subscribe(data=>{
     this.submissionClicked = data,
     this.open(this.defaultTabButtonsTpl2),
-    
+
     this.allUserUnapproved=true,
     this.allUserapproved=false
   });
@@ -74,7 +75,7 @@ if (type=='unapproved'){
     this.open(this.defaultTabButtonsTpl1),
     this.allUserapproved=true,
     this.allUserUnapproved=false
- 
+
   });
 }
   }
@@ -89,9 +90,9 @@ if (type=='unapproved'){
   open(content) {
   console.log(this.timeClicked);
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      
 
-    
+
+
     }, (reason) => {
 
     });
