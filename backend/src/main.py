@@ -9,12 +9,13 @@ from entities.database import employee,project,authUser,timesubmissions,TimeMast
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
 from entities.sample_data import create_sample_employee,create_sample_project,time_master
-from entities.mail import index
+
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_expects_json import expects_json
+from flask_mail import Mail, Message
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -23,10 +24,24 @@ import datetime
 import json
 from sqlalchemy.ext.serializer import loads, dumps
 
+import entities.mail
+
 app = Flask(__name__)
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'indium@gmail.com'
+app.config['MAIL_PASSWORD'] = 'xxxxxxxxx'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail= Mail(app)
+
+
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 jwt = JWTManager(app)
 CORS(app)
+
 
 Base.metadata.create_all(engine)
 #time_master()
@@ -48,6 +63,9 @@ def setpassword():
 
 @app.route("/login", methods=["POST"])
 def login():
+    # email sending
+    entities.mail.send_mail()
+
     emp_id = request.json.get("emp_id", None)
     password = request.json.get("password", None)
     login=False

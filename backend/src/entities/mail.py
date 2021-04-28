@@ -1,23 +1,19 @@
-from flask import Flask
 from flask_mail import Mail, Message
- 
-app = Flask(__name__)
-mail= Mail(app)
- 
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = '**********'
-app.config['MAIL_PASSWORD'] = '******'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-mail = Mail(app)
- 
-@app.route("/")
-def index():
-   msg = Message('Hello', sender = '********', recipients = ['*********'])
-   msg.body = "Hello Flask message sent from Flask-Mail"
+from main import mail
+
+
+# app.config['MAIL_SERVER']='smtp.gmail.com'
+# app.config['MAIL_PORT'] = 465
+# app.config['MAIL_USERNAME'] = 'indium@gmail.com'
+# app.config['MAIL_PASSWORD'] = 'xxxxxx'
+# app.config['MAIL_USE_TLS'] = False
+# app.config['MAIL_USE_SSL'] = True
+#
+# mail= Mail(app)
+
+def send_mail():
+   msg = Message('test', sender = 'indium@gmail.com', recipients = ['xxx@indiumsoft.com'])
+   msg.body = "RMG app mail test"
    mail.send(msg)
    return "Sent"
- 
-if __name__ == '__main__':
-   app.run(debug = True)
+
