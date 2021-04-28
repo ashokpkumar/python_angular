@@ -9,7 +9,7 @@ from entities.database import employee,project,authUser,timesubmissions,TimeMast
 from entities.database import announcements
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
-from entities.sample_data import create_sample_employee,create_sample_project,time_master
+from entities.sample_data import create_sample_employee,create_sample_project,create_sample_timesubmissions,create_sample_authUser,time_master
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -32,6 +32,9 @@ CORS(app)
 Base.metadata.create_all(engine)
 #time_master()
 create_sample_employee()
+create_sample_project()
+create_sample_timesubmissions()
+create_sample_authUser()
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
     session = Session()
@@ -476,10 +479,10 @@ def addEmployee():
                             project_code= data.get("project_code"), 
                             dept= data.get("dept"),
                             designation = data.get("designation"),
-                            emp_start_date= datetime.datetime.now(),
-                            emp_last_working_date=datetime.datetime.now(),
-                            emp_project_assigned_date=datetime.datetime.now(),
-                            emp_project_end_date=datetime.datetime.now(),
+                            emp_start_date= data.get("emp_start_date",None),
+                            emp_last_working_date=data.get("emp_last_date",None),
+                            emp_project_assigned_date=data.get("emp_project_assigned_date",None),
+                            emp_project_end_date=data.get("emp_project_end",None),
 
                             employment_status=data.get("employment_status"), 
                             manager_name=data.get("manager_name"), 
@@ -561,7 +564,7 @@ def addProject():
         project_data = project(client_name = data.get("clientname"),
                                 project_code=data.get("projectcode"),
                                 project_name=data.get("projectname"),
-                                project_start_date=datetime.datetime.now(),
+                                project_start_date=data.get("project_start_date",None),                                
                                 project_status=data.get("projectstatus"),
                                 billing_type=data.get("billingtype"),
                                 segment=data.get("segment"),
