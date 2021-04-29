@@ -12,7 +12,10 @@ from main import mail
 # mail= Mail(app)
 
 def send_mail():
-   msg = Message('test', sender = 'indium@gmail.com', recipients = ['xxx@indiumsoft.com'])
+   msg = Message('test', sender = 'indium@gmail.com', recipients = ['xxx@indiumsoft.com','yyy@indiumsoft.com'])
+   msg.add_recipient('zzz@indiumsoft.com')
+   #msg.cc(["",""])
+   #msg.bcc(["",""])
    msg.body = "RMG app mail test"
    mail.send(msg)
    return "Sent"
