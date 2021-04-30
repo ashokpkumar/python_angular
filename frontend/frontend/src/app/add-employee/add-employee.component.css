@@ -18,6 +18,7 @@ padding: 8px;
 background-color:#ffffff;
 width: 100%;
 height: auto;
+margin-top: 60px;
 }
 .container_bg{
 background-color: #fff;
@@ -32,10 +33,6 @@ display: grid;
   justify-content: center;
   width: 100%;
   padding: 54px;
-  overflow: scroll;
-  max-height: calc(100vh - 173px);
-  overflow-x: hidden;
-  overflow-y:scroll ;
 }
 .add_employee_align > div > p{
 margin-bottom: 10px;
@@ -43,6 +40,13 @@ font-family:Arial, Helvetica, sans-serif;
 font-size: 12px;
 color: #7f8fa4;
 font-weight: 700;
+}
+.add_employee_align > div > p::after{
+  content: "*";
+    color: #f66;
+    position: relative;
+    bottom: 3px;
+    left: 1px;
 }
 .add_employee_align > div > input{
 box-sizing: border-box;
@@ -61,6 +65,7 @@ outline: 0;
 .add_emp_heading{
 font-size: 30px;
 font-weight: 600;
+color: #7f8fa4;
 font-family:Arial, Helvetica, sans-serif;
 }
 
@@ -99,4 +104,28 @@ background: #0895ec !important;
 border-color: #0895ec !important;
 color: #fff !important;
 outline: 0;
+}
+.error{
+  color: red;
+  animation-name: erroranimation;
+  animation-duration: 1s;
+  opacity: 3s;
+  animation-iteration-count: infinite;
+}
+.parent_div{
+  position: relative;
+}
+@keyframes erroranimation {
+  0%{
+  opacity: 0;
+
+  }
+  50%{
+    opacity: 0.5;
+  
+    }
+  100%{
+  opacity: 1;
+  }
+  
 }
