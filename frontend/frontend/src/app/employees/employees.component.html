@@ -1,57 +1,102 @@
 <!-- https://codepen.io/AurelieT/pen/JGxMgo -->
 <!-- <p>Employees List</p>    -->
+
 <div class="container">
   <p class="emp_list_heading">Employees List</p>
+  <div class="for_filter_search">
+    <div>
+      <input #inputSearch  [(ngModel)]="searchInput" type="text" (input)="searchData()">
+      <fa-icon class="home_svg_img search_icon" [icon]='faSearch'></fa-icon>
+    </div>
+    <div>
+      <ng-template #popTitle>
+        <div class="popup_headings">
+          <p>Apply Filters</p>
+          <p>
+            <fa-icon (click)="p.close()" class="home_svg_img" [icon]='faTimesCircle'>
+            </fa-icon>
+          </p>
+        </div>
+      </ng-template>
+      <ng-template #popContent>
+        <div class="align_filter_popup">
+          <mat-form-field appearance="fill">
+            <mat-label>Project Name</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['selectedProject']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option value="Pi-Lit">Pi-Lit</mat-option>
+              <mat-option value="Omnicure"> Omnicure</mat-option>
+              <mat-option value="Warren">Warren</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Project ID</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['projectID']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option value="DIGI1111">DIGI 1111</mat-option>
+              <mat-option value="DIGI2323">DIGI 2323</mat-option>
+              <mat-option value="DIGI2222">DIGI 2222</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="projAssignedDate" placeholder="Select Date">
+            <mat-datepicker-toggle matSuffix [for]="projAssignedDate"></mat-datepicker-toggle>
+            <mat-datepicker #projAssignedDate></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="projEndDate" placeholder="Select Date">
+            <mat-datepicker-toggle matSuffix [for]="projEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #projEndDate></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Resource Status</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['resourceStatus']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option value="Billable">Billable</mat-option>
+              <mat-option value="Non-Billabe">Non-Billabe</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Manager Name</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['managerName']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option value="Nataraj.G">Nataraj.G</mat-option>
+              <mat-option value="Karthik Rangamani">Karthik Rangamani</mat-option>
+              <mat-option value="Ramesh A">Ramesh A</mat-option>
+              <mat-option value="Satish Pala">Satish Pala</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Client Name</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['clientName']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option value="adam">adam</mat-option>
+              <mat-option value="Kasturi">Kasturi</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Delivery Type</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['deliveryType']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option value="Delivery">Delivery</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="filter_reset_btn">
+          <button (click)="applyFilter(); p.close()" >Apply</button>
+          <button (click)="resetFilter()">Reset</button>
+        </div>
+      </ng-template>
+      <fa-icon triggers="manual"  (click)="p.open(); openFilter()" [autoClose]="false" placement="bottom" #p="ngbPopover" [ngbPopover]="popContent" [popoverTitle]="popTitle"
+        class="home_svg_img filter_icon " [icon]='faSlidersH'>
+      </fa-icon>
+    </div>
+  </div>
   <table>
     <thead>
       <tr class="emp_list_th">
         <!-- <tr> -->
-        <th data-field="employee ID" data-checkbox="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-           </th>
-        <th data-field="Salutation" data-checkbox="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-        </th>
-        <th data-field="Full Name" data-filter-control="input" data-sortable="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-        </th>
-        <th data-field="Project Name" data-filter-control="input" data-sortable="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-        </th>
-        <th data-field="Project ID" data-filter-control="select" data-sortable="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-        </th>
-        <th data-field="assigned Date" data-filter-control="select" data-sortable="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-        </th>
-        <th data-field="end Date" data-filter-control="select" data-sortable="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-        </th>
-        <th data-field="Resource Status" data-filter-control="input" data-sortable="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-          </th>
-        <th data-field="Manager Name" data-filter-control="select" data-sortable="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-         </th>
-        <th data-field="Client Name" data-filter-control="select" data-sortable="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-         </th>
-        <th data-field="Delivery Type" data-filter-control="select" data-sortable="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-         </th>
-        <th data-field="Additional Allocation" data-filter-control="select" data-sortable="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-        </th>
-        <th data-field="Skills" data-filter-control="select" data-sortable="true">
-          <select name="" id=""><option value=Select>Select</option></select>
-        </th>
-      </tr>
-    </thead>
-    
-    <thead>
-      <tr class="emp_list_th">
-        <!-- <tr> -->
-        <th data-field="employee ID" data-checkbox="true">Emp ID  </th>
+        <th data-field="employee ID" data-checkbox="true">Emp ID </th>
         <th data-field="Salutation" data-checkbox="true">Salutation</th>
         <th data-field="Full Name" data-filter-control="input" data-sortable="true">Full Name</th>
         <th data-field="Project Name" data-filter-control="input" data-sortable="true">Project Name</th>
@@ -59,20 +104,20 @@
         <th data-field="assigned Date" data-filter-control="select" data-sortable="true">Project Assigned Date</th>
         <th data-field="end Date" data-filter-control="select" data-sortable="true">Project End Date</th>
         <th data-field="Resource Status" data-filter-control="input" data-sortable="true">
-          
+
           Resource Status</th>
         <th data-field="Manager Name" data-filter-control="select" data-sortable="true">
-         
+
 
           Manager Name</th>
         <th data-field="Client Name" data-filter-control="select" data-sortable="true">
-        
+
           Client Name</th>
         <th data-field="Delivery Type" data-filter-control="select" data-sortable="true">
-        
+
           Delivery Type</th>
         <th data-field="Additional Allocation" data-filter-control="select" data-sortable="true">
-        
+
           Additional Allocation
         </th>
         <th data-field="Skills" data-filter-control="select" data-sortable="true">
@@ -108,6 +153,7 @@
     </tbody>
   </table>
 </div>
+
 
 
 <ng-template #content let-modal>

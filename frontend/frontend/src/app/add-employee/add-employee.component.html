@@ -2,51 +2,66 @@
   <div class="container card">
     <p class="add_emp_heading"> Add Employee</p>
     <div class="ps" style="position: relative; max-height: calc(100vh - 173px);" ></div>
-    <div class="add_employee_align container_bg">
-      <div>
+    <div class="container_bg">
+      <form class="add_employee_align" #employeeForm = "ngForm" ngSubmit="onSubmit(employeeForm.value)">
+      <div class="form-group parent_div">
         <p>Employee ID: </p>
-        <input [(ngModel)]="employee.emp_id" />
+        <input required #empID="ngModel" class="form-control" [(ngModel)]="employee.emp_id" name="emp_id" />
+        <span *ngIf="empID.invalid && empID.touched" class="error">Employee ID is required</span>
       </div>
       <div>
         <p>Email: </p>
-        <input [(ngModel)]="employee.email" />
-        <span style="font-size: 20px;"> </span>
+        <input required #empEmail="ngModel" class="form-control" [pattern]="emailPattern" [(ngModel)]="employee.email" name="email" />
+        <span *ngIf="empEmail.invalid && empEmail.touched && !isValidFormSubmitted" class="error">
+          <div *ngIf="empEmail.errors.pattern">  
+          Employee Email is required
+        </div>
+        </span>
       </div>
       <div>
         <p>First Name: </p>
-        <input [(ngModel)]="employee.first_name" />
+        <input required #empFirstName="ngModel" class="form-control" [(ngModel)]="employee.first_name" name="firstname" />
+        <span *ngIf="empFirstName.invalid && empFirstName.touched" class="error">FirstName is required</span>
       </div>
-      <div>
+       <div>
         <p>Last Name: </p>
-        <input [(ngModel)]="employee.last_name" />
+        <input required #empLastName="ngModel" class="form-control" [(ngModel)]="employee.last_name" name="lastname" />
+        <span *ngIf="empLastName.invalid && empLastName.touched" class="error">LastName is required</span>
       </div>
       <div>
         <p>Sur name: </p>
-        <input [(ngModel)]="employee.sur_name" />
+        <input required #empSurName="ngModel" class="form-control" [(ngModel)]="employee.sur_name" name="surname" />
+        <span *ngIf="empSurName.invalid && empSurName.touched" class="error">SurName is required</span>
       </div>
-      <div>
+     <div>
         <p>Initial: </p>
-        <input [(ngModel)]="employee.initial" />
+        <input required #empInitial="ngModel" class="form-control" [(ngModel)]="employee.initial" name="initial" />
+        <span *ngIf="empInitial.invalid && empInitial.touched" class="error">Initial is required</span>
       </div>
       <div>
         <p>Salutation: </p>
-        <input [(ngModel)]="employee.salutation" />
+        <input required #empSalutation="ngModel" class="form-control" [(ngModel)]="employee.salutation" name="salutation" />
+        <span *ngIf="empSalutation.invalid && empSalutation.touched" class="error">Salutation is required</span>
       </div>
-      <div>
+       <div>
         <p>Designation: </p>
-        <input [(ngModel)]="employee.designation" />
+        <input required #empDesignation="ngModel" class="form-control" [(ngModel)]="employee.designation" name="designation" />
+        <span *ngIf="empDesignation.invalid && empDesignation.touched" class="error">Designation is required</span>
       </div>
       <div>
         <p>Project Code: </p>
-        <input [(ngModel)]="employee.project_code" />
+        <input required #empProjectCode="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="projectCode" />
+        <span *ngIf="empProjectCode.invalid && empProjectCode.touched" class="error">Project Code is required</span>
       </div>
       <div>
         <p>Geography: </p>
-        <input [(ngModel)]="employee.geography" />
+        <input required #empGeography="ngModel" class="form-control" [(ngModel)]="employee.geography" name="Geography" />
+        <span *ngIf="empGeography.invalid && empGeography.touched" class="error">Geography is required</span>
       </div>
       <div>
         <p>Department: </p>
-        <input [(ngModel)]="employee.dept" />
+        <input required #empDepartment="ngModel" class="form-control" [(ngModel)]="employee.dept" name="department" />
+        <span *ngIf="empDepartment.invalid && empDepartment.touched" class="error">Department is required</span>
       </div>
       <div>
         <p>Emp Start date: </p>
@@ -55,7 +70,6 @@
           <mat-datepicker-toggle matSuffix [for]="empStartDate"></mat-datepicker-toggle>
           <mat-datepicker #empStartDate></mat-datepicker>
         </mat-form-field>
-        <!-- <input [(ngModel)]="employee.emp_start_date" /> -->
       </div>
 
       <div>
@@ -65,45 +79,53 @@
           <mat-datepicker-toggle matSuffix [for]="projectAssignedDate"></mat-datepicker-toggle>
           <mat-datepicker #projectAssignedDate></mat-datepicker>
         </mat-form-field>
-        <!-- <input [(ngModel)]="employee.emp_project_assigned_date" /> -->
       </div>
 
       <div>
         <p>Employment Status: </p>
-        <input [(ngModel)]="employee.employment_status" />
+        <input required #empEmploymentStatus="ngModel" class="form-control" [(ngModel)]="employee.employment_status" name="employmentStatus" />
+        <span *ngIf="empEmploymentStatus.invalid && empEmploymentStatus.touched" class="error">EmploymentStatus is required</span>
       </div>
 
       <div>
         <p>Manager Name: </p>
-        <input [(ngModel)]="employee.manager_name" />
+        <input required #empManagerName="ngModel" class="form-control" [(ngModel)]="employee.manager_name" name="ManagerName" />
+        <span *ngIf="empManagerName.invalid && empManagerName.touched" class="error">ManagerName is required</span>
       </div>
       <div>
         <p>Manager Dept: </p>
-        <input [(ngModel)]="employee.manager_dept" />
+        <input required #empManagerDept="ngModel" class="form-control" [(ngModel)]="employee.manager_dept" name="managerDept" />
+        <span *ngIf="empManagerDept.invalid && empManagerDept.touched" class="error">Manager Dept is required</span>
       </div>
       <div>
         <p>Resource Status: </p>
-        <input [(ngModel)]="employee.resource_status" />
+        <input required #empResourceStatus="ngModel" class="form-control" [(ngModel)]="employee.resource_status" name="resourceStatus" />
+        <span *ngIf="empResourceStatus.invalid && empResourceStatus.touched" class="error">Resource Status is required</span>
       </div>
       <div>
         <p>Delivery Type: </p>
-        <input [(ngModel)]="employee.delivery_type" />
+        <input required #empDeliveryType="ngModel" class="form-control" [(ngModel)]="employee.delivery_type" name="deliveryType" />
+        <span *ngIf="empDeliveryType.invalid && empDeliveryType.touched" class="error">Delivery Type is required</span>
       </div>
       <div>
         <p>Additional Allocation: </p>
-        <input [(ngModel)]="employee.additional_allocation" />
+        <input required #empAdditionalAllocation="ngModel" class="form-control" [(ngModel)]="employee.additional_allocation" name="additionalAllocation" />
+        <span *ngIf="empAdditionalAllocation.invalid && empAdditionalAllocation.touched" class="error">Additional Allocation is required</span>
       </div>
       <div>
         <p>Skills: </p>
-        <input [(ngModel)]="employee.skills" />
+        <input required #empSkills="ngModel" class="form-control"[(ngModel)]="employee.skills" name="skills" />
+        <span *ngIf="empSkills.invalid && empSkills.touched" class="error">Skills is required</span>
       </div>
       <div>
         <p>Roles: </p>
-        <input [(ngModel)]="employee.roles" />
+        <input required #empRoles="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="roles" />
+        <span *ngIf="empRoles.invalid && empRoles.touched" class="error">Roles is required</span>
       </div>
       <div class="add_btn-emp">
-        <button (click)="onSubmit()" type="button" class="btn ">Add</button>
+        <button (click)="onSubmit(employeeForm.value)" type="submit" class="btn ">Add</button>
       </div>
+    </form>
     </div>
   </div>
 </div>

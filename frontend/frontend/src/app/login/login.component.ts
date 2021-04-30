@@ -72,8 +72,6 @@ export class LoginComponent implements OnInit {
         this.apiService.showMessage(Object.values(data),Object.keys(data));
         this.forgotPass=true;
       }
-      
-      
     })
     console.log(this.project);
   }
