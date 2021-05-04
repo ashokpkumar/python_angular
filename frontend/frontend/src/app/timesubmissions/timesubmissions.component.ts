@@ -18,6 +18,7 @@ export class TimesubmissionsComponent implements OnInit {
   faCheck = faCheck;
   faTimes = faTimes;
   user_name : String;
+  downloadAs: String = "Summary as Csv";
   timeDatas = [];
   totalTime = {};
 
