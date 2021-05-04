@@ -24,9 +24,7 @@
             <mat-label>Project Name</mat-label>
             <mat-select [(ngModel)]="dataForFilter['selectedProject']" disableRipple>
               <mat-option value="All">All</mat-option>
-              <mat-option value="Pi-Lit">Pi-Lit</mat-option>
-              <mat-option value="Omnicure"> Omnicure</mat-option>
-              <mat-option value="Warren">Warren</mat-option>
+              <mat-option *ngFor="let item of project_name" [value]='item'>{{item}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="fill">

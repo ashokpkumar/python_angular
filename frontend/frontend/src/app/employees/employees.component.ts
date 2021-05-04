@@ -22,7 +22,8 @@ export class EmployeesComponent implements OnInit {
   projectResource = new projectResource();
   faSearch = faSearch
   faTimesCircle =faTimesCircle
-  faSlidersH = faSlidersH
+  faSlidersH = faSlidersH  
+  project_name : any
   dataForFilter={
     selectedProject:"All",
     projectID:"All",
@@ -47,6 +48,13 @@ export class EmployeesComponent implements OnInit {
       .subscribe(res => {
         this.employee_list = res;
         this.copyEmployeeList = res
+        let project_name = []
+        this.employee_list.map(item =>{
+          if(item['project_name'] != ""){
+            project_name.push(item['project_name'])  
+          }
+        })
+        this.project_name= new Set(project_name)
         console.log(this.employee_list);
       }, console.error);
     this.projectListSubs = this.empApi
@@ -106,14 +114,15 @@ export class EmployeesComponent implements OnInit {
   }
   applyFilter(){
     let {selectedProject,projectID,resourceStatus,managerName,clientName,deliveryType} = this.dataForFilter
-
+      console.log('Test============', selectedProject)
       this.employee_list = this.copyEmployeeList.filter(item => 
       ( item['manager_name'] === managerName  || managerName === "All") && 
       ( item['project_code'] === projectID  || projectID === "All") &&
       ( item['resource_status'] === resourceStatus  || resourceStatus === "All") &&
       ( item['project_name'] === selectedProject  || selectedProject === "All") &&
       ( item['client_name'] === clientName  || clientName === "All") &&
-      ( item['delivery_type'] === deliveryType  || deliveryType === "All") 
+      ( item['delivery_type'] === deliveryType  || deliveryType === "All") && 
+      ( item['project_name'] === selectedProject  || selectedProject === "All") 
      )
      Object.entries(this.dataForFilter).map(([key,value])=>{
       this.dataForFilter[key] = 'All'
@@ -122,7 +131,7 @@ export class EmployeesComponent implements OnInit {
 
   resetFilter(){
     Object.entries(this.dataForFilter).map(([key,value])=>{
-      this.dataForFilter[key] = ''
+      this.dataForFilter[key] = 'All'
     })
   }
   openFilter(){
