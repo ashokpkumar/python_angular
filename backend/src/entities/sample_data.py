@@ -31,19 +31,18 @@ project_list = [
 ]
 
 timesubmission_list =[
-    {"date":"22/01/2021","hours":"18","user_name":"Ashok","project_id":"DIG123","manager_name":"Natraj","time_type":"wfh","status":"In Progress","submission_id":"AshokAshokwfh"},
-    {"date":"26/01/2021","hours":"11","user_name":"Amit","project_id":"DIG123","manager_name":"Natraj","time_type":"wfh","status":"In Progress","submission_id":"AmitAmitwfh"},
-    {"date":"29/01/2021","hours":"9","user_name":"Deepak","project_id":"DIG123","manager_name":"Natraj","time_type":"wfh","status":"In Progress","submission_id":"DeepakDeepakwfh"},
-    {"date":"08/02/2021","hours":"10","user_name":"Shekar","project_id":"DIG123","manager_name":"Natraj","time_type":"wfh","status":"In Progress","submission_id":"ShekarShekarwfh"},
-    {"date":"06/02/2021","hours":"18","user_name":"Manikandan","project_id":"TE146","manager_name":"Prabhu","time_type":"wfh","status":"Submitted-pending approval","submission_id":"ManikandanManikandanwfh"},
-    {"date":"12/02/2021","hours":"12","user_name":"Subramani","project_id":"TE026","manager_name":"Thakur","time_type":"wfh","status":"Submitted-pending approval","submission_id":"SubramaniSubramaniwfh"},
-    {"date":"20/02/2021","hours":"12","user_name":"Raghu","project_id":"DIG101","manager_name":"Siva","time_type":"wfh","status":"In Progress","submission_id":"RaghuRaghuwfh"},
-    {"date":"09/03/2021","hours":"14","user_name":"Sam","project_id":"DIG291","manager_name":"Vinoth","time_type":"wfh","status":"Submitted-pending approval","submission_id":"SamSamwfh"},
-    {"date":"24/03/2021","hours":"16","user_name":"Nithesh","project_id":"TE013","manager_name":"Shanmugam","time_type":"wfh","status":"Submitted-pending approval","submission_id":"NitheshNitheshwfh"},
-    {"date":"30/03/2021","hours":"12","user_name":"Ram","project_id":"DIG1234","manager_name":"Ravi","time_type":"wfh","status":"Submitted-pending approval","submission_id":"RamRamwfh"},
-    {"date":"13/04/2021","hours":"11","user_name":"Aravind","project_id":"DIG135","manager_name":"Dinesh","time_type":"wfh","status":"In Progress","submission_id":"AravindAravindwfh"},
-    {"date":"19/04/2021","hours":"17","user_name":"Vineet","project_id":"TE074","manager_name":"Prashanth","time_type":"wfh","status":"Submitted-pending approval","submission_id":"VineetVineetwfh"}
+    {"date":"22/01/2021","hours":"8","user_name":"i3228","project_id":"DIG123","manager_name":"I3186","time_type":"wfh","status":"submitted-pending approval","submission_id":"AshokAshokwfh"},
+     {"date":"22/01/2021","hours":"8","user_name":"i3228","project_id":"DIG123","manager_name":"I3186","time_type":"wfh","status":"approved","submission_id":"AshokAshokwfh"},
+      {"date":"22/01/2021","hours":"8","user_name":"i3228","project_id":"DIG123","manager_name":"I3186","time_type":"wfh","status":"unapproved","submission_id":"AshokAshokwfh"},
 
+      {"date":"22/01/2021","hours":"8","user_name":"i3228","project_id":"DIG123","manager_name":"I3186","time_type":"SL","status":"submitted-pending approval","submission_id":"AshokAshokwfh"},
+     {"date":"22/01/2021","hours":"8","user_name":"i3228","project_id":"DIG123","manager_name":"I3186","time_type":"SL","status":"approved","submission_id":"AshokAshokwfh"},
+      {"date":"22/01/2021","hours":"8","user_name":"i3228","project_id":"DIG123","manager_name":"I3186","time_type":"SL","status":"unapproved","submission_id":"AshokAshokwfh"},
+
+      {"date":"22/01/2021","hours":"8","user_name":"i3228","project_id":"DIG123","manager_name":"I3186","time_type":"CL","status":"submitted-pending approval","submission_id":"AshokAshokwfh"},
+     {"date":"22/01/2021","hours":"8","user_name":"i3228","project_id":"DIG123","manager_name":"I3186","time_type":"CL","status":"approved","submission_id":"AshokAshokwfh"},
+      {"date":"22/01/2021","hours":"8","user_name":"i3228","project_id":"DIG123","manager_name":"I3186","time_type":"CL","status":"unapproved","submission_id":"AshokAshokwfh"},
+ 
 ]
 
 authUser_list=[

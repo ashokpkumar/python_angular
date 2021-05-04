@@ -30,7 +30,7 @@ class timesubmissions(Base):
     manager_id = Column(String)
     time_type = Column(String)
     submission_id = Column(String)
-    status = Column(String)
+    status = Column(String) # ['submitted-pending approval','approved','unapproved']
     hours = Column(Integer)
     project_code=Column(String)
 
