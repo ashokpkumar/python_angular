@@ -56,3 +56,120 @@ body {
   font-weight: 600;
   font-family: 'Times New Roman', Times, serif;
 }
+.mtop{
+  margin-top: 110px;
+}
+.time_sub_heading{
+  font-size: 30px;
+color: #E4E4E4;
+font-weight: 600;
+font-family: 'Times New Roman', Times, serif;
+}
+.for_filter_search{
+  width: 100%;
+  height: 75px;
+  border: 1px solid #E4E4E4;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+  display: grid;
+  grid-template-columns: repeat(6,auto);
+  align-items: center;
+  position: relative;
+  margin-bottom: 10px;
+  border-radius: 12px ;
+}
+.table_border{
+  width: 100%;
+  height: auto;
+  border: 1px solid #E4E4E4;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+  display: grid;
+  align-items: center;
+  position: relative;
+  margin-bottom: 10px;
+  border-radius: 12px ;
+}
+.for_filter_search > div{
+  margin: 10px 20px;
+}
+::ng-deep ngb-popover-window{
+  z-index: 1000 !important;
+  left: -152px !important;
+  top: 9px !important;
+  min-width: 400px
+}
+::ng-deep ngb-popover-window.bs-popover-bottom>.arrow, ngb-popover-window.bs-popover-top>.arrow{
+  left: 89% !important;
+}
+::ng-deep mat-form-field > div > .mat-form-field-flex {
+  background-color: #ffffff !important;
+  padding: 0.75em 0.75em 0 0 !important;
+}
+
+::ng-deep mat-form-field > div > .mat-form-field-flex >  .mat-form-field-infix {
+ padding: .25em 0 .2em 0 !important;
+}
+.filter_reset_btn{
+  display: grid;
+    grid-template-columns: auto;
+    margin-bottom: 14px;
+    justify-items: center;
+    margin: 15px 0;
+}
+.filter_reset_btn > button:nth-child(1){
+  background-color: #24a7f8;
+    border: 1px solid #24a7f8;
+    color: #fff;
+    padding-bottom: 6px;
+    padding: 9px;
+    margin-bottom: 10px;
+    outline: none;
+    text-transform: capitalize;
+    min-width: 130px;
+    font-size: 14px;
+    font-weight: 600;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 120px;
+    transition-property: background-color color;
+    transition-duration: 2s;
+}
+.filter_reset_btn > button:nth-child(1):hover{
+  color: #24a7f8;
+  background: #ffffff;
+}
+.time_submission_table{
+  padding: 30px 20px;
+}
+.time_submission_table > table{
+  table-layout: fixed;
+  width: 100%;
+}
+.time_sub_row > th {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color:black;
+  }
+  table{
+    border-spacing: 0;
+    z-index: 2;
+    background: #ffffff;
+    border-radius: 12px 12px 0 0 ;
+    box-shadow: 0 2px 12px rgba(32,32,32,.3);
+  }
+  .time_sub_row > td
+  {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color: black;
+  font-size: 14px;
+      font-style: normal;
+      font-stretch: normal;
+  }
+  .bg_color_total{
+    background-color: #58aee4;
+  }
+  .bg_color_total > td{
+    color: #ffffff;
+    font-weight: 700;
+  }
+  
