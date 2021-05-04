@@ -114,7 +114,6 @@ export class EmployeesComponent implements OnInit {
   }
   applyFilter(){
     let {selectedProject,projectID,resourceStatus,managerName,clientName,deliveryType} = this.dataForFilter
-      console.log('Test============', selectedProject)
       this.employee_list = this.copyEmployeeList.filter(item => 
       ( item['manager_name'] === managerName  || managerName === "All") && 
       ( item['project_code'] === projectID  || projectID === "All") &&
