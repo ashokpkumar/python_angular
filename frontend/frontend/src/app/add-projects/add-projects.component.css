@@ -17,11 +17,13 @@ padding: 8px;
 .add_project_bg{
   background-color:#ffffff;
   width: 100%;
+  margin-top: 60px;
   height: auto;
 }
 .add_project_heading{
 font-size: 30px;
 font-weight: 600;
+color: #7f8fa4;
 font-family:Arial, Helvetica, sans-serif
 }
 .add_project_align{
@@ -32,10 +34,8 @@ font-family:Arial, Helvetica, sans-serif
   justify-content: center;
   width: 100%;
   padding: 54px;
-  overflow: scroll;
-  max-height: calc(100vh - 173px);
-  overflow-x: hidden;
-  overflow-y:scroll ;
+  max-height: 100vh;
+ 
 }
 .container_bg{
   background-color: #fff;
@@ -48,6 +48,13 @@ font-family:Arial, Helvetica, sans-serif
   font-size: 12px;
   color: #7f8fa4;
   font-weight: 700;
+}
+.add_project_align > div > p::after{
+  content: "*";
+    color: #f66;
+    position: relative;
+    bottom: 3px;
+    left: 1px;
 }
 .add_project_align > div > input{
   box-sizing: border-box;

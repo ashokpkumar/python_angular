@@ -1,14 +1,14 @@
 #from .entities.entity import Session, engine, Base
-
 # sources
 #https://medium.com/@anushkamehra16/connecting-to-sql-database-using-sqlalchemy-in-python-2be2cf883f85
 #https://medium.com/@alanhamlett/part-1-sqlalchemy-models-to-json-de398bc2ef47#:~:text=To%20add%20a%20serialization%20method,columns%20and%20returns%20a%20dictionary.&text=def%20to_dict(self%2C%20show%3D,of%20this%20model.%22%22%22
 #sources
 
 from entities.database import employee,project,authUser,timesubmissions,TimeMaster
+from entities.database import announcements
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
-from entities.sample_data import create_sample_employee,create_sample_project,time_master
+from entities.sample_data import create_sample_employee,create_sample_project,create_sample_timesubmissions,create_sample_authUser,time_master
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -22,6 +22,7 @@ from flask_cors import CORS
 from datetime import time
 import datetime
 import json
+import pytest
 from sqlalchemy.ext.serializer import loads, dumps
 
 import entities.mail
@@ -46,6 +47,10 @@ CORS(app)
 Base.metadata.create_all(engine)
 #time_master()
 create_sample_employee()
+create_sample_project()
+create_sample_timesubmissions()
+create_sample_authUser()
+
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
     session = Session()
@@ -59,7 +64,6 @@ def setpassword():
     session.commit()
     session.close()
     return jsonify({'success':'password set successfully ! Please login with your new password'}),200
-
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -126,6 +130,14 @@ def events():
         events_data.append(eve)   
     return jsonify(events_data)
 
+@app.route('/announcements')
+def announcement():
+    session = Session()
+    announcement_objects = session.query(announcements).all()
+    serialized_obj = serialize_all(announcement_objects)
+    session.close()
+    return (jsonify(serialized_obj))
+
 
 @app.route('/projects')
 def projects():
@@ -135,10 +147,47 @@ def projects():
     session.close()
     return (jsonify(serialized_obj))
 
+@app.route('/add_announcements', methods=['POST'])
+def add_announcements():
+    data = request.get_json()
+    announcement_data = announcements (user_id =data.get('user_id'),
+                                       announcement_info = data.get('announcement_info'),
+                                       announcement_category=data.get('announcement_category'),
+                                       date_logged = datetime.datetime.now(),
+                                        )
+    session = Session()
+    session.add(announcement_data)
+    session.commit()    
+    return ({'success':'Announcements are added sucessfully '})
+
+@app.route('/get_announcements', methods=['POST'])
+def get_announcements():
+    session = Session()
+    data = request.get_json()
+    user_id = data.get("user_id")
+    existing_announcements = session.query(announcements).filter(announcements.user_id==user_id).order_by(announcements.id.desc())[-30:]
+    if existing_announcements:
+    #ann = announcements.select([announcements]).order_by(-announcements.c.id.desc()).limit(2)
+    #if ann:
+        serialized_obj = serialize_all(existing_announcements)
+        print(serialized_obj)
+        return jsonify(serialized_obj),200  
+    return jsonify({'info':'No announcements are available for you'}),200
+
+@app.route('/del_fn',methods=['POST'])
+def delete_fn():
+    session = Session()
+    data = request.get_json()
+    x = data.get("x")
+    delete_announcements=session.query(announcements).filter(announcements.id>=x).delete()
+    #delete_announcements = announcements.delete().where(announcements.c.id > x)
+    return jsonify({'info':'announcements are deleted '}),200
+
+
 
 @app.route('/addtimesubmissions', methods=['POST'])
 def addtimesubmissions():    
-    data = request.get_json()
+    data = request.get_json() 
     sub_data = timesubmissions( date_info = data.get('date'),
                                     hours = data.get('hours'),
                                     user_id = data.get('user_name'),
@@ -448,10 +497,10 @@ def addEmployee():
                             project_code= data.get("project_code"), 
                             dept= data.get("dept"),
                             designation = data.get("designation"),
-                            emp_start_date= datetime.datetime.now(),
-                            emp_last_working_date=datetime.datetime.now(),
-                            emp_project_assigned_date=datetime.datetime.now(),
-                            emp_project_end_date=datetime.datetime.now(),
+                            emp_start_date= data.get("emp_start_date",None),
+                            emp_last_working_date=data.get("emp_last_date",None),
+                            emp_project_assigned_date=data.get("emp_project_assigned_date",None),
+                            emp_project_end_date=data.get("emp_project_end",None),
 
                             employment_status=data.get("employment_status"), 
                             manager_name=data.get("manager_name"), 
@@ -533,7 +582,7 @@ def addProject():
         project_data = project(client_name = data.get("clientname"),
                                 project_code=data.get("projectcode"),
                                 project_name=data.get("projectname"),
-                                project_start_date=datetime.datetime.now(),
+                                project_start_date=data.get("project_start_date",None),                                
                                 project_status=data.get("projectstatus"),
                                 billing_type=data.get("billingtype"),
                                 segment=data.get("segment"),

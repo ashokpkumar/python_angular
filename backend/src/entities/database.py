@@ -22,18 +22,26 @@ class authUser(Base):
     password = Column(String)
     roles = Column(VARCHAR(2000))
 
-
 class timesubmissions(Base):
     __tablename__="timesubmissions"
     id = Column(Integer, primary_key=True)
-    date_info = Column(String)
+    date_info = Column(VARCHAR(2000))
     user_id = Column(String)
     manager_id = Column(String)
     time_type = Column(String)
     submission_id = Column(String)
-    status = Column(String)
+    status = Column(String) # ['submitted-pending approval','approved','unapproved']
     hours = Column(Integer)
     project_code=Column(String)
+
+
+class announcements(Base):
+    __tablename__="announcements"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(String)
+    announcement_info = Column(String)
+    announcement_category = Column(String)
+    date_logged = Column(DateTime)
     
 class employee(Base):
     __tablename__ = 'employee'
@@ -50,10 +58,10 @@ class employee(Base):
     dept = Column(String)
     designation = Column(String)
     
-    emp_start_date = Column(DateTime)
-    emp_last_working_date = Column(DateTime)
-    emp_project_assigned_date = Column(DateTime)
-    emp_project_end_date = Column(DateTime)
+    emp_start_date = Column(VARCHAR(2000))
+    emp_last_working_date = Column(VARCHAR(2000))
+    emp_project_assigned_date = Column(VARCHAR(2000))
+    emp_project_end_date = Column(VARCHAR(2000))
 
     employment_status = Column(String) #in project, new joined, in notice, bench, relieved
     manager_name = Column(String) 
@@ -184,7 +192,7 @@ class project(Base):
     client_name = Column(String)
     project_code = Column(String)
     project_name = Column(String)
-    project_start_date = Column(DateTime)
+    project_start_date = Column(VARCHAR(2000))
     project_status = Column(String)
     billing_type = Column(String)
     segment = Column(String)

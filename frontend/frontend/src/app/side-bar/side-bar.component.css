@@ -1,9 +1,11 @@
 .sidebar{
     display: grid;
     width: 200px;
-    height:calc(100vh - 61px);
+    height:100vh;
     background: #fbfbfb;
     border-right: 1px solid #dee4eb;
+    position: fixed;
+    margin-top: 60px;
   }
 
   .divide_sidebar{
@@ -40,6 +42,7 @@ margin-top: 1px solid #cbd5e1;
   }
   .main_menu_content:focus{
     font-weight: bold;
+    outline: 0;
   }
   .sub_menu > a {
     color: #7f8fa4;
@@ -52,10 +55,14 @@ margin-top: 1px solid #cbd5e1;
     line-height: normal;
     padding: 10px 0px;
     margin-left: 40px;
+    max-width: 155px;
   }
   .sub_menu > a:hover{
     color: #24a7f8;
     background: none;
+  }
+  .sub_menu > a:active{
+    color: #24a7f8 !important;
   }
   .show{
     color: black;

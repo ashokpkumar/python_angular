@@ -1,20 +1,43 @@
-
-
-
-<div class="container">
- <label >From Date: </label> <input type="text"><label >To Date: </label> <input type="text"><button type="submit">Submit</button>
- <select name="" id="">
-  <option value=""></option>
-    <option value="">Summary as Csv</option>
-    <option value="">Raw Data as Csv</option>
-  </select>
+<div class="container mtop">
+  <p class="time_sub_heading">Time Submission</p>
+  <div class="for_filter_search">
+    <div></div>
+    <div>
+      <mat-form-field>
+        <input matInput [matDatepicker]="fromDate" placeholder="Select From Date">
+        <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+        <mat-datepicker #fromDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput [matDatepicker]="toDate" placeholder="Select To Date">
+        <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+        <mat-datepicker #toDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Download As</mat-label>
+        <mat-select [(ngModel)]="downloadAs" disableRipple>
+          <mat-option value="Summary as Csv">Summary as Csv</mat-option>
+          <mat-option value="Raw Data as Csv">Raw Data as Csv </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="filter_reset_btn">
+      <button>Submit</button>
+    </div>
+    <div></div>
+  </div>
 </div>
 <div class="container" *ngIf="timeDatas?.length > 0">
-  <div class="time_submission_table">
-  <table>
-    <thead>
-      <tr class="emp_list_th">
-        <!-- <tr> -->
+    <div class="table_border">
+    <div class="time_submission_table">
+      <table>
+        <thead>
+          <tr class="time_sub_row">
+            <!-- <tr> -->
             <th data-field="dateInfo" data-checkbox="true">User ID</th>
             <th data-field="username" data-checkbox="true">User Name</th>
             <th data-field="manager name" data-filter-control="input" data-sortable="true">Project Time</th>
@@ -24,49 +47,42 @@
             <th data-field="Review" data-filter-control="select" data-sortable="true">AL</th>
             <th data-field="Review" data-filter-control="select" data-sortable="true">Total</th>
             <th data-field="Review" data-filter-control="select" data-sortable="true">Unapproved</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-            <tr class="emp_list_th" *ngFor="let timedata of timeDatas">
-        
-                <td><a href="url">{{timedata.user_id}}</a></td>
-                
-                <td>{{timedata.user_name}}</td>
-                <td><a (click)="clickNumbers(timedata.user_id,'project')">{{timedata.project_time}}</a></td>
-                <td><a (click)="clickNumbers(timedata.user_id,'bench')">{{timedata.bench}}</a></td>
-                <td><a (click)="clickNumbers(timedata.user_id,'sl')">{{timedata.sl}}</a></td>
-                <td><a (click)="clickNumbers(timedata.user_id,'cl')">{{timedata.cl}}</a></td>
-                <td><a (click)="clickNumbers(timedata.user_id,'al')">{{timedata.al}}</a></td>
-                <td><a (click)="clickNumbers(timedata.user_id,'total')">{{timedata.total_hrs}}</a></td>
-                <td><a (click)="clickNumbers(timedata.user_id,'unapproved')">{{timedata.unapproved}}</a></td>
-                
-            </tr>
-            
-           
-     
-    </tbody>
-    <tfoot>
-      <tr>
-        <td>Total: </td>
-        <td></td>
-        <td><a (click)="clickNumbers('total','project')">{{totalTime['total_project']}}</a></td>
-        <td><a (click)="clickNumbers('total','bench')">{{totalTime['total_bench']}}</a></td>
-        <td><a (click)="clickNumbers('total','sl')">{{totalTime['total_sl']}}</a></td>
-        <td><a (click)="clickNumbers('total','cl')">{{totalTime['total_cl']}}</a></td>
-        <td><a (click)="clickNumbers('total','al')">{{totalTime['total_al']}}</a></td>
-        <td></td>
-        <td><a (click)="clickNumbers('total','unapproved')">{{totalTime['total_unapproved']}}</a></td>
-      </tr>
-    </tfoot>
-    
-  </table>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="time_sub_row" *ngFor="let timedata of timeDatas">
+            <td><a href="url">{{timedata.user_id}}</a></td>
+            <td>{{timedata.user_name}}</td>
+            <td><a (click)="clickNumbers(timedata.user_id,'project')">{{timedata.project_time}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,'bench')">{{timedata.bench}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,'sl')">{{timedata.sl}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,'cl')">{{timedata.cl}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,'al')">{{timedata.al}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,'total')">{{timedata.total_hrs}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,'unapproved')">{{timedata.unapproved}}</a></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="time_sub_row bg_color_total">
+            <td>Total: </td>
+            <td></td>
+            <td><a (click)="clickNumbers('total','project')">{{totalTime['total_project']}}</a></td>
+            <td><a (click)="clickNumbers('total','bench')">{{totalTime['total_bench']}}</a></td>
+            <td><a (click)="clickNumbers('total','sl')">{{totalTime['total_sl']}}</a></td>
+            <td><a (click)="clickNumbers('total','cl')">{{totalTime['total_cl']}}</a></td>
+            <td><a (click)="clickNumbers('total','al')">{{totalTime['total_al']}}</a></td>
+            <td></td>
+            <td><a (click)="clickNumbers('total','unapproved')">{{totalTime['total_unapproved']}}</a></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
 </div>
-</div>
-<p></p>
+  <p></p>
 
-<!-- This is the part which displays all the unapproved times of all the users -->
-<!-- <div class="container" *ngIf="submissionClicked?.length > 0 && allUserUnapproved === true" >
+  <!-- This is the part which displays all the unapproved times of all the users -->
+  <!-- <div class="container" *ngIf="submissionClicked?.length > 0 && allUserUnapproved === true" >
   <div class="time_submission_table">
     <table>
       <thead>
@@ -103,8 +119,8 @@
 </div>  -->
 
 
-<!-- This is the part which displays all the approved times of all the users -->
-<!-- <div class="container" *ngIf="timeClicked?.length > 0 " >
+  <!-- This is the part which displays all the approved times of all the users -->
+  <!-- <div class="container" *ngIf="timeClicked?.length > 0 " >
   <div class="time_submission_table">
     <table>
       <thead>
@@ -139,100 +155,108 @@
 
 
 
-<ng-template #unapproved let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Review Time</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="container" *ngIf="submissionClicked?.length > 0 " >
-      <div class="time_submission_table">
-        <table>
-          <thead>
-            <tr class="emp_list_th">
-              <!-- <tr> -->
-                  <th data-field="dateInfo" data-checkbox="true">Date</th>
-                  <th data-field="username" data-checkbox="true">username</th>
-                  <th data-field="manager name" data-filter-control="input" data-sortable="true">Manager Name</th>
-                  <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
-                  <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
-                  <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
-                  <th data-field="Review" data-filter-control="select" data-sortable="true">Review</th>
-              </tr>
-          </thead>
-          <tbody>
-                      <tr class="emp_list_th" *ngFor="let timeSubmissions of submissionClicked">
-                  <!-- <tr *ngFor="let item of employee_list"> -->
-                      <td>{{timeSubmissions.date_info}}</td>
-                      <td>{{timeSubmissions.user_id}}</td>
-                      <td>{{timeSubmissions.manager_id}}</td>
-                      <td>{{timeSubmissions.time_type}}</td>
-                      <td>{{timeSubmissions.hours}}</td>
-                      <td>{{timeSubmissions.status}}</td>
-                      <td>
-                        <button (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)" type="button" class="btn btn-success"><fa-icon [icon]='faCheck'></fa-icon></button>
-                        <button (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)" type="button" class="btn btn-danger"><fa-icon [icon]='faTimes'></fa-icon></button>
-                      </td>
-                    
-                  </tr>
-           
-          </tbody>
-      </table>
-      </div>
+  <ng-template #unapproved let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Review Time</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-    
-  </div>
-  <div class="modal-footer">
-    
-  </div>
-</ng-template>
+    <div class="modal-body">
+      <div class="container" *ngIf="submissionClicked?.length > 0 ">
+        <div class="time_submission_table">
+          <table>
+            <thead>
+              <tr class="emp_list_th">
+                <!-- <tr> -->
+                <th data-field="dateInfo" data-checkbox="true">Date</th>
+                <th data-field="username" data-checkbox="true">username</th>
+                <th data-field="manager name" data-filter-control="input" data-sortable="true">Manager Name</th>
+                <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
+                <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
+                <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
+                <th data-field="Review" data-filter-control="select" data-sortable="true">Review</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="emp_list_th" *ngFor="let timeSubmissions of submissionClicked">
+                <!-- <tr *ngFor="let item of employee_list"> -->
+                <td>{{timeSubmissions.date_info}}</td>
+                <td>{{timeSubmissions.user_id}}</td>
+                <td>{{timeSubmissions.manager_id}}</td>
+                <td>{{timeSubmissions.time_type}}</td>
+                <td>{{timeSubmissions.hours}}</td>
+                <td>{{timeSubmissions.status}}</td>
+                <td>
+                  <button
+                    (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
+                    type="button" class="btn btn-success">
+                    <fa-icon [icon]='faCheck'></fa-icon>
+                  </button>
+                  <button
+                    (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
+                    type="button" class="btn btn-danger">
+                    <fa-icon [icon]='faTimes'></fa-icon>
+                  </button>
+                </td>
+
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+
+    </div>
+  </ng-template>
 
 
-<ng-template #approved let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Time Info</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="container" *ngIf="timeClicked?.length > 0 " >
-      <div class="time_submission_table">
-        <table>
-          <thead>
-            <tr class="emp_list_th">
-    
-                  <th data-field="dateInfo" data-checkbox="true">Date</th>
-                  <th data-field="username" data-checkbox="true">username</th>
-                  <th data-field="manager name" data-filter-control="input" data-sortable="true">Manager Name</th>
-                  <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
-                  <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
-                  <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
-                
-              </tr>
-          </thead>
-          <tbody>
-                      <tr class="emp_list_th" *ngFor="let time of timeClicked">
-          
-                      <td>{{time.date_info}}</td>
-                      <td>{{time.user_id}}</td>
-                      <td>{{time.manager_id}}</td>
-                      <td>{{time.time_type}}</td>
-                      <td>{{time.hours}}</td>
-                      <td>{{time.status}}</td>
-                      
-                    
-                  </tr>
-           
-          </tbody>
-      </table>
-      </div>
+  <ng-template #approved let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Time Info</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-    
-  </div>
-  <div class="modal-footer">
-    
-  </div>
-</ng-template>
+    <div class="modal-body">
+      <div class="container" *ngIf="timeClicked?.length > 0 ">
+        <div class="time_submission_table">
+          <table>
+            <thead>
+              <tr class="emp_list_th">
+
+                <th data-field="dateInfo" data-checkbox="true">Date</th>
+                <th data-field="username" data-checkbox="true">username</th>
+                <th data-field="manager name" data-filter-control="input" data-sortable="true">Manager Name</th>
+                <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
+                <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
+                <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="emp_list_th" *ngFor="let time of timeClicked">
+
+                <td>{{time.date_info}}</td>
+                <td>{{time.user_id}}</td>
+                <td>{{time.manager_id}}</td>
+                <td>{{time.time_type}}</td>
+                <td>{{time.hours}}</td>
+                <td>{{time.status}}</td>
+
+
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+
+    </div>
+  </ng-template>

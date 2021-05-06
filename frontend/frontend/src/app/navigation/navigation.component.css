@@ -99,6 +99,8 @@ height: 110px;
   border-top:1px solid #dee4eb;
   display: grid;
   grid-template-columns: 200px auto;
+  position: fixed;
+  z-index: 12;
 }
 .logo{
   width: 100px;
