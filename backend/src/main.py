@@ -1,5 +1,4 @@
 #from .entities.entity import Session, engine, Base
-
 # sources
 #https://medium.com/@anushkamehra16/connecting-to-sql-database-using-sqlalchemy-in-python-2be2cf883f85
 #https://medium.com/@alanhamlett/part-1-sqlalchemy-models-to-json-de398bc2ef47#:~:text=To%20add%20a%20serialization%20method,columns%20and%20returns%20a%20dictionary.&text=def%20to_dict(self%2C%20show%3D,of%20this%20model.%22%22%22
@@ -22,6 +21,7 @@ from flask_cors import CORS
 from datetime import time
 import datetime
 import json
+import pytest
 from sqlalchemy.ext.serializer import loads, dumps
 
 app = Flask(__name__)
@@ -35,6 +35,7 @@ create_sample_employee()
 create_sample_project()
 create_sample_timesubmissions()
 create_sample_authUser()
+
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
     session = Session()
@@ -48,7 +49,6 @@ def setpassword():
     session.commit()
     session.close()
     return jsonify({'success':'password set successfully ! Please login with your new password'}),200
-
 
 @app.route("/login", methods=["POST"])
 def login():
