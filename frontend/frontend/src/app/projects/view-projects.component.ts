@@ -22,6 +22,10 @@ export class ViewProjectsComponent implements OnInit {
   public project_list: any;
   public employee_list: any;
   public copyProjList: any
+  project_name: any
+  project_id: any
+  client_name: any
+
   projectListSubs: Subscription;
   searchInput:String;
   closeResult = '';
@@ -44,7 +48,23 @@ export class ViewProjectsComponent implements OnInit {
         .subscribe(res => {
           this.project_list = res;
           this.copyProjList = res
-          console.table(res)
+          let project_name = []
+          let project_id = []
+          let client_name = []
+          this.project_list.map(item=>{
+            if(item['project_name']!=""){
+              project_name.push(item['project_name'])
+            }
+            if(item['project_code']!=""){
+              project_id.push(item['project_code'])
+            }
+            if(item['client_name']!=""){
+              client_name.push(item['client_name'])
+            }
+          })
+          this.project_name= new Set(project_name)
+          this.project_id= new Set(project_id)
+          this.client_name = new Set(client_name)
         },
 
         );
