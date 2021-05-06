@@ -24,18 +24,14 @@
             <mat-label>Project Name</mat-label>
             <mat-select [(ngModel)]="dataForFilter['selectedProject']" disableRipple>
               <mat-option value="All">All</mat-option>
-              <mat-option value="Pi-Lit">Pi-Lit</mat-option>
-              <mat-option value="Omnicure"> Omnicure</mat-option>
-              <mat-option value="Warren">Warren</mat-option>
+              <mat-option *ngFor="let item of project_name" [value]='item'>{{item}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Project ID</mat-label>
             <mat-select [(ngModel)]="dataForFilter['projectID']" disableRipple>
               <mat-option value="All">All</mat-option>
-              <mat-option value="DIGI1111">DIGI 1111</mat-option>
-              <mat-option value="DIGI2323">DIGI 2323</mat-option>
-              <mat-option value="DIGI2222">DIGI 2222</mat-option>
+               <mat-option *ngFor="let item of project_id" [value]='item'>{{item}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field>
@@ -52,33 +48,28 @@
             <mat-label>Resource Status</mat-label>
             <mat-select [(ngModel)]="dataForFilter['resourceStatus']" disableRipple>
               <mat-option value="All">All</mat-option>
-              <mat-option value="Billable">Billable</mat-option>
-              <mat-option value="Non-Billabe">Non-Billabe</mat-option>
+              <mat-option *ngFor="let item of resource_status" [value]='item'>{{item}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Manager Name</mat-label>
             <mat-select [(ngModel)]="dataForFilter['managerName']" disableRipple>
               <mat-option value="All">All</mat-option>
-              <mat-option value="Nataraj.G">Nataraj.G</mat-option>
-              <mat-option value="Karthik Rangamani">Karthik Rangamani</mat-option>
-              <mat-option value="Ramesh A">Ramesh A</mat-option>
-              <mat-option value="Satish Pala">Satish Pala</mat-option>
+              <mat-option *ngFor="let item of manager_name" [value]='item'>{{item}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Client Name</mat-label>
             <mat-select [(ngModel)]="dataForFilter['clientName']" disableRipple>
               <mat-option value="All">All</mat-option>
-              <mat-option value="adam">adam</mat-option>
-              <mat-option value="Kasturi">Kasturi</mat-option>
+              <mat-option *ngFor="let item of client_name" [value]='item'>{{item}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Delivery Type</mat-label>
             <mat-select [(ngModel)]="dataForFilter['deliveryType']" disableRipple>
               <mat-option value="All">All</mat-option>
-              <mat-option value="Delivery">Delivery</mat-option>
+              <mat-option *ngFor="let item of delivery_type" [value]='item'>{{item}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

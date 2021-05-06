@@ -23,6 +23,13 @@ export class EmployeesComponent implements OnInit {
   faSearch = faSearch
   faTimesCircle =faTimesCircle
   faSlidersH = faSlidersH
+  project_name : any
+  project_id : any
+  resource_status : any
+  manager_name : any
+  client_name : any
+  delivery_type : any
+
   dataForFilter={
     selectedProject:"All",
     projectID:"All",
@@ -31,13 +38,13 @@ export class EmployeesComponent implements OnInit {
     clientName:"All",
     deliveryType:"All"
   }
-  
+
   constructor(private modalService: NgbModal, private empApi: employeesApiService, private router: Router, private cookieService: CookieService) { }
 
   ngOnInit() {
     let myElement = document.getElementsByClassName("popover") as HTMLCollectionOf<HTMLElement>;
     console.log(myElement);
-    
+
     if (this.cookieService.get('login') == 'true') { }
     else {
       this.router.navigate(['/login']);
@@ -47,8 +54,45 @@ export class EmployeesComponent implements OnInit {
       .subscribe(res => {
         this.employee_list = res;
         this.copyEmployeeList = res
+        let project_name = []
+        let project_id = []
+        let resource_status = []
+        let manager_name = []
+        let client_name = []
+        let delivery_type = []
+        this.employee_list.map(item =>{
+          if(item['project_name'] != ""){
+            project_name.push(item['project_name'])
+          }
+          if(item['project_code'] != ""){
+            project_id.push(item['project_code'])
+          }
+          if(item['resource_status'] != ""){
+            resource_status.push(item['resource_status'])
+          }
+          if(item['manager_name'] != ""){
+            manager_name.push(item['manager_name'])
+          }
+          if(item['client_name'] != ""){
+            client_name.push(item['client_name'])
+          }
+          if(item['delivery_type'] != ""){
+            delivery_type.push(item['delivery_type'])
+          }
+        })
+        this.project_name= new Set(project_name)
+        this.project_id= new Set(project_id)
+        this.resource_status = new Set(resource_status)
+        this.manager_name = new Set(manager_name)
+        this.client_name = new Set(client_name)
+        this.delivery_type = new Set(delivery_type)
+
         console.log(this.employee_list);
+        
+
+                
       }, console.error);
+
     this.projectListSubs = this.empApi
       .getProjects()
       .subscribe(res => {
@@ -106,14 +150,14 @@ export class EmployeesComponent implements OnInit {
   }
   applyFilter(){
     let {selectedProject,projectID,resourceStatus,managerName,clientName,deliveryType} = this.dataForFilter
-
-      this.employee_list = this.copyEmployeeList.filter(item => 
-      ( item['manager_name'] === managerName  || managerName === "All") && 
+      this.employee_list = this.copyEmployeeList.filter(item =>
+      ( item['manager_name'] === managerName  || managerName === "All") &&
       ( item['project_code'] === projectID  || projectID === "All") &&
       ( item['resource_status'] === resourceStatus  || resourceStatus === "All") &&
       ( item['project_name'] === selectedProject  || selectedProject === "All") &&
       ( item['client_name'] === clientName  || clientName === "All") &&
-      ( item['delivery_type'] === deliveryType  || deliveryType === "All") 
+      ( item['delivery_type'] === deliveryType  || deliveryType === "All") &&
+      ( item['project_name'] === selectedProject  || selectedProject === "All") 
      )
      Object.entries(this.dataForFilter).map(([key,value])=>{
       this.dataForFilter[key] = 'All'
@@ -122,10 +166,10 @@ export class EmployeesComponent implements OnInit {
 
   resetFilter(){
     Object.entries(this.dataForFilter).map(([key,value])=>{
-      this.dataForFilter[key] = ''
+      this.dataForFilter[key] = 'All'
     })
   }
   openFilter(){
-    
+
   }
 }
