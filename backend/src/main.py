@@ -4,7 +4,7 @@
 #https://medium.com/@alanhamlett/part-1-sqlalchemy-models-to-json-de398bc2ef47#:~:text=To%20add%20a%20serialization%20method,columns%20and%20returns%20a%20dictionary.&text=def%20to_dict(self%2C%20show%3D,of%20this%20model.%22%22%22
 #sources
 
-from entities.database import employee,project,authUser,timesubmissions,TimeMaster
+from entities.database import employee,project,authUser,timesubmissions,TimeMaster, forget_pass
 from entities.database import announcements
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
@@ -35,6 +35,7 @@ create_sample_employee()
 create_sample_project()
 create_sample_timesubmissions()
 create_sample_authUser()
+
 
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
