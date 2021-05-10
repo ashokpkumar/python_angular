@@ -4,7 +4,7 @@
 #https://medium.com/@alanhamlett/part-1-sqlalchemy-models-to-json-de398bc2ef47#:~:text=To%20add%20a%20serialization%20method,columns%20and%20returns%20a%20dictionary.&text=def%20to_dict(self%2C%20show%3D,of%20this%20model.%22%22%22
 #sources
 
-from entities.database import employee,project,authUser,timesubmissions,TimeMaster
+from entities.database import employee,project,authUser,timesubmissions
 from entities.database import announcements
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
@@ -24,19 +24,18 @@ import datetime
 import json
 import pytest
 from sqlalchemy.ext.serializer import loads, dumps
-
 import entities.mail
 
 app = Flask(__name__)
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'indium@gmail.com'
-app.config['MAIL_PASSWORD'] = 'xxxxxxxxx'
+app.config['MAIL_USERNAME'] = 'please enter email '
+app.config['MAIL_PASSWORD'] = 'please enter password '
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
-mail= Mail(app)
+mail = Mail(app)
 
 
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
@@ -45,11 +44,25 @@ CORS(app)
 
 
 Base.metadata.create_all(engine)
-#time_master()
+time_master()
 create_sample_employee()
 create_sample_project()
 create_sample_timesubmissions()
 create_sample_authUser()
+
+# Sample end point for email function
+@app.route("/emailSend1", methods=["POST"])
+def emailSend():
+    # email sending
+    subject = request.json.get("subject")
+    sender = request.json.get("sender")
+    recipient = request.json.get("recipient")
+    body = request.json.get("body")
+    cc = request.json.get("cc")
+
+    entities.mail.send_mail(subject, sender, recipient, body, cc, bcc=None,)
+
+    return "email send successfully"
 
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
@@ -58,7 +71,7 @@ def setpassword():
     password = request.json.get("password", None)
     auth_object = session.query(authUser).filter(authUser.emp_id == emp_id).first()
     if auth_object is None:
-        return jsonify({'error':'User not found, This user is not added yet'}),200
+        return jsonify({'error':'User not found, This user is not added yet'}), 200
     auth_object.password=password
     session.add(auth_object)
     session.commit()
@@ -67,9 +80,6 @@ def setpassword():
 
 @app.route("/login", methods=["POST"])
 def login():
-    # email sending
-    entities.mail.send_mail()
-
     emp_id = request.json.get("emp_id", None)
     password = request.json.get("password", None)
     login=False
