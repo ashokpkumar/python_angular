@@ -507,7 +507,46 @@ def addEmployee():
     except:
         return jsonify({"error":"Some error happened in adding the employee"}),500
 
+@app.route('/linkPM', methods=['POST'])
+def addProjectmanager():
+    session = Session()
+    data = request.get_json()
+    project_code = data.get("project_id")
+    project_manager=data.get('manager_id')
+    existing_project = session.query(project).filter(project.project_code==project_code).first()
+    if existing_project==None:
+        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
+    
+    existing_project_manager= session.query(employee).filter(employee.manager_id==project_manager).first()
+    if existing_project_manager==None:
+        return jsonify({"error":"Manager ID {} Does not Exists !".format(project_manager)})
 
+    existing_project_manager.project_code = project_code
+    session.add(existing_project_manager)
+    session.commit()
+    if existing_project.project_manager_id == None:
+        existing_project.project_manager_id = project_manager
+        session.add(existing_project)
+        session.commit()
+    else:
+        existing_PM = existing_project.project_manager_id
+        existing_PM_list = existing_PM.split(",")
+        for i in existing_PM_list:
+            if i=="":
+                existing_PM_list.remove(i)
+        if project_manager in existing_PM_list:
+            return  jsonify({'error':'Project Manager already Exists in the project'})
+        existing_PM_list.append(project_manager)
+
+        out_PM =""
+        for i in existing_PM_list:
+            out_PM = i +","+ out_PM
+        existing_project.PM_id=out_PM[:-1]
+        session.add(existing_project)
+        session.commit()
+    session.close()
+    return jsonify({"success":"Manager {} and Project {} Linked".format(project_manager,project_code)})
+        
 @app.route('/addProjectResource', methods=['POST'])
 def addProjectResource():
     session = Session()

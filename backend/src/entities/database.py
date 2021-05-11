@@ -199,6 +199,7 @@ class project(Base):
     geography = Column(String)
     solution_category = Column(String)
     financial_year = Column(String)
+    project_manager_id = Column(VARCHAR(2000))
     resource_info = Column(String)
 
     def to_dict(self, show=None, _hide=[], _path=None):
