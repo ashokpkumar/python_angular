@@ -31,8 +31,8 @@ app = Flask(__name__)
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'please enter email '
-app.config['MAIL_PASSWORD'] = 'please enter password '
+app.config['MAIL_USERNAME'] = 'please enter email'
+app.config['MAIL_PASSWORD'] = 'please enter password'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
@@ -62,7 +62,9 @@ def emailSend():
     body = request.json.get("body")
     cc = request.json.get("cc")
 
-    entities.mail.send_mail(subject, sender, recipient, body, cc, bcc=None,)
+    bcc = request.json.get("bcc")
+
+    entities.mail.send_mail(subject, sender, recipient, body, cc, bcc)
 
     return "email send successfully"
 
