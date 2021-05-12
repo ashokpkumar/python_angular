@@ -54,7 +54,7 @@ class employee(Base):
     sur_name = Column(String)
     initial = Column(String) 
     salutation = Column(String) #mr,ms, Miss, Mrs
-    project_code = Column(String)
+    project_code = Column(VARCHAR(2000))
     dept = Column(String)
     designation = Column(String)
     
