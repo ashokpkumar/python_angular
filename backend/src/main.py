@@ -26,7 +26,18 @@ import pytest
 from sqlalchemy.ext.serializer import loads, dumps
 import entities.mail
 
+
+from login.subroutelogin import login_bp
+from employees.employee import employees_bp
+from project.projects import project_bp
+from submission.submissions  import submission_bp
+
 app = Flask(__name__)
+
+app.register_blueprint(login_bp)
+app.register_blueprint(employees_bp)
+app.register_blueprint(project_bp)
+app.register_blueprint(submission_bp)
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -77,7 +88,7 @@ def setpassword():
     session.commit()
     session.close()
     return jsonify({'success':'password set successfully ! Please login with your new password'}),200
-
+'''
 @app.route("/login", methods=["POST"])
 def login():
     emp_id = request.json.get("emp_id", None)
@@ -102,9 +113,9 @@ def login():
     roles = auth_object.roles
     login=True
     access_token = create_access_token(identity=emp_id)
-    return jsonify(access_token=access_token,username=emp_id,roles=roles,login=login,employee_name = employee_name)
+    return jsonify(access_token=access_token,username=emp_id,roles=roles,login=login,employee_name = employee_name)'''
 
-
+'''
 @app.route('/employees')
 def employees():
     session = Session()
@@ -124,7 +135,7 @@ def employees():
                 dictionary.update(proj_item)
                 break
     session.close()
-    return (jsonify(serialed_out))
+    return (jsonify(serialed_out))'''
 
 
 @app.route('/events')
@@ -148,14 +159,14 @@ def announcement():
     session.close()
     return (jsonify(serialized_obj))
 
-
+'''
 @app.route('/projects')
 def projects():
     session = Session()
     project_objects = session.query(project).all()
     serialized_obj = serialize_all(project_objects)
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj))'''
 
 @app.route('/add_announcements', methods=['POST'])
 def add_announcements():
@@ -194,7 +205,7 @@ def delete_fn():
     return jsonify({'info':'announcements are deleted '}),200
 
 
-
+'''
 @app.route('/addtimesubmissions', methods=['POST'])
 def addtimesubmissions():    
     data = request.get_json() 
@@ -253,7 +264,7 @@ def getSubmissionsBy():
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='submitted-pending approval', timesubmissions.user_id==user).all()
         serialized_obj = serialize_all(sub_objects)
         session.close()
-        return (jsonify(serialized_obj)),200
+        return (jsonify(serialized_obj)),200'''
 
 
 @app.route('/getTimeBy', methods=['POST'])
@@ -480,6 +491,7 @@ schema ={
     "manager_name","manager_dept","resource_status","delivery_type","additional_allocation","skills","roles"]
   }
 
+'''
 @app.route('/addEmployee', methods=['POST'])
 @expects_json(schema)
 def addEmployee():
@@ -632,7 +644,7 @@ def viewEmpInfo():
         proj_dict = project_serialized[0]
         emp_dict.update(proj_dict)
     emp_dict['full_name'] = emp_dict['salutation'] + emp_dict['first_name'] + emp_dict['last_name'] 
-    return jsonify(emp_dict), 201
+    return jsonify(emp_dict), 201'''
 
 
 if __name__ == '__main__':

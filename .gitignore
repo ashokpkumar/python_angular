@@ -3,3 +3,4 @@
 *.xml
 *.txt
 .idea/python_angular.iml
+*.pyc
