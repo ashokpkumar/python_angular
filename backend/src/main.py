@@ -28,11 +28,8 @@ import entities.mail
 
 
 from login.subroutelogin import login_bp
-
 from employees.employee import employees_bp
-
 from project.projects import project_bp
-
 from submission.submissions  import submission_bp
 
 app = Flask(__name__)
