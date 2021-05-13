@@ -64,6 +64,7 @@
               </th>
               <th data-field="Financial year" data-filter-control="select" data-sortable="true">Financial year</th>
               <th data-field="Project Code" data-filter-control="select" data-sortable="true">Project Code</th>
+              <th data-field="Project Manager ID" data-filter-control="select" data-sortable="true">Project Manager ID</th>
               <th data-field="Resource Info" data-filter-control="select" data-sortable="true">Resource Info</th>
 
             </tr>
@@ -79,6 +80,8 @@
               <td>{{item.solution_category}}</td>
               <td>{{item.financial_year}}</td>
               <td>{{item.project_code}}</td>
+              <td><button (click)="open(content,item.project_manager_id)" type="button" class="add_project_manager_id's">Add</button>
+                {{item.project_manager_id}} </td>
               <td><button (click)="open(content,item.project_code)" type="button" class="add_projects">Add</button>
                 {{item.resource_info}} </td>
               <!-- <td><button (click)="addResource(item.project_code)">Add</button> {{item.resource_info}} </td> -->

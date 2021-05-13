@@ -22,7 +22,7 @@ from flask_cors import CORS
 from datetime import time
 import datetime
 import json
-import pytest
+#import pytest
 from sqlalchemy.ext.serializer import loads, dumps
 import entities.mail
 
@@ -598,6 +598,7 @@ def addProject():
                                 segment=data.get("segment"),
                                 geography=data.get("geography"),
                                 solution_category =data.get("solutioncategory"),
+                                project_manager_id= data.get("project_manager_id"),
                                 financial_year = data.get("financialyear")
         
         )
