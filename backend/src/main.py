@@ -567,10 +567,29 @@ def addProjectResource():
     existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project==None:
         return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
+    print(existing_emp)
+    if existing_emp.project_code == None:
+        existing_emp.project_code=project_code
+        session.add(existing_emp)
+        session.commit()
+    else:
+        existing_proj_list = existing_emp.project_code.split(',')
+        for i in existing_proj_list:
+            if i=="":
+                existing_proj_list.remove(i)
+        if project_code in existing_proj_list:
+            return jsonify({'error':'resource exist already in the project'})
+        existing_proj_list.append(project_code)
+        out_list =''
+        for i in existing_proj_list:
+            out_list = i + "," + out_list
+        existing_emp.project_code = out_list # check if the string sanitation is required
+        session.add(existing_emp)
+        session.commit()
 
-    existing_emp.project_code=project_code
-    session.add(existing_emp)
-    session.commit()
+    # existing_emp.project_code=project_code
+    # session.add(existing_emp)
+    # session.commit()
     if existing_project.resource_info == None:
         existing_project.resource_info=resource_id
         session.add(existing_project)
