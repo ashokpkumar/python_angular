@@ -192,6 +192,7 @@ class project(Base):
     client_name = Column(String)
     project_code = Column(String)
     project_name = Column(String)
+    project_manager_id=Column(VARCHAR(2000))
     project_start_date = Column(VARCHAR(2000))
     project_status = Column(String)
     billing_type = Column(String)

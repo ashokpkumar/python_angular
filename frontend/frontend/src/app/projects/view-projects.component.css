@@ -107,6 +107,15 @@ padding: 2em;
   line-height: 13px;
   font-family: Poppins;
 }
+.add_project_managerid{
+  background: #24a7f8;
+  border-color: #24a7f8;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 10px 15px;
+  line-height: 13px;
+  font-family: Poppins;
+}
 .for_filter_search{
   width: 100%;
   height: 50px;

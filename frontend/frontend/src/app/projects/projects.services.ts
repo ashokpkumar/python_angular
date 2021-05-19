@@ -5,6 +5,8 @@ import {Injectable} from '@angular/core';
 import {API_URL} from '../env';
 import { ToastrService } from 'ngx-toastr';
 import {projectResource} from './assign';
+import {projectManager} from './assignPM';
+
 @Injectable()
 export class projectsApiService {
     public employeesList: any;
@@ -34,6 +36,12 @@ addProjectResource(projectResource:projectResource): Observable<any> {
   const body=JSON.stringify(projectResource);
   console.log(body);
   return this.http.post(`${API_URL}/addProjectResource`, body,{'headers':headers})
+}
+addProjectManager(projectManager:projectManager): Observable<any> {
+  const headers = { 'content-type': 'application/json'}  
+  const body=JSON.stringify(projectManager);
+  console.log(body);
+  return this.http.post(`${API_URL}/addProjectmanager`, body,{'headers':headers})
 }
 
 }
