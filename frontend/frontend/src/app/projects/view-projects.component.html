@@ -143,12 +143,12 @@
       <div class="body_content_align">
 
         <label>Project ID: </label>
-        <input [(ngModel)]="projectResource.project_id" />
+        <input [(ngModel)]="projectManager.project_id" />
 
       </div>
       <div class="body_content_align">
         <label>Manager ID: </label>
-        <select [(ngModel)]="projectManager.project_manager_id">
+        <select [(ngModel)]="projectManager.manager_id">
 
           <option *ngFor="let item of employee_list" value={{item.manager_id}}>{{item.manager_id}}</option>
 
