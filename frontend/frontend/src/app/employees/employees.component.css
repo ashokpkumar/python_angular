@@ -39,9 +39,9 @@ font-size: 14px;
 
 .emp_list_heading{
 font-size: 30px;
-color: #E4E4E4;
+color: #7f8fa4;
 font-weight: 600;
-font-family: 'Times New Roman', Times, serif;
+font-family: Arial, Helvetica, sans-serif;
 }
 .add_res_title{
 text-align: center;
@@ -98,13 +98,19 @@ box-sizing: border-box;
 outline: 0;
 }
 .add_employess{
-background: #24a7f8;
-border-color: #24a7f8;
-color: #ffffff;
-font-size: 13px;
-padding: 5px 10px;
-line-height: 13px;
-font-family: Poppins;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  min-width: 50px;
+  padding: 5px;
+  font-family: Open Sans,sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #24a7f8;
+  height: 30px;
+  border-color: #24a7f8;
+  background: #fff;
+  margin: 15px;
 }
 .for_filter_search{
   width: 100%;
@@ -233,4 +239,36 @@ font-family: Poppins;
   color: #ffffff;
   background: #24a7f8;
   border: 1px solid #24a7f8;
+}
+
+.add_employes{
+  background: #24a7f8;
+  border-color: #24a7f8;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 5px 10px;
+  line-height: 13px;
+  font-family: Poppins;
+  }
+
+  .close-icon {
+    float: right;
+    font-size: 1.3125rem;
+    font-weight: 600;
+    line-height: 2;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    cursor: pointer;
+    top: -10px;
+    position: relative;
+}
+
+.project-id-div{
+  display: grid;
+  grid-template-rows: auto;
+}
+
+.pagination-container /deep/ .ngx-pagination .current {
+  margin-top: 15px;
 }

@@ -5,7 +5,7 @@
   <p class="emp_list_heading">Employees List</p>
   <div class="for_filter_search">
     <div>
-      <input #inputSearch  [(ngModel)]="searchInput" type="text" (input)="searchData()">
+      <input #inputSearch [(ngModel)]="searchInput" type="text" (input)="searchData()">
       <fa-icon class="home_svg_img search_icon" [icon]='faSearch'></fa-icon>
     </div>
     <div>
@@ -27,22 +27,10 @@
               <mat-option *ngFor="let item of project_name" [value]='item'>{{item}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Project ID</mat-label>
-            <mat-select [(ngModel)]="dataForFilter['projectID']" disableRipple>
-              <mat-option value="All">All</mat-option>
-               <mat-option *ngFor="let item of project_id" [value]='item'>{{item}}</mat-option>
-            </mat-select>
-          </mat-form-field>
           <mat-form-field>
-            <input matInput [matDatepicker]="projAssignedDate" placeholder="Select Date">
+            <input matInput [matDatepicker]="projAssignedDate" placeholder="Project End Date">
             <mat-datepicker-toggle matSuffix [for]="projAssignedDate"></mat-datepicker-toggle>
             <mat-datepicker #projAssignedDate></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [matDatepicker]="projEndDate" placeholder="Select Date">
-            <mat-datepicker-toggle matSuffix [for]="projEndDate"></mat-datepicker-toggle>
-            <mat-datepicker #projEndDate></mat-datepicker>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Resource Status</mat-label>
@@ -74,12 +62,12 @@
           </mat-form-field>
         </div>
         <div class="filter_reset_btn">
-          <button (click)="applyFilter(); p.close()" >Apply</button>
+          <button (click)="applyFilter(); p.close()">Apply</button>
           <button (click)="resetFilter()">Reset</button>
         </div>
       </ng-template>
-      <fa-icon triggers="manual"  (click)="p.open(); openFilter()" [autoClose]="false" placement="bottom" #p="ngbPopover" [ngbPopover]="popContent" [popoverTitle]="popTitle"
-        class="home_svg_img filter_icon " [icon]='faSlidersH'>
+      <fa-icon triggers="manual" (click)="p.open(); openFilter()" [autoClose]="false" placement="bottom" #p="ngbPopover"
+        [ngbPopover]="popContent" [popoverTitle]="popTitle" class="home_svg_img filter_icon " [icon]='faSlidersH'>
       </fa-icon>
     </div>
   </div>
@@ -87,9 +75,9 @@
     <thead>
       <tr class="emp_list_th">
         <!-- <tr> -->
-        <th data-field="employee ID" data-checkbox="true">Emp ID </th>
+        <th data-field="employee ID" data-checkbox="true" >Emp ID</th>
         <th data-field="Salutation" data-checkbox="true">Salutation</th>
-        <th data-field="Full Name" data-filter-control="input" data-sortable="true">Full Name</th>
+        <th data-field="Full Name" data-filter-control="input" sortable="full_name" (sort)="onSort($event)">Full Name<th>
         <th data-field="Project Name" data-filter-control="input" data-sortable="true">Project Name</th>
         <th data-field="Project ID" data-filter-control="select" data-sortable="true">Project ID</th>
         <th data-field="assigned Date" data-filter-control="select" data-sortable="true">Project Assigned Date</th>
@@ -117,7 +105,7 @@
     </thead>
 
     <tbody>
-      <tr class="emp_list_th" *ngFor="let item of employee_list">
+      <tr class="emp_list_th" *ngFor="let item of employee_list | paginate: { itemsPerPage: 5, currentPage: page, totalItems: totalLength } ">
         <!-- <tr *ngFor="let item of employee_list"> -->
         <td>{{item.emp_id}}</td>
         <td>{{item.salutation}}</td>
@@ -125,7 +113,12 @@
         <td>{{item.project_name}}</td>
         <td>
           <button (click)="open(content,item.emp_id)" type="button" class="add_employess">Add</button>
-          {{item.project_code}}
+          <div class="project-id-div">
+            <div class={{item.project_code}}>
+              {{item.project_code}}
+              <span class='close-icon' (click)="removeProject(item.project_code)">&times;</span>
+            </div>
+          </div>
         </td>
 
         <td>{{item.emp_project_assigned_date}}</td>
@@ -143,6 +136,7 @@
 
     </tbody>
   </table>
+  <pagination-controls class="text-center pagination-container" (pageChange)="page = $event"></pagination-controls>
 </div>
 
 
@@ -170,6 +164,6 @@
     </div>
   </div>
   <div class="modal-footer profile_update_header">
-    <button type="button" class="add_employess" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="add_employes" (click)="modal.close('Save click')">Save</button>
   </div>
 </ng-template>

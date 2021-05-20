@@ -1,11 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Directive, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { employeesApiService } from './employees.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from "@angular/router";
 import { projectResource } from './assign';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
 import { faSearch, faSlidersH,faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+
+interface EMPDETAILS {
+  empid: number;
+  salutation: string;
+  full_name: string;
+  projectname: number;
+  projectid: number;
+  projectassigneddate: any;
+  projectenddate:any;
+}
+
+export type SortColumn = keyof EMPDETAILS | '';
+export type SortDirection = 'asc' | 'desc' | '';
+const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
+
+const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+
+export interface SortEvent {
+  column: SortColumn;
+  direction: SortDirection;
+}
+
+@Directive({
+  selector: 'th[sortable]',
+  host: {
+    '[class.asc]': 'direction === "asc"',
+    '[class.desc]': 'direction === "desc"',
+    '(click)': 'rotate()'
+  }
+})
+export class NgbdSortableHeader {
+
+  @Input() sortable: SortColumn = '';
+  @Input() direction: SortDirection = '';
+  @Output() sort = new EventEmitter<SortEvent>();
+
+  rotate() {
+    this.direction = rotate[this.direction];
+    this.sort.emit({column: this.sortable, direction: this.direction});
+  }
+}
+
 
 @Component({
   selector: 'app-employees',
@@ -28,7 +70,11 @@ export class EmployeesComponent implements OnInit {
   resource_status : any
   manager_name : any
   client_name : any
-  delivery_type : any
+  delivery_type : any;
+  closeResult: any;
+  totalLength: any;
+  page:number=1;
+  emplist: any;
 
   dataForFilter={
     selectedProject:"All",
@@ -38,13 +84,13 @@ export class EmployeesComponent implements OnInit {
     clientName:"All",
     deliveryType:"All"
   }
+  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-  constructor(private modalService: NgbModal, private empApi: employeesApiService, private router: Router, private cookieService: CookieService) { }
+  constructor(private modalService: NgbModal, private empApi: employeesApiService, private router: Router, private cookieService: CookieService) {
+   }
 
   ngOnInit() {
     let myElement = document.getElementsByClassName("popover") as HTMLCollectionOf<HTMLElement>;
-    console.log(myElement);
-
     if (this.cookieService.get('login') == 'true') { }
     else {
       this.router.navigate(['/login']);
@@ -53,7 +99,9 @@ export class EmployeesComponent implements OnInit {
       .getExams()
       .subscribe(res => {
         this.employee_list = res;
-        this.copyEmployeeList = res
+        this.totalLength =this.employee_list.length;
+        this.copyEmployeeList = res;
+        this.emplist = this.copyEmployeeList;
         let project_name = []
         let project_id = []
         let resource_status = []
@@ -86,23 +134,18 @@ export class EmployeesComponent implements OnInit {
         this.manager_name = new Set(manager_name)
         this.client_name = new Set(client_name)
         this.delivery_type = new Set(delivery_type)
-
-        console.log(this.employee_list);
-        
-
-                
+       // this.employee_list[0].project_code = ["IND123","DIGI1111"];        
       }, console.error);
 
     this.projectListSubs = this.empApi
       .getProjects()
       .subscribe(res => {
         this.project_list = res;
-        console.log(res)
+        console.log(this.copyEmployeeList);
       },
       );
   }
   searchData() {
-    console.log(this.searchInput)
     if (this.searchInput == "") {
       this.employee_list = this.copyEmployeeList.map(item => { return item })
       return this.employee_list
@@ -117,8 +160,6 @@ export class EmployeesComponent implements OnInit {
     })
   }
   addResource(projectResource) {
-    console.log(projectResource.emp_id);
-    console.log(projectResource.project_id);
     this.empApi.addProjectResource(this.projectResource)
       .subscribe(data => {
 
@@ -131,11 +172,11 @@ export class EmployeesComponent implements OnInit {
   }
   open(content, project_code) {
     this.projectResource.emp_id = project_code;
-    console.log('Project Code: ', project_code);
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.addResource(this.projectResource);
+       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
-
+       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
 
@@ -159,17 +200,46 @@ export class EmployeesComponent implements OnInit {
       ( item['delivery_type'] === deliveryType  || deliveryType === "All") &&
       ( item['project_name'] === selectedProject  || selectedProject === "All") 
      )
-     Object.entries(this.dataForFilter).map(([key,value])=>{
-      this.dataForFilter[key] = 'All'
-    })
+    //  Object.entries(this.dataForFilter).map(([key,value])=>{
+    //   this.dataForFilter[key] = 'All'
+    // })
   }
 
   resetFilter(){
     Object.entries(this.dataForFilter).map(([key,value])=>{
       this.dataForFilter[key] = 'All'
     })
+    this.employee_list = this.copyEmployeeList.map(item => {
+      return item;
+    }
+    
+      )
   }
   openFilter(){
 
   }
+
+  removeProject(project_code){
+    document.getElementsByClassName(project_code)[0].innerHTML="";
+  }
+
+  onSort({column, direction}: SortEvent) {
+
+    // resetting other headers
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    if (direction === '' || column === '') {
+      this.emplist = this.copyEmployeeList;
+    } else {
+      this.emplist = [...this.copyEmployeeList].sort((a, b) => {
+        const res = compare(a[column], b[column]);
+        return direction === 'asc' ? res : -res;
+      });
+    }
+  }
+
 }
