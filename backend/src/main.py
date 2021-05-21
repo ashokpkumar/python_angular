@@ -121,6 +121,7 @@ def employees():
         emp_id = dictionary["project_code"]
         for proj_item in serialized_project:
             if proj_item["project_code"]==emp_id:
+                proj_item["project_code"] = [emp_id] #Project id should return list instead of string in employee
                 dictionary.update(proj_item)
                 break
     session.close()
