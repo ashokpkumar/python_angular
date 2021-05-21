@@ -1,6 +1,6 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Subscription} from 'rxjs'
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs'
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +10,19 @@ import {Subscription} from 'rxjs'
 export class AppComponent implements OnInit, OnDestroy {
   title = 'frontend';
   examsListSubs: Subscription;
-  
-  
+  currentRoute: string;
+  constructor(private router: ActivatedRoute) {
+
+  }
+
   ngOnInit() {
-  
+    this.currentRoute = this.router['_routerState']['snapshot']['url']
   }
 
   ngOnDestroy() {
     this.examsListSubs.unsubscribe();
   }
-
+  ngAfterViewChecked() {
+    this.currentRoute = this.router['_routerState']['snapshot']['url']
+  }
 }

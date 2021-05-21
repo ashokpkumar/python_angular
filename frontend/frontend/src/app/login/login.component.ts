@@ -3,6 +3,7 @@ import {login,setpass} from './login';
 import {loginService} from './login.service';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
+import {NgForm} from '@angular/forms';
 
 //https://www.npmjs.com/package/ngx-show-hide-password
 
