@@ -10,6 +10,8 @@ marshmallow = "*"
 flask = "*"
 flask-cors = "*"
 flask-expects-json = "*"
+flask-mail = "*"
+pytest = "*"
 
 [dev-packages]
 

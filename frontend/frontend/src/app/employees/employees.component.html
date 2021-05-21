@@ -71,13 +71,13 @@
       </fa-icon>
     </div>
   </div>
-  <table>
+  <table class="table">
     <thead>
       <tr class="emp_list_th">
         <!-- <tr> -->
         <th data-field="employee ID" data-checkbox="true" >Emp ID</th>
         <th data-field="Salutation" data-checkbox="true">Salutation</th>
-        <th data-field="Full Name" data-filter-control="input" sortable="full_name" (sort)="onSort($event)">Full Name<th>
+        <th scope="col" sortable="full_name" (sort)="onSort($event)">Full Name<th>
         <th data-field="Project Name" data-filter-control="input" data-sortable="true">Project Name</th>
         <th data-field="Project ID" data-filter-control="select" data-sortable="true">Project ID</th>
         <th data-field="assigned Date" data-filter-control="select" data-sortable="true">Project Assigned Date</th>
@@ -128,10 +128,8 @@
         <td>{{item.manager_name}}</td>
         <td>{{item.client_name}}</td>
         <td>{{item.delivery_type}}</td>
-
         <td>{{item.additional_allocation}}</td>
         <td>{{item.skills}}</td>
-
       </tr>
 
     </tbody>

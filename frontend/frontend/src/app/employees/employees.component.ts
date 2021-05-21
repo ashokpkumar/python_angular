@@ -224,7 +224,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   onSort({column, direction}: SortEvent) {
-
     // resetting other headers
     this.headers.forEach(header => {
       if (header.sortable !== column) {
@@ -233,9 +232,9 @@ export class EmployeesComponent implements OnInit {
     });
 
     if (direction === '' || column === '') {
-      this.emplist = this.copyEmployeeList;
+      this.employee_list = this.copyEmployeeList;
     } else {
-      this.emplist = [...this.copyEmployeeList].sort((a, b) => {
+      this.employee_list = [...this.copyEmployeeList].sort((a, b) => {
         const res = compare(a[column], b[column]);
         return direction === 'asc' ? res : -res;
       });
