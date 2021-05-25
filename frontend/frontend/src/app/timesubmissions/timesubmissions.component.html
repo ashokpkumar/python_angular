@@ -51,9 +51,9 @@
         </thead>
         <tbody>
           <tr class="time_sub_row" *ngFor="let timedata of timeDatas">
-            <td><a href="url">{{timedata.user_id}}</a></td>
+            <td>{{timedata.user_id}}</td>
             <td>{{timedata.user_name}}</td>
-            <td><a (click)="clickNumbers(timedata.user_id,'project')">{{timedata.project_time}}</a></td>
+            <td><a ng href="#"(click)="clickNumbers(timedata.user_id,'project')">{{timedata.project_time}}</a></td>
             <td><a (click)="clickNumbers(timedata.user_id,'bench')">{{timedata.bench}}</a></td>
             <td><a (click)="clickNumbers(timedata.user_id,'sl')">{{timedata.sl}}</a></td>
             <td><a (click)="clickNumbers(timedata.user_id,'cl')">{{timedata.cl}}</a></td>

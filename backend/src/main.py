@@ -198,19 +198,19 @@ def delete_fn():
 @app.route('/addtimesubmissions', methods=['POST'])
 def addtimesubmissions():    
     data = request.get_json() 
-    user_id = data.get('user_name')
+    user_id = data.get('user_id')
     session = Session()
     existing_emp = session.query(employee).filter(employee.emp_id == user_id ).first()
     if existing_emp == None:
         return jsonify({'error':'user not available in the employee table'}),200
     sub_data = timesubmissions( date_info = data.get('date'),
                                     hours = data.get('hours'),
-                                    user_id = data.get('user_name'),
+                                    user_id = data.get('user_id'),
                                     project_code = data.get('project_id'),
-                                    manager_id = data.get('manager_name'),
+                                    manager_id = data.get('manager_id'),
                                     time_type = data.get('time_type'),
                                     status = 'submitted-pending approval',
-                                    submission_id = data.get('user_name') + data.get('user_name') + data.get('time_type')     
+                                    submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type')     
                                )
     session = Session()
     session.add(sub_data)

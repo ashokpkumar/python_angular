@@ -17,6 +17,19 @@ body {
     padding-top: 60px;
     font-size: 10px;
   }
+
+  .container {
+    width:150%;
+  padding: 15px;
+    border: chartreuse;
+    font-size: small;
+    margin-top: 64px;
+  }
+  
+  .container td, .container th {
+    border: 1px solid #ddd;
+    padding: 15px;
+  }
   .tableInfo{
     margin:10%;
     width: 60%;
@@ -31,20 +44,24 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 .emp_list_th > th{
     background-color: #86AEC1;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     border: 1px solid black;
+    padding:10px
 }
 .emp_list_th > td{
+    width: 15px;
     background-color: #C9DBE3;
     border: 1px solid black;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     color: black;
     font-size: 15px;
-}
+    padding:10px
+  }
 .emp_list_th > td:last-child{
     padding: 10px;
 }
@@ -61,9 +78,9 @@ body {
 }
 .time_sub_heading{
   font-size: 30px;
-color: #E4E4E4;
+color: #ffffff;
 font-weight: 600;
-font-family: 'Times New Roman', Times, serif;
+font-family: 'Arial', Times, serif;
 }
 .for_filter_search{
   width: 100%;
@@ -77,6 +94,7 @@ font-family: 'Times New Roman', Times, serif;
   margin-bottom: 10px;
   border-radius: 12px ;
 }
+
 .table_border{
   width: 100%;
   height: auto;
@@ -110,15 +128,16 @@ font-family: 'Times New Roman', Times, serif;
 }
 .filter_reset_btn{
   display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: 1fr 1fr;
     margin-bottom: 14px;
     justify-items: center;
     margin: 15px 0;
 }
 .filter_reset_btn > button:nth-child(1){
-  background-color: #24a7f8;
+  background-color: #ffffff;
     border: 1px solid #24a7f8;
-    color: #fff;
+    border-radius: 12px ;
+    color: #24a7f8;
     padding-bottom: 6px;
     padding: 9px;
     margin-bottom: 10px;
@@ -127,15 +146,31 @@ font-family: 'Times New Roman', Times, serif;
     min-width: 130px;
     font-size: 14px;
     font-weight: 600;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     width: 120px;
-    transition-property: background-color color;
-    transition-duration: 2s;
 }
 .filter_reset_btn > button:nth-child(1):hover{
-  color: #24a7f8;
+  color: #ffffff;
+  background: #24a7f8;
+}
+.filter_reset_btn > button:nth-child(2){
+  padding-bottom: 6px;
+  padding: 9px;
+  outline: none;
+  border: 1px solid black;
   background: #ffffff;
+  color: black;
+  text-transform: capitalize;
+  min-width: 130px;
+  font-size: 14px;
+  font-weight: 600;
+  width: 120px;
+  transition-property: background-color border color;
+  transition-duration: 2s;
+}
+.filter_reset_btn > button:nth-child(2):hover{
+color: #24a7f8;
+background: #ffffff;
+border: 1px solid #24a7f8;
 }
 .time_submission_table{
   padding: 30px 20px;
@@ -172,4 +207,15 @@ font-family: 'Times New Roman', Times, serif;
     color: #ffffff;
     font-weight: 700;
   }
-  
+  .modal-title{
+      width: auto;
+      table-layout: center;
+  }
+  .modal-body{
+    width: auto;
+    table-layout: center;
+  }
+.center{
+  margin-left: auto;
+  margin-right: auto;
+}
