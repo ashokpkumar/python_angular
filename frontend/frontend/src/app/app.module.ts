@@ -43,7 +43,9 @@ import { IndividualTimeComponent } from './individual-time/individual-time.compo
 import { SideBarComponent } from './side-bar/side-bar.component';
 import {MatInputModule} from '@angular/material/input'
 import {PopoverModule} from "ngx-smart-popover";
-import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap'
+import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import { ForgotPasswodComponent } from './forgot-passwod/forgot-passwod.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component'
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
@@ -70,6 +72,8 @@ FullCalendarModule.registerPlugins([
     TimesubmissionsComponent,
     IndividualTimeComponent,
     SideBarComponent,
+    ForgotPasswodComponent,
+    ResetPasswordComponent,
    
   ],
 

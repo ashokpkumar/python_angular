@@ -4,6 +4,7 @@
 #https://medium.com/@alanhamlett/part-1-sqlalchemy-models-to-json-de398bc2ef47#:~:text=To%20add%20a%20serialization%20method,columns%20and%20returns%20a%20dictionary.&text=def%20to_dict(self%2C%20show%3D,of%20this%20model.%22%22%22
 #sources
 
+from entities.database import employee,project,authUser,timesubmissions,TimeMaster, forget_pass
 from entities.database import employee,project,authUser,timesubmissions
 from entities.database import announcements
 from entities.database import Session, engine, Base
@@ -25,16 +26,20 @@ import json
 import pytest
 from sqlalchemy.ext.serializer import loads, dumps
 import entities.mail
+from flask import request, render_template
+import os
 
-app = Flask(__name__)
+
+template_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+app = Flask(__name__, template_folder=template_dir)
+
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'please enter email '
-app.config['MAIL_PASSWORD'] = 'please enter password '
+app.config['MAIL_USERNAME'] = 'please enter your email id'
+app.config['MAIL_PASSWORD'] = 'password'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
-
 mail = Mail(app)
 
 
@@ -50,6 +55,7 @@ create_sample_project()
 create_sample_timesubmissions()
 create_sample_authUser()
 
+
 # Sample end point for email function
 @app.route("/emailSend1", methods=["POST"])
 def emailSend():
@@ -59,10 +65,12 @@ def emailSend():
     recipient = request.json.get("recipient")
     body = request.json.get("body")
     cc = request.json.get("cc")
+    bcc = request.json.get("bcc")
 
-    entities.mail.send_mail(subject, sender, recipient, body, cc, bcc=None,)
+    entities.mail.send_mail(subject, sender, recipient, body, cc, bcc)
 
     return "email send successfully"
+
 
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
@@ -673,10 +681,80 @@ def viewEmpInfo():
         project_serialized = serialize_all(project_objects)
         proj_dict = project_serialized[0]
         emp_dict.update(proj_dict)
-    emp_dict['full_name'] = emp_dict['salutation'] + emp_dict['first_name'] + emp_dict['last_name'] 
+    emp_dict['full_name'] = emp_dict['salutation'] + emp_dict['first_name'] + emp_dict['last_name']
     return jsonify(emp_dict), 201
 
 
+@app.route("/forgot_pass_create_token", methods=["POST"])
+def forgot_pass_create_token():
+    session = Session()
+    email_id = request.json.get("email_id")
+    emp_objects = session.query(employee).filter(employee.email == email_id).first()
+    if emp_objects == None:
+        return jsonify({"error":" Please enter Valid employee Email Id"})
+
+    emp_id = emp_objects.emp_id
+    forget_pass_data = session.query(forget_pass).filter(forget_pass.user_id == emp_id,
+                                                         forget_pass.email_address == email_id,
+                                                         ).first()
+    access_token = create_access_token(identity=emp_id)
+    current_date = datetime.datetime.now()
+
+    if forget_pass_data == None:
+        forget_pass_obj = forget_pass(user_id=emp_id, email_address=email_id, reset_token=access_token, create_date=current_date)
+        session.add(forget_pass_obj)
+        session.commit()
+        session.close()
+
+    else:
+        forget_pass_data.reset_token = access_token
+        forget_pass_data.create_data = current_date
+        session.add(forget_pass_data)
+        session.commit()
+        session.close()
+
+        html_body = render_template('frontend/frontend/src/app/reset-password/reset-password.component.html',
+                                    user=email_id, token=access_token)
+        text_body = "http://localhost:4200/" + 'resetpassword/?token='+access_token +'&'+'email='+email_id
+        entities.mail.send_mail("Forgot password setup", "amit.t.indium@gmail.com", email_id, html_body, text_body)
+
+        return jsonify(text_body), 201
+
+
+
+
+@app.route("/reset_pass", methods=["POST", "GET"])
+def reset_pass():
+    session = Session()
+    email = request.json.get('email')
+    password = request.json.get('password')
+    confirm_pass = request.json.get('password')
+    token = request.json.get('reset_token')
+
+    if email is None:
+        return jsonify({"error:": "incorrect username or password"}), 400
+
+    forget_pass_objects = session.query(forget_pass).filter(forget_pass.email_address == email)
+    forget_pass_obj = serialize_all(forget_pass_objects)
+
+    reset_token = forget_pass_obj[0]['reset_token']
+    print("*********************",email, password, confirm_pass )
+
+    if reset_token == token:
+        # update auth table password
+        auth_object = session.query(authUser).filter(authUser.email == email).first()
+        if auth_object is None:
+            return jsonify({'error': 'User not found, This user is not added yet'}), 401
+        auth_object.password = password
+        session.add(auth_object)
+        session.commit()
+
+        return "Password Reset successfully", 200
+    else:
+        return "Please generate token for reset password  token expired"
+
+
+
+
 if __name__ == '__main__':
-    #app.run(host = '0.0.0.0',port = 5000,debug = True)
     app.run(debug = True)
