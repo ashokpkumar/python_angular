@@ -307,7 +307,7 @@ def timeData():
         unapproved=0
 
         user_name = session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
-        submission_obj = session.query(timesubmissions).filter(timesubmissions.manager_id.in_(emp_final), timesubmissions.user_id==emp).all()
+        submission_obj = session.query(timesubmissions).filter(timesubmissions.user_id==emp).all()
         serialized_obj = serialize_all(submission_obj)
         for time in serialized_obj:
             #print(time)

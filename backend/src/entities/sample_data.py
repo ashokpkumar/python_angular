@@ -239,10 +239,10 @@ def create_sample_project():
 
 
 def create_sample_timesubmissions():    
-    for timesubmission in timesubmission_list:
+    for timesubmission in timesubmission_list: 
         session = Session()
-        #sub_objects = session.query(timesubmissions).filter(timesubmissions.user_id==timesubmission["user_id"]).first()
-        #if sub_objects==None:
+        sub_objects = session.query(timesubmissions).filter(timesubmissions.date_info==timesubmission["date"]).first()
+        if sub_objects==None:
             sub_data = timesubmissions( date_info=timesubmission['date'],
                                             hours = timesubmission['hours'],
                                             user_id = timesubmission['user_id'],
@@ -256,7 +256,6 @@ def create_sample_timesubmissions():
             session.add(sub_data)
             session.commit()    
         session.close()
-
 
 def create_sample_authUser():    
     for authUsers in authUser_list:
