@@ -64,6 +64,7 @@
               </th>
               <th data-field="Financial year" data-filter-control="select" data-sortable="true">Financial year</th>
               <th data-field="Project Code" data-filter-control="select" data-sortable="true">Project Code</th>
+              <th data-field="Project Manager Id" data-filter-control="select" data-sortable="true">Project Manager Id</th>
               <th data-field="Resource Info" data-filter-control="select" data-sortable="true">Resource Info</th>
 
             </tr>
@@ -78,7 +79,9 @@
               <td>{{item.geography}}</td>
               <td>{{item.solution_category}}</td>
               <td>{{item.financial_year}}</td>
-              <td>{{item.project_code}}</td>
+              <td>{{item.project_code}}</td>  
+              <td><button (click)="open1(contentPM,item.project_code)" type="button" class="add_project_managerid">Add</button>
+                {{item.project_manager_id}} </td>          
               <td><button (click)="open(content,item.project_code)" type="button" class="add_projects">Add</button>
                 {{item.resource_info}} </td>
               <!-- <td><button (click)="addResource(item.project_code)">Add</button> {{item.resource_info}} </td> -->
@@ -123,6 +126,37 @@
   <div class="modal-footer profile_update_header">
     <button type="button" class="add_projects" (click)="modal.close('Save click')">Save</button>
   </div>
-</ng-template>
+</ng-template> 
 
-<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+<!--  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> 
+ -->
+<ng-template #contentPM let-modal> 
+  <div class="modal-header profile_update_header">
+    <h4 class="modal-title add_res_title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body profile_update_body">
+    <p class="model_title"> Add Project Manager to this project : </p>
+    <div class="model-body-content">
+      <div class="body_content_align">
+
+        <label>Project ID: </label>
+        <input [(ngModel)]="projectManager.project_id" />
+
+      </div>
+      <div class="body_content_align">
+        <label>Manager ID: </label>
+        <select [(ngModel)]="projectManager.manager_id">
+
+          <option *ngFor="let item of employee_list" value={{item.manager_id}}>{{item.manager_id}}</option>
+
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer profile_update_header">
+    <button type="button" class="add_project_managerid" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
