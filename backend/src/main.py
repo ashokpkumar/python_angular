@@ -626,6 +626,8 @@ def addProjectmanager():
     data = request.get_json()
     project_code = data.get("project_id")
     project_manager=data.get('manager_id')
+    print(project_code)
+    print(project_manager)
     existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project==None:
         return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})

@@ -51,6 +51,7 @@ export class ViewProjectsComponent implements OnInit {
         .getProjects()
         .subscribe(res => {
           this.project_list = res;
+          console.log("project_list",this.project_list)
           this.copyProjList = res
           let project_name = []
           let project_id = []
