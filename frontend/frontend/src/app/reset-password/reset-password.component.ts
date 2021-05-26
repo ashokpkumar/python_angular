@@ -18,7 +18,7 @@ export class ResetPasswordComponent implements OnInit {
   this.token = this.route.snapshot.queryParams.token;
    this.email = this.route.snapshot.queryParams.email;
    console.log(this.email)
-   
+
 
   }
    resetPassword(email, password, confirmPass){
@@ -30,18 +30,12 @@ export class ResetPasswordComponent implements OnInit {
    }
     this.apiServices.resetPassword(resetPass)
     .subscribe(data=>{
-
       alert("Reset password done");
       console.log(data)
-//       alert(data)
-//       this.router.navigate(['/login']);
     },
     err => {
     this.router.navigate(['/login']);
-    }
-            )
-
+    })
   }
-
 }
 
