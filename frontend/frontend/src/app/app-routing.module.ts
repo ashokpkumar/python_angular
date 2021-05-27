@@ -24,6 +24,8 @@ const routes: Routes = [
   { path: 'addproject', component: AddProjectsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'addresourceproject', component: AssignResourceProjectComponent },
+  { path: 'addProjectmanager', component: ViewProjectsComponent },
+
   { path: 'time', component: TimeSummaryComponent },
   { path: 'professional', component: ProfessionalSummaryComponent },
   { path: 'personal', component: PersonalSummaryComponent },

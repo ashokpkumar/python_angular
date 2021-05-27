@@ -7,6 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from "@angular/router"
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { projectResource } from './assign';
+import { projectManager } from './assignPM';
 import { FormControl } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { faSearch, faSlidersH, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -18,10 +19,13 @@ import { faSearch, faSlidersH, faTimesCircle } from '@fortawesome/free-solid-svg
 })
 export class ViewProjectsComponent implements OnInit {
   projectResource = new projectResource();
+  projectManager = new projectManager();
 
   public project_list: any;
   public employee_list: any;
   public copyProjList: any
+  public copyEmpList: any
+
   project_name: any
   project_id: any
   client_name: any
@@ -47,6 +51,7 @@ export class ViewProjectsComponent implements OnInit {
         .getProjects()
         .subscribe(res => {
           this.project_list = res;
+          console.log("project_list",this.project_list)
           this.copyProjList = res
           let project_name = []
           let project_id = []
@@ -83,6 +88,40 @@ export class ViewProjectsComponent implements OnInit {
     }
 
   }
+    addmanager(projectManager){
+
+     this.projectApi.addProjectManager(this.projectManager)
+       .subscribe(data => {
+
+         this.projectApi.showMessage(Object.values(data), Object.keys(data))
+       });
+     this.projectListSubs = this.projectApi
+       .getEmployees()
+       .subscribe(res => {
+         this.employee_list = res;
+         this.copyEmpList = res
+       },
+
+       );
+     this.router.navigate(['/project']);
+     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+     this.router.onSameUrlNavigation = 'reload';
+     this.router.navigate(['/project']);
+    }
+   open1(contentPM,project_code ) {
+     this.projectManager.project_id = project_code;
+
+     this.modalService.open(contentPM, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+       this.closeResult = `Closed with: ${result}`;
+
+       console.log("Project Manager", this.projectManager);
+       this.addmanager(this.projectManager);
+     }, (reason) => {
+       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+
+     });
+   }  
+
   addResource(projectResource) {
 
     this.projectApi.addProjectResource(this.projectResource)
@@ -102,8 +141,8 @@ export class ViewProjectsComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/project']);
-  }
-
+  
+    }
 
   open(content, project_code) {
     this.projectResource.project_id = project_code;
@@ -118,6 +157,42 @@ export class ViewProjectsComponent implements OnInit {
 
     });
   }
+
+  //
+/*   addmanager(projectManager){
+
+     this.projectApi.addProjectManager(this.projectManager)
+       .subscribe(data => {
+
+         this.projectApi.showMessage(Object.values(data), Object.keys(data))
+       });
+     this.projectListSubs = this.projectApi
+       .getProjects()
+       .subscribe(res => {
+         this.project_list = res;
+         this.copyProjList = res
+       },
+
+       );
+     this.router.navigate(['/project']);
+     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+     this.router.onSameUrlNavigation = 'reload';
+     this.router.navigate(['/project']);
+    }
+   open1(contentPM,project_code ) {
+     this.projectManager.project_id = project_code;
+
+     this.modalService.open(contentPM, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+       this.closeResult = `Closed with: ${result}`;
+
+       console.log("Project Manager", this.projectManager);
+       this.addmanager(this.projectManager);
+     }, (reason) => {
+       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+
+     });
+   }  */ 
+  
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
