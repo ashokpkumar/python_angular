@@ -4,11 +4,13 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import pyodbc
 from sqlalchemy.orm.attributes import QueryableAttribute
+from env.config import Config
 
 
-engine = create_engine("mssql+pyodbc://localhost\SQLEXPRESS/master?driver=SQL Server?Trusted_Connection=yes")
+engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
+
 
 class authUser(Base):
     __tablename__ = 'authUser'
