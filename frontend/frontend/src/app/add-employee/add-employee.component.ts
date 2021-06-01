@@ -18,8 +18,10 @@ import {MatCalendarCellClassFunction,MatDatepickerModule} from '@angular/materia
 export class AddEmployeeComponent implements OnInit {
   durationInSeconds = 5;
   employee = new employee();
-  emailPattern =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;  
-  isValidFormSubmitted = false;  
+  emailPattern =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  isValidFormSubmitted = false;
+  roles: any
+  isVisible: boolean=true;
   // employee = new FormGroup({
   //   emp_id : new FormControl(),
   //   email : new FormControl(),
@@ -45,33 +47,47 @@ export class AddEmployeeComponent implements OnInit {
   //   additional_allocation:new FormControl(),
   //   skills:new FormControl(),
   //   roles:new FormControl()
-    
+
   // });
-  public employee_fields_list:any 
+  public employee_fields_list:any
   name = new FormControl('');
   constructor(private apiService:addEmployeeService,private router: Router,private cookieService: CookieService) { }
-  
+
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){}
+    if (this.cookieService.get('login')=='true'){
+    this.roles=this.cookieService.get('roles');
+     this.checkRoles(this.roles);
+    }
     else{
       this.router.navigate(['/login']);
     }
   }
- 
+  checkRoles(roles) {
+   let userRoles = roles.split(",");
+   console.log(userRoles);
+    for (const role of userRoles) {
+      if ( role == "RMG Admin") {
+        this.isVisible = true;
+      } else  {
+        this.isVisible = false;
+      }
+    }
+  }
+
   onSubmit(data) {
     console.log(this.employee)
-    this.isValidFormSubmitted = false;  
-  
-    if (data.email.invalid) {  
-       return;  
-    }  
-  
-    this.isValidFormSubmitted = true;  
+    this.isValidFormSubmitted = false;
+
+    if (data.email.invalid) {
+       return;
+    }
+
+    this.isValidFormSubmitted = true;
     // this.apiService.addEmployee(this.employee).subscribe(data=>{this.apiService.showMessage(Object.values(data),Object.keys(data))})
-   
+
   }
-  
-  
+
+
   // dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
   //   // Only highligh dates inside the month view.
   //   if (view === 'month') {

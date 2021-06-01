@@ -29,6 +29,8 @@ export class ViewProjectsComponent implements OnInit {
   project_name: any
   project_id: any
   client_name: any
+  roles: any
+  isVisible: boolean=true;
 
   projectListSubs: Subscription;
   searchInput:String;
@@ -47,6 +49,10 @@ export class ViewProjectsComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.cookieService.get('login') == 'true') {
+     this.roles=this.cookieService.get('roles');
+     this.checkRoles(this.roles);
+
+
       this.projectListSubs = this.projectApi
         .getProjects()
         .subscribe(res => {
@@ -120,7 +126,19 @@ export class ViewProjectsComponent implements OnInit {
        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 
      });
-   }  
+   }
+
+   checkRoles(roles) {
+   let userRoles = roles.split(",");
+   console.log(userRoles);
+    for (const role of userRoles) {
+      if ( role=="RMG Admin" || role == "Project Manager") {
+        this.isVisible = true;
+      } else  {
+        this.isVisible = false;
+      }
+    }
+  }
 
   addResource(projectResource) {
 
@@ -141,7 +159,7 @@ export class ViewProjectsComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/project']);
-  
+
     }
 
   open(content, project_code) {
@@ -191,8 +209,8 @@ export class ViewProjectsComponent implements OnInit {
        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 
      });
-   }  */ 
-  
+   }  */
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -209,7 +227,7 @@ export class ViewProjectsComponent implements OnInit {
     this.project_list = this.copyProjList.filter(item =>
       (item['project_code'] === projectID || projectID === "All") &&
       (item['project_name'] === selectedProject || selectedProject === "All") &&
-      (item['client_name'] === clientName || clientName === "All") 
+      (item['client_name'] === clientName || clientName === "All")
     )
     Object.entries(this.dataForFilter).map(([key, value]) => {
       this.dataForFilter[key] = 'All'
