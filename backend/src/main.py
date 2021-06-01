@@ -28,22 +28,16 @@ from sqlalchemy.ext.serializer import loads, dumps
 import entities.mail
 from flask import request, render_template
 import os
+from env.config import Config
 
 
 template_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 app = Flask(__name__, template_folder=template_dir)
-
-
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'please enter your email id'
-app.config['MAIL_PASSWORD'] = 'password'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
+app.config.from_object(Config)
 mail = Mail(app)
 
 
-app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+# app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 jwt = JWTManager(app)
 CORS(app)
 
@@ -54,22 +48,6 @@ create_sample_employee()
 create_sample_project()
 create_sample_timesubmissions()
 create_sample_authUser()
-
-
-# Sample end point for email function
-@app.route("/emailSend1", methods=["POST"])
-def emailSend():
-    # email sending
-    subject = request.json.get("subject")
-    sender = request.json.get("sender")
-    recipient = request.json.get("recipient")
-    body = request.json.get("body")
-    cc = request.json.get("cc")
-    bcc = request.json.get("bcc")
-
-    entities.mail.send_mail(subject, sender, recipient, body, cc, bcc)
-
-    return "email send successfully"
 
 
 @app.route("/setpassword", methods=["POST"])
@@ -759,11 +737,9 @@ def forgot_pass_create_token():
         html_body = render_template('frontend/frontend/src/app/reset-password/reset-password.component.html',
                                     user=email_id, token=access_token)
         text_body = "http://localhost:4200/" + 'resetpassword/?token='+access_token +'&'+'email='+email_id
-        entities.mail.send_mail("Forgot password setup", "amit.t.indium@gmail.com", email_id, html_body, text_body)
+        entities.mail.send_mail("Forgot password setup", Config.MAIL_USERNAME, email_id, html_body, text_body)
 
         return jsonify(text_body), 201
-
-
 
 
 @app.route("/reset_pass", methods=["POST", "GET"])
@@ -781,8 +757,6 @@ def reset_pass():
     forget_pass_obj = serialize_all(forget_pass_objects)
 
     reset_token = forget_pass_obj[0]['reset_token']
-    print("*********************",email, password, confirm_pass )
-
     if reset_token == token:
         # update auth table password
         auth_object = session.query(authUser).filter(authUser.email == email).first()
