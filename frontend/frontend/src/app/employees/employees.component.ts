@@ -29,6 +29,8 @@ export class EmployeesComponent implements OnInit {
   manager_name : any
   client_name : any
   delivery_type : any
+  roles: any
+  isVisible: boolean=true;
 
   dataForFilter={
     selectedProject:"All",
@@ -45,7 +47,10 @@ export class EmployeesComponent implements OnInit {
     let myElement = document.getElementsByClassName("popover") as HTMLCollectionOf<HTMLElement>;
     console.log(myElement);
 
-    if (this.cookieService.get('login') == 'true') { }
+    if (this.cookieService.get('login') == 'true') {
+    this.roles=this.cookieService.get('roles');
+    this.checkRoles(this.roles)
+  }
     else {
       this.router.navigate(['/login']);
     }
@@ -88,9 +93,9 @@ export class EmployeesComponent implements OnInit {
         this.delivery_type = new Set(delivery_type)
 
         console.log(this.employee_list);
-        
 
-                
+
+
       }, console.error);
 
     this.projectListSubs = this.empApi
@@ -138,6 +143,17 @@ export class EmployeesComponent implements OnInit {
 
     });
   }
+  checkRoles(roles) {
+   let userRoles = roles.split(",");
+   console.log(userRoles);
+    for (const role of userRoles) {
+      if ( role == "RMG Admin") {
+        this.isVisible = true;
+      } else  {
+        this.isVisible = false;
+      }
+    }
+  }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -157,7 +173,7 @@ export class EmployeesComponent implements OnInit {
       ( item['project_name'] === selectedProject  || selectedProject === "All") &&
       ( item['client_name'] === clientName  || clientName === "All") &&
       ( item['delivery_type'] === deliveryType  || deliveryType === "All") &&
-      ( item['project_name'] === selectedProject  || selectedProject === "All") 
+      ( item['project_name'] === selectedProject  || selectedProject === "All")
      )
      Object.entries(this.dataForFilter).map(([key,value])=>{
       this.dataForFilter[key] = 'All'
