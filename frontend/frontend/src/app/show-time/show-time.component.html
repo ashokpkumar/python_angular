@@ -19,7 +19,7 @@
 </div> -->
 
 
-<table id="customers">
+<table id="customers" *ngIf="isVisible">
   <tr>
     <th>Description</th>
     <th>Info</th>
@@ -93,4 +93,3 @@
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit Time info</button>
     </div>
   </ng-template>
-

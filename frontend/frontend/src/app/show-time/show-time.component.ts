@@ -16,6 +16,8 @@ declare var $: any;
 export class ShowTimeComponent implements OnInit {
   userInfo = new userInfo();
   userData = new userData()
+  roles: any
+  isVisible: boolean=true;
 
   constructor(private router: Router,private cookieService: CookieService,private apiService:showTimeApiService, private modalService: NgbModal) {
     
@@ -23,7 +25,10 @@ export class ShowTimeComponent implements OnInit {
   @ViewChild('content')
   private defaultTabButtonsTpl: TemplateRef<any>;
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){}
+    if (this.cookieService.get('login')=='true'){
+      this.roles=this.cookieService.get('roles');
+      this.checkRoles(this.roles)
+    }
     else{
       this.router.navigate(['/login']);
     }
@@ -40,6 +45,17 @@ export class ShowTimeComponent implements OnInit {
   }, (reason) => {
 
   });
+ }
+ checkRoles(roles) {
+  let userRoles = roles.split(",");
+  console.log(userRoles);
+   for (const role of userRoles) {
+     if ( role=="RMG Admin") {
+       this.isVisible = true;
+     } else  {
+       this.isVisible = false;
+     }
+   }
  }
  
   private getDismissReason(reason: any): string {

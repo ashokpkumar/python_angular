@@ -27,6 +27,9 @@ export class TimesubmissionsComponent implements OnInit {
   allUserapproved:boolean;
   individualUnapproved:boolean;
 
+  roles: any
+  isVisible: boolean=true;
+
   constructor(private modalService: NgbModal,private router: Router,private cookieService: CookieService, private apiService:timeSubmissionsService) { }
   @ViewChild('approved')
   private defaultTabButtonsTpl1: TemplateRef<any>;
@@ -37,7 +40,10 @@ export class TimesubmissionsComponent implements OnInit {
   
   ngOnInit(): void {
     this.allUserUnapproved = false;
-    if (this.cookieService.get('login')=='true'){}
+    if (this.cookieService.get('login')=='true'){
+      this.roles=this.cookieService.get('roles');
+      this.checkRoles(this.roles)
+    }
     else{
       this.router.navigate(['/login']);
     }
@@ -86,6 +92,17 @@ if (type=='unapproved'){
   this.router.onSameUrlNavigation = 'reload';
   this.router.navigate(['/timesubmission']);
   }
+  checkRoles(roles) {
+    let userRoles = roles.split(",");
+    console.log(userRoles);
+     for (const role of userRoles) {
+       if ( role=="RMG Admin" || role=="Employee") {
+         this.isVisible = true;
+       } else  {
+         this.isVisible = false;
+       }
+     }
+   }
 
   open(content) {
   console.log(this.timeClicked);

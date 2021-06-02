@@ -26,20 +26,36 @@ export class AddProjectsComponent implements OnInit {
     geography: new FormControl(''),
     solutioncategory: new FormControl(''),
     financialyear: new FormControl(''),
-        
   });
+  roles: any
+  isVisible: boolean=true;
   constructor(private router: Router,private cookieService: CookieService,private apiService:addProjectApiService,private projectApi: projectsApiService) { }
 
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){}
+    if (this.cookieService.get('login')=='true'){
+    this.roles=this.cookieService.get('roles');
+    this.checkRoles(this.roles)
+    }
     else{
       this.router.navigate(['/login']);
     }
   }
+  checkRoles(roles) {
+    let userRoles = roles.split(",");
+    console.log(userRoles);
+     for (const role of userRoles) {
+       if ( role=="RMG Admin" || role == "Sales Team") {
+         this.isVisible = true;
+       } else  {
+         this.isVisible = false;
+       }
+     }
+   }
+
   onSubmit() {
-    
+
     console.log(this.project)
-    
+
     this.apiService.addProject(this.project)
     .subscribe(data=>{console.log(data),this.apiService.showMessage(Object.values(data),Object.keys(data))});
     this.router.navigate(["/project"]);
