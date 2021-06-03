@@ -635,25 +635,18 @@ def addProjectResource():
 def getResourceInfo():
     session =Session()
     data =request.get_json()
-    emp_id=data.get("emp_id")
-    print(emp_id)
-
-    """resource_info=data['resource_name']
-    print(resource_info)"""
-    existing_data=session.query(employee).filter(employee.emp_id==data).first()
-    print(existing_data)
-    if existing_data==None:
-        return jsonify({"error":"list is empty"})
-    session.add(existing_data)
-    session.commit()
-    session.close()
-    return jsonify({"success":"data"})
-
-    """ 
-    else:
-        session=Session()
-        details_list=data['manager_name','first_name','emp_id','roles','designation','skills']
-        resource_obj=session.query(employee).filter(employee.) """
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    
+    project_ = session.query(project).filter(project.project_code==data).first()
+  
+    project_resources_list = project_.resource_info.split(",")
+    for i in project_resources_list:
+        if i=="":
+            project_resources_list.remove(i)
+    resource_info_data = session.query(employee).filter(employee.emp_id.in_(project_resources_list)).all()
+    print(serialize_all(resource_info_data))
+    return jsonify(serialize_all(resource_info_data))
+  
 @app.route('/addProjectmanager', methods=['POST'])
 def addProjectmanager():
     session = Session()

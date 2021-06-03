@@ -47,6 +47,14 @@ addProjectResource(projectResource:projectResource): Observable<any> {
   console.log(body);
   return this.http.post(`${API_URL}/addProjectResource`, body,{'headers':headers})
 }
+
+removeProjectResource(emp_id,project_id){
+  const headers = { 'content-type': 'application/json'}  
+  const body=JSON.stringify({'emp_id':emp_id,'project_id':project_id});
+  console.log(body);
+  return this.http.post(`${API_URL}/removeProjectResource`, body,{'headers':headers})
+}
+
 addProjectManager(projectManager:projectManager): Observable<any> {
   const headers = { 'content-type': 'application/json'}  
   const body=JSON.stringify(projectManager);

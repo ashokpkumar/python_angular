@@ -212,22 +212,20 @@
                 <th data-field="roles" data-checkbox="true">Roles </th>
                 <th data-field="Skills" data-filter-control="select" data-sortable="true">
                   Skills</th>
+                  <th data-field="roles" data-checkbox="true">Remove </th>
               </tr>
             </thead>
             <tbody>
-              <tr class="emp_list_th"  *ngFor="let item of project_list">
-                <td >{{item.resource_info}}</td>
-                <!-- <tr *ngFor="let item of employee_list"> 
-                <td>{{item.resource_info}}</td>
-                <td>{{item.full_name}}</td>
-                <td>{{item.emp_id}}</td>
-                <td>{{item.full_name}}</td>
-                <td>{{item.email}}</td>
-                <td>{{item.dept}}</td>
-                <td>{{item.designation}}</td>
-                <td>{{item.manager_name}}</td>
-                <td>{{item.roles}}</td>
-                <td>{{item.skills}}</td> -->
+              <tr class="emp_list_th"  *ngFor="let item of project_resource_list">
+                <td >{{item.emp_id}}</td>
+                <td >{{item.first_name}}</td>
+                <td >{{item.email}}</td>
+                <td >{{item.dept}}</td>
+                <td >{{item.designation}}</td>
+                <td >{{item.manager_name}}</td>
+                <td >{{item.roles}}</td>
+                <td >{{item.skills}}</td>
+                <td ><a (click)="removeResource(item.emp_id)" ><u>X</u></a></td>
 
               </tr>
             </tbody>

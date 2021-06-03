@@ -25,6 +25,7 @@ export class ViewProjectsComponent implements OnInit {
 
   public project_list: any;
   public employee_list: any;
+  public project_resource_list: any;
   public copyProjList: any
   public copyEmpList: any
   public show:boolean = false;
@@ -36,7 +37,8 @@ export class ViewProjectsComponent implements OnInit {
 
   projectListSubs: Subscription;
   searchInput:String;
-  searchInputName:String
+  searchInputName:String;
+  projectCodeRemoval:String;
   closeResult = '';
   public sample_data: string;
   faSearch = faSearch
@@ -182,24 +184,35 @@ export class ViewProjectsComponent implements OnInit {
   this.router.navigate(['/project']);
 
   }
+
+  removeResource(emp_id){
+    console.log(emp_id)
+    console.log(this.projectCodeRemoval)
+    this.projectListSubs = this.projectApi.removeProjectResource(emp_id,this.projectCodeRemoval)
+    .subscribe(res => {});
+
+  }
   openRL(contentRL, project_code) {
+this.projectCodeRemoval = project_code
     this.projectListSubs = this.projectApi    .getResourceInfo(project_code)
     .subscribe(res => {
-   console.log(res)
-    },
+      this.project_resource_list = res
+      console.log(res)
+   this.modalService.open(contentRL, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.closeResult = `Closed with: ${result}`;
+
+    console.log("Project resource", this.projectResource);
+    this.addResource(this.projectResource);
+  }, (reason) => {
+    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+
+  });
+    }
+
+    
 
     );
-    // this.ResourceList.project_id = project_code;
-
-    // this.modalService.open(contentRL, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-    //   this.closeResult = `Closed with: ${result}`;
-
-    //   console.log("resources", this.ResourceList);
-    //   this.addResourceList(this.ResourceList);
-    // }, (reason) => {
-    //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-
-    // });
+  
   }
     
   
