@@ -582,6 +582,8 @@ def addProjectResource():
     if existing_project==None:
         return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
     print(existing_emp)
+    resource_data=existing_emp.emp_id
+    print(resource_data)
     if existing_emp.project_code == None:
         existing_emp.project_code=project_code
         session.add(existing_emp)
@@ -629,6 +631,29 @@ def addProjectResource():
     session.close()
     return jsonify({"success":"Employee {} and Project {} Linked".format(resource_id,project_code)})
 
+@app.route('/getResourceInfo',methods=['POST'])
+def getResourceInfo():
+    session =Session()
+    data =request.get_json()
+    emp_id=data.get("emp_id")
+    print(emp_id)
+
+    """resource_info=data['resource_name']
+    print(resource_info)"""
+    existing_data=session.query(employee).filter(employee.emp_id==data).first()
+    print(existing_data)
+    if existing_data==None:
+        return jsonify({"error":"list is empty"})
+    session.add(existing_data)
+    session.commit()
+    session.close()
+    return jsonify({"success":"data"})
+
+    """ 
+    else:
+        session=Session()
+        details_list=data['manager_name','first_name','emp_id','roles','designation','skills']
+        resource_obj=session.query(employee).filter(employee.) """
 @app.route('/addProjectmanager', methods=['POST'])
 def addProjectmanager():
     session = Session()
@@ -662,10 +687,10 @@ def addProjectmanager():
             return  jsonify({'error':'Project Manager already Exists in the project'})
         existing_PM_list.append(project_manager)
 
-        out_PM =""
+        out_PM =''
         for i in existing_PM_list:
-            out_PM = i +","+ out_PM
-        existing_project.PM_id=out_PM[:-1]
+            out_PM = i + "," + out_PM
+        existing_project.project_manager_id=out_PM[:-1]
         session.add(existing_project)
         session.commit()
     session.close()

@@ -1,5 +1,5 @@
 export class projectResource{
-    emp_id:string
+    first_name:string
     project_id:string
-  
+    emp_id:string
   }

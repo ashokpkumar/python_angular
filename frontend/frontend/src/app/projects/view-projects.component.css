@@ -60,14 +60,28 @@ padding: 2em;
 }
 .profile_update_body{
   background-color: grey;
+  width: auto;
 }
 .profile_update_header > button{
   color: #ffffff;
+}
+.profile_update_footer{
+  background-color: #222;
 }
 .model-body-content{
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 70px;
+  width: auto;
+}
+.model-body-contentRL{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 70px;
+  display: inline-block;
+  max-height: 80vh;
+  overflow-y: auto;
+  width: 70vh;
 }
 .body_content_align{
   display: grid;
@@ -82,6 +96,7 @@ padding: 2em;
 }
 .body_content_align > input:focus {
   outline: 0;
+  
 }
 .body_content_align > label{
   font-size: 17px;
@@ -98,15 +113,25 @@ padding: 2em;
 .body_content_align > select:focus {
   outline: 0;
 }
+
 .add_projects{
   background: #24a7f8;
-  border-color: #24a7f8;
+  border-color: #ffffff;
+  color: #ffffff;
+  font-size: 20px;
+  line-height: 20px;
+  border:12px; ;
+} 
+.modal-footer > button{
+  background: #24a7f8;
+  border-color: #ffffff;
   color: #ffffff;
   font-size: 13px;
   padding: 10px 15px;
   line-height: 13px;
-  font-family: Poppins;
+  font-family: Poppins; 
 }
+
 .add_project_managerid{
   background: #24a7f8;
   border-color: #24a7f8;
@@ -115,6 +140,10 @@ padding: 2em;
   padding: 10px 15px;
   line-height: 13px;
   font-family: Poppins;
+}
+.plus-icon{
+  
+  border-radius: 50%;
 }
 .for_filter_search{
   width: 100%;

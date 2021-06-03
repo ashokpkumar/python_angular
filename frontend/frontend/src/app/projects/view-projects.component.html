@@ -82,10 +82,21 @@
               <td>{{item.project_code}}</td>  
               <td><button (click)="open1(contentPM,item.project_code)" type="button" class="add_project_managerid">Add</button>
                 {{item.project_manager_id}} </td>          
-              <td><button (click)="open(content,item.project_code)" type="button" class="add_projects">Add</button>
-                {{item.resource_info}} </td>
-              <!-- <td><button (click)="addResource(item.project_code)">Add</button> {{item.resource_info}} </td> -->
-
+              <td>
+                <div class="plus-icon">
+                <fa-icon class="fa fa-plus-circle fa-2x" aria-hidden="true" (click)="open(content,item.project_code)" style="color:white;  background: rgb(36, 167, 248);
+                border-radius: 50%;
+                height: 1em;
+                width: 1em;">
+                </fa-icon>
+              </div>
+                <!-- <i class="fa fa-close"></i> -->
+                <!-- <i class="bi bi-dash"></i> --> 
+                <div>        
+                  <a (click)="openRL(contentRL,item.project_code)" ><u>ResourceList...</u></a>
+                </div>
+                  <!-- <a (click)="open(contentRL)"class="show_RL">See more...</a> -->
+               </td>
             </tr>
 
           </tbody>
@@ -114,17 +125,32 @@
 
       </div>
       <div class="body_content_align">
-        <label>Employee ID: </label>
-        <select [(ngModel)]="projectResource.emp_id">
+        <label>Employee Name: </label>
+        <input list="selectid" [(ngModel)]="projectResource.emp_id" type="text"/> 
+        <datalist [(ngModel)]="chosenemp" (ngModelChange)="toggle()" id="selectid" [(ngModel)]="projectResource.emp_id" >
+          <option value="1" id="selectid" *ngFor="let item of employee_list" value={{item.emp_id}}>{{item.first_name}} </option>
+        </datalist>
+          <div class="Info">      
+            <ng-container *ngIf="show">
+            <div style="margin: 0 auto;text-align: left;">
+                <div>
+                    <label>Name:</label>
 
-          <option *ngFor="let item of employee_list" value={{item.emp_id}}>{{item.emp_id}}</option>
-
-        </select>
+                </div>
+                <div>
+                    <label>Manager Name:</label>
+                  </div>
+            </div>
+          </ng-container>
+        </div> 
+       
+        <!--<input EmpSearch  [(ngModel)]="searchInputName" type="text" (input)="searchEmp()" >-->
       </div>
     </div>
   </div>
   <div class="modal-footer profile_update_header">
     <button type="button" class="add_projects" (click)="modal.close('Save click')">Save</button>
+    <!-- <button type="button" class="Info" (click)="toggle()"id="selectid" >{{buttonName}}</button>  -->
   </div>
 </ng-template> 
 
@@ -158,5 +184,59 @@
   </div>
   <div class="modal-footer profile_update_header">
     <button type="button" class="add_project_managerid" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #contentRL let-modal> 
+  <div class="modal-header profile_update_header">
+    <h4 class="modal-title add_res_title" id="modal-basic-title">RESOURCE INFO</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body profile_update_body">
+    <div class="model-body-contentRL">
+      <div class="body_content_align">
+        <div>
+          <table>
+            <thead>
+              <tr class="emp_list_th">
+                <!-- <tr> -->
+                <th data-field="employee ID" data-checkbox="true">Emp ID </th>
+                <th data-field="Full Name" data-checkbox="true">Full Name</th>
+                <th data-field="email" data-checkbox="true">email </th>
+                <th data-field="dept" data-checkbox="true">Department </th>
+                <th data-field="designation" data-checkbox="true">Designation </th>
+                <th data-field="Manager Name" data-filter-control="select" data-sortable="true">
+                  Manager Name</th>
+                <th data-field="roles" data-checkbox="true">Roles </th>
+                <th data-field="Skills" data-filter-control="select" data-sortable="true">
+                  Skills</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="emp_list_th"  *ngFor="let item of project_list">
+                <td >{{item.resource_info}}</td>
+                <!-- <tr *ngFor="let item of employee_list"> 
+                <td>{{item.resource_info}}</td>
+                <td>{{item.full_name}}</td>
+                <td>{{item.emp_id}}</td>
+                <td>{{item.full_name}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.dept}}</td>
+                <td>{{item.designation}}</td>
+                <td>{{item.manager_name}}</td>
+                <td>{{item.roles}}</td>
+                <td>{{item.skills}}</td> -->
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer profile_update_header">
+    <button type="button" class="show_RL" (click)="modal.close('Save click')">View</button>
   </div>
 </ng-template>

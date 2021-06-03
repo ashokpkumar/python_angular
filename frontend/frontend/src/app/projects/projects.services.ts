@@ -6,6 +6,7 @@ import {API_URL} from '../env';
 import { ToastrService } from 'ngx-toastr';
 import {projectResource} from './assign';
 import {projectManager} from './assignPM';
+import { ResourceList } from './Resourcelist';
 
 @Injectable()
 export class projectsApiService {
@@ -31,6 +32,15 @@ export class projectsApiService {
 getEmployees() {
   return this.http.get(`${API_URL}/employees`);
 }
+
+getResourceInfo(ResourceList:ResourceList):Observable<any>{
+console.log(ResourceList)
+const headers = { 'content-type': 'application/json'}  
+const body=JSON.stringify(ResourceList);
+console.log(body);
+return this.http.post(`${API_URL}/getResourceInfo`, body,{'headers':headers})
+}
+
 addProjectResource(projectResource:projectResource): Observable<any> {
   const headers = { 'content-type': 'application/json'}  
   const body=JSON.stringify(projectResource);

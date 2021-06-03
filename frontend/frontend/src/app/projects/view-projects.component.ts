@@ -8,10 +8,11 @@ import { Router } from "@angular/router"
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { projectResource } from './assign';
 import { projectManager } from './assignPM';
+import {ResourceList} from './Resourcelist';
 import { FormControl } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { faSearch, faSlidersH, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-
+import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
 @Component({
   selector: 'app-view-projects',
   templateUrl: './view-projects.component.html',
@@ -20,11 +21,14 @@ import { faSearch, faSlidersH, faTimesCircle } from '@fortawesome/free-solid-svg
 export class ViewProjectsComponent implements OnInit {
   projectResource = new projectResource();
   projectManager = new projectManager();
+  ResourceList= new ResourceList();
 
   public project_list: any;
   public employee_list: any;
   public copyProjList: any
   public copyEmpList: any
+  public show:boolean = false;
+  public buttonName:any = 'Show';
 
   project_name: any
   project_id: any
@@ -32,6 +36,7 @@ export class ViewProjectsComponent implements OnInit {
 
   projectListSubs: Subscription;
   searchInput:String;
+  searchInputName:String
   closeResult = '';
   public sample_data: string;
   faSearch = faSearch
@@ -157,42 +162,54 @@ export class ViewProjectsComponent implements OnInit {
 
     });
   }
+  addResourceList(ResourceList){
+    this.projectApi.getResourceInfo(this.ResourceList)
+    .subscribe(data => {
 
-  //
-/*   addmanager(projectManager){
+      this.projectApi.showMessage(Object.values(data), Object.keys(data))
+    });
+    this.projectListSubs = this.projectApi
+      .getProjects()
+      .subscribe(res => {
+        this.employee_list = res;
+        this.copyEmpList = res
+      },
 
-     this.projectApi.addProjectManager(this.projectManager)
-       .subscribe(data => {
+    );
+  this.router.navigate(['/project']);
+  this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  this.router.onSameUrlNavigation = 'reload';
+  this.router.navigate(['/project']);
 
-         this.projectApi.showMessage(Object.values(data), Object.keys(data))
-       });
-     this.projectListSubs = this.projectApi
-       .getProjects()
-       .subscribe(res => {
-         this.project_list = res;
-         this.copyProjList = res
-       },
+  }
+  openRL(contentRL, project_code) {
+    this.projectListSubs = this.projectApi    .getResourceInfo(project_code)
+    .subscribe(res => {
+   console.log(res)
+    },
 
-       );
-     this.router.navigate(['/project']);
-     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-     this.router.onSameUrlNavigation = 'reload';
-     this.router.navigate(['/project']);
-    }
-   open1(contentPM,project_code ) {
-     this.projectManager.project_id = project_code;
+    );
+    // this.ResourceList.project_id = project_code;
 
-     this.modalService.open(contentPM, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-       this.closeResult = `Closed with: ${result}`;
+    // this.modalService.open(contentRL, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    //   this.closeResult = `Closed with: ${result}`;
 
-       console.log("Project Manager", this.projectManager);
-       this.addmanager(this.projectManager);
-     }, (reason) => {
-       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    //   console.log("resources", this.ResourceList);
+    //   this.addResourceList(this.ResourceList);
+    // }, (reason) => {
+    //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 
-     });
-   }  */ 
+    // });
+  }
+    
   
+    
+
+    /*   openRL(contentRL, resource_info){
+    this.ResourceList.resource_id= resource_info;
+  } */
+
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -235,4 +252,30 @@ export class ViewProjectsComponent implements OnInit {
         || res.client_name.toLocaleLowerCase().match(this.searchInput.toLocaleLowerCase())
     })
   }
+  searchEmp(){
+    if (this.projectResource.first_name == ""){
+      this.employee_list=this.copyEmpList.map(item =>{return item})
+      return this.employee_list
+    }
+    this.employee_list=this,this.copyEmpList.filtr(res=>{
+      return res.first_name.toLocaleLowerCase().match(this.projectResource.first_name.toLocaleLowerCase())
+    })
+  }
+  toggle() {
+    this.show = !this.show;
+
+    // CHANGE THE NAME OF THE BUTTON.
+    if(this.show)  
+      this.buttonName = "Hide Info";
+    else
+      this.buttonName = "Show Info";
+  }
+  chosenemp: string = "";
+
+info(){
+  if(this.chosenemp) { 
+    this.show = this.show;
+     }
+  }
+
 }
