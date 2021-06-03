@@ -132,7 +132,7 @@ export class ViewProjectsComponent implements OnInit {
    let userRoles = roles.split(",");
    console.log(userRoles);
     for (const role of userRoles) {
-      if ( role=="RMG Admin" || role == "Project Manager") {
+      if ( role=="Admin" || role == "Project Manager") {
         this.isVisible = true;
       } else  {
         this.isVisible = false;
