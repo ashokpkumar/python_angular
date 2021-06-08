@@ -1,11 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Directive, Input, Output, EventEmitter, ViewChildren, QueryList, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { employeesApiService } from './employees.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from "@angular/router";
 import { projectResource } from './assign';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { faSearch, faSlidersH,faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSlidersH, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+
+interface EMPDETAILS {
+  empid: number;
+  salutation: string;
+  full_name: string;
+  projectname: number;
+  projectid: number;
+  emp_project_assigned_date: any;
+  emp_project_end_date: any;
+}
+
+export type SortColumn = keyof EMPDETAILS | '';
+export type SortDirection = 'asc' | 'desc' | '';
+const rotate: { [key: string]: SortDirection } = { 'asc': 'desc', 'desc': '', '': 'asc' };
+
+const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+
+export interface SortEvent {
+  column: SortColumn;
+  direction: SortDirection;
+}
+
+@Directive({
+  selector: 'th[sortable]',
+  host: {
+    '[class.asc]': 'direction === "asc"',
+    '[class.desc]': 'direction === "desc"',
+    '(click)': 'rotate()'
+  }
+})
+export class NgbdSortableHeader {
+
+  @Input() sortable: SortColumn = '';
+  @Input() direction: SortDirection = '';
+  @Output() sort = new EventEmitter<SortEvent>();
+
+  rotate() {
+    this.direction = rotate[this.direction];
+    this.sort.emit({ column: this.sortable, direction: this.direction });
+  }
+}
+
 
 @Component({
   selector: 'app-employees',
@@ -21,36 +63,47 @@ export class EmployeesComponent implements OnInit {
   projectListSubs: Subscription;
   projectResource = new projectResource();
   faSearch = faSearch
-  faTimesCircle =faTimesCircle
+  faTimesCircle = faTimesCircle
   faSlidersH = faSlidersH
-  project_name : any
-  project_id : any
-  resource_status : any
-  manager_name : any
-  client_name : any
-  delivery_type : any
+
+  project_name: any
+  project_id: any
+  resource_status: any
+  manager_name: any
+  client_name: any
+  delivery_type: any;
+  closeResult: any;
+  totalLength: any;
+  page: number = 1;
+  emplist: any;
+  
   roles: any
   isVisible: boolean=true;
 
-  dataForFilter={
-    selectedProject:"All",
-    projectID:"All",
-    resourceStatus:"All",
-    managerName:"All",
-    clientName:"All",
-    deliveryType:"All"
-  }
 
-  constructor(private modalService: NgbModal, private empApi: employeesApiService, private router: Router, private cookieService: CookieService) { }
+  dataForFilter = {
+    selectedProject: "All",
+    projectID: "All",
+    resourceStatus: "All",
+    managerName: "All",
+    clientName: "All",
+    deliveryType: "All"
+  }
+    
+  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+
+  constructor(private modalService: NgbModal, private empApi: employeesApiService, private router: Router, private cookieService: CookieService) {
+  }
 
   ngOnInit() {
     let myElement = document.getElementsByClassName("popover") as HTMLCollectionOf<HTMLElement>;
-    console.log(myElement);
-
+    if (this.cookieService.get('login') == 'true') { }
+    
     if (this.cookieService.get('login') == 'true') {
     this.roles=this.cookieService.get('roles');
     this.checkRoles(this.roles)
   }
+
     else {
       this.router.navigate(['/login']);
     }
@@ -58,43 +111,42 @@ export class EmployeesComponent implements OnInit {
       .getExams()
       .subscribe(res => {
         this.employee_list = res;
-        this.copyEmployeeList = res
+        this.totalLength = this.employee_list.length;
+        this.copyEmployeeList = res;
+        this.emplist = this.copyEmployeeList;
         let project_name = []
         let project_id = []
         let resource_status = []
         let manager_name = []
         let client_name = []
         let delivery_type = []
-        this.employee_list.map(item =>{
-          if(item['project_name'] != ""){
+        this.employee_list.map(item => {
+          if (item['project_name'] != "") {
             project_name.push(item['project_name'])
           }
-          if(item['project_code'] != ""){
+          if (item['project_code'] != "") {
             project_id.push(item['project_code'])
           }
-          if(item['resource_status'] != ""){
+          if (item['resource_status'] != "") {
             resource_status.push(item['resource_status'])
           }
-          if(item['manager_name'] != ""){
+          if (item['manager_name'] != "") {
             manager_name.push(item['manager_name'])
           }
-          if(item['client_name'] != ""){
+          if (item['client_name'] != "") {
             client_name.push(item['client_name'])
           }
-          if(item['delivery_type'] != ""){
+          if (item['delivery_type'] != "") {
             delivery_type.push(item['delivery_type'])
           }
         })
-        this.project_name= new Set(project_name)
-        this.project_id= new Set(project_id)
+        this.project_name = new Set(project_name)
+        this.project_id = new Set(project_id)
         this.resource_status = new Set(resource_status)
         this.manager_name = new Set(manager_name)
         this.client_name = new Set(client_name)
         this.delivery_type = new Set(delivery_type)
-
-        console.log(this.employee_list);
-
-
+        // this.employee_list[0].project_code = ["IND123","DIGI1111"];        
 
       }, console.error);
 
@@ -102,12 +154,11 @@ export class EmployeesComponent implements OnInit {
       .getProjects()
       .subscribe(res => {
         this.project_list = res;
-        console.log(res)
+        console.log(this.copyEmployeeList);
       },
       );
   }
   searchData() {
-    console.log(this.searchInput)
     if (this.searchInput == "") {
       this.employee_list = this.copyEmployeeList.map(item => { return item })
       return this.employee_list
@@ -118,12 +169,10 @@ export class EmployeesComponent implements OnInit {
         || res.manager_name.toLowerCase().match(this.searchInput.toLowerCase())
         || res.skills.toLowerCase().match(this.searchInput.toLowerCase())
         || res.project_code.toLowerCase().match(this.searchInput.toLowerCase())
-        // || res.client_name.toLowerCase().match(this.searchInput.toLowerCase())
+      // || res.client_name.toLowerCase().match(this.searchInput.toLowerCase())
     })
   }
   addResource(projectResource) {
-    console.log(projectResource.emp_id);
-    console.log(projectResource.project_id);
     this.empApi.addProjectResource(this.projectResource)
       .subscribe(data => {
 
@@ -136,11 +185,11 @@ export class EmployeesComponent implements OnInit {
   }
   open(content, project_code) {
     this.projectResource.emp_id = project_code;
-    console.log('Project Code: ', project_code);
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.addResource(this.projectResource);
+      this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
-
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
   checkRoles(roles) {
@@ -164,6 +213,8 @@ export class EmployeesComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+
+  
   applyFilter(){
     let {selectedProject,projectID,resourceStatus,managerName,clientName,deliveryType} = this.dataForFilter
       this.employee_list = this.copyEmployeeList.filter(item =>
@@ -178,14 +229,42 @@ export class EmployeesComponent implements OnInit {
      Object.entries(this.dataForFilter).map(([key,value])=>{
       this.dataForFilter[key] = 'All'
     })
+
   }
 
-  resetFilter(){
-    Object.entries(this.dataForFilter).map(([key,value])=>{
+  resetFilter() {
+    Object.entries(this.dataForFilter).map(([key, value]) => {
       this.dataForFilter[key] = 'All'
     })
-  }
-  openFilter(){
+    this.employee_list = this.copyEmployeeList.map(item => {
+      return item;
+    }
 
+    )
   }
+  openFilter() {
+  }
+
+  removeProject(project_code) {
+    document.getElementsByClassName(project_code)[0].innerHTML = "";
+  }
+
+  onSort({ column, direction }: SortEvent) {
+    // resetting other headers
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    if (direction === '' || column === '') {
+      this.employee_list = this.copyEmployeeList;
+    } else {
+      this.employee_list = [...this.copyEmployeeList].sort((a, b) => {
+        const res = compare(a[column], b[column]);
+        return direction === 'asc' ? res : -res;
+      });
+    }
+  }
+
 }

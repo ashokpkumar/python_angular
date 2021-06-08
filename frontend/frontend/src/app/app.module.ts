@@ -44,8 +44,13 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import {MatInputModule} from '@angular/material/input'
 import {PopoverModule} from "ngx-smart-popover";
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+
+import {NgxPaginationModule} from 'ngx-pagination';
+import { NgbdSortableHeader } from './employees/employees.component';
+
 import { ForgotPasswodComponent } from './forgot-passwod/forgot-passwod.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component'
+
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
@@ -63,6 +68,7 @@ FullCalendarModule.registerPlugins([
     AssignResourceProjectComponent,
     NavigationComponent,
     HomeComponent,
+    NgbdSortableHeader,
     LoginComponent,
     ShowTimeComponent,
     PersonalSummaryComponent,
@@ -98,7 +104,8 @@ FullCalendarModule.registerPlugins([
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
-    PopoverModule
+    PopoverModule,
+    NgxPaginationModule,
   ],
   
   providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule],

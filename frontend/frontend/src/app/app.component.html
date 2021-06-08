@@ -3,9 +3,13 @@
 <app-add-projects></app-add-projects>
 <app-view-projects></app-view-projects> -->
 
-<app-navigation></app-navigation>
+<div *ngIf="currentRoute != '/login'">
+    <app-navigation></app-navigation>
+</div>
 <div class="side_main_content">
-    <app-side-bar></app-side-bar>
+    <div *ngIf="currentRoute != '/login'">
+        <app-side-bar></app-side-bar>
+    </div>
     <router-outlet></router-outlet>
 </div>
 

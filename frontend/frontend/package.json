@@ -34,6 +34,7 @@
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "ngx-cookie-service": "^11.0.2",
+    "ngx-pagination": "^5.1.0",
     "ngx-smart-popover": "^1.4.0",
     "ngx-toastr": "^13.2.1",
     "npm": "^7.9.0",
