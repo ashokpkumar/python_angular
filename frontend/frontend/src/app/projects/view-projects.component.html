@@ -83,19 +83,17 @@
               <td><button (click)="open1(contentPM,item.project_code)" type="button" class="add_project_managerid">Add</button>
                 {{item.project_manager_id}} </td>          
               <td>
+                <div>        
+                  <a (click)="openRL(contentRL,item.project_code)" style="color:rgb(36, 167, 248);" ><u>ResourceList</u></a>
+                </div>
                 <div class="plus-icon">
-                <fa-icon class="fa fa-plus-circle fa-2x" aria-hidden="true" (click)="open(content,item.project_code)" style="color:white;  background: rgb(36, 167, 248);
+                <fa-icon class="fa fa-plus-circle fa-lg" aria-hidden="true" (click)="open(content,item.project_code)" style="color:white;  background: rgb(36, 167, 248);
                 border-radius: 50%;
-                height: 1em;
-                width: 1em;">
+                line-height: normal;
+                width: 1em;
+                ">
                 </fa-icon>
               </div>
-                <!-- <i class="fa fa-close"></i> -->
-                <!-- <i class="bi bi-dash"></i> --> 
-                <div>        
-                  <a (click)="openRL(contentRL,item.project_code)" ><u>ResourceList...</u></a>
-                </div>
-                  <!-- <a (click)="open(contentRL)"class="show_RL">See more...</a> -->
                </td>
             </tr>
 
@@ -108,7 +106,7 @@
 
 
 
-<ng-template #content let-modal>
+<ng-template #content let-modal >
   <div class="modal-header profile_update_header">
     <h4 class="modal-title add_res_title" id="modal-basic-title">Profile update</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -128,7 +126,7 @@
         <label>Employee Name: </label>
         <input list="selectid" [(ngModel)]="projectResource.emp_id" type="text"/> 
         <datalist [(ngModel)]="chosenemp" (ngModelChange)="toggle()" id="selectid" [(ngModel)]="projectResource.emp_id" >
-          <option value="1" id="selectid" *ngFor="let item of employee_list" value={{item.emp_id}}>{{item.first_name}} </option>
+          <option  id="selectid" *ngFor="let item of employee_list" value={{item.emp_id}}>{{item.first_name}} </option>
         </datalist>
           <div class="Info">      
             <ng-container *ngIf="show">
@@ -188,17 +186,18 @@
 </ng-template>
 
 <ng-template #contentRL let-modal> 
-  <div class="modal-header profile_update_header">
-    <h4 class="modal-title add_res_title" id="modal-basic-title">RESOURCE INFO</h4>
+  <div class="containerRL"[(ngModel)]="projectResource.project_id">
+    <div class="modal-header profile_update_headerRL">
+    <h4 class="modal-titleRL" class="proj_list_th" id="modal-basic-title">{{projectResource.project_id}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body profile_update_body">
+  <div class="modal-body profile_update_bodyRL">
     <div class="model-body-contentRL">
-      <div class="body_content_align">
+      <div class="body_content_alignRL">
         <div>
-          <table>
+          <table class="RLtable">
             <thead>
               <tr class="emp_list_th">
                 <!-- <tr> -->
@@ -225,7 +224,7 @@
                 <td >{{item.manager_name}}</td>
                 <td >{{item.roles}}</td>
                 <td >{{item.skills}}</td>
-                <td ><a (click)="removeResource(item.emp_id)" ><u>X</u></a></td>
+                <td ><i class="fa fa-times-circle" aria-hidden="true"(click)="removeResource(item.emp_id)"></i> </td>
 
               </tr>
             </tbody>
@@ -234,7 +233,6 @@
       </div>
     </div>
   </div>
-  <div class="modal-footer profile_update_header">
-    <button type="button" class="show_RL" (click)="modal.close('Save click')">View</button>
   </div>
+
 </ng-template>

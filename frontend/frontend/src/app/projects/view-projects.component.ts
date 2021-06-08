@@ -26,6 +26,7 @@ export class ViewProjectsComponent implements OnInit {
   public project_list: any;
   public employee_list: any;
   public project_resource_list: any;
+  public copyResList:any;
   public copyProjList: any
   public copyEmpList: any
   public show:boolean = false;
@@ -189,7 +190,21 @@ export class ViewProjectsComponent implements OnInit {
     console.log(emp_id)
     console.log(this.projectCodeRemoval)
     this.projectListSubs = this.projectApi.removeProjectResource(emp_id,this.projectCodeRemoval)
-    .subscribe(res => {});
+    .subscribe(data => {      
+      this.projectApi.showMessage(Object.values(data), Object.keys(data))
+      console.log(data)
+
+    });
+    this.projectListSubs = this.projectApi.removeProjectResource(emp_id,this.projectCodeRemoval)
+    .subscribe(res => {
+      this.project_resource_list = res;
+      this.copyResList=res
+      console.log(res)
+      
+      
+    },
+    );
+
 
   }
   openRL(contentRL, project_code) {
