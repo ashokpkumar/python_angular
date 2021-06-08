@@ -291,13 +291,13 @@ padding: 2em;
   max-height: 80vh;
   max-width: 100%;
   position: absolute;
-  padding: 30px;
+  padding: 40px;
   padding: right 0px;
   
 }
 .containerRL td, .containerRL th {
   border: 1px solid #ddd;
-  padding: 3px;
+  padding: 2px;
 }
 
 .example-additional-selection {
@@ -365,10 +365,4 @@ padding: 2em;
 
 
 }
-.body_content_alignRL{
-  vertical-align: middle; 
-  overflow-y: auto;
-  grid-template-columns: 120px 200px;
 
-
-}
