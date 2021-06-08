@@ -50,7 +50,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     border: 1px solid black;
-    padding:10px
+    padding:10px;
 }
 .emp_list_th > td{
     width: 15px;
@@ -63,10 +63,10 @@ body {
     padding:10px
   }
 .emp_list_th > td:last-child{
-    padding: 10px;
+    padding: 3px;
 }
 .emp_list_th > td:last-child > button:nth-child(1){
-    margin-right: 10px;
+    margin-right: 5px;
 }
 .timesub_heading{
     font-size: 30px;
@@ -114,6 +114,7 @@ font-family: 'Arial', Times, serif;
   left: -152px !important;
   top: 9px !important;
   min-width: 400px
+
 }
 ::ng-deep ngb-popover-window.bs-popover-bottom>.arrow, ngb-popover-window.bs-popover-top>.arrow{
   left: 89% !important;
@@ -208,14 +209,36 @@ border: 1px solid #24a7f8;
     font-weight: 700;
   }
   .modal-title{
-      width: auto;
+      width: 180%;
       table-layout: center;
+      overflow: auto;
   }
   .modal-body{
     width: auto;
-    table-layout: center;
+    table-layout: middle;
   }
 .center{
   margin-left: auto;
   margin-right: auto;
+}
+.emp_list_th{
+  padding: 2px;
+}
+.time_submission_tableRT{
+  padding: 5px 5px;
+}
+.time_submission_tableRT > table{
+  table-layout: absolute;
+  width: 75%;
+} 
+.containerRT{
+  width: 200px;
+  padding: 0px;
+    border: chartreuse;
+    font-size: small;
+    margin-top: 64px;
+}
+.containerRT td, .containerRT th {
+  border: 1px solid rgb(7, 7, 7);
+  padding: 5px;
 }
