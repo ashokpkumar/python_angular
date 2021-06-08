@@ -1,4 +1,4 @@
-<div class="add_employee_bg">
+<div class="add_employee_bg" *ngIf="isVisible">
   <div class="container card">
     <p class="add_emp_heading"> Add Employee</p>
     <div class="ps" style="position: relative; max-height: calc(100vh - 173px);" ></div>
@@ -13,7 +13,7 @@
         <p>Email: </p>
         <input required #empEmail="ngModel" class="form-control" [pattern]="emailPattern" [(ngModel)]="employee.email" name="email" />
         <span *ngIf="empEmail.invalid && empEmail.touched && !isValidFormSubmitted" class="error">
-          <div *ngIf="empEmail.errors.pattern">  
+          <div *ngIf="empEmail.errors.pattern">
           Employee Email is required
         </div>
         </span>
@@ -225,7 +225,7 @@
     <label>Roles: </label>
     <input [(ngModel)]="employee.roles" />
   </div>
-  
+
   <div>
     <button (click)="onSubmit()">Add</button>
   </div>

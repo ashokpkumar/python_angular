@@ -4,6 +4,7 @@
 #https://medium.com/@alanhamlett/part-1-sqlalchemy-models-to-json-de398bc2ef47#:~:text=To%20add%20a%20serialization%20method,columns%20and%20returns%20a%20dictionary.&text=def%20to_dict(self%2C%20show%3D,of%20this%20model.%22%22%22
 #sources
 
+from entities.database import employee,project,authUser,timesubmissions,TimeMaster, forget_pass
 from entities.database import employee,project,authUser,timesubmissions
 from entities.database import announcements
 from entities.database import Session, engine, Base
@@ -25,20 +26,18 @@ import json
 import pytest
 from sqlalchemy.ext.serializer import loads, dumps
 import entities.mail
+from flask import request, render_template
+import os
+from env.config import Config
 
-app = Flask(__name__)
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'please enter email '
-app.config['MAIL_PASSWORD'] = 'please enter password '
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-
+template_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+app = Flask(__name__, template_folder=template_dir)
+app.config.from_object(Config)
 mail = Mail(app)
 
 
-app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+# app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 jwt = JWTManager(app)
 CORS(app)
 
@@ -50,19 +49,6 @@ create_sample_project()
 create_sample_timesubmissions()
 create_sample_authUser()
 
-# Sample end point for email function
-@app.route("/emailSend1", methods=["POST"])
-def emailSend():
-    # email sending
-    subject = request.json.get("subject")
-    sender = request.json.get("sender")
-    recipient = request.json.get("recipient")
-    body = request.json.get("body")
-    cc = request.json.get("cc")
-
-    entities.mail.send_mail(subject, sender, recipient, body, cc, bcc=None,)
-
-    return "email send successfully"
 
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
@@ -121,6 +107,7 @@ def employees():
         emp_id = dictionary["project_code"]
         for proj_item in serialized_project:
             if proj_item["project_code"]==emp_id:
+                proj_item["project_code"] = [emp_id] #Project id should return list instead of string in employee
                 dictionary.update(proj_item)
                 break
     session.close()
@@ -620,6 +607,48 @@ def addProjectResource():
     session.close()
     return jsonify({"success":"Employee {} and Project {} Linked".format(resource_id,project_code)})
 
+@app.route('/addProjectmanager', methods=['POST'])
+def addProjectmanager():
+    session = Session()
+    data = request.get_json()
+    project_code = data.get("project_id")
+    project_manager=data.get('manager_id')
+    print(project_code)
+    print(project_manager)
+    existing_project = session.query(project).filter(project.project_code==project_code).first()
+    if existing_project==None:
+        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
+    
+    existing_project_manager= session.query(employee).filter(employee.manager_id==project_manager).first()
+    if existing_project_manager==None:
+        return jsonify({"error":"Manager ID {} Does not Exists !".format(project_manager)})
+
+    existing_project_manager.project_code = project_code
+    session.add(existing_project_manager)
+    session.commit()
+    if existing_project.project_manager_id == None:
+        existing_project.project_manager_id = project_manager
+        session.add(existing_project)
+        session.commit()
+    else:
+        existing_PM = existing_project.project_manager_id
+        existing_PM_list = existing_PM.split(",")
+        for i in existing_PM_list:
+            if i=="":
+                existing_PM_list.remove(i)
+        if project_manager in existing_PM_list:
+            return  jsonify({'error':'Project Manager already Exists in the project'})
+        existing_PM_list.append(project_manager)
+
+        out_PM =""
+        for i in existing_PM_list:
+            out_PM = i +","+ out_PM
+        existing_project.PM_id=out_PM[:-1]
+        session.add(existing_project)
+        session.commit()
+    session.close()
+    return jsonify({"success":"Manager {} and Project {} Linked".format(project_manager,project_code)})
+        
 
 @app.route('/addProject', methods=['POST'])
 def addProject():
@@ -673,10 +702,76 @@ def viewEmpInfo():
         project_serialized = serialize_all(project_objects)
         proj_dict = project_serialized[0]
         emp_dict.update(proj_dict)
-    emp_dict['full_name'] = emp_dict['salutation'] + emp_dict['first_name'] + emp_dict['last_name'] 
+    emp_dict['full_name'] = emp_dict['salutation'] + emp_dict['first_name'] + emp_dict['last_name']
     return jsonify(emp_dict), 201
 
 
+@app.route("/forgot_pass_create_token", methods=["POST"])
+def forgot_pass_create_token():
+    session = Session()
+    email_id = request.json.get("email_id")
+    emp_objects = session.query(employee).filter(employee.email == email_id).first()
+    if emp_objects == None:
+        return jsonify({"error":" Please enter Valid employee Email Id"})
+
+    emp_id = emp_objects.emp_id
+    forget_pass_data = session.query(forget_pass).filter(forget_pass.user_id == emp_id,
+                                                         forget_pass.email_address == email_id,
+                                                         ).first()
+    access_token = create_access_token(identity=emp_id)
+    current_date = datetime.datetime.now()
+
+    if forget_pass_data == None:
+        forget_pass_obj = forget_pass(user_id=emp_id, email_address=email_id, reset_token=access_token, create_date=current_date)
+        session.add(forget_pass_obj)
+        session.commit()
+        session.close()
+
+    else:
+        forget_pass_data.reset_token = access_token
+        forget_pass_data.create_data = current_date
+        session.add(forget_pass_data)
+        session.commit()
+        session.close()
+
+        html_body = render_template('frontend/frontend/src/app/reset-password/reset-password.component.html',
+                                    user=email_id, token=access_token)
+        text_body = "http://localhost:4200/" + 'resetpassword/?token='+access_token +'&'+'email='+email_id
+        entities.mail.send_mail("Forgot password setup", Config.MAIL_USERNAME, email_id, html_body, text_body)
+
+        return jsonify(text_body), 201
+
+
+@app.route("/reset_pass", methods=["POST", "GET"])
+def reset_pass():
+    session = Session()
+    email = request.json.get('email')
+    password = request.json.get('password')
+    confirm_pass = request.json.get('password')
+    token = request.json.get('reset_token')
+
+    if email is None:
+        return jsonify({"error:": "incorrect username or password"}), 400
+
+    forget_pass_objects = session.query(forget_pass).filter(forget_pass.email_address == email)
+    forget_pass_obj = serialize_all(forget_pass_objects)
+
+    reset_token = forget_pass_obj[0]['reset_token']
+    if reset_token == token:
+        # update auth table password
+        auth_object = session.query(authUser).filter(authUser.email == email).first()
+        if auth_object is None:
+            return jsonify({'error': 'User not found, This user is not added yet'}), 401
+        auth_object.password = password
+        session.add(auth_object)
+        session.commit()
+
+        return "Password Reset successfully", 200
+    else:
+        return "Please generate token for reset password  token expired"
+
+
+
+
 if __name__ == '__main__':
-    #app.run(host = '0.0.0.0',port = 5000,debug = True)
     app.run(debug = True)

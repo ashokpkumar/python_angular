@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     }else{
         this.login=false;
     }
- 
+
   }
   createPassword(){
     this.apiService.setPassword(this.project)
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
       this.apiService.showMessage(Object.values(data),Object.keys(data));
     },
                 err=>{console.log(err);});
-    
+
       }
   onSubmit() {
     console.log("Project",this.project)
@@ -87,6 +87,7 @@ export class LoginComponent implements OnInit {
   forgot(){
     this.forgotPass=true;
     this.apiService.showMessage('please set your password here','info')
+    this.router.navigate(['/forgotpassword']);
   }
-  
+
 }

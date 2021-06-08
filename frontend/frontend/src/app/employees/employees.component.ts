@@ -65,6 +65,7 @@ export class EmployeesComponent implements OnInit {
   faSearch = faSearch
   faTimesCircle = faTimesCircle
   faSlidersH = faSlidersH
+
   project_name: any
   project_id: any
   resource_status: any
@@ -75,6 +76,10 @@ export class EmployeesComponent implements OnInit {
   totalLength: any;
   page: number = 1;
   emplist: any;
+  
+  roles: any
+  isVisible: boolean=true;
+
 
   dataForFilter = {
     selectedProject: "All",
@@ -84,6 +89,7 @@ export class EmployeesComponent implements OnInit {
     clientName: "All",
     deliveryType: "All"
   }
+    
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   constructor(private modalService: NgbModal, private empApi: employeesApiService, private router: Router, private cookieService: CookieService) {
@@ -92,6 +98,12 @@ export class EmployeesComponent implements OnInit {
   ngOnInit() {
     let myElement = document.getElementsByClassName("popover") as HTMLCollectionOf<HTMLElement>;
     if (this.cookieService.get('login') == 'true') { }
+    
+    if (this.cookieService.get('login') == 'true') {
+    this.roles=this.cookieService.get('roles');
+    this.checkRoles(this.roles)
+  }
+
     else {
       this.router.navigate(['/login']);
     }
@@ -135,6 +147,7 @@ export class EmployeesComponent implements OnInit {
         this.client_name = new Set(client_name)
         this.delivery_type = new Set(delivery_type)
         // this.employee_list[0].project_code = ["IND123","DIGI1111"];        
+
       }, console.error);
 
     this.projectListSubs = this.empApi
@@ -179,6 +192,17 @@ export class EmployeesComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+  checkRoles(roles) {
+   let userRoles = roles.split(",");
+   console.log(userRoles);
+    for (const role of userRoles) {
+      if ( role == "RMG Admin") {
+        this.isVisible = true;
+      } else  {
+        this.isVisible = false;
+      }
+    }
+  }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -189,20 +213,23 @@ export class EmployeesComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-  applyFilter() {
-    let { selectedProject, projectID, resourceStatus, managerName, clientName, deliveryType } = this.dataForFilter
-    this.employee_list = this.copyEmployeeList.filter(item =>
-      (item['manager_name'] === managerName || managerName === "All") &&
-      (item['project_code'] === projectID || projectID === "All") &&
-      (item['resource_status'] === resourceStatus || resourceStatus === "All") &&
-      (item['project_name'] === selectedProject || selectedProject === "All") &&
-      (item['client_name'] === clientName || clientName === "All") &&
-      (item['delivery_type'] === deliveryType || deliveryType === "All") &&
-      (item['project_name'] === selectedProject || selectedProject === "All")
-    )
-    //  Object.entries(this.dataForFilter).map(([key,value])=>{
-    //   this.dataForFilter[key] = 'All'
-    // })
+
+  
+  applyFilter(){
+    let {selectedProject,projectID,resourceStatus,managerName,clientName,deliveryType} = this.dataForFilter
+      this.employee_list = this.copyEmployeeList.filter(item =>
+      ( item['manager_name'] === managerName  || managerName === "All") &&
+      ( item['project_code'] === projectID  || projectID === "All") &&
+      ( item['resource_status'] === resourceStatus  || resourceStatus === "All") &&
+      ( item['project_name'] === selectedProject  || selectedProject === "All") &&
+      ( item['client_name'] === clientName  || clientName === "All") &&
+      ( item['delivery_type'] === deliveryType  || deliveryType === "All") &&
+      ( item['project_name'] === selectedProject  || selectedProject === "All")
+     )
+     Object.entries(this.dataForFilter).map(([key,value])=>{
+      this.dataForFilter[key] = 'All'
+    })
+
   }
 
   resetFilter() {

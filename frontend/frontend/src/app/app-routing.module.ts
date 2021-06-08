@@ -14,6 +14,8 @@ import {ProfessionalSummaryComponent} from './professional-summary/professional-
 import {TimeSummaryComponent} from './time-summary/time-summary.component';
 import {TimesubmissionsComponent} from './timesubmissions/timesubmissions.component';
 import {IndividualTimeComponent} from './individual-time/individual-time.component';
+import {ForgotPasswodComponent} from './forgot-passwod/forgot-passwod.component';
+import {ResetPasswordComponent} from './reset-password/reset-password.component'
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'employee', component: EmployeesComponent },
@@ -22,13 +24,17 @@ const routes: Routes = [
   { path: 'addproject', component: AddProjectsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'addresourceproject', component: AssignResourceProjectComponent },
+  { path: 'addProjectmanager', component: ViewProjectsComponent },
+
   { path: 'time', component: TimeSummaryComponent },
   { path: 'professional', component: ProfessionalSummaryComponent },
   { path: 'personal', component: PersonalSummaryComponent },
   { path: 'account', component: AccountSummaryComponent },
   { path: 'timesubmission', component: TimesubmissionsComponent },
   { path: 'individualTime', component: IndividualTimeComponent },
-  
+  {path: 'forgotpassword', component: ForgotPasswodComponent },
+  {path: 'resetpassword',component: ResetPasswordComponent}
+
 ];
 
 @NgModule({
