@@ -10,7 +10,6 @@ from entities.database import announcements
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
 from entities.sample_data import create_sample_employee,create_sample_project,create_sample_timesubmissions,create_sample_authUser,time_master
-
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
@@ -147,9 +146,9 @@ def projects():
 @app.route('/add_announcements', methods=['POST'])
 def add_announcements():
     data = request.get_json()
-    announcement_data = announcements (user_id =data.get('user_id'),
-                                       announcement_info = data.get('announcement_info'),
-                                       announcement_category=data.get('announcement_category'),
+    announcement_data = announcements (user_id =data.get('user_id').lower(),
+                                       announcement_info = data.get('announcement_info').lower(),
+                                       announcement_category=data.get('announcement_category').lower(),
                                        date_logged = datetime.datetime.now(),
                                         )
     session = Session()
@@ -191,11 +190,11 @@ def addtimesubmissions():
     if existing_emp == None:
         return jsonify({'error':'user not available in the employee table'}),200
     sub_data = timesubmissions( date_info = data.get('date'),
-                                    hours = data.get('hours'),
-                                    user_id = data.get('user_name'),
-                                    project_code = data.get('project_id'),
-                                    manager_id = data.get('manager_name'),
-                                    time_type = data.get('time_type'),
+                                    hours = data.get('hours').lower(),
+                                    user_id = data.get('user_name').lower(),
+                                    project_code = data.get('project_id').lower(),
+                                    manager_id = data.get('manager_name').lower(),
+                                    time_type = data.get('time_type').lower(),
                                     status = 'submitted-pending approval',
                                     submission_id = data.get('user_name') + data.get('user_name') + data.get('time_type')     
                                )
@@ -506,38 +505,38 @@ def addEmployee():
     session.commit()
 
     try: 
-        emp_data = employee(emp_id=data.get("emp_id") , 
-                            manager_id = data.get("manager_id"),
-                            email = data.get("email") , 
-                            first_name = data.get("first_name"), 
-                            last_name= data.get("last_name"), 
-                            sur_name= data.get("sur_name"), 
-                            initial= data.get("initial"), 
-                            salutation= data.get("salutation"), 
-                            project_code= data.get("project_code"), 
-                            dept= data.get("dept"),
-                            designation = data.get("designation"),
+        emp_data = employee(emp_id=data.get("emp_id").lower() , 
+                            manager_id = data.get("manager_id").lower(),
+                            email = data.get("email").lower() , 
+                            first_name = data.get("first_name").lower(), 
+                            last_name= data.get("last_name").lower(), 
+                            sur_name= data.get("sur_name").lower(), 
+                            initial= data.get("initial").lower(), 
+                            salutation= data.get("salutation").lower(), 
+                            project_code= data.get("project_code").lower(), 
+                            dept= data.get("dept").lower(),
+                            designation = data.get("designation").lower(),
                             emp_start_date= data.get("emp_start_date",None),
                             emp_last_working_date=data.get("emp_last_date",None),
                             emp_project_assigned_date=data.get("emp_project_assigned_date",None),
                             emp_project_end_date=data.get("emp_project_end",None),
 
-                            employment_status=data.get("employment_status"), 
-                            manager_name=data.get("manager_name"), 
-                            manager_dept=data.get("manager_dept"), 
-                            resource_status=data.get("resource_status"),
-                            delivery_type=data.get("delivery_type"),
-                            additional_allocation=data.get("additional_allocation"),
-                            skills=data.get("skills"),
-                            roles=data.get("roles"),
+                            employment_status=data.get("employment_status").lower(), 
+                            manager_name=data.get("manager_name").lower(), 
+                            manager_dept=data.get("manager_dept").lower(), 
+                            resource_status=data.get("resource_status").lower(),
+                            delivery_type=data.get("delivery_type").lower(),
+                            additional_allocation=data.get("additional_allocation").lower(),
+                            skills=data.get("skills").lower(),
+                            roles=data.get("roles").lower(),
 
                             )
         session = Session()
         session.add(emp_data)
         session.commit()
-        auth_data = authUser(emp_id = data.get("emp_id"),
-                            email=data.get("email"),
-                            roles=data.get("roles"))
+        auth_data = authUser(emp_id = data.get("emp_id").lower(),
+                            email=data.get("email").lower(),
+                            roles=data.get("roles").lower())
         session = Session()
         session.add(auth_data)
         session.commit()     
@@ -660,16 +659,16 @@ def addProject():
         session.close()
         return jsonify({'warning':'Project with ID: {} already exist !'.format(data.get("projectcode"))})
     try:     
-        project_data = project(client_name = data.get("clientname"),
-                                project_code=data.get("projectcode"),
-                                project_name=data.get("projectname"),
+        project_data = project(client_name = data.get("clientname").lower(),
+                                project_code=data.get("projectcode").lower(),
+                                project_name=data.get("projectname").lower(),
                                 project_start_date=data.get("project_start_date",None),                                
-                                project_status=data.get("projectstatus"),
-                                billing_type=data.get("billingtype"),
-                                segment=data.get("segment"),
-                                geography=data.get("geography"),
-                                solution_category =data.get("solutioncategory"),
-                                financial_year = data.get("financialyear")
+                                project_status=data.get("projectstatus").lower(),
+                                billing_type=data.get("billingtype").lower(),
+                                segment=data.get("segment").lower(),
+                                geography=data.get("geography").lower(),
+                                solution_category =data.get("solutioncategory").lower(),
+                                financial_year = data.get("financialyear").lower()
         
         )
         session = Session()

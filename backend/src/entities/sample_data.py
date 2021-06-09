@@ -183,28 +183,28 @@ def create_sample_employee():
         session = Session()
         emp_object = session.query(employee).filter(employee.emp_id==emp['emp_id']).first()
         if emp_object==None:
-            emp_data = employee(emp_id = emp['emp_id'],
-                            manager_id = emp['manager_id'],
-                            email = emp['email'],
-                            first_name = emp['first_name'],
-                            last_name = emp['last_name'],
-                            sur_name = emp['sur_name'],
-                            initial = emp['initial'],
-                            salutation = emp['salutation'],
-                            project_code = emp['project_code'],
-                            dept = emp['dept'],
-                            designation = emp['designation'],
+            emp_data = employee(emp_id = emp['emp_id'].lower(),
+                            manager_id = emp['manager_id'].lower(),
+                            email = emp['email'].lower(),
+                            first_name = emp['first_name'].lower(),
+                            last_name = emp['last_name'].lower(),
+                            sur_name = emp['sur_name'].lower(),
+                            initial = emp['initial'].lower(),
+                            salutation = emp['salutation'].lower(),
+                            project_code = emp['project_code'].lower(),
+                            dept = emp['dept'].lower(),
+                            designation = emp['designation'].lower(),
                             emp_start_date = emp['emp_start_date'],
                             emp_last_working_date = emp['emp_last_working_date'],
                             emp_project_assigned_date = emp['emp_project_assigned_date'],
                             emp_project_end_date = emp['emp_project_end_date'],
-                            employment_status = emp['employment_status'],
-                            manager_name = emp['manager_name'],
-                            manager_dept = emp['manager_dept'],
-                            resource_status = emp['resource_status'],
-                            delivery_type = emp['delivery_type'],
-                            skills = emp['skills'],
-                            roles = emp['roles']
+                            employment_status = emp['employment_status'].lower(),
+                            manager_name = emp['manager_name'].lower(),
+                            manager_dept = emp['manager_dept'].lower(),
+                            resource_status = emp['resource_status'].lower(),
+                            delivery_type = emp['delivery_type'].lower(),
+                            skills = emp['skills'].lower(),
+                            roles = emp['roles'].lower()
 
                             )
             session.add(emp_data)
@@ -218,17 +218,17 @@ def create_sample_project():
         sample_objects = session.query(project).filter(project.project_code==sample["projectcode"]).first()
         #serialized_obj = serialize_all(emp_objects)
         if sample_objects==None:
-            sample_data = project(client_name = sample["clientname"],
-                                    project_code=sample["projectcode"],
-                                    project_name=sample["projectname"],
-                                    project_start_date=sample["project_start_date"],
-                                    project_status=sample["projectstatus"],
-                                    billing_type=sample["billingtype"],
-                                    segment=sample["segment"],
-                                    geography=sample["geography"],
-                                    solution_category =sample["solution_category"],
-                                    financial_year = sample["financialyear"],
-                                    resource_info = sample["resource_info"]
+            sample_data = project(client_name = sample["clientname"].lower(),
+                                    project_code=sample["projectcode"].lower(),
+                                    project_name=sample["projectname"].lower(),
+                                    project_start_date=sample["project_start_date"].lower(),
+                                    project_status=sample["projectstatus"].lower(),
+                                    billing_type=sample["billingtype"].lower(),
+                                    segment=sample["segment"].lower(),
+                                    geography=sample["geography"].lower(),
+                                    solution_category =sample["solution_category"].lower(),
+                                    financial_year = sample["financialyear"].lower(),
+                                    resource_info = sample["resource_info"].lower()
                                 )         
             print(sample_data)  
             session.add(sample_data)
@@ -243,12 +243,12 @@ def create_sample_timesubmissions():
         if sub_objects==None:
             sub_data = timesubmissions( date_info=timesubmission['date'],
                                             hours = timesubmission['hours'],
-                                            user_id = timesubmission['user_id'],
-                                            project_code = timesubmission['project_id'],
-                                            manager_id = timesubmission['manager_id'],
-                                            time_type = timesubmission['time_type'],
-                                            status = timesubmission["status"],
-                                            submission_id = timesubmission["submission_id"]    
+                                            user_id = timesubmission['user_id'].lower(),
+                                            project_code = timesubmission['project_id'].lower(),
+                                            manager_id = timesubmission['manager_id'].lower(),
+                                            time_type = timesubmission['time_type'].lower(),
+                                            status = timesubmission["status"].lower(),
+                                            submission_id = timesubmission["submission_id"].lower()    
                                     )
             print(sub_data)
             session.add(sub_data)
@@ -261,10 +261,10 @@ def create_sample_authUser():
         session = Session()
         auth_objects = session.query(authUser).filter(authUser.emp_id==authUsers["emp_id"]).first()
         if auth_objects==None: 
-            auth_data = authUser( emp_id =authUsers["emp_id"], 
-                                    email = authUsers["email"],
-                                    password = authUsers["password"],
-                                    roles = authUsers["roles"]
+            auth_data = authUser( emp_id =authUsers["emp_id"].lower(), 
+                                    email = authUsers["email"].lower(),
+                                    password = authUsers["password"].lower(),
+                                    roles = authUsers["roles"].lower()
                                     )
             print(auth_data)
             session.add(auth_data)
