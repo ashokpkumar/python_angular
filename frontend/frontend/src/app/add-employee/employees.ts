@@ -28,3 +28,8 @@ export class employee{
     roles:string
 
   }
+  export enum users{
+    admin="admin",
+    manager="manager"
+  }
+  

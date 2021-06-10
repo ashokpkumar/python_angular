@@ -6,7 +6,7 @@ import { projectsApiService } from './projects.services';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from "@angular/router"
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { projectResource } from './assign';
+import { projectResource,users } from './assign';
 import { projectManager } from './assignPM';
 import { FormControl } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -29,8 +29,9 @@ export class ViewProjectsComponent implements OnInit {
   project_name: any
   project_id: any
   client_name: any
+  public users:any
   roles: any
-  isVisible: boolean=true;
+  isVisible: boolean=false;
 
   projectListSubs: Subscription;
   searchInput:String;
@@ -132,11 +133,9 @@ export class ViewProjectsComponent implements OnInit {
    let userRoles = roles.split(",");
    console.log(userRoles);
     for (const role of userRoles) {
-      if ( role=="RMG Admin" || role == "Project Manager") {
+      if ( role==users.admin) {
         this.isVisible = true;
-      } else  {
-        this.isVisible = false;
-      }
+      } 
     }
   }
 
