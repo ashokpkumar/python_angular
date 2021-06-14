@@ -10,7 +10,7 @@ from entities.database import announcements
 from entities.database import Session, engine, Base
 from entities.database import serialize_all
 from entities.sample_data import create_sample_employee,create_sample_project,create_sample_timesubmissions,create_sample_authUser,time_master
-from entities.helper import helper1,helper2,removenull
+from entities.helper import stringToList,listToString
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -491,13 +491,12 @@ def addEmployee():
     if existing_project==None:
         return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
 
-    project_list=helper1(existing_project)
-    removenull(project_list)
+    project_list=stringToList(existing_project)
     if project_code in project_list:
         return jsonify({'error':'Employee is already working in the project'})
     project_list.append(project_code)
         
-    existing_project.project_code =helper2(project_list)
+    existing_project.project_code =listToString(project_list)
     session.add(existing_project)
     session.commit()
 
@@ -563,13 +562,12 @@ def addProjectResource():
         session.commit()
     else:
         existing_proj_code= existing_emp.project_code
-        existing_proj_list = helper1(existing_proj_code)
-        removenull(existing_proj_list)
+        existing_proj_list = stringToList(existing_proj_code)
         if project_code in existing_proj_list:
             return jsonify({'error':'resource exist already in the project'})
         existing_proj_list.append(project_code)
         
-        existing_emp.project_code = helper2(existing_proj_list)# check if the string sanitation is required
+        existing_emp.project_code = listToString(existing_proj_list)# check if the string sanitation is required
         print(type(existing_emp.project_code))
         session.add(existing_emp)
         session.commit()
@@ -585,14 +583,13 @@ def addProjectResource():
     else:
         existing_resource = existing_project.resource_info
         print(existing_resource)
-        existing_resource_list=helper1(existing_resource)#helper1 fn convert str to list 
+        existing_resource_list=stringToList(existing_resource)#stringToList fn convert str to list 
         print(type(existing_resource_list))
-        removenull(existing_resource_list)#removed null in list
         print(existing_resource_list)
         if resource_id in existing_resource_list:
             return jsonify({'error':'resource exist already in the project'})
         existing_resource_list.append(resource_id )
-        existing_project.resource_info = helper2(existing_resource_list)#helper2 convert list to str 
+        existing_project.resource_info = listToString(existing_resource_list)#listToString convert list to str 
         print(existing_resource_list)
         session.add(existing_project)
         session.commit()
@@ -616,23 +613,24 @@ def addProjectmanager():
     if existing_project_manager==None:
         return jsonify({"error":"Manager ID {} Does not Exists !".format(project_manager)})
 
-    existing_project_manager.project_code = project_code
-    session.add(existing_project_manager)
-    session.commit()
+    #existing_project_manager.project_code = project_code
+    #session.add(existing_project_manager)
+    #session.commit()
     if existing_project.project_manager_id == None:
         existing_project.project_manager_id = project_manager
         session.add(existing_project)
         session.commit()
     else:
         existing_PM = existing_project.project_manager_id
-        existing_PM_list = helper1(existing_PM)
-        removenull(existing_PM_list)
+        print(existing_PM)
+        existing_PM_list = stringToList(existing_PM)
+        print(existing_PM_list)
         if project_manager in existing_PM_list:
             return  jsonify({'error':'Project Manager already Exists in the project'})
         existing_PM_list.append(project_manager)
-
-        existing_project.PM_id=helper2(existing_PM_list)
-        print(type(existing_PM_list))
+        print(existing_PM_list)
+        existing_project.project_manager_id=listToString(existing_PM_list)
+        print(existing_PM_list)
         session.add(existing_project)
         session.commit()
     session.close()
