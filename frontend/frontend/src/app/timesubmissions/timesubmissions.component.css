@@ -19,11 +19,12 @@ body {
   }
 
   .container {
-    width:150%;
-  padding: 15px;
+    width:auto;
+    padding: 2em;
     border: chartreuse;
     font-size: small;
-    margin-top: 64px;
+    display: grid;
+    margin-top: 20px;
   }
   
   .container td, .container th {
