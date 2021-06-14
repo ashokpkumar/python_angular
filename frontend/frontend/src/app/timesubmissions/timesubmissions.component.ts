@@ -1,6 +1,7 @@
 import { Component, OnInit,TemplateRef ,ViewChild} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router";
+import {users} from "./timeinfo";
 import {timeSubmissionsService} from './timesubmissions.service';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
@@ -27,8 +28,9 @@ export class TimesubmissionsComponent implements OnInit {
   allUserapproved:boolean;
   individualUnapproved:boolean;
 
+  public users:any
   roles: any
-  isVisible: boolean=true;
+  isVisible: boolean=false;
 
   constructor(private modalService: NgbModal,private router: Router,private cookieService: CookieService, private apiService:timeSubmissionsService) { }
   @ViewChild('approved')
@@ -96,11 +98,9 @@ if (type=='unapproved'){
     let userRoles = roles.split(",");
     console.log(userRoles);
      for (const role of userRoles) {
-       if ( role=="RMG Admin" || role=="Employee") {
+       if ( role==users.admin) {
          this.isVisible = true;
-       } else  {
-         this.isVisible = false;
-       }
+       } 
      }
    }
 

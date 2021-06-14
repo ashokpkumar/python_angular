@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit,ViewEncapsulation } from '@angular/core';
 import {  FormGroup,FormControl, Validators } from '@angular/forms';
-import {employee} from './employees';
+import {employee,users} from './employees';
 import { addEmployeeService } from './add-employee.service';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
@@ -20,8 +20,9 @@ export class AddEmployeeComponent implements OnInit {
   employee = new employee();
   emailPattern =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   isValidFormSubmitted = false;
+  public users:any
   roles: any
-  isVisible: boolean=true;
+  isVisible: boolean=false;
   // employee = new FormGroup({
   //   emp_id : new FormControl(),
   //   email : new FormControl(),
@@ -66,11 +67,9 @@ export class AddEmployeeComponent implements OnInit {
    let userRoles = roles.split(",");
    console.log(userRoles);
     for (const role of userRoles) {
-      if ( role == "RMG Admin") {
+      if ( role == users.admin) {
         this.isVisible = true;
-      } else  {
-        this.isVisible = false;
-      }
+      } 
     }
   }
 

@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { employeesApiService } from './employees.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from "@angular/router";
-import { projectResource } from './assign';
+import { projectResource,users } from './assign';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { faSearch, faSlidersH,faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -29,8 +29,9 @@ export class EmployeesComponent implements OnInit {
   manager_name : any
   client_name : any
   delivery_type : any
-  roles: any
-  isVisible: boolean=true;
+  public users:any
+  roles:any
+  isVisible: boolean=false;
 
   dataForFilter={
     selectedProject:"All",
@@ -147,11 +148,9 @@ export class EmployeesComponent implements OnInit {
    let userRoles = roles.split(",");
    console.log(userRoles);
     for (const role of userRoles) {
-      if ( role == "RMG Admin") {
+      if ( role == users.admin) {
         this.isVisible = true;
-      } else  {
-        this.isVisible = false;
-      }
+      } 
     }
   }
 

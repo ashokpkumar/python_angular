@@ -10,3 +10,7 @@ export class project{
   solutioncategory:string
   financialyear:string
 }
+export enum users{
+  admin="admin",
+  manager="manager"
+}

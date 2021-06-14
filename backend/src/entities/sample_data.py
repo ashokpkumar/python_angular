@@ -264,7 +264,7 @@ def create_sample_authUser():
             auth_data = authUser( emp_id =authUsers["emp_id"], 
                                     email = authUsers["email"],
                                     password = authUsers["password"],
-                                    roles = authUsers["roles"]
+                                    roles = authUsers["roles"].lower()
                                     )
             print(auth_data)
             session.add(auth_data)

@@ -7,3 +7,8 @@ export class timeSubmissions{
     approved:boolean
     submission_id:string
   }
+  export enum users{
+    admin="admin",
+    manager="manager"
+  }
+  

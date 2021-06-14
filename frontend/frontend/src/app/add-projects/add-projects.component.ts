@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {  FormGroup,FormControl } from '@angular/forms';
 import { projectsApiService } from '../projects/projects.services';
 import { addProjectApiService } from './add-projects.service';
-import {project} from './projects';
+import {project,users} from './projects';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
 
@@ -27,8 +27,9 @@ export class AddProjectsComponent implements OnInit {
     solutioncategory: new FormControl(''),
     financialyear: new FormControl(''),
   });
+  public users:any
   roles: any
-  isVisible: boolean=true;
+  isVisible: boolean=false;
   constructor(private router: Router,private cookieService: CookieService,private apiService:addProjectApiService,private projectApi: projectsApiService) { }
 
   ngOnInit(): void {
@@ -44,11 +45,9 @@ export class AddProjectsComponent implements OnInit {
     let userRoles = roles.split(",");
     console.log(userRoles);
      for (const role of userRoles) {
-       if ( role=="RMG Admin" || role == "Sales Team") {
+       if ( role==users.admin) {
          this.isVisible = true;
-       } else  {
-         this.isVisible = false;
-       }
+       } 
      }
    }
 

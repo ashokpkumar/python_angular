@@ -3,3 +3,8 @@ export class projectResource{
     project_id:string
   
   }
+  export enum users{
+    admin="admin",
+    manager="manager"
+  }
+  
