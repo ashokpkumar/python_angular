@@ -60,15 +60,21 @@ padding: 2em;
 }
 .profile_update_body{
   background-color: grey;
+  width: auto;
 }
 .profile_update_header > button{
   color: #ffffff;
+}
+.profile_update_footer{
+  background-color: #222;
 }
 .model-body-content{
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 70px;
+  width: auto;
 }
+
 .body_content_align{
   display: grid;
   grid-template-columns: 120px 200px;
@@ -82,6 +88,7 @@ padding: 2em;
 }
 .body_content_align > input:focus {
   outline: 0;
+  
 }
 .body_content_align > label{
   font-size: 17px;
@@ -98,15 +105,25 @@ padding: 2em;
 .body_content_align > select:focus {
   outline: 0;
 }
+
 .add_projects{
   background: #24a7f8;
-  border-color: #24a7f8;
+  border-color: #ffffff;
+  color: #ffffff;
+  font-size: 20px;
+  line-height: 20px;
+  border:12px; ;
+} 
+.modal-footer > button{
+  background: #24a7f8;
+  border-color: #ffffff;
   color: #ffffff;
   font-size: 13px;
   padding: 10px 15px;
   line-height: 13px;
-  font-family: Poppins;
+  font-family: Poppins; 
 }
+
 .add_project_managerid{
   background: #24a7f8;
   border-color: #24a7f8;
@@ -115,6 +132,10 @@ padding: 2em;
   padding: 10px 15px;
   line-height: 13px;
   font-family: Poppins;
+}
+.plus-icon{
+  
+  border-radius: 50%;
 }
 .for_filter_search{
   width: 100%;
@@ -251,4 +272,97 @@ padding: 2em;
   font-weight: 600;
   font-family: 'Times New Roman', Times, serif;
   }
+
+
+
+.model-body-contentRL{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 70px;
+  display: inline-block;
+  max-height: 80vh;
+  max-width: auto;
+  overflow-x: auto;
+  vertical-align: middle;
+  width: auto;
+  padding:0px;
+}
+.containerRL{
+  max-height: 80vh;
+  max-width: 100%;
+  position: absolute;
+  padding: 40px;
+  padding: right 0px;
   
+}
+.containerRL td, .containerRL th {
+  border: 1px solid #ddd;
+  padding: 2px;
+}
+
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+.emp_list_th > th {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color:black;
+}
+
+  table{   
+    border-spacing: 0;
+    z-index: 2;
+    background: #ffffff;
+    border-radius: 12px 12px 0 0 ;
+    box-shadow: 0 2px 12px rgba(32,32,32,.3);
+    }
+  
+.emp_list_th > td
+{
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color: black;
+  font-size: 14px;
+      font-style: normal;
+      font-stretch: normal;
+}
+.add_res_titleRL{
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  width: auto;
+  color: #0c0c0c;
+
+}
+.model_titleRL{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  color: #ffffff;
+
+}
+.profile_update_headerRL{
+  background-color: rgb(184, 179, 179);
+  color:#ffffff;
+  width: 200%;
+
+}
+.profile_update_bodyRL{
+  background-color: #ffffff;
+  
+  width: 200%;
+  padding: 30px;
+
+}
+.profile_update_header > button{
+  color: #ffffff;
+}
+.profile_update_footer{
+  background-color: #ffffff;
+  width: 200%;
+  vertical-align: middle;
+  position: relative;
+
+
+
+}
+
