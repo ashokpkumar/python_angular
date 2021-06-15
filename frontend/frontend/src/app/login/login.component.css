@@ -1,19 +1,16 @@
-.login_page_bg{
-    height: 91vh;
-    width: 100%;
-    background: #DFE1E1;
+.divide_page{
     display: grid;
-    justify-content: center;
-    align-items: center;
+    grid-template-columns: 35% 65%;
+    width: 85vw;
+}
+.login_page_bg{
+    width: 100%;
+    position: relative;
 }
 .login_style{
     background: #ffffff;
-    height: 400px;
-    width: 500px;
     border-radius: 20px;
     display: grid;
-    justify-content: center;
-    align-items: start;
 }
 .sign_reset{
     font-size: 20px;
@@ -26,31 +23,30 @@
 }
 .mail_pass > div > input{
     box-sizing: border-box;
-    height: 40px !important;
-    width: 259px !important;
-    border: 1px solid #E4E4E4;
-    border-radius: 4px;
+    height: 42px !important;
+    width: 100% !important;
+    border: 1px solid #dee2e6!important;
+    border-radius: 8px;
     background-color: #FFFFFF;
+    padding-left: 20px;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
 }
 .mail_pass > div > p{
-    margin-bottom: 10px;
-    color: #4B5258;
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 0;
-    line-height: 16px
+    --tw-text-opacity: 1!important;
+    color: rgba(103,122,142,var(--tw-text-opacity))!important;
+    font-size: 12px!important;
+    font-weight: 500!important;
 }
 .mail_pass > div > input:focus{
 outline: 0;
 }
-.login_style > div{
+.login_style  > div{
     margin-top: 30px;
     display: grid;
 }
 .login_create{
     border-radius: 4px;
-    background-color: #FAA528 !important;
+    background-color: #0062cc!important ;
     color: #FFFFFF;
     font-size: 14px;
     letter-spacing: 0;
@@ -72,8 +68,39 @@ outline: 0;
 
 }
 .forgot_password  > p {
-    font-size: 10px;
+    font-size: 14px;
     cursor: pointer;
-    color: #1657af;
+    color: #0056b3;
+    font-weight: 600;
     margin-bottom: 0;
+}
+.logo{
+    height: 80px;
+    width: 130px;
+    margin-bottom: 50px;
+}
+.hello_there{
+    opacity:0.9 !important;
+    font-size: 24px;
+    margin: 0;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(57,70,87,0.9);
+    justify-self: center;
+}
+.for_right_image{
+    height: 77%;
+    width: 37%;
+    background-size: cover;
+    position: absolute;
+    right: 128px;
+    top: 100px;
+}
+.for_card{
+   box-shadow:  0 12px 34px 0 rgba(57,67,87,0.1)!important;
+   padding: 20px;
+   border-radius: 14px;
+   position: absolute;
+    width: 100%;
+    left: 62px;
 }

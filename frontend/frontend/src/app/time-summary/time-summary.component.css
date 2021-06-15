@@ -1,6 +1,4 @@
-.add_employee_bg{
-    background-color:#ffffff;
-    width: 100%;
-    height: auto;
-    margin-top: 60px;
-    }
+.time_header{
+    margin-top: 100px;
+    padding: 0px 20px;
+}
