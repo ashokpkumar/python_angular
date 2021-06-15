@@ -186,7 +186,7 @@ def delete_fn():
 @app.route('/addtimesubmissions', methods=['POST'])
 def addtimesubmissions():    
     data = request.get_json() 
-    user_id = data.get('user_name')
+    user_id = data.get('user_id')
     session = Session()
     existing_emp = session.query(employee).filter(employee.emp_id == user_id ).first()
     if existing_emp == None:
@@ -198,7 +198,7 @@ def addtimesubmissions():
                                     manager_id = data.get('manager_name').lower(),
                                     time_type = data.get('time_type').lower(),
                                     status = 'submitted-pending approval',
-                                    submission_id = data.get('user_name') + data.get('user_name') + data.get('time_type')     
+                                    submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type')     
                                )
     session = Session()
     session.add(sub_data)
@@ -295,7 +295,7 @@ def timeData():
         unapproved=0
 
         user_name = session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
-        submission_obj = session.query(timesubmissions).filter(timesubmissions.manager_id.in_(emp_final), timesubmissions.user_id==emp).all()
+        submission_obj = session.query(timesubmissions).filter(timesubmissions.user_id==emp).all()
         serialized_obj = serialize_all(submission_obj)
         for time in serialized_obj:
             #print(time)

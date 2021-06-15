@@ -28,10 +28,11 @@ project_list = [
     {"clientname":"VNN Softcore","projectcode":"QWWST_HPPR24","projectname":"Data Corelation from Web Application","project_start_date":"28/11/2020","projectstatus":"In Progress","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3281,I3252","financialyear":"2018","resource_info":"I3252,I3186"},
     {"clientname":"INB services","projectcode":"PQQE_XGGL21","projectname":"Resource Management for INB","project_start_date":"02/03/2021","projectstatus":"In Progress","billingtype":"T","segment":"Consulting Services","geography":"US","solution_category":"Product Developement","project_manager_id":"I3228","financialyear":"2021","resource_info":"I2668,I3122"},
     {"clientname":"Airbnb","projectcode":"WGLOR_LMNV03","projectname":"Frimware Developement","project_start_date":"09/03/2019","projectstatus":"Pending Request","billingtype":"F","segment":"Managed Services","geography":"INDIA","solution_category":"Big Data Analytics","project_manager_id":"I2013","financialyear":"2020","resource_info":"I3050,I1666"},
+
 ]
 
 timesubmission_list =[
-    
+
     #Askok(changed order of time type and status to show with permutation data in table because it only stores data with uniqe user Id )
     {"date":"12/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Submitted-pending approval","submission_id":"i3228i3228wfh"},
     {"date":"16/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"i3228i3228wfh"},
@@ -145,6 +146,7 @@ timesubmission_list =[
     {"date":"29/02/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"AL","status":"Approved","submission_id":"I3252I3252AL"},
     {"date":"18/02/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"AL","status":"Unapproved","submission_id":"I3252I3252AL"},
 
+
     #{"date":"08/02/2021","hours":"8","user_id":"Shekar","project_id":"DIG123","manager_id":"Natraj","time_type":"wfh","status":"Submitted-pending approval","submission_id":"ShekarShekarwfh"},
     #{"date":"06/02/2021","hours":"8","user_id":"Manikandan","project_id":"TE146","manager_id":"Prabhu","time_type":"wfh","status":"Submitted-pending approval","submission_id":"ManikandanManikandanwfh"},
     #{"date":"12/02/2021","hours":"8","user_id":"Subramani","project_id":"TE026","manager_id":"Thakur","time_type":"wfh","status":"Submitted-pending approval","submission_id":"SubramaniSubramaniwfh"},
@@ -237,9 +239,9 @@ def create_sample_project():
 
 
 def create_sample_timesubmissions():    
-    for timesubmission in timesubmission_list:
+    for timesubmission in timesubmission_list: 
         session = Session()
-        sub_objects = session.query(timesubmissions).filter(timesubmissions.user_id==timesubmission["user_id"]).first()
+        sub_objects = session.query(timesubmissions).filter(timesubmissions.date_info==timesubmission["date"]).first()
         if sub_objects==None:
             sub_data = timesubmissions( date_info=timesubmission['date'],
                                             hours = timesubmission['hours'],
@@ -254,7 +256,6 @@ def create_sample_timesubmissions():
             session.add(sub_data)
             session.commit()    
         session.close()
-
 
 def create_sample_authUser():    
     for authUsers in authUser_list:
