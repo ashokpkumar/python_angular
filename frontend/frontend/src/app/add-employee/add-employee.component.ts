@@ -19,7 +19,7 @@ export class AddEmployeeComponent implements OnInit {
   durationInSeconds = 5;
   employee = new employee();
   emailPattern =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  isValidFormSubmitted = false;
+  isValidFormSubmitted: boolean = false;
   public users:any
   roles: any
   isVisible: boolean=false;
@@ -82,8 +82,12 @@ export class AddEmployeeComponent implements OnInit {
     }
 
     this.isValidFormSubmitted = true;
-    // this.apiService.addEmployee(this.employee).subscribe(data=>{this.apiService.showMessage(Object.values(data),Object.keys(data))})
+    console.log(this.employee)
+    this.apiService.addEmployee(this.employee)
+    .subscribe(data=>{console.log(data),this.apiService.showMessage(Object.values(data),Object.keys(data))})
+    console.log(this.employee)
 
+    // this.router.navigate(["/employee"]);
   }
 
 

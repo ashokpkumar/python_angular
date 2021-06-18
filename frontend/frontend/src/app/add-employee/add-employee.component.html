@@ -19,6 +19,11 @@
         </span>
       </div>
       <div>
+        <p>Manager ID: </p>
+        <input required #empManagerID="ngModel" class="form-control" [(ngModel)]="employee.manager_id" name="manager_id" />
+        <span *ngIf="empManagerID.invalid && empManagerID.touched" class="error">Manager ID is required</span>
+      </div>
+      <div>
         <p>First Name: </p>
         <input required #empFirstName="ngModel" class="form-control" [(ngModel)]="employee.first_name" name="firstname" />
         <span *ngIf="empFirstName.invalid && empFirstName.touched" class="error">FirstName is required</span>
@@ -53,11 +58,11 @@
         <input required #empProjectCode="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="projectCode" />
         <span *ngIf="empProjectCode.invalid && empProjectCode.touched" class="error">Project Code is required</span>
       </div>
-      <div>
+      <!-- <div>
         <p>Geography: </p>
         <input required #empGeography="ngModel" class="form-control" [(ngModel)]="employee.geography" name="Geography" />
         <span *ngIf="empGeography.invalid && empGeography.touched" class="error">Geography is required</span>
-      </div>
+      </div> -->
       <div>
         <p>Department: </p>
         <input required #empDepartment="ngModel" class="form-control" [(ngModel)]="employee.dept" name="department" />
@@ -119,7 +124,7 @@
       </div>
       <div>
         <p>Roles: </p>
-        <input required #empRoles="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="roles" />
+        <input required #empRoles="ngModel" class="form-control" [(ngModel)]="employee.roles" name="roles" />
         <span *ngIf="empRoles.invalid && empRoles.touched" class="error">Roles is required</span>
       </div>
       <div class="add_btn-emp">
