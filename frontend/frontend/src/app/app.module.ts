@@ -31,7 +31,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid'; 
 import interactionPlugin from '@fullcalendar/interaction'; 
 import { MatNativeDateModule } from '@angular/material/core';
-
+import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { PersonalSummaryComponent } from './personal-summary/personal-summary.component';
@@ -90,6 +90,7 @@ FullCalendarModule.registerPlugins([
     FullCalendarModule ,
     MatDatepickerModule,
     MatButtonModule,
+    MatCardModule,
     MatFormFieldModule,
     MatNativeDateModule, 
     MatDatepickerModule,
