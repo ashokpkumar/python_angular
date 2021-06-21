@@ -3,7 +3,7 @@
   <p class="time_sub_heading">Time Submission</p>
   <div class="for_filter_search">
     <div></div>
-    <div>
+    <div> 
       <mat-form-field>
         <input matInput [matDatepicker]="fromDate" placeholder="Select From Date">
         <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
@@ -17,7 +17,10 @@
         <mat-datepicker #toDate></mat-datepicker>
       </mat-form-field>
     </div>
-    <div>
+    <div class="filter_reset_btn">
+      <button>Submit</button>
+    </div>
+    <div class="download_dropdown">
       <mat-form-field appearance="fill">
         <mat-label>Download As</mat-label>
         <mat-select [(ngModel)]="downloadAs" disableRipple>
@@ -27,9 +30,8 @@
       </mat-form-field>
     </div>
     <div class="filter_reset_btn">
-      <button>Submit</button>
+      <button>Download</button>
     </div>
-    <div></div>
   </div>
 </div>
 <div class="container" *ngIf="timeDatas?.length > 0">
@@ -54,7 +56,7 @@
           <tr class="time_sub_row" *ngFor="let timedata of timeDatas">
             <td>{{timedata.user_id}}</td>
             <td>{{timedata.user_name}}</td>
-            <td><a ng href="#"(click)="clickNumbers(timedata.user_id,'project')">{{timedata.project_time}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,'project')">{{timedata.project_time}}</a></td>
             <td><a (click)="clickNumbers(timedata.user_id,'bench')">{{timedata.bench}}</a></td>
             <td><a (click)="clickNumbers(timedata.user_id,'sl')">{{timedata.sl}}</a></td>
             <td><a (click)="clickNumbers(timedata.user_id,'cl')">{{timedata.cl}}</a></td>
@@ -157,6 +159,7 @@
 
 
   <ng-template #unapproved let-modal>
+    <div class="modal_1">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Review Time</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -171,8 +174,8 @@
               <tr class="emp_list_th">
                 <!-- <tr> -->
                 <th data-field="dateInfo" data-checkbox="true">Date</th>
-                <th data-field="username" data-checkbox="true">username</th>
-                <th data-field="manager name" data-filter-control="input" data-sortable="true">Manager Name</th>
+                <th data-field="userid" data-checkbox="true">User Id</th>
+                <th data-field="username" data-filter-control="input" data-sortable="true">User Name</th>
                 <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
                 <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
                 <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
@@ -184,38 +187,35 @@
                 <!-- <tr *ngFor="let item of employee_list"> -->
                 <td>{{timeSubmissions.date_info}}</td>
                 <td>{{timeSubmissions.user_id}}</td>
-                <td>{{timeSubmissions.manager_id}}</td>
+                <td>{{timeSubmissions.user_name}}</td>
                 <td>{{timeSubmissions.time_type}}</td>
                 <td>{{timeSubmissions.hours}}</td>
                 <td>{{timeSubmissions.status}}</td>
                 <td>
-                  <button
-                    (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
-                    type="button" class="btn btn-success">
-                    <fa-icon [icon]='faCheck'></fa-icon>
-                  </button>
-                  <button
-                    (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
-                    type="button" class="btn btn-danger">
-                    <fa-icon [icon]='faTimes'></fa-icon>
-                  </button>
+                  <div>
+                    <i class ="fa fa-check-circle-o fa-lg" aria-hidden="true" (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
+                    style="color:rgb(15, 15, 15); 
+                    border-radius: 50%;">
+                    </i>
+                    <i class="fa fa-times-circle-o fa-lg" aria-hidden="true" (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
+                    style="color:rgb(15, 15, 15); 
+                    border-radius: 50%;">
+                    </i>
+                </div>
                 </td>
-
               </tr>
 
             </tbody>
           </table>
         </div>
       </div>
-
     </div>
-    <div class="modal-footer">
-
-    </div>
+  </div>
   </ng-template>
 
 
   <ng-template #approved let-modal>
+  <div class ="modal_1">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Time Info</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -230,8 +230,8 @@
               <tr class="emp_list_th">
 
                 <th data-field="dateInfo" data-checkbox="true">Date</th>
-                <th data-field="username" data-checkbox="true">username</th>
-                <th data-field="manager name" data-filter-control="input" data-sortable="true">Manager Name</th>
+                <th data-field="user id" data-checkbox="true">User ID</th>
+                <th data-field="user name" data-filter-control="input" data-sortable="true">User Name</th>
                 <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
                 <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
                 <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
@@ -243,7 +243,7 @@
 
                 <td>{{time.date_info}}</td>
                 <td>{{time.user_id}}</td>
-                <td>{{time.manager_id}}</td>
+                <td>{{time.first_name}}</td>
                 <td>{{time.time_type}}</td>
                 <td>{{time.hours}}</td>
                 <td>{{time.status}}</td>
@@ -255,9 +255,6 @@
           </table>
         </div>
       </div>
-
     </div>
-    <div class="modal-footer">
-
-    </div>
+  </div>
   </ng-template>

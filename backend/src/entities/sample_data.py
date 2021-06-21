@@ -34,128 +34,118 @@ project_list = [
 timesubmission_list =[
 
     #Askok(changed order of time type and status to show with permutation data in table because it only stores data with uniqe user Id )
-    {"date":"12/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Submitted-pending approval","submission_id":"i3228i3228wfh"},
+    {"date":"12/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"i3228i3228wfh"},
     {"date":"16/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"i3228i3228wfh"},
     {"date":"20/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"i3228i3228wfh"},
 
-    {"date":"13/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Submitted-pending approval","submission_id":"i3228i3228SL"},
+    {"date":"13/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"i3228i3228SL"},
     {"date":"15/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"i3228i3228SL"},
     {"date":"19/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"i3228i3228SL"},
 
-    {"date":"11/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Submitted-pending approval","submission_id":"i3228i3228CL"},
+    {"date":"11/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"i3228i3228CL"},
     {"date":"23/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"i3228i3228CL"},
     {"date":"25/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"i3228i3228CL"},
     
-    {"date":"22/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Submitted-pending approval","submission_id":"i3228i3228AL"},
+    {"date":"22/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"i3228i3228AL"},
     {"date":"27/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"i3228i3228AL"},
-    {"date":"29/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"i3228i3228AL"},
+    {"date":"30/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"i3228i3228AL"},
     #Amit
-    {"date":"16/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I31288I31288wfh"},
-    {"date":"12/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Submitted-pending approval","submission_id":"I31288I31288wfh"},
-    {"date":"20/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I31288I31288wfh"},
+    {"date":"16/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I31288I31288wfh"},
+    {"date":"12/03/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I31288I31288wfh"},
+    {"date":"20/05/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I31288I31288wfh"},
 
-    {"date":"8/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Submitted-pending approval","submission_id":"I31288I31288SL"},
+    {"date":"8/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I31288I31288SL"},
     {"date":"14/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I31288I31288SL"},
     {"date":"21/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I31288I31288SL"},
 
-    {"date":"24/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Submitted-pending approval","submission_id":"I31288I31288CL"},
+    {"date":"24/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I31288I31288CL"},
     {"date":"26/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I31288I31288CL"},
-    {"date":"29/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I31288I31288CL"},
+    {"date":"28/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I31288I31288CL"},
 
-    {"date":"29/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Submitted-pending approval","submission_id":"I31288I31288AL"},
     {"date":"02/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I31288I31288AL"},
+    {"date":"26/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I31288I31288AL"},
     {"date":"09/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I31288I31288AL"},
     #Deepak
-    {"date":"29/01/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I2668I2668SL"},
-    {"date":"02/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Submitted-pending approval","submission_id":"I2668I2668SL"},
+    {"date":"29/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I2668I2668SL"},
+    {"date":"02/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I2668I2668SL"},
     {"date":"06/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I2668I2668SL"},
 
-    {"date":"12/01/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Submitted-pending approval","submission_id":"I2668I2668wfh"},
-    {"date":"16/01/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I2668I2668wfh"},
-    {"date":"20/01/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I2668I2668wfh"},
+    {"date":"12/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I2668I2668wfh"},
+    {"date":"15/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I2668I2668wfh"},
+    {"date":"20/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I2668I2668wfh"},
 
-    {"date":"14/01/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Submitted-pending approval","submission_id":"I2668I2668CL"},
-    {"date":"21/01/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I2668I2668CL"},
-    {"date":"27/01/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I2668I2668CL"},
+    {"date":"14/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I2668I2668CL"},
+    {"date":"21/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I2668I2668CL"},
+    {"date":"27/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I2668I2668CL"},
 
-    {"date":"29/01/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Submitted-pending approval","submission_id":"I2668I2668AL"},
-    {"date":"02/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I2668I2668AL"},
+    {"date":"29/04/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I2668I2668AL"},
+    {"date":"02/05/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I2668I2668AL"},
     {"date":"09/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I2668I2668AL"},
-    #RameshThangaraj
-    {"date":"18/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Cl","status":"Submitted-pending approval","submission_id":"I1891I1891CL"},
-    {"date":"20/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"CL","status":"Approved","submission_id":"I1891I1891CL"},
-    {"date":"27/02/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"CL","status":"Unapproved","submission_id":"I1891I1891CL"},
-
-    {"date":"19/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Submitted-pending approval","submission_id":"I1891I1891wfh"},
-    {"date":"28/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Approved","submission_id":"I1891I1891wfh"},
-    {"date":"04/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Unapproved","submission_id":"I1891I1891wfh"},
-
-    {"date":"10/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"SL","status":"Submitted-pending approval","submission_id":"I1891I1891SL"},
-    {"date":"26/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"SL","status":"Approved","submission_id":"I1891I1891SL"},
-    {"date":"03/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Sl","status":"Unapproved","submission_id":"I1891I1891SL"},
-
-    {"date":"29/02/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"AL","status":"Submitted-pending approval","submission_id":"I1891I1891AL"},
-    {"date":"02/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Al","status":"Approved","submission_id":"I1891I1891AL"},
-    {"date":"09/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"AL","status":"Unapproved","submission_id":"I1891I1891AL"},
-    #Priya
-    {"date":"29/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Submitted-pending approval","submission_id":"I2013I2013AL"},
-    {"date":"02/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Approved","submission_id":"I2013I2013AL"},
-    {"date":"09/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Unapproved","submission_id":"I2013I2013AL"},
-
-    {"date":"18/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Submitted-pending approval","submission_id":"I2013I2013wfh"},
-    {"date":"26/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Approved","submission_id":"I2013I2013wfh"},
-    {"date":"10/03/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Unapproved","submission_id":"I2013I2013wfh"},
-
-    {"date":"22/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Submitted-pending approval","submission_id":"I2013I2013SL"},
-    {"date":"19/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Approved","submission_id":"I2013I2013SL"},
-    {"date":"01/03/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Unapproved","submission_id":"I2013I2013SL"},
-
-    {"date":"06/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Submitted-pending approval","submission_id":"I2013I2013CL"},
-    {"date":"17/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Approved","submission_id":"I2013I2013CL"},
-    {"date":"05/03/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Unapproved","submission_id":"I2013I2013CL"},
-    #Mani kandan
-    {"date":"12/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    {"date":"16/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Submitted-pending approval","submission_id":"I3050I3050wfh"},
+    
+    # #Mani kandan
+    {"date":"12/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"16/03/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3050I3050wfh"},
     {"date":"20/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I3050I3050wfh"},
 
-    {"date":"28/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Submitted-pending approval","submission_id":"I3050I3050wfh"},
+    {"date":"28/04/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3050I3050wfh"},
     {"date":"15/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I3050I3050wfh"},
-    {"date":"22/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"22/03/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3050I3050wfh"},
 
-    {"date":"04/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Submitted-pending approval","submission_id":"I3050I3050wfh"},
-    {"date":"19/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3050I3050wfh"},
+    {"date":"04/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"19/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3050I3050wfh"},
     {"date":"11/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3050I3050wfh"},
 
-    {"date":"29/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Submitted-pending approval","submission_id":"I3050I3050wfh"},
-    {"date":"02/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I3050I3050wfh"},
-    {"date":"09/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    #R.karthic
-    {"date":"08/03/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"CL","status":"Submitted-pending approval","submission_id":"I3252I3252CL"},
-    {"date":"10/03/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"CL","status":"Approved","submission_id":"I3252I3252CL"},
-    {"date":"17/02/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"CL","status":"Unapproved","submission_id":"I3252I3252CL"},
+    {"date":"03/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"02/07/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I3050I3050wfh"},
+    {"date":"09/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    #chandrasekara
+    {"date":"08/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL"},
+    {"date":"10/05/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3122I3122CL"},
+    {"date":"17/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL"},
 
-    {"date":"01/03/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"wfh","status":"Submitted-pending approval","submission_id":"I3252I3252wfh"},
-    {"date":"14/03/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"wfh","status":"Approved","submission_id":"I3252I3252wfh"},
-    {"date":"26/02/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"wfh","status":"Unapproved","submission_id":"I3252I3252wfh"},
+    {"date":"01/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3122I3122wfh"},
+    {"date":"14/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I3122I3122wfh"},
+    {"date":"26/05/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3122I3122wfh"},
 
-    {"date":"02/03/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"SL","status":"Submitted-pending approval","submission_id":"I3252I3252SL"},
-    {"date":"19/03/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"SL","status":"Approved","submission_id":"I3252I3252SL"},
-    {"date":"27/03/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"SL","status":"Unapproved","submission_id":"I3252I3252SL"},
+    {"date":"02/04/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3122I3122SL"},
+    {"date":"19/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I3122I3122SL"},
+    {"date":"27/03/2021","hours":"8","user_id":"I3122","project_id":"DIG129","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3122I3122SL"},
 
-    {"date":"04/03/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"AL","status":"Submitted-pending approval","submission_id":"I3252I3252AL"},
-    {"date":"29/02/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"AL","status":"Approved","submission_id":"I3252I3252AL"},
-    {"date":"18/02/2021","hours":"8","user_id":"I3252","project_id":"DIG129","manager_id":"I3281","time_type":"AL","status":"Unapproved","submission_id":"I3252I3252AL"},
+    {"date":"04/06/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3122I3122AL"},
+    {"date":"29/07/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I3122I3122AL"},
+    {"date":"18/01/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3122I3122AL"},
+    #RameshThangaraj
+    # {"date":"18/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Cl","status":"Unapproved","submission_id":"I1891I1891CL"},
+    # {"date":"20/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"CL","status":"Approved","submission_id":"I1891I1891CL"},
+    # {"date":"27/05/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"CL","status":"Unapproved","submission_id":"I1891I1891CL"},
 
+    # {"date":"19/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Unapproved","submission_id":"I1891I1891wfh"},
+    # {"date":"28/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Approved","submission_id":"I1891I1891wfh"},
+    # {"date":"04/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Unapproved","submission_id":"I1891I1891wfh"},
 
-    #{"date":"08/02/2021","hours":"8","user_id":"Shekar","project_id":"DIG123","manager_id":"Natraj","time_type":"wfh","status":"Submitted-pending approval","submission_id":"ShekarShekarwfh"},
-    #{"date":"06/02/2021","hours":"8","user_id":"Manikandan","project_id":"TE146","manager_id":"Prabhu","time_type":"wfh","status":"Submitted-pending approval","submission_id":"ManikandanManikandanwfh"},
-    #{"date":"12/02/2021","hours":"8","user_id":"Subramani","project_id":"TE026","manager_id":"Thakur","time_type":"wfh","status":"Submitted-pending approval","submission_id":"SubramaniSubramaniwfh"},
-    #{"date":"20/02/2021","hours":"8","user_id":"Raghu","project_id":"DIG101","manager_id":"Siva","time_type":"wfh","status":"Submitted-pending approval","submission_id":"RaghuRaghuwfh"},
-    #{"date":"09/03/2021","hours":"8","user_id":"Sam","project_id":"DIG291","manager_id":"Vinoth","time_type":"wfh","status":"Submitted-pending approval","submission_id":"SamSamwfh"},
-    #{"date":"24/03/2021","hours":"8","user_id":"Nithesh","project_id":"TE013","manager_id":"Shanmugam","time_type":"wfh","status":"Submitted-pending approval","submission_id":"NitheshNitheshwfh"},
-    #{"date":"30/03/2021","hours":"8","user_id":"Ram","project_id":"DIG1234","manager_id":"Ravi","time_type":"wfh","status":"Submitted-pending approval","submission_id":"RamRamwfh"},
-    #{"date":"13/04/2021","hours":"8","user_id":"Aravind","project_id":"DIG135","manager_id":"Dinesh","time_type":"wfh","status":"Submitted-pending approval","submission_id":"AravindAravindwfh"},
-    #{"date":"19/04/2021","hours":"8","user_id":"Vineet","project_id":"TE074","manager_id":"Prashanth","time_type":"wfh","status":"Submitted-pending approval","submission_id":"VineetVineetwfh"}
+    # {"date":"10/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"SL","status":"Unapproved","submission_id":"I1891I1891SL"},
+    # {"date":"26/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"SL","status":"Approved","submission_id":"I1891I1891SL"},
+    # {"date":"03/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Sl","status":"Unapproved","submission_id":"I1891I1891SL"},
+
+    # {"date":"29/05/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"AL","status":"Unapproved","submission_id":"I1891I1891AL"},
+    # {"date":"06/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Al","status":"Approved","submission_id":"I1891I1891AL"},
+    # {"date":"09/06/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"AL","status":"Unapproved","submission_id":"I1891I1891AL"},
+    # #Priya
+    # {"date":"27/06/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Unapproved","submission_id":"I2013I2013AL"},
+    # {"date":"02/06/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Approved","submission_id":"I2013I2013AL"},
+    # {"date":"09/04/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Unapproved","submission_id":"I2013I2013AL"},
+
+    # {"date":"18/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Unapproved","submission_id":"I2013I2013wfh"},
+    # {"date":"26/04/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Approved","submission_id":"I2013I2013wfh"},
+    # {"date":"10/04/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Unapproved","submission_id":"I2013I2013wfh"},
+
+    # {"date":"22/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Unapproved","submission_id":"I2013I2013SL"},
+    # {"date":"19/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Approved","submission_id":"I2013I2013SL"},
+    # {"date":"01/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Unapproved","submission_id":"I2013I2013SL"},
+
+    # {"date":"06/05/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Unapproved","submission_id":"I2013I2013CL"},
+    # {"date":"17/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Approved","submission_id":"I2013I2013CL"},
+    # {"date":"05/03/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Unapproved","submission_id":"I2013I2013CL"},
 
 ]
 

@@ -197,7 +197,7 @@ def addtimesubmissions():
                                     project_code = data.get('project_id').lower(),
                                     manager_id = data.get('manager_name').lower(),
                                     time_type = data.get('time_type').lower(),
-                                    status = 'submitted-pending approval',
+                                    status = 'Unapproved',
                                     submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type')     
                                )
     session = Session()
@@ -215,7 +215,7 @@ def viewsubmissions():
     emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_name).all()
     emp_final = [emp[0].lower() for emp in emp_list]
     print(emp_final)
-    submission_obj = session.query(timesubmissions).filter(timesubmissions.manager_id.in_(emp_final),timesubmissions.status=='submitted-pending approval' ).all()
+    submission_obj = session.query(timesubmissions).filter(timesubmissions.manager_id.in_(emp_final),timesubmissions.status=='Unapproved' ).all()
     print(submission_obj)
     if submission_obj:
         serialized_obj = serialize_all(submission_obj)
@@ -237,13 +237,13 @@ def getSubmissionsBy():
     session = Session()
     user = request.get_json()
     if user == 'total':
-        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='submitted-pending approval').all()
+        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='unapproved').all()
         serialized_obj = serialize_all(sub_objects)
         session.close()
         return (jsonify(serialized_obj)),200
         
     else:
-        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='submitted-pending approval', timesubmissions.user_id==user).all()
+        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='unapproved', timesubmissions.user_id==user).all()
         serialized_obj = serialize_all(sub_objects)
         session.close()
         return (jsonify(serialized_obj)),200
@@ -264,6 +264,7 @@ def getTimeBy():
             time_type_list = [time_type]
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='approved',timesubmissions.time_type.in_(time_type_list)).all()
         serialized_obj = serialize_all(sub_objects)
+        print(serialized_obj)
         session.close()
         return (jsonify(serialized_obj)),200
         
@@ -348,7 +349,7 @@ def review_time():
         date = data['date']
         time_type = data['time_type']
         hours = data['hours']
-        datee = datetime.datetime.strptime(date, "%Y-%m-%d")
+        datee = datetime.datetime.strptime(date, "%d/%m/%Y")
         month = datee.month
         year = datee.year
         time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
@@ -431,7 +432,7 @@ def review_time():
         date = data['date']
         time_type = data['time_type']
         hours = data['hours']
-        datee = datetime.datetime.strptime(date, "%Y-%m-%d")
+        datee = datetime.datetime.strptime(date,  "%d/%m/%Y")
         month = datee.month
         year = datee.year
         time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()

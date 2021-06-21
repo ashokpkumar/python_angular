@@ -20,11 +20,11 @@ body {
 
   .container {
     width:auto;
-    padding: 2em;
+    padding: 1em;
     border: chartreuse;
     font-size: small;
     display: grid;
-    margin-top: 20px;
+    margin-top: 5px;
   }
   
   .container td, .container th {
@@ -75,11 +75,12 @@ body {
   font-family: 'Times New Roman', Times, serif;
 }
 .mtop{
-  margin-top: 110px;
+  margin-top: 40px;
+  margin-bottom: 0px;
 }
 .time_sub_heading{
   font-size: 30px;
-color: #ffffff;
+color: #dfdddd;
 font-weight: 600;
 font-family: 'Arial', Times, serif;
 }
@@ -99,12 +100,12 @@ font-family: 'Arial', Times, serif;
 .table_border{
   width: 100%;
   height: auto;
-  border: 1px solid #E4E4E4;
+  border: 1px solid #f8f6f6;
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
   display: grid;
   align-items: center;
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   border-radius: 12px ;
 }
 .for_filter_search > div{
@@ -174,8 +175,15 @@ color: #24a7f8;
 background: #ffffff;
 border: 1px solid #24a7f8;
 }
+.download_dropdown{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 14px;
+  justify-items: center;
+  margin: 15px 0;
+}
 .time_submission_table{
-  padding: 30px 20px;
+  padding: 10px 10px;
 }
 .time_submission_table > table{
   table-layout: fixed;
@@ -196,7 +204,7 @@ border: 1px solid #24a7f8;
   .time_sub_row > td
   {
   font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
+  text-align: center; 
   color: black;
   font-size: 14px;
       font-style: normal;
@@ -209,37 +217,51 @@ border: 1px solid #24a7f8;
     color: #ffffff;
     font-weight: 700;
   }
+.modal_1{
+  width: 150%;
+  display: grid;
+  position: absolute;
+  padding: 5px 5px 5px 5px ; 
+  z-index: 1; 
+  background: #ffffff;
+  padding-top: 0px; 
+  left: 0;
+  top: 0; 
+  overflow:initial;
+}
   .modal-title{
-      width: 180%;
+      width: 120%;
+      text-align: center;
       table-layout: center;
-      overflow: auto;
   }
   .modal-body{
-    width: auto;
-    table-layout: middle;
+    width: 130%;
+    padding: 10px 10px 10px 10px ; 
+
   }
-.center{
-  margin-left: auto;
-  margin-right: auto;
-}
-.emp_list_th{
-  padding: 2px;
-}
-.time_submission_tableRT{
-  padding: 5px 5px;
-}
+  .center{
+    margin-left:initial ;
+    margin-right: initial;
+  }
+
+  .time_submission_tableRT{
+    padding: 5px 5px;
+  }
 .time_submission_tableRT > table{
   table-layout: absolute;
   width: 75%;
 } 
 .containerRT{
-  width: 200px;
+  width: 100%;
   padding: 0px;
     border: chartreuse;
     font-size: small;
-    margin-top: 64px;
+    margin-top: 10px;
+    overflow: auto;
 }
 .containerRT td, .containerRT th {
-  border: 1px solid rgb(7, 7, 7);
+  border: 1px solid rgb(189, 184, 184);
   padding: 5px;
+  overflow: auto;
+
 }
