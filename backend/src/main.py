@@ -447,64 +447,78 @@ schema ={
     "type": "object",
     "properties": {
       "emp_id":{"type":"string"},
-      "email": { "type": "string", "format": "email","pattern":"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"},
-      "first_name": { "type": "string", "minLength": 2, "maxLength": 50 },
-      "last_name": { "type": "string", "minLength": 2, "maxLength": 50 },
-      "sur_name": { "type": "string", "minLength": 2, "maxLength": 50 },
-      "initial": { "type": "string", "minLength": 2, "maxLength": 4 },
-      "salutation": { "type": "string", "minLength": 2,  },
-      "project_code": { "type": "string", "minLength": 2, "maxLength": 50 },
-      "dept": { "type": "string", "minLength": 2, "maxLength": 50 },
-      "designation": { "type": "string", "minLength": 2, "maxLength": 100 },
-      "emp_start_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
-      "emp_last_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
-      "emp_project_assigned_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
-      "emp_project_end_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
-      "employment_status": { "type": "boolean"},
-      "manager_name": { "type": "string", "minLength": 2, "maxLength": 50 },
-      "manager_dept": { "type": "string", "minLength": 2, "maxLength": 50 },
-      "resource-status": { "type": "string", "minLength": 2, "maxLength": 100 },
-      "delivery_type": { "type": "string", "minLength": 2, "maxLength": 50 },
-      "additional_allocation": { "type": "string", "minLength": 2, "maxLength": 100 },
-      "skills": { "type": "string", "minLength": 2, "maxLength": 100 },
-      "roles": { "type": "string", "minLength": 2, "maxLength": 100 },
+      "email": { "type": "string", "format": "email","pattern":"^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"},
+       "first_name": { "type": "string", "minLength": 2, "maxLength": 50 },
+       "last_name": { "type": "string", "minLength": 2, "maxLength": 50 },
+       "sur_name": { "type": "string", "minLength": 2, "maxLength": 50 },
+       "initial": { "type": "string", "minLength": 0, "maxLength": 4 },
+       "salutation": { "type": "string", "minLength": 2,  },
+       "project_code": { "type": "string", "minLength": 2, "maxLength": 50 },
+       "dept": { "type": "string", "minLength": 2, "maxLength": 50 },
+       "designation": { "type": "string", "minLength": 2, "maxLength": 100 },
+       "emp_start_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
+       "emp_last_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
+       "emp_project_assigned_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
+       "emp_project_end_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
+       "employment_status": {  "type": "string", "minLength": 2, "maxLength": 50},
+       "manager_name": { "type": "string", "minLength": 2, "maxLength": 50 },
+       "manager_dept": { "type": "string", "minLength": 2, "maxLength": 50 },
+       "resource-status": { "type": "string", "minLength": 1, "maxLength": 100 },
+       "delivery_type": { "type": "string", "minLength": 1, "maxLength": 50 },
+       "additional_allocation": { "type": "string", "minLength": 2, "maxLength": 100 },
+       "skills": { "type": "string", "minLength": 2, "maxLength": 100 },
+       "roles": { "type": "string", "minLength": 2, "maxLength": 100 },
     },
     "required": [ "emp_id", "email", "first_name","last_name","sur_name","initial","salutation","project_code",
-    "dept","designation","emp_last_working_date","emp_project_assigned_date","emp_project_end_date","employment_status",   
-    "manager_name","manager_dept","resource_status","delivery_type","additional_allocation","skills","roles"]
+    "dept","designation","employment_status","manager_name","manager_dept","resource_status","delivery_type","additional_allocation","skills","roles"]
   }
 
 @app.route('/addEmployee', methods=['POST'])
 @expects_json(schema)
 def addEmployee():
     data = request.get_json()
+    emp_id=data.get("emp_id")
+    email=data.get("email")
+    project_code=data.get("project_code")
     session = Session()
-    existing_emp = session.query(employee).filter(employee.emp_id==data.get("emp_id")).first()
+    existing_emp = session.query(employee).filter(employee.emp_id==emp_id).first()
     if existing_emp:
         session.close()
-        return jsonify({'warning':'User ID: {} already exist !'.format(data.get("emp_id"))})
-    
-    existing_emp = session.query(employee).filter(employee.email==data.get("email")).first()
+        return jsonify({'warning':'User ID: {} already exist !'.format(emp_id)})
+    print(emp_id)
+    existing_emp = session.query(employee).filter(employee.email==email).first()
     if existing_emp:
         session.close()
-        return jsonify({'warning':'Email ID: {} already exist !'.format(data.get("email"))})
-    existing_project = session.query(project).filter(project.project_code==data.get("project_code")).first()
+        return jsonify({'warning':'Email ID: {} already exist !'.format(email)})
+    existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project==None:
         return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
-
-    project_list=stringToList(existing_project)
-    if project_code in project_list:
-        return jsonify({'error':'Employee is already working in the project'})
-    project_list.append(project_code)
-        
-    existing_project.project_code =listToString(project_list)
-    session.add(existing_project)
-    session.commit()
+    print(existing_project)
+    
+    # existing_proj_list=existing_project.project_code
+    # print(existing_proj_list)
+    # project_list = existing_proj_list.split(',')
+    # print(project_list)
+    # for i in project_list:
+    #     if i=="":
+    #         project_list.remove(i)
+    # print(project_list)
+    # if project_code in project_list:
+    #      return jsonify({'error':'Employee is already working in the project'})
+    #project_list.append(project_code)
+    # print(project_list)
+    # out_proj =''
+    # for i in project_list:
+    #     out_resource = i + "," + out_proj
+    # existing_project.project_code = out_proj[:-1]
+    #print(type(out_proj))
+    # session.add(existing_project)
+    # session.commit()
 
     try: 
         emp_data = employee(emp_id=data.get("emp_id").lower() , 
-                            manager_id = data.get("manager_id").lower(),
-                            email = data.get("email").lower() , 
+                            manager_id = data.get("manager_id"),
+                            email = data.get("email").lower(), 
                             first_name = data.get("first_name").lower(), 
                             last_name= data.get("last_name").lower(), 
                             sur_name= data.get("sur_name").lower(), 
@@ -551,11 +565,9 @@ def addProjectResource():
     existing_emp = session.query(employee).filter(employee.emp_id==resource_id).first()
     if existing_emp==None:
         return jsonify({'success':'Employee with ID: {} Does not Exist !'.format(resource_id)})
-    
     existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project==None:
         return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
-    print(existing_emp)
     print("<<<<<<<<<<")
     resource_data=existing_emp.emp_id
     print(resource_data)
