@@ -18,10 +18,15 @@ export class TimesubmissionsComponent implements OnInit {
   timeClicked :any;
   faCheck = faCheck;
   faTimes = faTimes;
-  user_name : String;
+  user_id : String;
   downloadAs: String = "Summary as Csv";
   timeDatas = [];
   totalTime = {};
+  fromDate:any;
+  toDate:any;
+  modaluser_name:any;
+  modaltime_type:any
+
 
   arr = [];
   allUserUnapproved:boolean;
@@ -49,22 +54,22 @@ export class TimesubmissionsComponent implements OnInit {
     else{
       this.router.navigate(['/login']);
     }
-    this.user_name = "I3186";
+    this.user_id = "I3186";
     // this.user_name = "I3228";
-    this.apiService.getSubmissions(this.user_name)
+    this.apiService.getSubmissions(this.user_id)
     .subscribe(data=>{
     this.submissionList = data,
     this.apiService.showMessage(Object.values(data),Object.keys(data))});
 
-    this.apiService.getTimeData(this.user_name)
+    this.apiService.getTimeData(this.user_id)
     .subscribe(data=>{
                  this.timeDatas = data.result,
                  this.totalTime = data.total                  
                     });
   }
-  clickNumbers(user,type){
+  clickNumbers(user,user_name,type){
 
-console.log(user,type);
+console.log(user,user_name,type);
 if (type=='unapproved'){
   this.apiService.getSubmissionsBy(user)
   .subscribe(data=>{
@@ -73,16 +78,22 @@ if (type=='unapproved'){
     
     this.allUserUnapproved=true,
     this.allUserapproved=false
+    this.modaluser_name=user_name
+    this.modaltime_type=type
+    
+  
   });
 
 }else{
-  this.apiService.getTimeBy(user,type)
+  this.apiService.getTimeBy(user,user_name,type)
   .subscribe(data=>{
     console.log("Employee Data: ",data),
     this.timeClicked = data,
     this.open(this.defaultTabButtonsTpl1),
     this.allUserapproved=true,
     this.allUserUnapproved=false
+    this.modaluser_name=user_name
+    this.modaltime_type=type
  
   });
 }
@@ -103,9 +114,9 @@ if (type=='unapproved'){
        } 
      }
    }
-
   open(content) {
   console.log(this.timeClicked);
+  if (this.timeClicked !=0 && this.submissionClicked !=0){
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       
 
@@ -114,4 +125,14 @@ if (type=='unapproved'){
 
     });
   }
+}
+  applyFilter(fromDate,toDate){
+    console.log(this.fromDate)
+    this.apiService.getSubmissionByDate(fromDate,toDate)
+    .subscribe(data=>{console.log(data);this.apiService.showMessage(Object.values(data),Object.keys(data))});
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate(['/timesubmission']);
+      }
+    
 }

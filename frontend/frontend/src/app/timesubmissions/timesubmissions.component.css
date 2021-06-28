@@ -227,7 +227,7 @@ border: 1px solid #24a7f8;
   padding-top: 0px; 
   left: 0;
   top: 0; 
-  overflow:initial;
+  overflow-wrap: scroll;
 }
   .modal-title{
       width: 120%;
@@ -237,7 +237,7 @@ border: 1px solid #24a7f8;
   .modal-body{
     width: 130%;
     padding: 10px 10px 10px 10px ; 
-
+    overflow-y: auto;
   }
   .center{
     margin-left:initial ;

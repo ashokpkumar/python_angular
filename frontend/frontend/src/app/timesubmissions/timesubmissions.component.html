@@ -1,6 +1,6 @@
 <div *ngIf="isVisible">
 <div class="container mtop" >
-  <p class="time_sub_heading">Time Submission</p>
+  <p class="time_sub_heading">Time Submission :{{this.user_id}}</p>
   <div class="for_filter_search">
     <div></div>
     <div> 
@@ -18,7 +18,7 @@
       </mat-form-field>
     </div>
     <div class="filter_reset_btn">
-      <button>Submit</button>
+      <button type="button" (click)="applyFilter(this.fromDate,this.toDate)">Submit</button>
     </div>
     <div class="download_dropdown">
       <mat-form-field appearance="fill">
@@ -53,29 +53,29 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="time_sub_row" *ngFor="let timedata of timeDatas">
+          <tr class="time_sub_row" *ngFor="let timedata of timeDatas; let i=index;" >
             <td>{{timedata.user_id}}</td>
             <td>{{timedata.user_name}}</td>
-            <td><a (click)="clickNumbers(timedata.user_id,'project')">{{timedata.project_time}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'bench')">{{timedata.bench}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'sl')">{{timedata.sl}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'cl')">{{timedata.cl}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'al')">{{timedata.al}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'total')">{{timedata.total_hrs}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'unapproved')">{{timedata.unapproved}}</a></td>
+            <td ><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'project')" *ngIf="timeDatas" style='color: #000;'>{{timedata.project_time}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'bench')" *ngIf="timeDatas" style='color: #000;' >{{timedata.bench}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'sl')" *ngIf="timeDatas" style='color: #000;'>{{timedata.sl}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'cl')" *ngIf="timeDatas" style='color: #000;'>{{timedata.cl}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'al')"  style='color: #000;'>{{timedata.al}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'total')" *ngIf="timeDatas" style='color: #000;'>{{timedata.total_hrs}}</a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'unapproved')" *ngIf="timeDatas" style='color: #000;'>{{timedata.unapproved}}</a></td>
           </tr>
         </tbody>
         <tfoot>
-          <tr class="time_sub_row bg_color_total">
+          <tr class="time_sub_row bg_color_total" >
             <td>Total: </td>
+            <td>{{totalTime['user_name']}}</td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'project')">{{totalTime['total_project']}}</a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'bench')">{{totalTime['total_bench']}}</a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'sl')">{{totalTime['total_sl']}}</a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'cl')">{{totalTime['total_cl']}}</a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'al')">{{totalTime['total_al']}}</a></td>
             <td></td>
-            <td><a (click)="clickNumbers('total','project')">{{totalTime['total_project']}}</a></td>
-            <td><a (click)="clickNumbers('total','bench')">{{totalTime['total_bench']}}</a></td>
-            <td><a (click)="clickNumbers('total','sl')">{{totalTime['total_sl']}}</a></td>
-            <td><a (click)="clickNumbers('total','cl')">{{totalTime['total_cl']}}</a></td>
-            <td><a (click)="clickNumbers('total','al')">{{totalTime['total_al']}}</a></td>
-            <td></td>
-            <td><a (click)="clickNumbers('total','unapproved')">{{totalTime['total_unapproved']}}</a></td>
+            <td><a (click)="clickNumbers('total','total','unapproved')">{{totalTime['total_unapproved']}}</a></td>
           </tr>
         </tfoot>
       </table>
@@ -161,7 +161,7 @@
   <ng-template #unapproved let-modal>
     <div class="modal_1">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Review Time</h4>
+      <h4 class="modal-title" id="modal-basic-title">Review Time:{{this.modaluser_name}}({{this.modaltime_type}})</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -183,24 +183,26 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="emp_list_th" *ngFor="let timeSubmissions of submissionClicked">
+              <tr class="emp_list_th" *ngFor="let timeSubmissions of submissionClicked" >
                 <!-- <tr *ngFor="let item of employee_list"> -->
                 <td>{{timeSubmissions.date_info}}</td>
                 <td>{{timeSubmissions.user_id}}</td>
-                <td>{{timeSubmissions.user_name}}</td>
+                <td>{{this.modaluser_name}}</td>
                 <td>{{timeSubmissions.time_type}}</td>
                 <td>{{timeSubmissions.hours}}</td>
                 <td>{{timeSubmissions.status}}</td>
                 <td>
                   <div>
-                    <i class ="fa fa-check-circle-o fa-lg" aria-hidden="true" (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
+                    <i class ="fa fa-check-circle-o fa-2x" aria-hidden="true" (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
+                    style="color:rgb(15, 15, 15);
+                    padding: 4px; 
+                    border-radius: 50%;">
+                    </i><i class="fa fa-times-circle-o fa-2x" aria-hidden="true" (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
                     style="color:rgb(15, 15, 15); 
+                    padding: 4px;
                     border-radius: 50%;">
                     </i>
-                    <i class="fa fa-times-circle-o fa-lg" aria-hidden="true" (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
-                    style="color:rgb(15, 15, 15); 
-                    border-radius: 50%;">
-                    </i>
+                    
                 </div>
                 </td>
               </tr>
@@ -217,7 +219,7 @@
   <ng-template #approved let-modal>
   <div class ="modal_1">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Time Info</h4>
+      <h4 class="modal-title" id="modal-basic-title">Time Info:{{this.modaluser_name}}({{this.modaltime_type}})</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -243,7 +245,7 @@
 
                 <td>{{time.date_info}}</td>
                 <td>{{time.user_id}}</td>
-                <td>{{time.first_name}}</td>
+                <td >{{this.modaluser_name}}</td>
                 <td>{{time.time_type}}</td>
                 <td>{{time.hours}}</td>
                 <td>{{time.status}}</td>

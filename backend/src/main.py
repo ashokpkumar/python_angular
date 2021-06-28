@@ -232,6 +232,19 @@ def timesubmission():
     session.close()
     return (jsonify(serialized_obj))
 
+@app.route('/getSubmissionByDate', methods=['POST'])
+def getSubmissionByDate():
+    session=Session()
+    data = request.get_json()
+    fromDate= data.get("fromDate")
+    toDate= data.get("toDate")
+    print(fromDate)
+    sub_objects=session.query(timesubmissions.date_info).filter(date_range=[fromDate.toDate])
+    serialized_obj = serialize_all(sub_objects)
+    print(serialized_obj)
+    session.close()
+    return (jsonify(serialized_obj)),200
+
 @app.route('/getSubmissionsBy', methods=['POST'])
 def getSubmissionsBy():
     session = Session()
@@ -255,8 +268,10 @@ def getTimeBy():
     data = request.get_json()
     time_type = data['type']
     user = data['user']
+    #user_name = session.query(employee.first_name).filter(employee.emp_id==user).first()[0]
     print(user)
     print(time_type)
+    #print(user_name)
     if user == 'total':
         if time_type =="project":
             time_type_list = ['wfh','REG']
@@ -267,10 +282,12 @@ def getTimeBy():
         print(serialized_obj)
         session.close()
         return (jsonify(serialized_obj)),200
-        
     else:
         if time_type =="project":
             time_type_list = ['wfh','REG']
+        elif time_type=="total":
+                time_type_list=['wfh','REG','cl','sl','al']
+                print(time_type_list)
         else:
             time_type_list = [time_type]
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='approved',timesubmissions.time_type.in_(time_type_list),timesubmissions.user_id==user).all()
@@ -294,8 +311,12 @@ def timeData():
         bench=0
         user_id = emp
         unapproved=0
-
-        user_name = session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
+        first_name=session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
+        last_name=session.query(employee.last_name).filter(employee.emp_id==emp).first()[0]                
+        initial=session.query(employee.initial).filter(employee.emp_id==emp).first()[0]
+        first_name1=first_name.capitalize()
+        initial1=initial.upper()
+        user_name = (first_name1+" "+last_name +"."+ initial1)
         submission_obj = session.query(timesubmissions).filter(timesubmissions.user_id==emp).all()
         serialized_obj = serialize_all(submission_obj)
         for time in serialized_obj:
@@ -325,10 +346,9 @@ def timeData():
     total_al = 0
     total_bench = 0
     total_unapproved = 0
-
     for emp_data in time_final:
         total_project = total_project  + emp_data['project_time']
-        total_sl = total_sl  + emp_data['sl']
+        total_sl = total_sl  + emp_data['sl']   
         total_cl = total_cl  + emp_data['cl']
         total_al = total_al  + emp_data['al']
         total_bench = total_bench  + emp_data['bench']

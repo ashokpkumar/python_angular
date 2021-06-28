@@ -10,16 +10,16 @@ export class timeSubmissionsService {
   constructor(public toastr: ToastrService,private http: HttpClient) {
   }
   
-  getSubmissions(user_name): Observable<any> {
+  getSubmissions(user_id): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
-    const body=JSON.stringify(user_name);
+    const body=JSON.stringify(user_id);
     console.log(body)
     return this.http.post(`${API_URL}/view_submissions`, body,{'headers':headers})
   }
 
-  getTimeData(user_name): Observable<any> {
+  getTimeData(user_id): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
-    const body=JSON.stringify(user_name);
+    const body=JSON.stringify(user_id);
     console.log(body)
     return this.http.post(`${API_URL}/timeData`, body,{'headers':headers})
   }
@@ -30,26 +30,32 @@ export class timeSubmissionsService {
                                 'reviewd':reviewd,
                                 'date':date,
                                 'time_type':time_type,
-                                'hours':hours
+                                'hours':hours 
                             });
  
     return this.http.post(`${API_URL}/review_time`, body,{'headers':headers})
   }
 
-  getSubmissionsBy(user){
+  getSubmissionsBy(user ){
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(user);
     console.log(body)
     return this.http.post(`${API_URL}/getSubmissionsBy`, body,{'headers':headers})
   }
 
-  getTimeBy(user,type){
+  getTimeBy(user,user_name,type){
     const headers = { 'content-type': 'application/json'}  
-    const body=JSON.stringify({'user':user,'type':type});
+    const body=JSON.stringify({'user':user,'user_name':user_name,'type':type});
     console.log('Body : ',body);
     return this.http.post(`${API_URL}/getTimeBy`, body,{'headers':headers})
   }
-  
+  getSubmissionByDate(fromDate,toDate){
+    const headers = { 'content-type': 'application/json'}  
+    const body=JSON.stringify({'fromDate':fromDate,'toDate':toDate});
+    console.log('Body : ',body);
+    return this.http.post(`${API_URL}/getSubmissionByDate`, body,{'headers':headers})
+  }
+
   showMessage(message, title){
     if (title=='success'){
         this.toastr.success(message, title)
