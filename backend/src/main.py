@@ -18,6 +18,8 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_expects_json import expects_json
 from flask_mail import Mail, Message
+from datetime import date, timedelta
+
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -232,17 +234,37 @@ def timesubmission():
     session.close()
     return (jsonify(serialized_obj))
 
+
 @app.route('/getSubmissionByDate', methods=['POST'])
 def getSubmissionByDate():
     session=Session()
     data = request.get_json()
-    fromDate= data.get("fromDate")
-    toDate= data.get("toDate")
-    print(fromDate)
-    sub_objects=session.query(timesubmissions.date_info).filter(date_range=[fromDate.toDate])
+    fromDate=data.get("fromDate",None)
+    toDate= data.get("toDate",None)
+    if any(fromDate or toDate) is None:
+        return jsonify({"error":"From date or To Date is missing"})
+    start_Date=fromDate.split(" ")[0]
+    end_Date=toDate.split(" ")[0]
+    s_datee = datetime.datetime.strptime(start_Date, "%Y/%m/%d")
+    e_datee = datetime.datetime.strptime(end_Date, "%Y/%m/%d")
+    print(start_Date)
+    print(end_Date)
+    print(type(start_Date))
+    print(type(s_datee))
+    date_array = \
+         (s_datee + datetime.timedelta(days=x) for x in range(0, (e_datee-s_datee).days))
+    for date_object in date_array:
+         datee=date_object.strftime("%Y/%d/%m")
+         print(datee)
+         print(type(datee))
+
+    sub_objects = session.query(timesubmissions).filter(timesubmissions.date_info==datee).all()#,timesubmissions.status=='Unapproved').all()
     serialized_obj = serialize_all(sub_objects)
-    print(serialized_obj)
-    session.close()
+    #print(sub_objects)
+    #print(serialized_obj)
+    #print(start_Date,end_Date)    
+    #print(serialized_obj)
+    session.close()        
     return (jsonify(serialized_obj)),200
 
 @app.route('/getSubmissionsBy', methods=['POST'])
@@ -298,10 +320,54 @@ def getTimeBy():
 
 @app.route('/timeData', methods=['POST'])
 def timeData():
-    manager_id = request.get_json()
+    #manager_id = request.get_json()
     session = Session()
+    data = request.get_json()
+    manager_id = data.get("user_id")
+    print(manager_id)
+    date_submission_obj = session.query(timesubmissions.date_info).all()
+    #print(date_submission_obj)
+    date_info=date_submission_obj
+    min_date=min(date_info)
+    #start_Date=datetime.datetime.strptime(min_date,"%d-%m-%Y")
+    #print(start_Date)
+    max_date=max(date_info)
+    #print(min_date)
+    #print(max_date)
+    #select query for all submission
+    #sort by date
+    #date column separate
+    #take the first and last date values and save in two variables
+
+    fromDate=data.get("fromDate",min_date) #substitutehte variable instead of None
+    toDate= data.get("toDate",max_date) #substitutehte variable instead of None
+    #print(fromDate)
+    #print(type(fromDate))
+    #print(toDate)
+    #print(type(toDate))
+    #s=datetime.datetime.date(fromDate).text()
+    #s=fromDate.strftime(" %Y %m %d %H:%M:%S %z")
+    #t=fromDate.strftime("%d/%m/%Y")[20:30]
+    #start_Date=fromDate.split(" ")[20:30]
+    #t=str(fromDate)[19:30]
+    s = str(fromDate)
+    print("fromdate",s)
+    print(type(s))
+    # start_Date=fromDate.split(" ")[0]
+    # end_Date=toDate.split(" ")[0]
+    # #print(start_Date)
+    # s_datee = datetime.datetime.strptime(start_Date, "%Y/%m/%d")
+    # e_datee = datetime.datetime.strptime(end_Date, "%Y/%m/%d")
+    # date_array = \
+    #     (s_datee + datetime.timedelta(days=x) for x in range(0, (e_datee-s_datee).days))
+    # for date_object in date_array:
+    #     datee=date_object
+    #     print(datee)
+    # print(type(datee))
+    
     emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_id).all()
     emp_final = [emp[0].lower() for emp in emp_list]
+    print(emp_final)
     time_final = []
     for emp in emp_final:
         project_time = 0
@@ -317,8 +383,9 @@ def timeData():
         first_name1=first_name.capitalize()
         initial1=initial.upper()
         user_name = (first_name1+" "+last_name +"."+ initial1)
-        submission_obj = session.query(timesubmissions).filter(timesubmissions.user_id==emp).all()
+        submission_obj = session.query(timesubmissions).filter(timesubmissions.user_id==emp).all()#timesubmissions.user_id==emp,timesubmissions.date_info == datee,
         serialized_obj = serialize_all(submission_obj)
+        #print(serialized_obj)
         for time in serialized_obj:
             #print(time)
             if time['status']=='approved':
@@ -357,6 +424,24 @@ def timeData():
     print(total_time_list)
     #time_final.append({'total_project':total_project,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_bench':total_bench,'total_unapproved':total_unapproved, })
     return (jsonify({'result':time_final,'total':total_time_list}))
+    # else:
+    #     start_Date=fromDate.split(" ")[0]
+    #     end_Date=toDate.split(" ")[0]
+    #     print(start_Date)
+    #     s_datee = datetime.datetime.strptime(start_Date, "%Y/%m/%d")
+    #     e_datee = datetime.datetime.strptime(end_Date, "%Y/%m/%d")
+    #     print(s_datee)
+    #     print(e_datee)
+    #     print(type(s_datee))
+    #     date_array = \
+    #         (s_datee + datetime.timedelta(days=x) for x in range(0, (e_datee-s_datee).days))
+    #     for date_object in date_array:
+    #         datee=date_object.strftime("%Y/%d/%m")
+    #         print(datee)
+    #     print(type(datee))
+    #     date=datee
+    #     return (jsonify(date_info))
+    
 
 
 @app.route('/review_time', methods=['POST'])

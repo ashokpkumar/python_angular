@@ -17,9 +17,11 @@ export class timeSubmissionsService {
     return this.http.post(`${API_URL}/view_submissions`, body,{'headers':headers})
   }
 
-  getTimeData(user_id): Observable<any> {
+  getTimeData(user_id,fromDate,toDate): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
-    const body=JSON.stringify(user_id);
+    //const body=JSON.stringify(user_id);
+    const body=JSON.stringify({'user_id':user_id,'fromDate':fromDate,'toDate':toDate});
+
     console.log(body)
     return this.http.post(`${API_URL}/timeData`, body,{'headers':headers})
   }
@@ -36,7 +38,7 @@ export class timeSubmissionsService {
     return this.http.post(`${API_URL}/review_time`, body,{'headers':headers})
   }
 
-  getSubmissionsBy(user ){
+  getSubmissionsBy(user){
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(user);
     console.log(body)
@@ -50,6 +52,7 @@ export class timeSubmissionsService {
     return this.http.post(`${API_URL}/getTimeBy`, body,{'headers':headers})
   }
   getSubmissionByDate(fromDate,toDate){
+    console.log(fromDate,toDate)
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify({'fromDate':fromDate,'toDate':toDate});
     console.log('Body : ',body);
@@ -69,5 +72,99 @@ export class timeSubmissionsService {
         this.toastr.warning(message, title)
     }    
 } 
+downloadFile(data, filename='data') {
+  console.log(data)
+  let csvData = this.ConvertToCSV(data, ['user_id','user_name','project_time','bench','SL','CL','AL','total_hrs','Unapproved'
+  ]);
+  console.log(csvData)
+  let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
+  let dwldLink = document.createElement("a");
+  let url = URL.createObjectURL(blob);
+  let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+  if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+      dwldLink.setAttribute("target", "_blank");
+  }
+  dwldLink.setAttribute("href", url);
+  dwldLink.setAttribute("download", filename + ".csv");
+  dwldLink.style.visibility = "hidden";
+  document.body.appendChild(dwldLink);
+  dwldLink.click();
+  document.body.removeChild(dwldLink);
+}
+download_timeinfo(data, filename='data') {
+  console.log(data)
+  let csvData = this.ConvertToCSV(data, ['date_info','user_id','time_type','hours','status' ]);
+  console.log(csvData)
+  let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
+  let dwldLink = document.createElement("a");
+  let url = URL.createObjectURL(blob);
+  let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+  if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+      dwldLink.setAttribute("target", "_blank");
+  }
+  dwldLink.setAttribute("href", url);
+  dwldLink.setAttribute("download", filename + ".csv");
+  dwldLink.style.visibility = "hidden";
+  document.body.appendChild(dwldLink);
+  dwldLink.click();
+  document.body.removeChild(dwldLink);
+}
+
+download_reviewtime(data, filename='data') {
+  console.log(data)
+  let csvData = this.ConvertToCSV(data, ['date_info','user_id','time_type','hours','status' ]);
+  console.log(csvData)
+  let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
+  let dwldLink = document.createElement("a");
+  let url = URL.createObjectURL(blob);
+  let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+  if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+      dwldLink.setAttribute("target", "_blank");
+  }
+  dwldLink.setAttribute("href", url);
+  dwldLink.setAttribute("download", filename + ".csv");
+  dwldLink.style.visibility = "hidden";
+  document.body.appendChild(dwldLink);
+  dwldLink.click();
+  document.body.removeChild(dwldLink);
+}
+ConvertToCSV(objArray, headerList) {
+  console.log(objArray)
+  console.log(typeof(objArray))
+   let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+   console.log(array)
+   let str = '';
+   let row = 'S.No,';
+
+   for (let index in headerList) {
+       row += headerList[index] + ',';
+
+       
+   }
+   console.log(row)
+   row = row.slice(0, -1);
+
+   str += row + '\r\n';
+   console.log(row)
+   console.log(array.length)
+   for (let i = 0; i < array.length; i++) {
+       let line = (i+1)+'';
+       for (let index in headerList) {
+         console.log(index)
+          let head = headerList[index];
+            console.log(array)
+            console.log(head)
+            console.log(i)
+            console.log(array[i])
+            console.log(array[i][head.toLowerCase()])
+
+           line += ',' + array[i][head.toLowerCase()];
+       }
+       console.log(line)
+       str += line + '\r\n';
+   }
+   console.log(str)
+   return str;
+}
 
 }

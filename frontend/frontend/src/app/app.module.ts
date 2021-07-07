@@ -44,6 +44,7 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import {MatInputModule} from '@angular/material/input'
 import {PopoverModule} from "ngx-smart-popover";
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import {Ng2OrderModule } from "ng2-order-pipe";
 import { ForgotPasswodComponent } from './forgot-passwod/forgot-passwod.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component'
 FullCalendarModule.registerPlugins([ 
@@ -95,6 +96,7 @@ FullCalendarModule.registerPlugins([
     MatDatepickerModule,
     MatButtonModule,
     NgbPopoverModule,
+    Ng2OrderModule,
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,

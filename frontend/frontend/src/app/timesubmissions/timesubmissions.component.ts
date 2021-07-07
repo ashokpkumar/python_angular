@@ -5,6 +5,8 @@ import {users} from "./timeinfo";
 import {timeSubmissionsService} from './timesubmissions.service';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
+import {FormControl, FormGroup} from '@angular/forms';
 
 declare var $: any;
 @Component({
@@ -22,10 +24,13 @@ export class TimesubmissionsComponent implements OnInit {
   downloadAs: String = "Summary as Csv";
   timeDatas = [];
   totalTime = {};
-  fromDate:any;
-  toDate:any;
   modaluser_name:any;
-  modaltime_type:any
+  modaltime_type:any;
+  pipe: DatePipe;
+  from_Date:any;
+  to_Date:any;
+  sortDir = 1;//1= 'ASE' -1= DSC
+
 
 
   arr = [];
@@ -37,6 +42,13 @@ export class TimesubmissionsComponent implements OnInit {
   roles: any
   isVisible: boolean=false;
 
+  weekendsDatesFilter = (d: Date): boolean => {
+    const day = d.getDay();
+
+    /* Prevent Saturday and Sunday for select. */
+    return day !== 0 && day !== 6 ;
+  }
+
   constructor(private modalService: NgbModal,private router: Router,private cookieService: CookieService, private apiService:timeSubmissionsService) { }
   @ViewChild('approved')
   private defaultTabButtonsTpl1: TemplateRef<any>;
@@ -44,6 +56,9 @@ export class TimesubmissionsComponent implements OnInit {
   @ViewChild('unapproved')
   private defaultTabButtonsTpl2: TemplateRef<any>;
 
+  minDate = new Date(2021, 0, 1);
+  maxDate = new Date(2022, 0, 0);
+  
   
   ngOnInit(): void {
     this.allUserUnapproved = false;
@@ -61,10 +76,11 @@ export class TimesubmissionsComponent implements OnInit {
     this.submissionList = data,
     this.apiService.showMessage(Object.values(data),Object.keys(data))});
 
-    this.apiService.getTimeData(this.user_id)
+    this.apiService.getTimeData(this.user_id,this.from_Date,this.to_Date)
     .subscribe(data=>{
                  this.timeDatas = data.result,
-                 this.totalTime = data.total                  
+                 this.totalTime = data.total 
+                 console.log(data)                 
                     });
   }
   clickNumbers(user,user_name,type){
@@ -118,21 +134,67 @@ if (type=='unapproved'){
   console.log(this.timeClicked);
   if (this.timeClicked !=0 && this.submissionClicked !=0){
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      
-
     
     }, (reason) => {
 
     });
   }
 }
-  applyFilter(fromDate,toDate){
-    console.log(this.fromDate)
-    this.apiService.getSubmissionByDate(fromDate,toDate)
-    .subscribe(data=>{console.log(data);this.apiService.showMessage(Object.values(data),Object.keys(data))});
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-      this.router.onSameUrlNavigation = 'reload';
-      this.router.navigate(['/timesubmission']);
-      }
+
+
+
+filterForm = new FormGroup({
+    fromDate: new FormControl(),
+    toDate: new FormControl(),
+});
+
+get fromDate() { return this.filterForm.get('fromDate'); }
+get toDate() { return this.filterForm.get('toDate'); }
+
+
+
+  getDateRange(value) {
+    // getting date from calendar
+    const fromDate = value.fromDate
+    const toDate = value.toDate
+
     
+    var from_Date = new Date(fromDate);
+    var to_Date = new Date(toDate);     
+    console.log(getFormattedString(from_Date));
+    console.log(getFormattedString(to_Date));
+    function getFormattedString(d){
+      return d.getFullYear() + "/"+(d.getMonth()+1) +"/"+d.getDate() + ' '+d.toString().split(' ')[4]
+    }
+    this.apiService.getTimeData(this.user_id, getFormattedString(from_Date).toString(),getFormattedString(to_Date).toString())
+    .subscribe(data=>{
+      this.timeDatas =data
+      console.log(data)
+      this.apiService.showMessage(Object.values(data),Object.keys(data))});
+      
+      // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      // this.router.onSameUrlNavigation = 'reload';
+      // this.router.navigate(['/timesubmission']);
+  }
+    
+  download(){
+    this.apiService.downloadFile(this.timeDatas, 'jsontocsv');
+  }   
+  download_approved(){
+    this.apiService.download_timeinfo(this.timeClicked, 'jsontocsv');
+  } 
+  download_unapproved(){
+    this.apiService.download_reviewtime(this.submissionClicked, 'jsontocsv'); 
+  }
+  download1(){}
+
+  key:string ='id';
+  reverse:boolean=false;
+  sort(key){
+    this.key=key;
+    this.reverse=!this.reverse;
+  }
+
+
+ 
 }

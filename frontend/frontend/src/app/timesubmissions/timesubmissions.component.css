@@ -223,8 +223,9 @@ border: 1px solid #24a7f8;
   position: absolute;
   padding: 5px 5px 5px 5px ; 
   z-index: 1; 
+  border-radius: 8px;
   background: #ffffff;
-  padding-top: 0px; 
+  padding-top: 0px;
   left: 0;
   top: 0; 
   overflow-wrap: scroll;
@@ -238,6 +239,32 @@ border: 1px solid #24a7f8;
     width: 130%;
     padding: 10px 10px 10px 10px ; 
     overflow-y: auto;
+  }
+  .modal-footer{
+    width: 75%;
+    padding: 15px  ;
+    justify-content:center;
+
+  }
+  .modal-footer >div{
+    margin: 1px 0px;
+    padding: 2px 2px 2px 2px ;
+  }
+  .download_dropdown1{
+    display: grid;
+    justify-content:space-evenly;
+  }
+  .download{
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 7px 14px;
+    font-family: Open Sans,sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    background-color:rgb(68, 169, 236);
+    color: rgb(255, 255, 255);
+    border-color:rgb(68, 169, 236);
+    
   }
   .center{
     margin-left:initial ;
