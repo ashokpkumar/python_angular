@@ -329,11 +329,9 @@ def timeData():
     #print(date_submission_obj)
     date_info=date_submission_obj
     min_date=min(date_info)
-    #start_Date=datetime.datetime.strptime(min_date,"%d-%m-%Y")
-    #print(start_Date)
     max_date=max(date_info)
-    #print(min_date)
-    #print(max_date)
+    print(min_date)
+    print(max_date)
     #select query for all submission
     #sort by date
     #date column separate
@@ -359,7 +357,7 @@ def timeData():
     # s_datee = datetime.datetime.strptime(start_Date, "%Y/%m/%d")
     # e_datee = datetime.datetime.strptime(end_Date, "%Y/%m/%d")
     # date_array = \
-    #     (s_datee + datetime.timedelta(days=x) for x in range(0, (e_datee-s_datee).days))
+    #     (s_datee + datetime.timedelta(days=x) for x in range(0, (e_datee-s_datee).days))# to get inbetween dates 
     # for date_object in date_array:
     #     datee=date_object
     #     print(datee)
@@ -383,7 +381,7 @@ def timeData():
         first_name1=first_name.capitalize()
         initial1=initial.upper()
         user_name = (first_name1+" "+last_name +"."+ initial1)
-        submission_obj = session.query(timesubmissions).filter(timesubmissions.user_id==emp).all()#timesubmissions.user_id==emp,timesubmissions.date_info == datee,
+        submission_obj = session.query(timesubmissions).filter(timesubmissions.user_id==emp).all()#timesubmissions.date_info == datee,
         serialized_obj = serialize_all(submission_obj)
         #print(serialized_obj)
         for time in serialized_obj:
