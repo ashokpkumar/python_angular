@@ -17,10 +17,10 @@ export class timeSubmissionsService {
     return this.http.post(`${API_URL}/view_submissions`, body,{'headers':headers})
   }
 
-  getTimeData(user_id,fromDate,toDate): Observable<any> {
+  getTimeData(user_id): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
     //const body=JSON.stringify(user_id);
-    const body=JSON.stringify({'user_id':user_id,'fromDate':fromDate,'toDate':toDate});
+    const body=JSON.stringify({'user_id':user_id});
 
     console.log(body)
     return this.http.post(`${API_URL}/timeData`, body,{'headers':headers})
@@ -58,7 +58,13 @@ export class timeSubmissionsService {
     console.log('Body : ',body);
     return this.http.post(`${API_URL}/getSubmissionByDate`, body,{'headers':headers})
   }
-
+  rawData(raw_data) {
+    const headers = { 'content-type': 'application/json'}  
+    const body=JSON.stringify(raw_data);
+    console.log(body)
+    return this.http.post(`${API_URL}/rawDataDownload`, body,{'headers':headers})
+    }
+  
   showMessage(message, title){
     if (title=='success'){
         this.toastr.success(message, title)
@@ -109,6 +115,24 @@ download_timeinfo(data, filename='data') {
   dwldLink.click();
   document.body.removeChild(dwldLink);
 }
+download_timeinfoRawData(data, filename='data') {
+  console.log(data)
+  let csvData = this.ConvertToCSV(data, ["date_info","hours","id","manager_id","project_code","status","submission_id","time_type","user_id"]);
+  console.log(csvData)
+  let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
+  let dwldLink = document.createElement("a");
+  let url = URL.createObjectURL(blob);
+  let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+  if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+      dwldLink.setAttribute("target", "_blank");
+  }
+  dwldLink.setAttribute("href", url);
+  dwldLink.setAttribute("download", filename + ".csv");
+  dwldLink.style.visibility = "hidden";
+  document.body.appendChild(dwldLink);
+  dwldLink.click();
+  document.body.removeChild(dwldLink);
+}
 
 download_reviewtime(data, filename='data') {
   console.log(data)
@@ -128,6 +152,43 @@ download_reviewtime(data, filename='data') {
   dwldLink.click();
   document.body.removeChild(dwldLink);
 }
+download_reviewtimeRawData(data, filename='data') {
+  console.log(data)
+  let csvData = this.ConvertToCSV(data, ["date_info","hours","id","manager_id","project_code","status","submission_id","time_type","user_id"]);
+  console.log(csvData)
+  let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
+  let dwldLink = document.createElement("a");
+  let url = URL.createObjectURL(blob);
+  let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+  if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+      dwldLink.setAttribute("target", "_blank");
+  }
+  dwldLink.setAttribute("href", url);
+  dwldLink.setAttribute("download", filename + ".csv");
+  dwldLink.style.visibility = "hidden";
+  document.body.appendChild(dwldLink);
+  dwldLink.click();
+  document.body.removeChild(dwldLink);
+}
+download_rawdata(data, filename='data') {
+  console.log(data)
+  let csvData = this.ConvertToCSV(data,["date_info","hours","id","manager_id","project_code","status","submission_id","time_type","user_id"]);
+  console.log(csvData)
+  let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
+  let dwldLink = document.createElement("a");
+  let url = URL.createObjectURL(blob);
+  let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+  if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+      dwldLink.setAttribute("target", "_blank");
+  }
+  dwldLink.setAttribute("href", url);
+  dwldLink.setAttribute("download", filename + ".csv");
+  dwldLink.style.visibility = "hidden";
+  document.body.appendChild(dwldLink);
+  dwldLink.click();
+  document.body.removeChild(dwldLink);
+}
+
 ConvertToCSV(objArray, headerList) {
   console.log(objArray)
   console.log(typeof(objArray))

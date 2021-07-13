@@ -5,14 +5,14 @@
     <div></div>
     <div> 
       <mat-form-field [formGroup]="filterForm">
-        <input matInput [min]="minDate" [max]="maxDate" matInput [matDatepicker]="fromDate" placeholder="Select From Date" formControlName="fromDate">
+        <input  matInput [matDatepicker]="fromDate" placeholder="Select From Date" formControlName="fromDate">
         <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
         <mat-datepicker #fromDate></mat-datepicker>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field [formGroup]="filterForm">
-        <input matInput [min]="minDate" [max]="maxDate" matInput [matDatepicker]="toDate"  placeholder="Select To Date" formControlName="toDate">
+        <input matInput [matDatepicker]="toDate"  placeholder="Select To Date" formControlName="toDate">
         <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
         <mat-datepicker #toDate></mat-datepicker>
       </mat-form-field>
@@ -24,8 +24,8 @@
       <mat-form-field appearance="fill">
         <mat-label>Download As</mat-label>
         <mat-select [(ngModel)]="downloadAs" disableRipple>
-          <mat-option value="Summary as Csv">Summary as Csv</mat-option>
-          <mat-option value="Raw Data as Csv">Raw Data as Csv </mat-option>
+          <mat-option value="Summary as Csv" >Summary as Csv</mat-option>
+          <mat-option value="Raw Data as Csv" (click)="download_data(raw_data)">Raw Data as Csv </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -41,7 +41,7 @@
         <thead>
           <tr class="time_sub_row">
             <!-- <tr> -->
-            <th data-field="dateInfo" data-checkbox="true">User ID <i class="fa fa-sort" aria-hidden="true" (click)="sort('id')"></i></th>
+            <th data-field="dateInfo" data-checkbox="true">User ID <i class="fa fa-sort" aria-hidden="true" (click)="sort('userid')"></i></th>
             <th data-field="username" data-checkbox="true">User Name <i class="fa fa-sort" aria-hidden="true"(click)="sort('username')"></i></th>
             <th data-field="manager name" data-filter-control="input" data-sortable="true">Project Time <i class="fa fa-sort" aria-hidden="true"(click)="sort('projectTime')"></i></th>
             <th data-field="time type" data-filter-control="input" data-sortable="true">Bench Time <i class="fa fa-sort" aria-hidden="true"(click)="sort('benchTime')"></i></th>
@@ -213,11 +213,11 @@
             <mat-form-field appearance="fill">
             <mat-label>Download As</mat-label>
               <mat-select [(ngModel)]="downloadAs" disableRipple>
-                <mat-option value="Summary as Csv">Summary as Csv</mat-option>
-                <mat-option value="Raw Data as Csv">Raw Data as Csv </mat-option>
+                <mat-option value="Summary as Csv"(click)='download_unapproved()'>Summary as Csv</mat-option>
+                <mat-option value="Raw Data as Csv" (click)='download_modalUnapprovedData()'>Raw Data as Csv </mat-option>
               </mat-select>
             </mat-form-field>
-            <button class="download" type="button" (click)='download_unapproved()'>Download</button>
+            <button class="download" type="button" (click)='download_modalUnapprovedData()'>Download</button>
           </div>
         </div>
       </div>
@@ -269,11 +269,11 @@
             <mat-form-field appearance="fill">
             <mat-label>Download As</mat-label>
               <mat-select [(ngModel)]="downloadAs" disableRipple>
-                <mat-option value="Summary as Csv">Summary as Csv</mat-option>
-                <mat-option value="Raw Data as Csv">Raw Data as Csv </mat-option>
+                <mat-option value="Summary as Csv" (click)='download_approved()'>Summary as Csv</mat-option>
+                <mat-option value="Raw Data as Csv" (click)='download_modalUnapprovedData()'>Raw Data as Csv </mat-option>
               </mat-select>
             </mat-form-field>
-            <button  class="download" type="button" (click)='download_approved()'>Download</button>
+            <button  class="download" type="button" (click)='download_modalUnapprovedData()'>Download</button>
           </div>
         </div>
       </div>

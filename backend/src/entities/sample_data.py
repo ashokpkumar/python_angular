@@ -3,151 +3,152 @@ from entities.database import employee,project,authUser,TimeMaster,timesubmissio
 import datetime
 
 emp_list = [
-    {'emp_id':'I3228','email':'ashokkumar.p@indiumsoft.com','first_name':'Ashok','last_name':'Kumar','sur_name':'','initial':'P','salutation':'Mr','project_code':'DIGI1111','dept':'Digital','designation':'Python Lead','emp_start_date':'03-04-2019','emp_last_working_date':'05-06-2020','emp_project_assigned_date':'11-06-2020','emp_project_end_date':'21-07-2020','employment_status':'Project','manager_name':'Nataraj.G','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'python','roles':'Project Manager ','manager_id':'I3186'},
-    {'emp_id':'I31288','email':'amit.kumar@indiumsoft.com','first_name':'Amit','last_name':'Kumar','sur_name':'','initial':'T','salutation':'Mr','project_code':'DIGI1111','dept':'Digital','designation':'Python Developer','emp_start_date':'20-08-2020','emp_last_working_date':'01-06-2021','emp_project_assigned_date':'05-06-2021','emp_project_end_date':'04-11-2021','employment_status':'Project','manager_name':'Nataraj.G','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'python','roles':'Employee','manager_id':'I3186'},
-    {'emp_id':'I1666','email':'shyam@indiumsoft.com','first_name':'Shyamsundar','last_name':'Mahalingam','sur_name':'','initial':'S','salutation':'Mr','project_code':'DIGI2222','dept':'Digital','designation':'Java Developer','emp_start_date':'11-12-2019','emp_last_working_date':'28-10-2020','emp_project_assigned_date':'20-11-2020','emp_project_end_date':'30-11-2020','employment_status':'Project','manager_name':'Nataraj.G','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'java','roles':'Sales Team','manager_id':'I3186'},
-    {'emp_id':'I1891','email':'RameshThangaraj@indiumsoft.com','first_name':'Ramesh','last_name':'Thangaraj','sur_name':'','initial':'T','salutation':'Mr','project_code':'DIGI2222','dept':'Digital','designation':'Java Developer','emp_start_date':'21-06-2018','emp_last_working_date':'29-11-2019','emp_project_assigned_date':'08-11-2019','emp_project_end_date':'12-11-2019','employment_status':'Project','manager_name':'Ramesh A','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'java','roles':'Delivery Head','manager_id':'I3182'},
-    {'emp_id':'I2013','email':'PriyaS@indiumsoft.com','first_name':'Priya','last_name':'','sur_name':'','initial':'S','salutation':'Ms','project_code':'DIGI2323','dept':'Digital','designation':'SQL developer','emp_start_date':'17-02-2021','emp_last_working_date':'0-11-2020','emp_project_assigned_date':'20-11-2021','emp_project_end_date':'26-12-2021','employment_status':'Project','manager_name':'Karthik Rangamani','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'','roles':'Project Manager','manager_id':'I3252'},
-    {'emp_id':'I3186','email':'nataraj.g@indiumsoft.com','first_name':'Nataraj','last_name':'','sur_name':'','initial':'G','salutation':'Mr','project_code':'','dept':'Digital','designation':'Project Manager','emp_start_date':'15-10-2020','emp_last_working_date':'0-11-2020','emp_project_assigned_date':'01-10-2020','emp_project_end_date':'03-11-2020','employment_status':'Project','manager_name':'Karthik Rangamani','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'','roles':'RMG Admin','manager_id':'I3252'},
-    {'emp_id':'I3252','email':'r.karthik@indiumsoft.com','first_name':'Karthik','last_name':'Rangamani','sur_name':'','initial':'RK','salutation':'Mr','project_code':'','dept':'Digital','designation':'Vice President','emp_start_date':'10-12-2019','emp_last_working_date':'12-11-2020','emp_project_assigned_date':'21-03-2021','emp_project_end_date':'03-04-2021','employment_status':'Project','manager_name':'Satish Bala','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'','roles':'RMG Admin','manager_id':'I3281'},
-    {'emp_id':'I3050','email':'manikandan.l@indiumsoft.com','first_name':'manikandan','last_name':'Loganathan','sur_name':'','initial':'L','salutation':'Mr','project_code':'DIGI1111','dept':'Digital','designation':'Frontend Developer','emp_start_date':'30-10-2020','emp_last_working_date':'04-11-2020','emp_project_assigned_date':'19-09-2021','emp_project_end_date':'21-10-2021','employment_status':'Project','manager_name':'Nataraj.g','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'react','roles':'Finance Team','manager_id':'I3186'},
-    {'emp_id':'I2668','email':'deepak.g@indiumsoft.com','first_name':'Deepak','last_name':'','sur_name':'','initial':'G','salutation':'Mr','project_code':'DIGI1212','dept':'Digital','designation':'python Developer','emp_start_date':'28-04-2019','emp_last_working_date':'30-11-2020','emp_project_assigned_date':'19-12-2020','emp_project_end_date':'25-01-2021','employment_status':'Project','manager_name':'Nataraj.G','manager_dept':'Digital','resource_status':'billable','delivery_type':'delivery','additional_allocation':'','skills':'python','roles':'Employee','manager_id':'I3186'},
-    {'emp_id':'I3122','email':'chandrasekara.v@indiumsoft.com','first_name':'Chandra ','last_name':'Sekara','sur_name':'','initial':'V','salutation':'Mr','project_code':'DIGI1212','dept':'Digital','designation':'python Developer','emp_start_date':'28-04-2019','emp_last_working_date':'30-11-2020','emp_project_assigned_date':'19-12-2020','emp_project_end_date':'25-01-2021','employment_status':'Project','manager_name':'Nataraj.G','manager_dept':'Digital','resource_status':'billable','delivery_type':'delivery','additional_allocation':'','skills':'python','roles':'Employee','manager_id':'I3186'},
+    {'emp_id':'I3228','email':'ashokkumar.p@indiumsoft.com','first_name':'Ashok','last_name':'Kumar','sur_name':'','initial':'P','salutation':'Mr','project_code':'DIGI1111','dept':'Digital','designation':'Python Lead','emp_start_date':'03/04/2019','emp_last_working_date':'05/06/2020','emp_project_assigned_date':'11/06/2020','emp_project_end_date':'21/07/2020','employment_status':'Project','manager_name':'Nataraj.G','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'python','roles':'Project Manager ','manager_id':'I3186'},
+    {'emp_id':'I31288','email':'amit.kumar@indiumsoft.com','first_name':'Amit','last_name':'Kumar','sur_name':'','initial':'T','salutation':'Mr','project_code':'DIGI1111','dept':'Digital','designation':'Python Developer','emp_start_date':'20/08/2020','emp_last_working_date':'01/06/2021','emp_project_assigned_date':'05/06/2021','emp_project_end_date':'04/11/2021','employment_status':'Project','manager_name':'Nataraj.G','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'python','roles':'Employee','manager_id':'I3186'},
+    {'emp_id':'I1666','email':'shyam@indiumsoft.com','first_name':'Shyamsundar','last_name':'Mahalingam','sur_name':'','initial':'S','salutation':'Mr','project_code':'DIGI2222','dept':'Digital','designation':'Java Developer','emp_start_date':'11/12/2019','emp_last_working_date':'28/10/2020','emp_project_assigned_date':'20/11/2020','emp_project_end_date':'30/11/2020','employment_status':'Project','manager_name':'Nataraj.G','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'java','roles':'Sales Team','manager_id':'I3186'},
+    {'emp_id':'I1891','email':'RameshThangaraj@indiumsoft.com','first_name':'Ramesh','last_name':'Thangaraj','sur_name':'','initial':'T','salutation':'Mr','project_code':'DIGI2222','dept':'Digital','designation':'Java Developer','emp_start_date':'21/06/2018','emp_last_working_date':'29/11/2019','emp_project_assigned_date':'08/11/2019','emp_project_end_date':'12/11/2019','employment_status':'Project','manager_name':'Ramesh A','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'java','roles':'Delivery Head','manager_id':'I3182'},
+    {'emp_id':'I2013','email':'PriyaS@indiumsoft.com','first_name':'Priya','last_name':'','sur_name':'','initial':'S','salutation':'Ms','project_code':'DIGI2323','dept':'Digital','designation':'SQL developer','emp_start_date':'17/02/2021','emp_last_working_date':'0/11/2020','emp_project_assigned_date':'20/11/2021','emp_project_end_date':'26/12/2021','employment_status':'Project','manager_name':'Karthik Rangamani','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'','roles':'Project Manager','manager_id':'I3252'},
+    {'emp_id':'I3186','email':'nataraj.g@indiumsoft.com','first_name':'Nataraj','last_name':'','sur_name':'','initial':'G','salutation':'Mr','project_code':'','dept':'Digital','designation':'Project Manager','emp_start_date':'15/10/2020','emp_last_working_date':'0/11/2020','emp_project_assigned_date':'01/10/2020','emp_project_end_date':'03/11/2020','employment_status':'Project','manager_name':'Karthik Rangamani','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'','roles':'RMG Admin','manager_id':'I3252'},
+    {'emp_id':'I3252','email':'r.karthik@indiumsoft.com','first_name':'Karthik','last_name':'Rangamani','sur_name':'','initial':'RK','salutation':'Mr','project_code':'','dept':'Digital','designation':'Vice President','emp_start_date':'10/12/2019','emp_last_working_date':'12/11/2020','emp_project_assigned_date':'21/03/2021','emp_project_end_date':'03/04/2021','employment_status':'Project','manager_name':'Satish Bala','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'','roles':'RMG Admin','manager_id':'I3281'},
+    {'emp_id':'I3050','email':'manikandan.l@indiumsoft.com','first_name':'manikandan','last_name':'Loganathan','sur_name':'','initial':'L','salutation':'Mr','project_code':'DIGI1111','dept':'Digital','designation':'Frontend Developer','emp_start_date':'30/10/2020','emp_last_working_date':'04/11/2020','emp_project_assigned_date':'19/09/2021','emp_project_end_date':'21/10/2021','employment_status':'Project','manager_name':'Nataraj.g','manager_dept':'Digital','resource_status':'Billable','delivery_type':'delivery','additional_allocation':'','skills':'react','roles':'Finance Team','manager_id':'I3186'},
+    {'emp_id':'I2668','email':'deepak.g@indiumsoft.com','first_name':'Deepak','last_name':'','sur_name':'','initial':'G','salutation':'Mr','project_code':'DIGI1212','dept':'Digital','designation':'python Developer','emp_start_date':'28/04/2019','emp_last_working_date':'30/11/2020','emp_project_assigned_date':'19/12/2020','emp_project_end_date':'25/01/2021','employment_status':'Project','manager_name':'Nataraj.G','manager_dept':'Digital','resource_status':'billable','delivery_type':'delivery','additional_allocation':'','skills':'python','roles':'Employee','manager_id':'I3186'},
+    {'emp_id':'I3122','email':'chandrasekara.v@indiumsoft.com','first_name':'Chandra ','last_name':'Sekara','sur_name':'','initial':'V','salutation':'Mr','project_code':'DIGI1212','dept':'Digital','designation':'python Developer','emp_start_date':'28/04/2019','emp_last_working_date':'30/11/2020','emp_project_assigned_date':'19/12/2020','emp_project_end_date':'25/01/2021','employment_status':'Project','manager_name':'Nataraj.G','manager_dept':'Digital','resource_status':'billable','delivery_type':'delivery','additional_allocation':'','skills':'python','roles':'Employee','manager_id':'I3186'},
 ]
 
 project_list = [
-    {"clientname":"Indium-Pilit","projectcode":"IND123","projectname":"RMG Web Application ","project_start_date":"14-11-2020","projectstatus":"Submitted","billingtype":"F","segment":"Managed Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3228,I3186","financialyear":"2021","resource_info":"I31288,I2668,I3050"},
-    {"clientname":"AB Martin","projectcode":"ABMPPSW_FCUD20","projectname":"Port from Powershell to Web Application","project_start_date":"04-01-2021","projectstatus":"In Progress","billingtype":"F","segment":"Consulting Services","geography":"US","solution_category":"Data Analytics","project_manager_id":"I3186","financialyear":"2019","resource_info":'I31288,I2668'},
-    {"clientname":"GNQ-IND","projectcode":"AWLD_TMIN12","projectname":"RMG Application for Management","project_start_date":"01-02-2019","projectstatus":"Submitted","billingtype":"T","segment":"Managed Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3228,I3186","financialyear":"2020","resource_info":"I3122,I2668"},
-    {"clientname":"Pi-Lit","projectcode":"AQTFDHW_TMIN18","projectname":"RMG Application for Management ","project_start_date":"22-08-2020","projectstatus":"Submitted-pending request ","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3186","financialyear":"2019","resource_info":"I3228,I31288,I3050"},
-    {"clientname":"ACT Fibernet","projectcode":"BKMPPSW_F202","projectname":"Hadoop Data Platform Consulting","project_start_date":"12-06-2019","projectstatus":"Not Approved","billingtype":"T","segment":"Managed Services","geography":"US","solution_category":"Analytics","project_manager_id":"I2013","financialyear":"2019","resource_info":"I3050,I1666"},
-    {"clientname":"Adqvest","projectcode":"MPPSWB_FCUD203","projectname":"Financial data Harvesting from web sources","project_start_date":"09-12-2019","projectstatus":"In Progress","billingtype":"T","segment":"Consulting Services","geography":"US","solution_category":"Product Developement","project_manager_id":"I3228","financialyear":"2021","resource_info":"I3122,I31288"},
-    {"clientname":"Bharath","projectcode":"BMKPPSW_FCUD204","projectname":"Client Insurance Source and Services ","project_start_date":"01-07-2019","projectstatus":"Submitted-pending request","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Big Data Analytics","project_manager_id":"I3186","financialyear":"2021","resource_info":"I3228,I2013"},
-    {"clientname":"AppTech","projectcode":"SWRRP_FUD205","projectname":"ARDAMS Powershell Web Application","project_start_date":"10-03-2021","projectstatus":"In Progress","billingtype":"F","segment":"Consulting Services","geography":"US","solution_category":"Product Developement","project_manager_id":"I3252","financialyear":"2019","resource_info":"I3186,I3228"},
-    {"clientname":"ABB Technology","projectcode":"PPSWFF_FCUD206","projectname":"Production Based Data Platform","project_start_date":"18-05-2020","projectstatus":"Approval Rejected","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Big Data Analytics","project_manager_id":"I3252","financialyear":"2020","resource_info":"I1891,I1666,I3050"},
-    {"clientname":"VNN Softcore","projectcode":"QWWST_HPPR24","projectname":"Data Corelation from Web Application","project_start_date":"28-11-2020","projectstatus":"In Progress","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3281,I3252","financialyear":"2018","resource_info":"I3252,I3186"},
-    {"clientname":"INB services","projectcode":"PQQE_XGGL21","projectname":"Resource Management for INB","project_start_date":"02-03-2021","projectstatus":"In Progress","billingtype":"T","segment":"Consulting Services","geography":"US","solution_category":"Product Developement","project_manager_id":"I3228","financialyear":"2021","resource_info":"I2668,I3122"},
-    {"clientname":"Airbnb","projectcode":"WGLOR_LMNV03","projectname":"Frimware Developement","project_start_date":"09-03-2019","projectstatus":"Pending Request","billingtype":"F","segment":"Managed Services","geography":"INDIA","solution_category":"Big Data Analytics","project_manager_id":"I2013","financialyear":"2020","resource_info":"I3050,I1666"},
+    {"clientname":"Indium/Pilit","projectcode":"IND123","projectname":"RMG Web Application ","project_start_date":"14/11/2020","projectstatus":"Submitted","billingtype":"F","segment":"Managed Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3228,I3186","financialyear":"2021","resource_info":"I31288,I2668,I3050"},
+    {"clientname":"AB Martin","projectcode":"ABMPPSW_FCUD20","projectname":"Port from Powershell to Web Application","project_start_date":"04/01/2021","projectstatus":"In Progress","billingtype":"F","segment":"Consulting Services","geography":"US","solution_category":"Data Analytics","project_manager_id":"I3186","financialyear":"2019","resource_info":'I31288,I2668'},
+    {"clientname":"GNQ/IND","projectcode":"AWLD_TMIN12","projectname":"RMG Application for Management","project_start_date":"01/02/2019","projectstatus":"Submitted","billingtype":"T","segment":"Managed Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3228,I3186","financialyear":"2020","resource_info":"I3122,I2668"},
+    {"clientname":"Pi/Lit","projectcode":"AQTFDHW_TMIN18","projectname":"RMG Application for Management ","project_start_date":"22/08/2020","projectstatus":"Submitted/pending request ","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3186","financialyear":"2019","resource_info":"I3228,I31288,I3050"},
+    {"clientname":"ACT Fibernet","projectcode":"BKMPPSW_F202","projectname":"Hadoop Data Platform Consulting","project_start_date":"12/06/2019","projectstatus":"Not Approved","billingtype":"T","segment":"Managed Services","geography":"US","solution_category":"Analytics","project_manager_id":"I2013","financialyear":"2019","resource_info":"I3050,I1666"},
+    {"clientname":"Adqvest","projectcode":"MPPSWB_FCUD203","projectname":"Financial data Harvesting from web sources","project_start_date":"09/12/2019","projectstatus":"In Progress","billingtype":"T","segment":"Consulting Services","geography":"US","solution_category":"Product Developement","project_manager_id":"I3228","financialyear":"2021","resource_info":"I3122,I31288"},
+    {"clientname":"Bharath","projectcode":"BMKPPSW_FCUD204","projectname":"Client Insurance Source and Services ","project_start_date":"01/07/2019","projectstatus":"Submitted/pending request","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Big Data Analytics","project_manager_id":"I3186","financialyear":"2021","resource_info":"I3228,I2013"},
+    {"clientname":"AppTech","projectcode":"SWRRP_FUD205","projectname":"ARDAMS Powershell Web Application","project_start_date":"10/03/2021","projectstatus":"In Progress","billingtype":"F","segment":"Consulting Services","geography":"US","solution_category":"Product Developement","project_manager_id":"I3252","financialyear":"2019","resource_info":"I3186,I3228"},
+    {"clientname":"ABB Technology","projectcode":"PPSWFF_FCUD206","projectname":"Production Based Data Platform","project_start_date":"18/05/2020","projectstatus":"Approval Rejected","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Big Data Analytics","project_manager_id":"I3252","financialyear":"2020","resource_info":"I1891,I1666,I3050"},
+    {"clientname":"VNN Softcore","projectcode":"QWWST_HPPR24","projectname":"Data Corelation from Web Application","project_start_date":"28/11/2020","projectstatus":"In Progress","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3281,I3252","financialyear":"2018","resource_info":"I3252,I3186"},
+    {"clientname":"INB services","projectcode":"PQQE_XGGL21","projectname":"Resource Management for INB","project_start_date":"02/03/2021","projectstatus":"In Progress","billingtype":"T","segment":"Consulting Services","geography":"US","solution_category":"Product Developement","project_manager_id":"I3228","financialyear":"2021","resource_info":"I2668,I3122"},
+    {"clientname":"Airbnb","projectcode":"WGLOR_LMNV03","projectname":"Frimware Developement","project_start_date":"09/03/2019","projectstatus":"Pending Request","billingtype":"F","segment":"Managed Services","geography":"INDIA","solution_category":"Big Data Analytics","project_manager_id":"I2013","financialyear":"2020","resource_info":"I3050,I1666"},
 
 ]
 
 timesubmission_list =[
 
     #Askok
-    {"date":"12-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"i3228i3228wfh"},
-    {"date":"16-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"i3228i3228wfh"},
-    {"date":"20-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"i3228i3228wfh"},
+    {"date":"12/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"i3228i3228wfh"},
+    {"date":"16/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"i3228i3228wfh"},
+    {"date":"20/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"i3228i3228wfh"},
 
-    {"date":"13-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"i3228i3228SL"},
-    {"date":"15-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"i3228i3228SL"},
-    {"date":"19-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"i3228i3228SL"},
+    {"date":"13/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"i3228i3228SL"},
+    {"date":"15/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"i3228i3228SL"},
+    {"date":"19/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"i3228i3228SL"},
 
-    {"date":"11-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"i3228i3228CL"},
-    {"date":"23-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"i3228i3228CL"},
-    {"date":"25-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"i3228i3228CL"},
+    {"date":"11/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"i3228i3228CL"},
+    {"date":"23/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"i3228i3228CL"},
+    {"date":"25/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"i3228i3228CL"},
     
-    {"date":"22-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"i3228i3228AL"},
-    {"date":"27-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"i3228i3228AL"},
-    {"date":"30-01-2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"i3228i3228AL"},
+    {"date":"22/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"i3228i3228AL"},
+    {"date":"27/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"i3228i3228AL"},
+    {"date":"30/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"i3228i3228AL"},
     #Amit
-    {"date":"16-02-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I31288I31288wfh"},
-    {"date":"12-03-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I31288I31288wfh"},
-    {"date":"20-05-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I31288I31288wfh"},
+    {"date":"16/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I31288I31288wfh"},
+    {"date":"12/03/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I31288I31288wfh"},
+    {"date":"20/05/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I31288I31288wfh"},
 
-    {"date":"8-01-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I31288I31288SL"},
-    {"date":"14-01-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I31288I31288SL"},
-    {"date":"21-01-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I31288I31288SL"},
+    {"date":"8/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I31288I31288SL"},
+    {"date":"14/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I31288I31288SL"},
+    {"date":"21/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I31288I31288SL"},
 
-    {"date":"24-01-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I31288I31288CL"},
-    {"date":"26-01-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I31288I31288CL"},
-    {"date":"28-02-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I31288I31288CL"},
+    {"date":"24/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I31288I31288CL"},
+    {"date":"26/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I31288I31288CL"},
+    {"date":"28/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I31288I31288CL"},
 
-    {"date":"02-02-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I31288I31288AL"},
-    {"date":"26-02-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I31288I31288AL"},
-    {"date":"09-01-2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I31288I31288AL"},
+    {"date":"02/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I31288I31288AL"},
+    {"date":"26/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I31288I31288AL"},
+    {"date":"09/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I31288I31288AL"},
     #Deepak
-    {"date":"29-03-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I2668I2668SL"},
-    {"date":"02-03-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I2668I2668SL"},
-    {"date":"06-02-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I2668I2668SL"},
+    {"date":"29/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I2668I2668SL"},
+    {"date":"02/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I2668I2668SL"},
+    {"date":"06/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I2668I2668SL"},
 
-    {"date":"12-02-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I2668I2668wfh"},
-    {"date":"15-03-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I2668I2668wfh"},
-    {"date":"20-03-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I2668I2668wfh"},
+    {"date":"12/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I2668I2668wfh"},
+    {"date":"15/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I2668I2668wfh"},
+    {"date":"20/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I2668I2668wfh"},
 
-    {"date":"14-02-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I2668I2668CL"},
-    {"date":"21-02-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I2668I2668CL"},
-    {"date":"27-02-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I2668I2668CL"},
+    {"date":"14/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I2668I2668CL"},
+    {"date":"21/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I2668I2668CL"},
+    {"date":"27/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I2668I2668CL"},
 
-    {"date":"29-04-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I2668I2668AL"},
-    {"date":"02-05-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I2668I2668AL"},
-    {"date":"09-02-2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I2668I2668AL"},
+    {"date":"29/04/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I2668I2668AL"},
+    {"date":"02/05/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I2668I2668AL"},
+    {"date":"09/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I2668I2668AL"},
     
     # #Mani kandan
-    {"date":"12-05-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    {"date":"16-03-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    {"date":"20-02-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I3050I3050wfh"},
+    {"date":"12/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"16/03/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"20/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I3050I3050wfh"},
 
-    {"date":"28-04-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    {"date":"15-02-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I3050I3050wfh"},
-    {"date":"22-03-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"28/04/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"15/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I3050I3050wfh"},
+    {"date":"22/03/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3050I3050wfh"},
 
-    {"date":"04-02-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    {"date":"19-05-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3050I3050wfh"},
-    {"date":"11-02-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"04/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"19/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3050I3050wfh"},
+    {"date":"11/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3050I3050wfh"},
 
-    {"date":"03-05-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    {"date":"02-07-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I3050I3050wfh"},
-    {"date":"09-05-2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"03/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"02/07/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I3050I3050wfh"},
+    {"date":"09/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3050I3050wfh"},
     #chandrasekara
-    {"date":"08-03-2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL"},
-    {"date":"10-05-2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3122I3122CL"},
-    {"date":"17-03-2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL"},
+    {"date":"08/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL"},
+    {"date":"10/05/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3122I3122CL"},
+    {"date":"17/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL"},
 
-    {"date":"01-03-2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3122I3122wfh"},
-    {"date":"14-03-2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I3122I3122wfh"},
-    {"date":"26-05-2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3122I3122wfh"},
+    {"date":"01/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3122I3122wfh"},
+    {"date":"14/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I3122I3122wfh"},
+    {"date":"26/05/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3122I3122wfh"},
 
-    {"date":"02-04-2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3122I3122SL"},
-    {"date":"19-03-2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I3122I3122SL"},
-    {"date":"27-03-2021","hours":"8","user_id":"I3122","project_id":"DIG129","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3122I3122SL"},
+    {"date":"02/04/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3122I3122SL"},
+    {"date":"19/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I3122I3122SL"},
+    {"date":"27/03/2021","hours":"8","user_id":"I3122","project_id":"DIG129","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3122I3122SL"},
 
-    {"date":"04-06-2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3122I3122AL"},
-    {"date":"29-07-2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I3122I3122AL"},
-    {"date":"18-01-2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3122I3122AL"},
+    {"date":"04/06/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3122I3122AL"},
+    {"date":"29/07/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I3122I3122AL"},
+    {"date":"18/01/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3122I3122AL"},
+    ]
     #RameshThangaraj
-    # {"date":"18-03-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Cl","status":"Unapproved","submission_id":"I1891I1891CL"},
-    # {"date":"20-04-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"CL","status":"Approved","submission_id":"I1891I1891CL"},
-    # {"date":"27-05-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"CL","status":"Unapproved","submission_id":"I1891I1891CL"},
+    # {"date":"18/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Cl","status":"Unapproved","submission_id":"I1891I1891CL"},
+    # {"date":"20/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"CL","status":"Approved","submission_id":"I1891I1891CL"},
+    # {"date":"27/05/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"CL","status":"Unapproved","submission_id":"I1891I1891CL"},
 
-    # {"date":"19-04-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Unapproved","submission_id":"I1891I1891wfh"},
-    # {"date":"28-03-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Approved","submission_id":"I1891I1891wfh"},
-    # {"date":"04-04-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Unapproved","submission_id":"I1891I1891wfh"},
+    # {"date":"19/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Unapproved","submission_id":"I1891I1891wfh"},
+    # {"date":"28/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Approved","submission_id":"I1891I1891wfh"},
+    # {"date":"04/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"wfh","status":"Unapproved","submission_id":"I1891I1891wfh"},
 
-    # {"date":"10-03-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"SL","status":"Unapproved","submission_id":"I1891I1891SL"},
-    # {"date":"26-03-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"SL","status":"Approved","submission_id":"I1891I1891SL"},
-    # {"date":"03-04-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Sl","status":"Unapproved","submission_id":"I1891I1891SL"},
+    # {"date":"10/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"SL","status":"Unapproved","submission_id":"I1891I1891SL"},
+    # {"date":"26/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"SL","status":"Approved","submission_id":"I1891I1891SL"},
+    # {"date":"03/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Sl","status":"Unapproved","submission_id":"I1891I1891SL"},
 
-    # {"date":"29-05-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"AL","status":"Unapproved","submission_id":"I1891I1891AL"},
-    # {"date":"06-04-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Al","status":"Approved","submission_id":"I1891I1891AL"},
-    # {"date":"09-06-2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"AL","status":"Unapproved","submission_id":"I1891I1891AL"},
+    # {"date":"29/05/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"AL","status":"Unapproved","submission_id":"I1891I1891AL"},
+    # {"date":"06/04/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Al","status":"Approved","submission_id":"I1891I1891AL"},
+    # {"date":"09/06/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"AL","status":"Unapproved","submission_id":"I1891I1891AL"},
     # #Priya
-    # {"date":"27-06-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Unapproved","submission_id":"I2013I2013AL"},
-    # {"date":"02-06-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Approved","submission_id":"I2013I2013AL"},
-    # {"date":"09-04-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Unapproved","submission_id":"I2013I2013AL"},
+    # {"date":"27/06/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Unapproved","submission_id":"I2013I2013AL"},
+    # {"date":"02/06/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Approved","submission_id":"I2013I2013AL"},
+    # {"date":"09/04/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"AL","status":"Unapproved","submission_id":"I2013I2013AL"},
 
-    # {"date":"18-02-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Unapproved","submission_id":"I2013I2013wfh"},
-    # {"date":"26-04-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Approved","submission_id":"I2013I2013wfh"},
-    # {"date":"10-04-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Unapproved","submission_id":"I2013I2013wfh"},
+    # {"date":"18/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Unapproved","submission_id":"I2013I2013wfh"},
+    # {"date":"26/04/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Approved","submission_id":"I2013I2013wfh"},
+    # {"date":"10/04/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"wfh","status":"Unapproved","submission_id":"I2013I2013wfh"},
 
-    # {"date":"22-02-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Unapproved","submission_id":"I2013I2013SL"},
-    # {"date":"19-02-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Approved","submission_id":"I2013I2013SL"},
-    # {"date":"01-02-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Unapproved","submission_id":"I2013I2013SL"},
+    # {"date":"22/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Unapproved","submission_id":"I2013I2013SL"},
+    # {"date":"19/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Approved","submission_id":"I2013I2013SL"},
+    # {"date":"01/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"SL","status":"Unapproved","submission_id":"I2013I2013SL"},
 
-    # {"date":"06-05-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Unapproved","submission_id":"I2013I2013CL"},
-    # {"date":"17-02-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Approved","submission_id":"I2013I2013CL"},
-    # {"date":"05-03-2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Unapproved","submission_id":"I2013I2013CL"},
+    # {"date":"06/05/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Unapproved","submission_id":"I2013I2013CL"},
+    # {"date":"17/02/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Approved","submission_id":"I2013I2013CL"},
+    # {"date":"05/03/2021","hours":"8","user_id":"I2013","project_id":"DIG132","manager_id":"I3252","time_type":"CL","status":"Unapproved","submission_id":"I2013I2013CL"},
 
-]
+
 
 authUser_list=[
     {"emp_id":"Manager","email":"manager@gamil.com","password":"manager@123","roles":"Manager"},
@@ -231,16 +232,16 @@ def create_sample_project():
 def create_sample_timesubmissions():    
     for timesubmission in timesubmission_list: 
         session = Session()
-        print(type(timesubmission["date"]))
-        date=timesubmission["date"]
-        date_info = datetime.datetime.strptime(date,"%d-%m-%Y")
-        datee=date_info.date()
-        print(datee)
-        print(type(datee))
+        #print(type(timesubmission["date"]))
+        #date=timesubmission["date"]
+        #date_info = datetime.datetime.strptime(date,"%d/%m/%Y")
+        #datee=date_info.date()
+        #print(datee)
+        #print(type(datee))
 
-        sub_objects = session.query(timesubmissions).filter(timesubmissions.date_info==datee).first()
+        sub_objects = session.query(timesubmissions).filter(timesubmissions.date_info==(timesubmission["date"])).first()
         if sub_objects==None:
-            sub_data = timesubmissions( date_info=datee,
+            sub_data = timesubmissions( date_info=timesubmission["date"],
                                             hours = timesubmission['hours'],
                                             user_id = timesubmission['user_id'].lower(),
                                             project_code = timesubmission['project_id'].lower(),

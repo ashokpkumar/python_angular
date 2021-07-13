@@ -24,6 +24,7 @@ export class TimesubmissionsComponent implements OnInit {
   downloadAs: String = "Summary as Csv";
   timeDatas = [];
   totalTime = {};
+  rawData ={};
   modaluser_name:any;
   modaltime_type:any;
   pipe: DatePipe;
@@ -54,11 +55,7 @@ export class TimesubmissionsComponent implements OnInit {
   private defaultTabButtonsTpl1: TemplateRef<any>;
   
   @ViewChild('unapproved')
-  private defaultTabButtonsTpl2: TemplateRef<any>;
-
-  minDate = new Date(2021, 0, 1);
-  maxDate = new Date(2022, 0, 0);
-  
+  private defaultTabButtonsTpl2: TemplateRef<any>;  
   
   ngOnInit(): void {
     this.allUserUnapproved = false;
@@ -76,7 +73,7 @@ export class TimesubmissionsComponent implements OnInit {
     this.submissionList = data,
     this.apiService.showMessage(Object.values(data),Object.keys(data))});
 
-    this.apiService.getTimeData(this.user_id,this.from_Date,this.to_Date)
+    this.apiService.getTimeData(this.user_id)
     .subscribe(data=>{
                  this.timeDatas = data.result,
                  this.totalTime = data.total 
@@ -140,6 +137,13 @@ if (type=='unapproved'){
     });
   }
 }
+raw_data(raw_data){
+this.apiService.rawData(raw_data)
+.subscribe(data=>{
+  this.rawData=data});
+}
+
+
 
 
 
@@ -166,11 +170,11 @@ get toDate() { return this.filterForm.get('toDate'); }
     function getFormattedString(d){
       return d.getFullYear() + "/"+(d.getMonth()+1) +"/"+d.getDate() + ' '+d.toString().split(' ')[4]
     }
-    this.apiService.getTimeData(this.user_id, getFormattedString(from_Date).toString(),getFormattedString(to_Date).toString())
-    .subscribe(data=>{
-      this.timeDatas =data
-      console.log(data)
-      this.apiService.showMessage(Object.values(data),Object.keys(data))});
+    //this.apiService.getTimeData(this.user_id, getFormattedString(from_Date).toString(),getFormattedString(to_Date).toString())
+    //.subscribe(data=>{
+    //  this.timeDatas =data
+    //  console.log(data)
+    //  this.apiService.showMessage(Object.values(data),Object.keys(data))});
       
       // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       // this.router.onSameUrlNavigation = 'reload';
@@ -186,9 +190,22 @@ get toDate() { return this.filterForm.get('toDate'); }
   download_unapproved(){
     this.apiService.download_reviewtime(this.submissionClicked, 'jsontocsv'); 
   }
-  download1(){}
+  download_data(raw_data){
+    this.apiService.rawData(raw_data)
+  .subscribe(data=>{console.log(data)
+    this.rawData=data
+    console.log(this.rawData)
 
-  key:string ='id';
+    this.apiService.download_rawdata(this.rawData , 'jsontocsv'); });
+  }
+  download_modalApprovedData(){
+    this.apiService.download_timeinfoRawData(this.timeClicked, 'jsontocsv');
+  }
+  download_modalUnapprovedData(){  
+    this.apiService.download_reviewtimeRawData(this.timeClicked, 'jsontocsv');
+  }
+
+  key:string ='userid';
   reverse:boolean=false;
   sort(key){
     this.key=key;
