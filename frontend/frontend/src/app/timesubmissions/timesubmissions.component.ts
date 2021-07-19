@@ -27,6 +27,7 @@ export class TimesubmissionsComponent implements OnInit {
   rawData ={};
   modaluser_name:any;
   modaltime_type:any;
+  user_name:any;
   pipe: DatePipe;
   from_Date:any;
   to_Date:any;
@@ -141,6 +142,16 @@ raw_data(raw_data){
 this.apiService.rawData(raw_data)
 .subscribe(data=>{
   this.rawData=data});
+}
+search(){
+  if (this.user_name ==""){
+    this.ngOnInit();
+  }
+  else{
+    this.users=this.users.filter(res =>{
+      return res.user_name.toLocaleLowerCase().match(this.user_name.toLocaleLowerCase())
+    })
+  }
 }
 
 

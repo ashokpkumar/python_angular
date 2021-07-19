@@ -18,7 +18,7 @@
       </mat-form-field>
     </div>
     <div class="filter_reset_btn">
-      <button type="button" (click)="getDateRange(filterForm.value)" >Submit</button>
+      <!-- <button type="button" (click)="getDateRange(filterForm.value)" >Submit</button> -->
     </div>
     <div class="download_dropdown">
       <mat-form-field appearance="fill">
@@ -28,10 +28,16 @@
           <mat-option value="Raw Data as Csv" (click)="download_data(raw_data)">Raw Data as Csv </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
-    <div class="filter_reset_btn">
-      <button (click)="download()">Download</button>
-    </div>
+      <div class="filter_reset_btn">
+        <i class="fa fa-download fa-2x" aria-hidden="true"style=""></i>
+        <!-- <button (click)="download()">Download</button> -->
+      </div>
+  </div>
+      <div>
+        <nav class="navbar">
+          <input class ="form-control" type="text" name="user_name" [(ngModel)]="user_name" (ngModelChange)="search()" placeholder="Search Names">
+        </nav>
+      </div>
   </div>
 </div>
 <div class="container" *ngIf="timeDatas?.length > 0">

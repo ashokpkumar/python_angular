@@ -109,7 +109,8 @@ font-family: 'Arial', Times, serif;
   border-radius: 12px ;
 }
 .for_filter_search > div{
-  margin: 10px 20px;
+  margin: 10px 10px;
+  padding: auto;
 }
 ::ng-deep ngb-popover-window{
   z-index: 1000 !important;

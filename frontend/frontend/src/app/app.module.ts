@@ -45,6 +45,7 @@ import {MatInputModule} from '@angular/material/input'
 import {PopoverModule} from "ngx-smart-popover";
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import {Ng2OrderModule } from "ng2-order-pipe";
+import {Ng2SearchPipeModule } from "ng2-search-filter";
 import { ForgotPasswodComponent } from './forgot-passwod/forgot-passwod.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component'
 FullCalendarModule.registerPlugins([ 
@@ -97,6 +98,7 @@ FullCalendarModule.registerPlugins([
     MatButtonModule,
     NgbPopoverModule,
     Ng2OrderModule,
+    Ng2SearchPipeModule,
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,

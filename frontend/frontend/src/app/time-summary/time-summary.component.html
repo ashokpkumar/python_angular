@@ -1,1 +1,106 @@
+<div class="Calendar">
+<div class="row text-center">
+    <div class="col-md-4">
+        <div class="btn btn-primary" mwlCalendarPreviousView>
+          Previous
+        </div>
+        <div class="btn btn-outline-secondary" mwlCalendarToday >
+            Today:{{this.todaysDate}}
+        </div>
+        <div class="btn btn-primary" mwlCalendarNextView>
+          Next
+        </div>
+      
+    </div>
+    <div class="col-md-4">
+      <!-- <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3> -->
+    </div>
+  </div>
+  <div>
+    <full-calendar [options]="calendarOptions" ></full-calendar>
+  </div>
 
+
+<ng-template #content let-modal>
+   <div class="madal">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Submit Time</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        
+        <div>
+            <label>Date : </label>
+            <input [(ngModel)]="timeInfo.date" />
+        </div>
+        <div>
+            <label>Time Type : </label>
+            <select name="" id="" [(ngModel)]="timeInfo.time_type">
+            <option value=CL>CL</option>
+            <option value=SL>SL</option>
+            <option value=AL>AL</option>
+            <option value=wfh>WFH</option>
+            <option value=REG>REG</option>
+            </select>
+        </div>
+        <div>
+            <label>project_id : </label>
+            <select name="" id="" [(ngModel)]="timeInfo.project_id">
+                <option value=DIGI1111>DIGI1111</option>
+                <option value=DIGI1111>DIGI1111</option>
+                <option value=DIGI1111>DIGI1111</option>
+                <option value=DIGI1111>DIGI1111</option>
+                <option value=DIGI1111>DIGI1111</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Hours : </label>
+            <input [(ngModel)]="timeInfo.hours" />
+        </div>
+        <div>
+            <label>Comments :</label>
+            <input [(ngModel)]="timeInfo.comments" />
+        </div>
+        
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit Time info</button>
+        </div>
+    </div>
+</ng-template>
+
+  <!-- <br>
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="'month'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day)"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+      *ngSwitchCase="'week'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+      *ngSwitchCase="'day'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-day-view>
+  </div>
+  
+  <br><br><br> -->
+</div>
