@@ -34,86 +34,86 @@ project_list = [
 timesubmission_list =[
 
     #Askok
-    {"date":"12/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"i3228i3228wfh"},
-    {"date":"16/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"i3228i3228wfh"},
-    {"date":"20/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"i3228i3228wfh"},
+    {"date":"12/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"i3228i3228wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"16/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"i3228i3228wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"20/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"i3228i3228wfh","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"13/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"i3228i3228SL"},
-    {"date":"15/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"i3228i3228SL"},
-    {"date":"19/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"i3228i3228SL"},
+    {"date":"13/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"i3228i3228SL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"15/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"i3228i3228SL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"19/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"i3228i3228SL","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"11/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"i3228i3228CL"},
-    {"date":"23/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"i3228i3228CL"},
-    {"date":"25/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"i3228i3228CL"},
+    {"date":"11/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"i3228i3228CL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"23/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"i3228i3228CL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"25/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"i3228i3228CL","task_id":"RMG issue","description":"","remarks":"f"},
     
-    {"date":"22/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"i3228i3228AL"},
-    {"date":"27/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"i3228i3228AL"},
-    {"date":"30/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"i3228i3228AL"},
+    {"date":"22/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"i3228i3228AL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"27/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"i3228i3228AL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"30/01/2021","hours":"8","user_id":"I3228","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"i3228i3228AL","task_id":"RMG issue","description":"","remarks":"f"},
     #Amit
-    {"date":"16/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I31288I31288wfh"},
-    {"date":"12/03/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I31288I31288wfh"},
-    {"date":"20/05/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I31288I31288wfh"},
+    {"date":"16/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I31288I31288wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"12/03/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I31288I31288wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"20/05/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I31288I31288wfh","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"8/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I31288I31288SL"},
-    {"date":"14/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I31288I31288SL"},
-    {"date":"21/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I31288I31288SL"},
+    {"date":"8/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I31288I31288SL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"14/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I31288I31288SL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"21/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I31288I31288SL","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"24/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I31288I31288CL"},
-    {"date":"26/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I31288I31288CL"},
-    {"date":"28/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I31288I31288CL"},
+    {"date":"24/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I31288I31288CL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"26/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I31288I31288CL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"28/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I31288I31288CL","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"02/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I31288I31288AL"},
-    {"date":"26/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I31288I31288AL"},
-    {"date":"09/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I31288I31288AL"},
+    {"date":"02/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I31288I31288AL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"26/02/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I31288I31288AL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"09/01/2021","hours":"8","user_id":"I31288","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I31288I31288AL","task_id":"RMG issue","description":"","remarks":"f"},
     #Deepak
-    {"date":"29/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I2668I2668SL"},
-    {"date":"02/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I2668I2668SL"},
-    {"date":"06/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I2668I2668SL"},
+    {"date":"29/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I2668I2668SL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"02/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I2668I2668SL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"06/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I2668I2668SL","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"12/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I2668I2668wfh"},
-    {"date":"15/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I2668I2668wfh"},
-    {"date":"20/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I2668I2668wfh"},
+    {"date":"12/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I2668I2668wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"15/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I2668I2668wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"20/03/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I2668I2668wfh","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"14/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I2668I2668CL"},
-    {"date":"21/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I2668I2668CL"},
-    {"date":"27/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I2668I2668CL"},
+    {"date":"14/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I2668I2668CL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"21/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I2668I2668CL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"27/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I2668I2668CL","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"29/04/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I2668I2668AL"},
-    {"date":"02/05/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I2668I2668AL"},
-    {"date":"09/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I2668I2668AL"},
+    {"date":"29/04/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I2668I2668AL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"02/05/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I2668I2668AL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"09/02/2021","hours":"8","user_id":"I2668","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I2668I2668AL","task_id":"RMG issue","description":"","remarks":"f"},
     
     # #Mani kandan
-    {"date":"12/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    {"date":"16/03/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    {"date":"20/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I3050I3050wfh"},
+    {"date":"12/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"16/03/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"20/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"28/04/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    {"date":"15/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I3050I3050wfh"},
-    {"date":"22/03/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"28/04/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"15/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"22/03/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"04/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    {"date":"19/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3050I3050wfh"},
-    {"date":"11/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"04/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"19/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"11/02/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"03/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3050I3050wfh"},
-    {"date":"02/07/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I3050I3050wfh"},
-    {"date":"09/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3050I3050wfh"},
+    {"date":"03/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"02/07/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"09/05/2021","hours":"8","user_id":"I3050","project_id":"DIG123","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3050I3050wfh","task_id":"RMG issue","description":"","remarks":"f"},
     #chandrasekara
-    {"date":"08/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL"},
-    {"date":"10/05/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3122I3122CL"},
-    {"date":"17/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL"},
+    {"date":"08/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"10/05/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3122I3122CL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"17/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"01/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3122I3122wfh"},
-    {"date":"14/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I3122I3122wfh"},
-    {"date":"26/05/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3122I3122wfh"},
+    {"date":"01/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3122I3122wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"14/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I3122I3122wfh","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"26/05/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3122I3122wfh","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"02/04/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3122I3122SL"},
-    {"date":"19/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I3122I3122SL"},
-    {"date":"27/03/2021","hours":"8","user_id":"I3122","project_id":"DIG129","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3122I3122SL"},
+    {"date":"02/04/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3122I3122SL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"19/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"SL","status":"Approved","submission_id":"I3122I3122SL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"27/03/2021","hours":"8","user_id":"I3122","project_id":"DIG129","manager_id":"I3186","time_type":"SL","status":"Unapproved","submission_id":"I3122I3122SL","task_id":"RMG issue","description":"","remarks":"f"},
 
-    {"date":"04/06/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3122I3122AL"},
-    {"date":"29/07/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I3122I3122AL"},
-    {"date":"18/01/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3122I3122AL"},
+    {"date":"04/06/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3122I3122AL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"29/07/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Approved","submission_id":"I3122I3122AL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"18/01/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"AL","status":"Unapproved","submission_id":"I3122I3122AL","task_id":"RMG issue","description":"","remarks":"f"},
     ]
     #RameshThangaraj
     # {"date":"18/03/2021","hours":"8","user_id":"I1891","project_id":"DIG156","manager_id":"I3182","time_type":"Cl","status":"Unapproved","submission_id":"I1891I1891CL"},
@@ -248,7 +248,10 @@ def create_sample_timesubmissions():
                                             manager_id = timesubmission['manager_id'].lower(),
                                             time_type = timesubmission['time_type'].lower(),
                                             status = timesubmission["status"].lower(),
-                                            submission_id = timesubmission["submission_id"].lower()    
+                                            submission_id = timesubmission["submission_id"].lower(),
+                                            task_id=timesubmission['task_id'],
+                                            description=timesubmission['description'],
+                                            remarks=timesubmission['remarks']
                                     )
             print(sub_data)
             session.add(sub_data)

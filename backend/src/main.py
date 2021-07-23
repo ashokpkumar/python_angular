@@ -194,13 +194,16 @@ def addtimesubmissions():
     if existing_emp == None:
         return jsonify({'error':'user not available in the employee table'}),200
     sub_data = timesubmissions( date_info = data.get('date'),
-                                    hours = data.get('hours').lower(),
+                                    hours = data.get('hours'),
                                     user_id = data.get('user_id').lower(),
-                                    project_code = data.get('project_id').lower(),
-                                    manager_id = data.get('manager_id').lower(),
-                                    time_type = data.get('time_type').lower(),
+                                    project_code = data.get('project_id'),
+                                    manager_id = data.get('manager_id'),
+                                    time_type = data.get('time_type'),
                                     status = 'Unapproved',
-                                    submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type')     
+                                    #submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type'),
+                                    task_id=data.get('task_id'),
+                                    description=data.get('description'),
+                                    remarks=data.get('remarks')     
                                )
     session = Session()
     session.add(sub_data)
@@ -851,6 +854,7 @@ def viewEmpInfo():
     if emp_id is None:
         return jsonify({"error":"Employee ID is empty"}), 201
     session = Session()
+    print(emp_id)
     emp_objects = session.query(employee).filter(employee.emp_id==emp_id).all()
     print(">>>>>>>>>>>>")
     print(emp_objects)

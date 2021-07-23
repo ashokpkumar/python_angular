@@ -14,7 +14,9 @@ export class SideBarComponent implements OnInit {
   faChevronDown =faChevronDown
   dropDownList = {employeeDropDownList:false,projectDropDownList:false}
   constructor(private router: Router,public toastr: ToastrService,private cookieService: CookieService) { }
-  
+  login: boolean;
+  isVisible: boolean=false;
+
   logout(){
     console.log("Logging out ")
     this.cookieService.set('login','false');
@@ -23,6 +25,10 @@ export class SideBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this.cookieService.get('login')=='true'){
+      this.login=true;
+    }
+
   }
   employeeDropDown=(value,id)=>{
     this.dropDownList[value] = ! this.dropDownList[value]

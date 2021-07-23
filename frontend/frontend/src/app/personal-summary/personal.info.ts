@@ -1,20 +1,18 @@
 export class userInfo{
-  emp_id:string
+    emp_id:string
+  
+  }
 
-}
-export class timeinfo{
+  export class timeInfo{
     date:Date
     time_type:string
     hours:string
-    remarks:string
+    comments:string
     project_id:string
-    task_id:string
-    description:string
     
   
   }
 
-  
   export class userData{
     additional_allocation:string
     billing_type:string
@@ -24,7 +22,6 @@ export class timeinfo{
     designation:string
     email:string
     emp_id:string
-    manager_id :String
     emp_last_working_date:string
     emp_project_assigned_date:string
     emp_project_end_date:string
@@ -33,6 +30,7 @@ export class timeinfo{
     financial_year:string
     first_name:string
     geography:string
+    id:string
     initial:string
     last_name:string
     manager_dept:string

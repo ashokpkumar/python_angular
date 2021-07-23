@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
- import {timeinfo,userInfo} from './timeInfo';
+ import {timeInfo,userData,userInfo} from './personal.info';
 import {API_URL} from '../env';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({providedIn:'root'})
-export class TimesummaryService {
+export class PersonalsummaryService {
   constructor(public toastr: ToastrService,private http: HttpClient) {
   }
 
@@ -29,20 +29,5 @@ export class TimesummaryService {
     else if (title=='warning'){
         this.toastr.warning(message, title)
     }    
-} 
-  addTimeSubmissions(timeInfo:timeinfo): Observable<any> {
-    const headers = { 'content-type': 'application/json'}  
-    const body=JSON.stringify(timeInfo);
-    console.log(body)
-    return this.http.post(`${API_URL}/addtimesubmissions`, body,{'headers':headers})
-  }
-  getEvents():Observable<any>{
-    return this.http.get(`${API_URL}/events`);
-  }
-  getExams() {
-    return this.http.get(`${API_URL}/employees`);
- }
-  getProjects() {
-     return this.http.get(`${API_URL}/projects`);
-  }
+}
 }
