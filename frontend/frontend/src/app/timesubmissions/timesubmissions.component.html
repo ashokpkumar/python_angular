@@ -1,35 +1,43 @@
 <div *ngIf="isVisible">
 <div class="container mtop" >
-  <p class="time_sub_heading">Time Submission</p>
+  <p class="time_sub_heading">Time Submission :{{this.user_id}}</p>
   <div class="for_filter_search">
     <div></div>
-    <div>
-      <mat-form-field>
-        <input matInput [matDatepicker]="fromDate" placeholder="Select From Date">
+    <div> 
+      <mat-form-field [formGroup]="filterForm">
+        <input  matInput [matDatepicker]="fromDate" placeholder="Select From Date" formControlName="fromDate">
         <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
         <mat-datepicker #fromDate></mat-datepicker>
       </mat-form-field>
     </div>
     <div>
-      <mat-form-field>
-        <input matInput [matDatepicker]="toDate" placeholder="Select To Date">
+      <mat-form-field [formGroup]="filterForm">
+        <input matInput [matDatepicker]="toDate"  placeholder="Select To Date" formControlName="toDate">
         <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
         <mat-datepicker #toDate></mat-datepicker>
       </mat-form-field>
     </div>
-    <div>
+    <div class="filter_reset_btn">
+      <!-- <button type="button" (click)="getDateRange(filterForm.value)" >Submit</button> -->
+    </div>
+    <div class="download_dropdown">
       <mat-form-field appearance="fill">
         <mat-label>Download As</mat-label>
         <mat-select [(ngModel)]="downloadAs" disableRipple>
-          <mat-option value="Summary as Csv">Summary as Csv</mat-option>
-          <mat-option value="Raw Data as Csv">Raw Data as Csv </mat-option>
+          <mat-option value="Summary as Csv" >Summary as Csv</mat-option>
+          <mat-option value="Raw Data as Csv" (click)="download_data(raw_data)">Raw Data as Csv </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
-    <div class="filter_reset_btn">
-      <button>Submit</button>
-    </div>
-    <div></div>
+      <div class="filter_reset_btn">
+        <i class="fa fa-download fa-2x" aria-hidden="true"style=""></i>
+        <!-- <button (click)="download()">Download</button> -->
+      </div>
+  </div>
+      <div>
+        <nav class="navbar">
+          <input class ="form-control" type="text" name="user_name" [(ngModel)]="user_name" (ngModelChange)="search()" placeholder="Search Names">
+        </nav>
+      </div>
   </div>
 </div>
 <div class="container" *ngIf="timeDatas?.length > 0">
@@ -39,41 +47,41 @@
         <thead>
           <tr class="time_sub_row">
             <!-- <tr> -->
-            <th data-field="dateInfo" data-checkbox="true">User ID</th>
-            <th data-field="username" data-checkbox="true">User Name</th>
-            <th data-field="manager name" data-filter-control="input" data-sortable="true">Project Time</th>
-            <th data-field="time type" data-filter-control="input" data-sortable="true">Bench Time</th>
-            <th data-field="hours" data-filter-control="select" data-sortable="true">SL</th>
-            <th data-field="status" data-filter-control="select" data-sortable="true">CL</th>
-            <th data-field="Review" data-filter-control="select" data-sortable="true">AL</th>
-            <th data-field="Review" data-filter-control="select" data-sortable="true">Total</th>
-            <th data-field="Review" data-filter-control="select" data-sortable="true">Unapproved</th>
+            <th data-field="dateInfo" data-checkbox="true">User ID <i class="fa fa-sort" aria-hidden="true" (click)="sort('userid')"></i></th>
+            <th data-field="username" data-checkbox="true">User Name <i class="fa fa-sort" aria-hidden="true"(click)="sort('username')"></i></th>
+            <th data-field="manager name" data-filter-control="input" data-sortable="true">Project Time <i class="fa fa-sort" aria-hidden="true"(click)="sort('projectTime')"></i></th>
+            <th data-field="time type" data-filter-control="input" data-sortable="true">Bench Time <i class="fa fa-sort" aria-hidden="true"(click)="sort('benchTime')"></i></th>
+            <th data-field="hours" data-filter-control="select" data-sortable="true">SL <i class="fa fa-sort" aria-hidden="true"(click)="sort('sl')"></i></th>
+            <th data-field="status" data-filter-control="select" data-sortable="true">CL <i class="fa fa-sort" aria-hidden="true"(click)="sort('cl')"></i></th>
+            <th data-field="Review" data-filter-control="select" data-sortable="true">AL <i class="fa fa-sort" aria-hidden="true"(click)="sort('al')"></i></th>
+            <th data-field="Review" data-filter-control="select" data-sortable="true">Total <i class="fa fa-sort" aria-hidden="true"(click)="sort('total')"></i></th>
+            <th data-field="Review" data-filter-control="select" data-sortable="true">Unapproved <i class="fa fa-sort" aria-hidden="true"(click)="sort('unapproved')"></i></th>
           </tr>
         </thead>
         <tbody>
-          <tr class="time_sub_row" *ngFor="let timedata of timeDatas">
+          <tr class="time_sub_row" *ngFor="let timedata of timeDatas | orderBy: key: reverse" >
             <td>{{timedata.user_id}}</td>
             <td>{{timedata.user_name}}</td>
-            <td><a ng href="#"(click)="clickNumbers(timedata.user_id,'project')">{{timedata.project_time}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'bench')">{{timedata.bench}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'sl')">{{timedata.sl}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'cl')">{{timedata.cl}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'al')">{{timedata.al}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'total')">{{timedata.total_hrs}}</a></td>
-            <td><a (click)="clickNumbers(timedata.user_id,'unapproved')">{{timedata.unapproved}}</a></td>
+            <td ><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'project')"  ><u>{{timedata.project_time}}</u></a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'bench')"  ><u>{{timedata.bench}}</u></a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'sl')" ><u>{{timedata.sl}}</u></a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'cl')"><u>{{timedata.cl}}</u></a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'al')"  ><u>{{timedata.al}}</u></a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'total')"><u>{{timedata.total_hrs}}</u></a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'unapproved')"><u>{{timedata.unapproved}}</u></a></td>
           </tr>
         </tbody>
         <tfoot>
-          <tr class="time_sub_row bg_color_total">
+          <tr class="time_sub_row bg_color_total" >
             <td>Total: </td>
+            <td>{{totalTime['user_name']}}</td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'project')"><u>{{totalTime['total_project']}}</u></a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'bench')"><u>{{totalTime['total_bench']}}</u></a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'sl')"><u>{{totalTime['total_sl']}}</u></a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'cl')"><u>{{totalTime['total_cl']}}</u></a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'al')"><u>{{totalTime['total_al']}}</u></a></td>
             <td></td>
-            <td><a (click)="clickNumbers('total','project')">{{totalTime['total_project']}}</a></td>
-            <td><a (click)="clickNumbers('total','bench')">{{totalTime['total_bench']}}</a></td>
-            <td><a (click)="clickNumbers('total','sl')">{{totalTime['total_sl']}}</a></td>
-            <td><a (click)="clickNumbers('total','cl')">{{totalTime['total_cl']}}</a></td>
-            <td><a (click)="clickNumbers('total','al')">{{totalTime['total_al']}}</a></td>
-            <td></td>
-            <td><a (click)="clickNumbers('total','unapproved')">{{totalTime['total_unapproved']}}</a></td>
+            <td><a (click)="clickNumbers('total','total','unapproved')"><u>{{totalTime['total_unapproved']}}</u></a></td>
           </tr>
         </tfoot>
       </table>
@@ -157,8 +165,9 @@
 
 
   <ng-template #unapproved let-modal>
+    <div class="modal_1">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Review Time</h4>
+      <h4 class="modal-title" id="modal-basic-title">Review Time:{{this.modaluser_name}}({{this.modaltime_type}})</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -170,9 +179,9 @@
             <thead>
               <tr class="emp_list_th">
                 <!-- <tr> -->
-                <th data-field="dateInfo" data-checkbox="true">Date</th>
-                <th data-field="username" data-checkbox="true">username</th>
-                <th data-field="manager name" data-filter-control="input" data-sortable="true">Manager Name</th>
+                <th data-field="dateInfo" data-checkbox="true" >Date</th>
+                <th data-field="userid" data-checkbox="true">User Id</th>
+                <th data-field="username" data-filter-control="input" data-sortable="true">User Name</th>
                 <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
                 <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
                 <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
@@ -180,44 +189,53 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="emp_list_th" *ngFor="let timeSubmissions of submissionClicked">
+              <tr class="emp_list_th" *ngFor="let timeSubmissions of submissionClicked" >
                 <!-- <tr *ngFor="let item of employee_list"> -->
                 <td>{{timeSubmissions.date_info}}</td>
                 <td>{{timeSubmissions.user_id}}</td>
-                <td>{{timeSubmissions.manager_id}}</td>
+                <td>{{this.modaluser_name}}</td>
                 <td>{{timeSubmissions.time_type}}</td>
                 <td>{{timeSubmissions.hours}}</td>
                 <td>{{timeSubmissions.status}}</td>
                 <td>
-                  <button
-                    (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
-                    type="button" class="btn btn-success">
-                    <fa-icon [icon]='faCheck'></fa-icon>
-                  </button>
-                  <button
-                    (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
-                    type="button" class="btn btn-danger">
-                    <fa-icon [icon]='faTimes'></fa-icon>
-                  </button>
+                  <div>
+                    <i class ="fa fa-check-circle-o fa-2x" aria-hidden="true" (click)="review(true,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
+                    style="color:rgb(15, 15, 15);
+                    padding: 4px; 
+                    border-radius: 50%;">
+                    </i><i class="fa fa-times-circle-o fa-2x" aria-hidden="true" (click)="review(false,timeSubmissions.date_info,timeSubmissions.user_id,timeSubmissions.time_type,timeSubmissions.hours)"
+                    style="color:rgb(15, 15, 15); 
+                    padding: 4px;
+                    border-radius: 50%;">
+                    </i>
+                    
+                </div>
                 </td>
-
               </tr>
 
             </tbody>
           </table>
+          <div class="modal-footer" >
+            <mat-form-field appearance="fill">
+            <mat-label>Download As</mat-label>
+              <mat-select [(ngModel)]="downloadAs" disableRipple>
+                <mat-option value="Summary as Csv"(click)='download_unapproved()'>Summary as Csv</mat-option>
+                <mat-option value="Raw Data as Csv" (click)='download_modalUnapprovedData()'>Raw Data as Csv </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button class="download" type="button" (click)='download_modalUnapprovedData()'>Download</button>
+          </div>
         </div>
       </div>
-
     </div>
-    <div class="modal-footer">
-
-    </div>
+  </div>
   </ng-template>
 
 
   <ng-template #approved let-modal>
+  <div class ="modal_1">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Time Info</h4>
+      <h4 class="modal-title" id="modal-basic-title">Time Info:{{this.modaluser_name}}({{this.modaltime_type}})</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -230,8 +248,8 @@
               <tr class="emp_list_th">
 
                 <th data-field="dateInfo" data-checkbox="true">Date</th>
-                <th data-field="username" data-checkbox="true">username</th>
-                <th data-field="manager name" data-filter-control="input" data-sortable="true">Manager Name</th>
+                <th data-field="user id" data-checkbox="true">User ID</th>
+                <th data-field="user name" data-filter-control="input" data-sortable="true">User Name</th>
                 <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
                 <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
                 <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
@@ -243,7 +261,7 @@
 
                 <td>{{time.date_info}}</td>
                 <td>{{time.user_id}}</td>
-                <td>{{time.manager_id}}</td>
+                <td >{{this.modaluser_name}}</td>
                 <td>{{time.time_type}}</td>
                 <td>{{time.hours}}</td>
                 <td>{{time.status}}</td>
@@ -253,11 +271,18 @@
 
             </tbody>
           </table>
+          <div class="modal-footer">
+            <mat-form-field appearance="fill">
+            <mat-label>Download As</mat-label>
+              <mat-select [(ngModel)]="downloadAs" disableRipple>
+                <mat-option value="Summary as Csv" (click)='download_approved()'>Summary as Csv</mat-option>
+                <mat-option value="Raw Data as Csv" (click)='download_modalUnapprovedData()'>Raw Data as Csv </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button  class="download" type="button" (click)='download_modalUnapprovedData()'>Download</button>
+          </div>
         </div>
       </div>
-
     </div>
-    <div class="modal-footer">
-
-    </div>
+  </div>
   </ng-template>

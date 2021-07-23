@@ -31,6 +31,9 @@ class timesubmissions(Base):
     status = Column(String) # ['submitted-pending approval','approved','unapproved']
     hours = Column(Integer)
     project_code=Column(String)
+    task_id=Column(String)
+    description=Column(String)
+    remarks=Column(String)
 
 
 class announcements(Base):
