@@ -9,8 +9,6 @@ export class timeSubmissions{
   }
   export enum users{
     admin="admin",
-    manager="manager",
-    vp="vp",
-    rmgadmin="rmg admin"
+    manager="manager"
   }
   

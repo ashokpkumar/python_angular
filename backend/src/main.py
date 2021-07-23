@@ -18,8 +18,6 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_expects_json import expects_json
 from flask_mail import Mail, Message
-from datetime import date, timedelta
-
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -194,16 +192,13 @@ def addtimesubmissions():
     if existing_emp == None:
         return jsonify({'error':'user not available in the employee table'}),200
     sub_data = timesubmissions( date_info = data.get('date'),
-                                    hours = data.get('hours'),
-                                    user_id = data.get('user_id').lower(),
-                                    project_code = data.get('project_id'),
-                                    manager_id = data.get('manager_id'),
-                                    time_type = data.get('time_type'),
-                                    status = 'Unapproved',
-                                    #submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type'),
-                                    task_id=data.get('task_id'),
-                                    description=data.get('description'),
-                                    remarks=data.get('remarks')     
+                                    hours = data.get('hours').lower(),
+                                    user_id = data.get('user_name').lower(),
+                                    project_code = data.get('project_id').lower(),
+                                    manager_id = data.get('manager_name').lower(),
+                                    time_type = data.get('time_type').lower(),
+                                    status = 'submitted-pending approval',
+                                    submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type')     
                                )
     session = Session()
     session.add(sub_data)
@@ -220,7 +215,7 @@ def viewsubmissions():
     emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_name).all()
     emp_final = [emp[0].lower() for emp in emp_list]
     print(emp_final)
-    submission_obj = session.query(timesubmissions).filter(timesubmissions.manager_id.in_(emp_final),timesubmissions.status=='Unapproved' ).all()
+    submission_obj = session.query(timesubmissions).filter(timesubmissions.manager_id.in_(emp_final),timesubmissions.status=='submitted-pending approval' ).all()
     print(submission_obj)
     if submission_obj:
         serialized_obj = serialize_all(submission_obj)
@@ -234,64 +229,21 @@ def timesubmission():
     session = Session()
     sub_objects = session.query(timesubmissions).all()
     serialized_obj = serialize_all(sub_objects)
-    print(serialized_obj)
     session.close()
     return (jsonify(serialized_obj))
-
-@app.route('/rawDataDownload', methods=['POST'])
-def rawDataDownload():
-    session = Session()
-    sub_objects = session.query(timesubmissions).all()
-    serialized_obj = serialize_all(sub_objects)
-    print(">>>>>>>>>>>")
-    raw_data=serialized_obj
-    print(raw_data)
-    return(jsonify(raw_data))
-
-#@app.route('/getSubmissionByDate', methods=['POST'])
-# def getSubmissionByDate():
-#     session=Session()
-#     data = request.get_json()
-#     fromDate=data.get("fromDate",None)
-#     toDate= data.get("toDate",None)
-#     if any(fromDate or toDate) is None:
-#         return jsonify({"error":"From date or To Date is missing"})
-#     start_Date=fromDate.split(" ")[0]
-#     end_Date=toDate.split(" ")[0]
-#     s_datee = datetime.datetime.strptime(start_Date, "%Y/%m/%d")
-#     e_datee = datetime.datetime.strptime(end_Date, "%Y/%m/%d")
-#     print(start_Date)
-#     print(end_Date)
-#     print(type(start_Date))
-#     print(type(s_datee))
-#     date_array = \
-#          (s_datee + datetime.timedelta(days=x) for x in range(0, (e_datee-s_datee).days))
-#     for date_object in date_array:
-#          datee=date_object.strftime("%Y/%d/%m")
-#          print(datee)
-#          print(type(datee))
-
-#     sub_objects = session.query(timesubmissions).filter(timesubmissions.date_info==datee).all()#,timesubmissions.status=='Unapproved').all()
-#     serialized_obj = serialize_all(sub_objects)
-#     #print(sub_objects)
-#     #print(serialized_obj)
-#     #print(start_Date,end_Date)    
-#     #print(serialized_obj)
-#     session.close()        
-#     return (jsonify(serialized_obj)),200
 
 @app.route('/getSubmissionsBy', methods=['POST'])
 def getSubmissionsBy():
     session = Session()
     user = request.get_json()
     if user == 'total':
-        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='unapproved').all()
+        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='submitted-pending approval').all()
         serialized_obj = serialize_all(sub_objects)
         session.close()
         return (jsonify(serialized_obj)),200
         
     else:
-        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='unapproved', timesubmissions.user_id==user).all()
+        sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='submitted-pending approval', timesubmissions.user_id==user).all()
         serialized_obj = serialize_all(sub_objects)
         session.close()
         return (jsonify(serialized_obj)),200
@@ -303,10 +255,8 @@ def getTimeBy():
     data = request.get_json()
     time_type = data['type']
     user = data['user']
-    #user_name = session.query(employee.first_name).filter(employee.emp_id==user).first()[0]
     print(user)
     print(time_type)
-    #print(user_name)
     if user == 'total':
         if time_type =="project":
             time_type_list = ['wfh','REG']
@@ -314,15 +264,12 @@ def getTimeBy():
             time_type_list = [time_type]
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='approved',timesubmissions.time_type.in_(time_type_list)).all()
         serialized_obj = serialize_all(sub_objects)
-        print(serialized_obj)
         session.close()
         return (jsonify(serialized_obj)),200
+        
     else:
         if time_type =="project":
             time_type_list = ['wfh','REG']
-        elif time_type=="total":
-                time_type_list=['wfh','REG','cl','sl','al']
-                print(time_type_list)
         else:
             time_type_list = [time_type]
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='approved',timesubmissions.time_type.in_(time_type_list),timesubmissions.user_id==user).all()
@@ -333,52 +280,10 @@ def getTimeBy():
 
 @app.route('/timeData', methods=['POST'])
 def timeData():
-    #manager_id = request.get_json()
+    manager_id = request.get_json()
     session = Session()
-    data = request.get_json()
-    manager_id = data.get("user_id")
-    print(manager_id)
-    date_submission_obj = session.query(timesubmissions.date_info).all()
-    #print(date_submission_obj)
-    date_info=date_submission_obj
-    min_date=min(date_info)
-    max_date=max(date_info)
-    #print(min_date)
-    #print(max_date)
-    #select query for all submission
-    #sort by date
-    #date column separate
-    #take the first and last date values and save in two variables
-
-    #fromDate=data.get("fromDate",min_date) #substitutehte variable instead of None
-    #toDate= data.get("toDate",max_date) #substitutehte variable instead of None
-    #print(fromDate)
-    #print(type(fromDate))
-    #print(toDate)
-    #print(type(toDate))
-    #s=datetime.datetime.date(fromDate).text()
-    #s=fromDate.strftime(" %Y %m %d %H:%M:%S %z")
-    #t=fromDate.strftime("%d/%m/%Y")[20:30]
-    #start_Date=fromDate.split(" ")[20:30]
-    #t=str(fromDate)[19:30]
-    # s = str(fromDate)
-    # print("fromdate",s)
-    # print(type(s))
-    # start_Date=fromDate.split(" ")[0]
-    # end_Date=toDate.split(" ")[0]
-    # #print(start_Date)
-    # s_datee = datetime.datetime.strptime(start_Date, "%Y/%m/%d")
-    # e_datee = datetime.datetime.strptime(end_Date, "%Y/%m/%d")
-    # date_array = \
-    #     (s_datee + datetime.timedelta(days=x) for x in range(0, (e_datee-s_datee).days))# to get inbetween dates 
-    # for date_object in date_array:
-    #     datee=date_object
-    #     print(datee)
-    # print(type(datee))
-    
     emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_id).all()
     emp_final = [emp[0].lower() for emp in emp_list]
-    print(emp_final)
     time_final = []
     for emp in emp_final:
         project_time = 0
@@ -388,15 +293,10 @@ def timeData():
         bench=0
         user_id = emp
         unapproved=0
-        first_name=session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
-        last_name=session.query(employee.last_name).filter(employee.emp_id==emp).first()[0]                
-        initial=session.query(employee.initial).filter(employee.emp_id==emp).first()[0]
-        first_name1=first_name.capitalize()
-        initial1=initial.upper()
-        user_name = (first_name1+" "+last_name +"."+ initial1)
-        submission_obj = session.query(timesubmissions).filter(timesubmissions.user_id==emp).all()#timesubmissions.date_info == datee,
+
+        user_name = session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
+        submission_obj = session.query(timesubmissions).filter(timesubmissions.user_id==emp).all()
         serialized_obj = serialize_all(submission_obj)
-        #print(serialized_obj)
         for time in serialized_obj:
             #print(time)
             if time['status']=='approved':
@@ -424,10 +324,10 @@ def timeData():
     total_al = 0
     total_bench = 0
     total_unapproved = 0
-    first_name=session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
+
     for emp_data in time_final:
         total_project = total_project  + emp_data['project_time']
-        total_sl = total_sl  + emp_data['sl']   
+        total_sl = total_sl  + emp_data['sl']
         total_cl = total_cl  + emp_data['cl']
         total_al = total_al  + emp_data['al']
         total_bench = total_bench  + emp_data['bench']
@@ -436,7 +336,7 @@ def timeData():
     print(total_time_list)
     #time_final.append({'total_project':total_project,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_bench':total_bench,'total_unapproved':total_unapproved, })
     return (jsonify({'result':time_final,'total':total_time_list}))
-    
+
 
 @app.route('/review_time', methods=['POST'])
 def review_time():
@@ -448,7 +348,7 @@ def review_time():
         date = data['date']
         time_type = data['time_type']
         hours = data['hours']
-        datee = datetime.datetime.strptime(date, "%d/%m/%Y")
+        datee = datetime.datetime.strptime(date, "%Y-%m-%d")
         month = datee.month
         year = datee.year
         time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
@@ -531,7 +431,7 @@ def review_time():
         date = data['date']
         time_type = data['time_type']
         hours = data['hours']
-        datee = datetime.datetime.strptime(date,  "%d/%m/%Y")
+        datee = datetime.datetime.strptime(date, "%Y-%m-%d")
         month = datee.month
         year = datee.year
         time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
@@ -854,7 +754,6 @@ def viewEmpInfo():
     if emp_id is None:
         return jsonify({"error":"Employee ID is empty"}), 201
     session = Session()
-    print(emp_id)
     emp_objects = session.query(employee).filter(employee.emp_id==emp_id).all()
     print(">>>>>>>>>>>>")
     print(emp_objects)
