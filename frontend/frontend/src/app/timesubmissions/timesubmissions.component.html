@@ -1,6 +1,6 @@
 <div *ngIf="isVisible">
 <div class="container mtop" >
-  <p class="time_sub_heading">Time Submission :{{this.user_id}}</p>
+  <p class="time_sub_heading">Time Submission :{{this.user_id}} <input class ="form-control" type="text" name="user_name" [(ngModel)]="user_name" (ngModelChange)="search()" placeholder="Search Names"></p>
   <div class="for_filter_search">
     <div></div>
     <div> 
@@ -25,13 +25,21 @@
         <mat-label>Download As</mat-label>
         <mat-select [(ngModel)]="downloadAs" disableRipple>
           <mat-option value="Summary as Csv" >Summary as Csv</mat-option>
-          <mat-option value="Raw Data as Csv" (click)="download_data(raw_data)">Raw Data as Csv </mat-option>
+          <mat-option value="Raw Data as Csv" >Raw Data as Csv </mat-option>
         </mat-select>
       </mat-form-field>
+      <ng-container *ngIf="downloadAs == 'Summary as Csv'">
       <div class="filter_reset_btn">
-        <i class="fa fa-download fa-2x" aria-hidden="true"style=""></i>
+        <i class="fa fa-download fa-2x" aria-hidden="true"(click)="download()" style="color: #24a7f8;"></i>
         <!-- <button (click)="download()">Download</button> -->
       </div>
+      </ng-container>
+      <ng-container *ngIf="downloadAs == 'Raw Data as Csv'">
+        <div class="filter_reset_btn">
+          <i class="fa fa-download fa-2x" aria-hidden="true"(click)="download_data(raw_data)"style="color: #24a7f8;"></i>
+          <!-- <button (click)="download()">Download</button> -->
+        </div>
+        </ng-container>
   </div>
       <div>
         <nav class="navbar">

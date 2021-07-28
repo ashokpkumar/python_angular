@@ -48,6 +48,8 @@ import {Ng2OrderModule } from "ng2-order-pipe";
 import {Ng2SearchPipeModule } from "ng2-search-filter";
 import { ForgotPasswodComponent } from './forgot-passwod/forgot-passwod.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component'
+import {MatTabsModule} from '@angular/material/tabs';
+
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
@@ -102,7 +104,8 @@ FullCalendarModule.registerPlugins([
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
-    PopoverModule
+    PopoverModule,
+    MatTabsModule
   ],
   
   providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule],

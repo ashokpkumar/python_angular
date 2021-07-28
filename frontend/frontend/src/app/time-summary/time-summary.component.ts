@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
 import { CalendarOptions } from '@fullcalendar/angular';
-import {userInfo,userData,timeinfo} from './timeInfo';
+import {userInfo,userData,timeinfo, users} from './timeInfo';
 import {TimesummaryService} from './time-summary.service'
 import { HttpClient } from '@angular/common/http';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
@@ -30,18 +30,27 @@ export class TimeSummaryComponent implements OnInit {
   viewDate: Date = new Date();
   spec=`optionValue`;
   project_id:any
+  public users:any
+  roles: any
+  isVisible: boolean=false;
+  user_id:any;
   
 
   public show:boolean = false;
   public buttonName:any = 'Show';
   calendarPlugins = [dayGridPlugin, interactionPlugin];
+  
 
 
   constructor(private router: Router,private modalService: NgbModal,private apiService: TimesummaryService,private http: HttpClient,private cookieService: CookieService) { }
   @ViewChild('content')
   private defaultTabButtonsTpl: TemplateRef<any>;
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){}
+    if (this.cookieService.get('login')=='true'){
+      this.roles=this.cookieService.get('roles');
+      this.user_id=this.cookieService.get('username')
+      this.checkRoles(this.roles)
+    }
     else{
       this.router.navigate(['/login']);
     }
@@ -52,8 +61,9 @@ export class TimeSummaryComponent implements OnInit {
     this.apiService.showMessage(Object.values(data),Object.keys(data))});
 
     this.time=false;
-
+    
     setTimeout(() => {
+     //if (this.userInfo.emp_id==this.user_id) {}
       return this.apiService.getEvents().subscribe(res=>{
         console.log("Result",res);
         for (let value of res){
@@ -62,26 +72,37 @@ export class TimeSummaryComponent implements OnInit {
         }
 
       },console.error) ;
-      this.posts.push({'title':'This is your','start':'2021-04-29'});
-      this.posts.push({'title':'This is your','start':'2021-04-21'});
    
  
-  }, 2000);
-  setTimeout(() => {
-    this.calendarOptions = {
-    initialView: 'dayGridMonth',
-    dateClick: this.handleDateClick.bind(this), // bind is important!
-    events: this.posts
-    };
-  }, 3000);
-  }
+    }, 2000);
+    setTimeout(() => {
+      this.calendarOptions = {
+      initialView: 'dayGridMonth',
+      dateClick: this.handleDateClick.bind(this), // bind is important!
+      events: this.posts
+      };
+    }, 3000);
   
+  }
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     dateClick: this.handleDateClick.bind(this), // bind is important!
+    events: [
+      { title: 'event 1', date: '2019-04-01' },
+      { title: 'event 2', date: '2019-04-02' }
+    ] 
 
   };
+  checkRoles(roles) {
+    let userRoles = roles.split(",");
+    console.log(userRoles);
+     for (const role of userRoles) {
+       if ( role==users.employees,users.manager,users.projectManager) {
+         this.isVisible = true;
+       } 
+     }
+   }
   
   timeShow(){
     this.time = true;

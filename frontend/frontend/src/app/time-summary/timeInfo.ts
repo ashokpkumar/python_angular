@@ -1,3 +1,6 @@
+import { employee } from "../add-employee/employees"
+import { projectManager } from "../projects/assignPM"
+
 export class userInfo{
   emp_id:string
 
@@ -50,8 +53,13 @@ export class timeinfo{
     skills:string
     solution_category:string
     sur_name:string
-
-
-
   
+  }
+  export enum users{
+    admin="admin",
+    manager="manager",
+    vp="vp",
+    rmgadmin="rmg admin",
+    employees="employee",
+    projectManager="project manager"
   }

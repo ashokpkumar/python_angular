@@ -148,7 +148,7 @@ export class EmployeesComponent implements OnInit {
    let userRoles = roles.split(",");
    console.log(userRoles);
     for (const role of userRoles) {
-      if ( role == users.admin) {
+      if ( role==users.admin,users.manager,users.rmgadmin) {
         this.isVisible = true;
       } 
     }

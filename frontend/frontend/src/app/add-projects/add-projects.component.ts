@@ -45,8 +45,8 @@ export class AddProjectsComponent implements OnInit {
     let userRoles = roles.split(",");
     console.log(userRoles);
      for (const role of userRoles) {
-       if ( role==users.admin) {
-         this.isVisible = true;
+      if ( role==users.admin,users.rmgadmin,users.sales_team) {
+        this.isVisible = true;
        } 
      }
    }

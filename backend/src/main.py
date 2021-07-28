@@ -200,7 +200,7 @@ def addtimesubmissions():
                                     manager_id = data.get('manager_id'),
                                     time_type = data.get('time_type'),
                                     status = 'Unapproved',
-                                    #submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type'),
+                                    submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type'),
                                     task_id=data.get('task_id'),
                                     description=data.get('description'),
                                     remarks=data.get('remarks')     
@@ -868,7 +868,14 @@ def viewEmpInfo():
         project_serialized = serialize_all(project_objects)
         proj_dict = project_serialized[0]
         emp_dict.update(proj_dict)
-    emp_dict['full_name'] = emp_dict['salutation'] + emp_dict['first_name'] + emp_dict['last_name']
+    
+    first_name=session.query(employee.first_name).filter(employee.emp_id==emp_id).first()[0]
+    last_name=session.query(employee.last_name).filter(employee.emp_id==emp_id).first()[0]                
+    initial=session.query(employee.initial).filter(employee.emp_id==emp_id  ).first()[0]
+    first_name1=first_name.capitalize()
+    initial1=initial.upper()
+    user_name = (first_name1+" "+last_name +"."+ initial1)
+    emp_dict['full_name'] = user_name
     return jsonify(emp_dict), 201
 
 

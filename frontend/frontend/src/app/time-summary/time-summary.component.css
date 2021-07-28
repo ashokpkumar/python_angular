@@ -11,6 +11,16 @@ h3 {
 
   
 }
+.mtop{
+  margin-top: 50px;
+  margin-bottom: 0px;
+}
+.time_sub_heading{
+  font-size: 30px;
+color: #dfdddd;
+font-weight: 600;
+font-family: 'Arial', Times, serif;
+}
 
 .modal-title{
   width: 120%;
@@ -43,7 +53,10 @@ background-color: black;
   background-color:darkgray;  
 }
 .Calendar{
-  padding: 80px 0px 0px 0px ;  
+  padding: 20px 0px 0px 0px ;  
+  color: #24a7f8; ;
+  font-size:large ;
+  font-weight: bold;
 
  }
   
