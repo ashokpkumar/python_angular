@@ -1,36 +1,39 @@
-<div class="acc_summary_head">
-  <div class=header>      
-    <h1 class="table_summary_heading">Personal Info Summary</h1>
-  </div>
-    <div class = "tableInfo" id="personal">
-      <table>
-          <tr>
-            <th>Full Name</th>
-            <td>{{userData.full_name}}</td>
-          </tr>
-          <tr>
-            <th>Employee ID</th>
-            <td>{{userData.emp_id}}</td>
-          </tr>
-          <tr>
-              <th>Email</th>
-              <td>{{userData.email}}</td>
-          </tr>
-          <tr>
-              <th>Department</th>
-              <td>{{userData.dept}}</td>
-          </tr>
-          <tr>
-              <th>Designation</th>
-              <td>{{userData.designation}}</td>
-          </tr>
-          <tr>
-              <th>Work Location</th>
-              <td>{{userData.geography}}</td>
-          </tr>
-         
-          
-        </table>
-        
-    </div>
+  <mat-tab-group class=nav>
+    <mat-tab label="Personal Info "class=header>
+      <div class="acc_summary_head">
+        <div class = "tableInfo" id="personal">
+          <table>
+              <tr>
+                <th>Full Name</th>
+                <td>{{userData.full_name}}</td>
+              </tr>
+              <tr>
+                <th>Employee ID</th>
+                <td>{{userData.emp_id}}</td>
+              </tr>
+              <tr>
+                  <th>Email</th>
+                  <td>{{userData.email}}</td>
+              </tr>
+              <tr>
+                  <th>Department</th>
+                  <td>{{userData.dept}}</td>
+              </tr>
+              <tr>
+                  <th>Designation</th>
+                  <td>{{userData.designation}}</td>
+              </tr>
+              <tr>
+                  <th>Work Location</th>
+                  <td>{{userData.geography}}</td>
+              </tr>
+             
+              
+            </table>
+          </div> 
+        </div>  
+      </mat-tab>
+    <mat-tab label="Second"> Content 2 </mat-tab>
+    <mat-tab label="Third"> Content 3 </mat-tab>
+  </mat-tab-group>
     

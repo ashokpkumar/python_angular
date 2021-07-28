@@ -1,5 +1,4 @@
 import { project } from "../add-projects/projects"
-import { projectManager } from "../projects/assignPM"
 
 export class timeSubmissions{
     date:string
@@ -17,4 +16,8 @@ export class timeSubmissions{
     rmgadmin="rmg admin",
     projectManager="project manager"
   }
+  export class projectManager{
+    manager_name:string
+    manager_id:string
   
+  }

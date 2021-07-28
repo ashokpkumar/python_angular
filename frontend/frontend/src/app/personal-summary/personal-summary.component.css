@@ -1,13 +1,19 @@
+.nav{
+  padding: 60px 20px 10px 0px;
+  
+
+}
 .header{
-  font-weight: 600;
+  font-weight: 200;
   font-family: 'Arial', Times, serif;
-    font-size: 30px;
+    font-size: 20px;
     padding: 50px 20px 10px 250px;
     margin: 10px;
+    width: 100%;
     
 }
 .tableInfo{
-    padding: 0px 20px 60px 80px;
+    padding: 30px 30px 60px 80px;
 }
 table {
     font-family: arial, sans-serif;
@@ -30,6 +36,4 @@ table {
     padding: 15px ;
   }
   
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
+  

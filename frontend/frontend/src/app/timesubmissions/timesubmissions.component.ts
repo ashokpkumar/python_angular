@@ -63,12 +63,13 @@ export class TimesubmissionsComponent implements OnInit {
     this.allUserUnapproved = false;
     if (this.cookieService.get('login')=='true'){
       this.roles=this.cookieService.get('roles');
+      this.user_id=this.cookieService.get('username')
       this.checkRoles(this.roles)
     }
     else{
       this.router.navigate(['/login']);
     }
-    this.user_id = "I3186";
+    //this.user_id = "I3186";
     // this.user_name = "I3228";
     this.apiService.getSubmissions(this.user_id)
     .subscribe(data=>{

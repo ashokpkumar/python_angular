@@ -33,6 +33,7 @@ export class TimeSummaryComponent implements OnInit {
   public users:any
   roles: any
   isVisible: boolean=false;
+  user_id:any;
   
 
   public show:boolean = false;
@@ -45,7 +46,11 @@ export class TimeSummaryComponent implements OnInit {
   @ViewChild('content')
   private defaultTabButtonsTpl: TemplateRef<any>;
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){}
+    if (this.cookieService.get('login')=='true'){
+      this.roles=this.cookieService.get('roles');
+      this.user_id=this.cookieService.get('username')
+      this.checkRoles(this.roles)
+    }
     else{
       this.router.navigate(['/login']);
     }
@@ -58,6 +63,7 @@ export class TimeSummaryComponent implements OnInit {
     this.time=false;
     
     setTimeout(() => {
+     //if (this.userInfo.emp_id==this.user_id) {}
       return this.apiService.getEvents().subscribe(res=>{
         console.log("Result",res);
         for (let value of res){
