@@ -27,6 +27,7 @@
     "@fullcalendar/angular": "^5.6.0",
     "@fullcalendar/daygrid": "^5.6.0",
     "@fullcalendar/interaction": "^5.6.0",
+    "@material/tabs": "^2.3.0",
     "@ng-bootstrap/ng-bootstrap": "^9.1.0",
     "angular-calendar": "^0.28.26",
     "bootstrap": "^4.6.0",

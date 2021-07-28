@@ -80,8 +80,14 @@
               <td>{{item.solution_category}}</td>
               <td>{{item.financial_year}}</td>
               <td>{{item.project_code}}</td>
-              <td><button (click)="open1(contentPM,item.project_code)" type="button" class="add_project_managerid">Add</button>
-                {{item.project_manager_id}} </td>          
+              <td><fa-icon class="fa fa-plus-circle fa-lg" aria-hidden="true" (click)="open1(contentPM,item.project_code)"  style="color:white;  background: rgb(36, 167, 248);
+                border-radius: 50%;
+                line-height: normal;
+                width: 1em;
+                ">
+                </fa-icon>
+                <div>{{item.project_manager_id}}</div> 
+              </td>          
               <td>
                 <div>        
                   <a (click)="openRL(contentRL,item.project_code)" style="color:rgb(36, 167, 248);" ><u>ResourceList</u></a>

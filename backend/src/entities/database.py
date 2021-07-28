@@ -7,7 +7,7 @@ from sqlalchemy.orm.attributes import QueryableAttribute
 from env.config import Config
 
 
-engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+engine = create_engine(Config.SQLALCHEMY_DATABASE_URI,pool_size=10, max_overflow=20)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 

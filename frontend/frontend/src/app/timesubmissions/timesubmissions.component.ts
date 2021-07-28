@@ -28,6 +28,7 @@ export class TimesubmissionsComponent implements OnInit {
   modaluser_name:any;
   modaltime_type:any;
   user_name:any;
+  manager_id:any;
   pipe: DatePipe;
   from_Date:any;
   to_Date:any;
@@ -123,7 +124,7 @@ if (type=='unapproved'){
     let userRoles = roles.split(",");
     console.log(userRoles);
      for (const role of userRoles) {
-       if ( role==users.admin,users.manager,users.vp,users.rmgadmin) {
+       if ( role==users.manager,users.projectManager) {
          this.isVisible = true;
        } 
      }
@@ -148,7 +149,7 @@ search(){
     this.ngOnInit();
   }
   else{
-    this.users=this.users.filter(res =>{
+    this.timeDatas=this.timeDatas.filter(res =>{
       return res.user_name.toLocaleLowerCase().match(this.user_name.toLocaleLowerCase())
     })
   }

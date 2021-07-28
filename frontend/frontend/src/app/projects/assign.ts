@@ -5,6 +5,9 @@ export class projectResource{
   }
   export enum users{
     admin="admin",
-    manager="manager"
+    manager="manager",
+    vp="vp",
+    rmgadmin="rmg admin",
+    delivery_head="deliveryhead"
   }
   

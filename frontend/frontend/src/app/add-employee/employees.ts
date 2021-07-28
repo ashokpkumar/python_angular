@@ -30,6 +30,9 @@ export class employee{
   }
   export enum users{
     admin="admin",
-    manager="manager"
+    manager="manager",
+    vp="vp",
+    rmgadmin="rmg admin"
+    
   }
   
