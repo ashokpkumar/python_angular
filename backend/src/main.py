@@ -53,6 +53,33 @@ create_sample_timesubmissions()
 create_sample_authUser()
 
 
+@app.route("/getsampleevents", methods=["POST"])
+def getsampleevents():
+ 
+    events=[{
+        "title": 'Event 1',
+        # "start": "Mon Aug 02 2021 00:00:00 GMT+0530 (India Standard Time)",
+        # "end": "Mon Aug 02 2021 00:00:00 GMT+0530 (India Standard Time)",
+        "color": "colors.red",
+        "draggable": True,
+        "resizable": {
+          "beforeStart": True,
+          "afterEnd": True,
+        }
+      },
+     {
+        "title": 'Event 2',
+        # "start": "Mon Aug 02 2021 00:00:00 GMT+0530 (India Standard Time)",
+        # "end": "Mon Aug 02 2021 00:00:00 GMT+0530 (India Standard Time)",
+        "color": "colors.red",
+        "draggable": True,
+        "resizable": {
+          "beforeStart": True,
+          "afterEnd": True,
+        }
+      }]
+    
+    return jsonify(events),200
 @app.route("/setpassword", methods=["POST"])
 def setpassword():
     session = Session()

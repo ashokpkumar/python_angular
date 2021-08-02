@@ -51,6 +51,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import {MatTabsModule} from '@angular/material/tabs';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { AngularCalendarComponent } from './angular-calendar/angular-calendar.component';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -80,6 +81,7 @@ FullCalendarModule.registerPlugins([
     SideBarComponent,
     ForgotPasswodComponent,
     ResetPasswordComponent,
+    AngularCalendarComponent,
    
   ],
 
