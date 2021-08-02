@@ -200,11 +200,11 @@ def addtimesubmissions():
                                     manager_id = data.get('manager_id'),
                                     time_type = data.get('time_type'),
                                     status = 'Unapproved',
-                                    submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type'),
+                                    submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type').lower(),
                                     task_id=data.get('task_id'),
                                     description=data.get('description'),
                                     remarks=data.get('remarks')     
-                               )
+                                )
     session = Session()
     session.add(sub_data)
     session.commit()
@@ -248,37 +248,6 @@ def rawDataDownload():
     print(raw_data)
     return(jsonify(raw_data))
 
-#@app.route('/getSubmissionByDate', methods=['POST'])
-# def getSubmissionByDate():
-#     session=Session()
-#     data = request.get_json()
-#     fromDate=data.get("fromDate",None)
-#     toDate= data.get("toDate",None)
-#     if any(fromDate or toDate) is None:
-#         return jsonify({"error":"From date or To Date is missing"})
-#     start_Date=fromDate.split(" ")[0]
-#     end_Date=toDate.split(" ")[0]
-#     s_datee = datetime.datetime.strptime(start_Date, "%Y/%m/%d")
-#     e_datee = datetime.datetime.strptime(end_Date, "%Y/%m/%d")
-#     print(start_Date)
-#     print(end_Date)
-#     print(type(start_Date))
-#     print(type(s_datee))
-#     date_array = \
-#          (s_datee + datetime.timedelta(days=x) for x in range(0, (e_datee-s_datee).days))
-#     for date_object in date_array:
-#          datee=date_object.strftime("%Y/%d/%m")
-#          print(datee)
-#          print(type(datee))
-
-#     sub_objects = session.query(timesubmissions).filter(timesubmissions.date_info==datee).all()#,timesubmissions.status=='Unapproved').all()
-#     serialized_obj = serialize_all(sub_objects)
-#     #print(sub_objects)
-#     #print(serialized_obj)
-#     #print(start_Date,end_Date)    
-#     #print(serialized_obj)
-#     session.close()        
-#     return (jsonify(serialized_obj)),200
 
 @app.route('/getSubmissionsBy', methods=['POST'])
 def getSubmissionsBy():
@@ -321,7 +290,13 @@ def getTimeBy():
         if time_type =="project":
             time_type_list = ['wfh','REG']
         elif time_type=="total":
-                time_type_list=['wfh','REG','cl','sl','al']
+                time_type_list=['wfh','REG','cl','sl','al','bench','non_project']
+                print(time_type_list)
+        elif time_type=="total_presence":
+                time_type_list=['wfh','REG','bench','non_project']
+                print(time_type_list)
+        elif time_type=="total_absence":
+                time_type_list=['cl','sl','al']
                 print(time_type_list)
         else:
             time_type_list = [time_type]
@@ -385,7 +360,10 @@ def timeData():
         sl = 0
         cl=0
         al=0
+        total_presence=0
+        non_project=0
         bench=0
+        total_absence=0
         user_id = emp
         unapproved=0
         first_name=session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
@@ -408,13 +386,17 @@ def timeData():
                     cl = cl + time['hours']
                 elif time['time_type']=='al':
                     al = al + time['hours']
+                elif time['time_type']=='non_project':
+                    non_project = non_project + time['hours']
                 elif time['time_type']=='bench':
                     bench = bench + time['hours']
             else:
                 unapproved = unapproved + time['hours']    
         
-        total_hrs = project_time + sl + cl + al + bench
-        time_final.append({'user_id':user_id, 'user_name': user_name, 'project_time':project_time,'sl':sl,'cl':cl,'al':al,'bench':bench,'unapproved':unapproved, 'total_hrs':total_hrs})
+        total_hrs = project_time + sl + cl + al + bench + non_project
+        total_presence = project_time + non_project + bench 
+        total_absence = sl + cl + al 
+        time_final.append({'user_id':user_id, 'user_name': user_name, 'project_time':project_time,'sl':sl,'cl':cl,'al':al,'non_project':non_project,'bench':bench,'unapproved':unapproved,'total_presence': total_presence,'total_absence':total_absence,'total_hrs':total_hrs})
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     print(time_final)  
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
@@ -422,6 +404,7 @@ def timeData():
     total_sl = 0
     total_cl = 0
     total_al = 0
+    total_non_project=0
     total_bench = 0
     total_unapproved = 0
     first_name=session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
@@ -430,9 +413,10 @@ def timeData():
         total_sl = total_sl  + emp_data['sl']   
         total_cl = total_cl  + emp_data['cl']
         total_al = total_al  + emp_data['al']
+        total_non_project=total_non_project + emp_data['non_project']
         total_bench = total_bench  + emp_data['bench']
         total_unapproved = total_unapproved + emp_data['unapproved']
-    total_time_list = {'total_project':total_project,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_bench':total_bench,'total_unapproved':total_unapproved, }
+    total_time_list = {'total_project':total_project,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_non_project':total_non_project,'total_bench':total_bench,'total_unapproved':total_unapproved, }
     print(total_time_list)
     #time_final.append({'total_project':total_project,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_bench':total_bench,'total_unapproved':total_unapproved, })
     return (jsonify({'result':time_final,'total':total_time_list}))
