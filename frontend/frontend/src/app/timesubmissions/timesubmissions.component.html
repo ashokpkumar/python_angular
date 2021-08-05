@@ -56,7 +56,7 @@
         <thead>
           <tr class="time_sub_row">
             <!-- <tr> -->
-            <th data-field="username" data-checkbox="true" rowspan="1">User Name <i class="fa fa-sort" aria-hidden="true"(click)="sort('username')"></i></th>
+            <th data-field="username" data-checkbox="true" rowspan="1" >User Name <i class="fa fa-sort" aria-hidden="true"(click)="sort('username')"></i></th>
             <th data-field="dateInfo" data-checkbox="true"rowspan="1">User ID <i class="fa fa-sort" aria-hidden="true" (click)="sort('userid')"></i></th>
             <th data-field="Project Time" data-filter-control="input" data-sortable="true" colspan="4">Presence 
               <tr class="sub_hed">
@@ -103,11 +103,14 @@
             <td><a (click)="clickNumbers('total',this.modaluser_name,'non_project')"><u>{{totalTime['total_non_project']}}</u></a></td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'bench')"><u>{{totalTime['total_bench']}}</u></a></td>
             <td></td>
+            <!-- <td><a (click)="clickNumbers('total',this.modaluser_name,'total_total_presence')"><u>{{totalTime['total_total_presence']}}</u></a></td> -->
             <td><a (click)="clickNumbers('total',this.modaluser_name,'sl')"><u>{{totalTime['total_sl']}}</u></a></td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'cl')"><u>{{totalTime['total_cl']}}</u></a></td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'al')"><u>{{totalTime['total_al']}}</u></a></td>
             <td></td>
             <td></td>
+            <!-- <td><a (click)="clickNumbers('total',this.modaluser_name,'total_total_presence')"><u>{{totalTime['total_total_absence']}}</u></a></td> -->
+            <!-- <td><a (click)="clickNumbers('total',this.modaluser_name,'total_total_hrs')"><u>{{totalTime['total_total_hrs']}}</u></a></td> -->
             <td><a (click)="clickNumbers('total','total','unapproved')"><u>{{totalTime['total_unapproved']}}</u></a></td>
           </tr>
         </tfoot>
@@ -208,8 +211,11 @@
                 <!-- <tr> -->
                 <th data-field="dateInfo" data-checkbox="true" >Date</th>
                 <th data-field="userid" data-checkbox="true">User Id</th>
-                <th data-field="username" data-filter-control="input" data-sortable="true">User Name</th>
+                <th data-field="userid" data-checkbox="true">Project Id</th>
+                <!-- <th data-field="username" data-filter-control="input" data-sortable="true">User Name</th> -->
                 <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
+                <th data-field="userid" data-checkbox="true">Description</th>
+                <th data-field="userid" data-checkbox="true">Remarks</th>
                 <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
                 <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
                 <th data-field="Review" data-filter-control="select" data-sortable="true">Review</th>
@@ -220,8 +226,11 @@
                 <!-- <tr *ngFor="let item of employee_list"> -->
                 <td>{{timeSubmissions.date_info}}</td>
                 <td>{{timeSubmissions.user_id}}</td>
-                <td>{{this.modaluser_name}}</td>
+                <td>{{timeSubmissions.project_code}}</td>
+                <!-- <td>{{this.modaluser_name}}</td> -->
                 <td>{{timeSubmissions.time_type}}</td>
+                <td>{{timeSubmissions.description}}</td>
+                <td>{{timeSubmissions.remarks}}</td>
                 <td>{{timeSubmissions.hours}}</td>
                 <td>{{timeSubmissions.status}}</td>
                 <td>
@@ -262,7 +271,7 @@
   <ng-template #approved let-modal>
   <div class ="modal_1">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Time Info:{{this.modaluser_name}}({{this.modaltime_type}})</h4>
+      <h4 class="modal-title" id="modal-basic-title">Time Info : {{this.modaluser_name}}({{this.modaltime_type}})</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -276,9 +285,12 @@
 
                 <th data-field="dateInfo" data-checkbox="true">Date</th>
                 <th data-field="user id" data-checkbox="true">User ID</th>
-                <th data-field="user name" data-filter-control="input" data-sortable="true" >User Name</th>
+                <th data-field="project id" data-checkbox="true">Project ID</th>
+                <!-- <th data-field="user name" data-filter-control="input" data-sortable="true" >User Name</th> -->
                 <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
                 <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
+                <th data-field="project id" data-checkbox="true">Description</th>
+                <th data-field="project id" data-checkbox="true">Remarks</th>
                 <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
 
               </tr>
@@ -288,9 +300,12 @@
 
                 <td>{{time.date_info}}</td>
                 <td>{{time.user_id}}</td>
-                <td >{{this.modaluser_name}}</td>
+                <td>{{time.project_code}}</td>
+                <!-- <td >{{this.modaluser_name}}</td> -->
                 <td>{{time.time_type}}</td>
                 <td>{{time.hours}}</td>
+                <td>{{time.description}}</td>
+                <td>{{time.remarks}}</td>
                 <td>{{time.status}}</td>
 
 

@@ -269,7 +269,7 @@ def viewsubmissions():
         serialized_obj = serialize_all(submission_obj)
         print(serialized_obj)
         return jsonify(serialized_obj),200
-    return jsonify({'info':'No submission available for you'}),200
+    return jsonify({'info':'Time Submissions available for you'}),200
   
 
 @app.route('/timesubmissions')
@@ -447,19 +447,25 @@ def timeData():
     total_sl = 0
     total_cl = 0
     total_al = 0
+    total_total_presence=0
+    total_total_absence=0
     total_non_project=0
     total_bench = 0
+    total_total_hrs=0
     total_unapproved = 0
     first_name=session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
     for emp_data in time_final:
         total_project = total_project  + emp_data['project_time']
         total_sl = total_sl  + emp_data['sl']   
         total_cl = total_cl  + emp_data['cl']
+        total_total_presence = total_total_presence  + emp_data['total_presence']
+        total_total_absence = total_total_absence  + emp_data['total_absence']
+        total_total_hrs = total_total_hrs  + emp_data['total_hrs']
         total_al = total_al  + emp_data['al']
         total_non_project=total_non_project + emp_data['non_project']
         total_bench = total_bench  + emp_data['bench']
         total_unapproved = total_unapproved + emp_data['unapproved']
-    total_time_list = {'total_project':total_project,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_non_project':total_non_project,'total_bench':total_bench,'total_unapproved':total_unapproved, }
+    total_time_list = {'total_project':total_project,'total_total_presence':total_total_presence,'total_total_absence':total_total_absence,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_non_project':total_non_project,'total_bench':total_bench,'total_total_hrs':total_total_hrs,'total_unapproved':total_unapproved, }
     print(total_time_list)
     #time_final.append({'total_project':total_project,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_bench':total_bench,'total_unapproved':total_unapproved, })
     return (jsonify({'result':time_final,'total':total_time_list}))
