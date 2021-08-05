@@ -130,6 +130,49 @@ def events():
         events_data.append(eve)   
     return jsonify(events_data)
 
+@app.route("/getsampleevents", methods=["POST"])
+def getsampleevents():
+    session = Session()
+    time_objects = session.query(timesubmissions).all()
+    serialized_obj = serialize_all(time_objects)
+    events=[
+    #     {
+    #     "title": 'Event 2',
+    #     "start": "Mon Aug 02 2021 00:00:00 GMT+0530 (India Standard Time)",
+    #     "color": "colors.red",
+    #     "draggable": True,
+    #     "resizable": {
+    #       "beforeStart": True,
+    #       "afterEnd": True,
+    #     }
+        
+    #   }
+    ]
+    for event in serialized_obj:
+        eve={        "color": "colors.red",
+        "draggable": True,
+        "resizable": {
+          "beforeStart": True,
+          "afterEnd": True,
+        }}
+        eve["title"]="*" + str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
+        eve["start"]=str(event["date_info"])
+        eve["end"]=str(event["date_info"])
+        print(eve)
+        events.append(eve) 
+    # session = Session()
+    # time_objects = session.query(timesubmissions).all()
+    # serialized_obj = serialize_all(time_objects)
+    # events = []
+    # for event in serialized_obj:
+    #     eve={}
+    #     eve["title"]="*" + str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
+    #     eve["start"]=event["date_info"]
+    #     events.append(eve)   
+    return jsonify(events)
+    
+    #return jsonify(events),200
+
 @app.route('/announcements')
 def announcement():
     session = Session()
@@ -198,7 +241,7 @@ def addtimesubmissions():
                                     user_id = data.get('user_id').lower(),
                                     project_code = data.get('project_id'),
                                     manager_id = data.get('manager_id'),
-                                    time_type = data.get('time_type'),
+                                    time_type = data.get('time_type').lower(),
                                     status = 'Unapproved',
                                     submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type').lower(),
                                     task_id=data.get('task_id'),

@@ -39,6 +39,12 @@ export class TimesummaryService {
   getEvents():Observable<any>{
     return this.http.get(`${API_URL}/events`);
   }
+  getEvent(): Observable<any> {
+    const headers = { 'content-type': 'application/json'}  
+    const body="";
+    console.log(body)
+    return this.http.post(`${API_URL}/getsampleevents`, body,{'headers':headers})
+  }
   getExams() {
     return this.http.get(`${API_URL}/employees`);
  }

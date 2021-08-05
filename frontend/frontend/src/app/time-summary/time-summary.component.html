@@ -1,6 +1,6 @@
 <div class="Calendar" >
   <div class="container mtop" >
-    <p class="time_sub_heading">Calendar</p> 
+    <p class="time_sub_heading">Calendar : {{this.user_id}}</p> 
     <div class="navbar">
       <div class="col-md-4">
           <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
@@ -39,22 +39,48 @@
     <mwl-calendar-month-view  (dayClicked)="dayClicked($event.day)"  *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
     [refresh]="refresh"
     [activeDayIsOpen]="activeDayIsOpen"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
     >
     </mwl-calendar-month-view>
 
     <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
     [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
     >
     </mwl-calendar-week-view>
 
     <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
     [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
     >
     </mwl-calendar-day-view>
 
   </div>
 </div>
 
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Event action occurred</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      Action:
+      <pre>{{ modalData?.action }}</pre>
+    </div>
+    <div>
+      Event:
+      <pre>{{ modalData?.event | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">
+      OK
+    </button>
+  </div>
+</ng-template>
 
 
 
@@ -95,7 +121,7 @@
           <div>
             <label style="padding: 30px 11px 0px 0px;">project_id : </label>
             <select name="" id="" [(ngModel)]="timeInfo.project_id" style="width: 250px;padding: 6px 6px 6px 6px; ">  
-                <option value=this.userData.project_code>{{this.userData.project_code}}</option>
+                <option >{{this.userData.project_code}}</option>
             </select>
           </div>
           <div>
@@ -131,8 +157,8 @@
         </div>
           </div>
           <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');">Submit Time info</button>
-          <button type="button"  (click)="addEvent()">Add Time info</button>
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');"(click)="addEvent(date1)">Submit Time info</button>
+          <!-- <button type="button"  (click)="addEvent(date1)">Add Time info</button> -->
         </div>
   </ng-template>
 </div>
