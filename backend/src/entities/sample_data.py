@@ -102,6 +102,7 @@ timesubmission_list =[
     {"date":"08/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL","task_id":"RMG issue","description":"","remarks":"f"},
     {"date":"10/05/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Approved","submission_id":"I3122I3122CL","task_id":"RMG issue","description":"","remarks":"f"},
     {"date":"17/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"CL","status":"Unapproved","submission_id":"I3122I3122CL","task_id":"RMG issue","description":"","remarks":"f"},
+    {"date":"18/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"non_project","status":"Unapproved","submission_id":"I3122I3122CL","task_id":"RMG issue","description":"","remarks":"f"},
 
     {"date":"01/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Unapproved","submission_id":"I3122I3122wfh","task_id":"RMG issue","description":"","remarks":"f"},
     {"date":"14/03/2021","hours":"8","user_id":"I3122","project_id":"DIGI1212","manager_id":"I3186","time_type":"wfh","status":"Approved","submission_id":"I3122I3122wfh","task_id":"RMG issue","description":"","remarks":"f"},

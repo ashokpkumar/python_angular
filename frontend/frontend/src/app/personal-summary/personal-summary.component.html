@@ -33,7 +33,36 @@
           </div> 
         </div>  
       </mat-tab>
-    <mat-tab label="Second"> Content 2 </mat-tab>
-    <mat-tab label="Third"> Content 3 </mat-tab>
+    <mat-tab label="Professional info" class="header" > 
+    <div class = "tableInfo" id="professional">  
+      <table>
+          <tr>
+              <th>Full Name</th>
+              <td>{{userData.full_name}}</td>
+          </tr>
+          <tr>
+              <th>Reporting Manager</th>
+              <td>{{userData.manager_name}}</td>
+          </tr>
+          <tr>
+              <th>Employee Start Date</th>
+              <td>{{userData.emp_start_date}}</td>
+          </tr>
+          <tr>
+              <th>Project Assigned Date</th>
+              <td>{{userData.emp_project_assigned_date}}</td>
+          </tr>
+          <tr>
+              <th>Project Name</th>
+              <td>{{userData.project_name}}</td>
+          </tr>
+          <tr>
+              <th>Resource Status</th>
+              <td>{{userData.resource_status}}</td>
+          </tr>
+        </table>
+    </div>
+  </mat-tab>
+    <mat-tab label="payinfo"> </mat-tab>
   </mat-tab-group>
     

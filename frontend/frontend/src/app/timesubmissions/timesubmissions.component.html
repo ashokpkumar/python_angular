@@ -1,6 +1,7 @@
 <div *ngIf="isVisible">
 <div class="container mtop" >
-  <p class="time_sub_heading">Time Submission :{{this.user_id}} <input class ="form-control" type="text" name="user_name" [(ngModel)]="user_name" (ngModelChange)="search()" placeholder="Search Names"></p>
+  <p class="time_sub_heading">Time Submission :{{this.user_id}} </p> 
+  <!-- <input class ="form-control" type="text" name="user_name" [(ngModel)]="user_name" (ngModelChange)="search()" placeholder="Search Names"></p> -->
   <div class="for_filter_search">
     <div></div>
     <div> 
@@ -55,26 +56,41 @@
         <thead>
           <tr class="time_sub_row">
             <!-- <tr> -->
-            <th data-field="dateInfo" data-checkbox="true">User ID <i class="fa fa-sort" aria-hidden="true" (click)="sort('userid')"></i></th>
-            <th data-field="username" data-checkbox="true">User Name <i class="fa fa-sort" aria-hidden="true"(click)="sort('username')"></i></th>
-            <th data-field="manager name" data-filter-control="input" data-sortable="true">Project Time <i class="fa fa-sort" aria-hidden="true"(click)="sort('projectTime')"></i></th>
-            <th data-field="time type" data-filter-control="input" data-sortable="true">Bench Time <i class="fa fa-sort" aria-hidden="true"(click)="sort('benchTime')"></i></th>
-            <th data-field="hours" data-filter-control="select" data-sortable="true">SL <i class="fa fa-sort" aria-hidden="true"(click)="sort('sl')"></i></th>
-            <th data-field="status" data-filter-control="select" data-sortable="true">CL <i class="fa fa-sort" aria-hidden="true"(click)="sort('cl')"></i></th>
-            <th data-field="Review" data-filter-control="select" data-sortable="true">AL <i class="fa fa-sort" aria-hidden="true"(click)="sort('al')"></i></th>
-            <th data-field="Review" data-filter-control="select" data-sortable="true">Total <i class="fa fa-sort" aria-hidden="true"(click)="sort('total')"></i></th>
-            <th data-field="Review" data-filter-control="select" data-sortable="true">Unapproved <i class="fa fa-sort" aria-hidden="true"(click)="sort('unapproved')"></i></th>
+            <th data-field="username" data-checkbox="true" rowspan="1">User Name <i class="fa fa-sort" aria-hidden="true"(click)="sort('username')"></i></th>
+            <th data-field="dateInfo" data-checkbox="true"rowspan="1">User ID <i class="fa fa-sort" aria-hidden="true" (click)="sort('userid')"></i></th>
+            <th data-field="Project Time" data-filter-control="input" data-sortable="true" colspan="4">Presence 
+              <tr class="sub_hed">
+                <th data-field="Project Time" data-filter-control="input" data-sortable="true" >Project Time <i class="fa fa-sort" aria-hidden="true"(click)="sort('projectTime')"></i></th>
+                <th>Non Project<i class="fa fa-sort" aria-hidden="true"(click)="sort('al')"></i></th>
+                <th data-field="Time Type" data-filter-control="input" data-sortable="true">Bench Time <i class="fa fa-sort" aria-hidden="true"(click)="sort('benchTime')"></i></th>
+                <th>Total Presence<i class="fa fa-sort" aria-hidden="true"(click)="sort('al')"></i></th>
+              </tr>  
+            </th>
+            <th data-field="Project Time" data-filter-control="input" data-sortable="true" colspan="4">Absence
+              <tr class = "sub header">
+                <th data-field="Sl" data-filter-control="select" data-sortable="true" style="align-self: auto;">SL Type <i class="fa fa-sort" aria-hidden="true"(click)="sort('sl')"></i>  </th>
+                <th data-field="Cl" data-filter-control="select" data-sortable="true">CL Type<i class="fa fa-sort" aria-hidden="true"(click)="sort('cl')"></i>  </th>
+                <th data-field="Al" data-filter-control="select" data-sortable="true">AL Type<i class="fa fa-sort" aria-hidden="true"(click)="sort('al')"></i>   </th>
+                <th>Total Absence<i class="fa fa-sort" aria-hidden="true"(click)="sort('al')"></i></th>
+              </tr>
+            </th>
+            <th data-field="Total" data-filter-control="select" data-sortable="true"rowspan="1">Grand Total <i class="fa fa-sort" aria-hidden="true"(click)="sort('total')"></i></th>
+            <th data-field="Review" data-filter-control="select" data-sortable="true"rowspan="1">Unapproved <i class="fa fa-sort" aria-hidden="true"(click)="sort('unapproved')"></i></th>
           </tr>
         </thead>
+
         <tbody>
           <tr class="time_sub_row" *ngFor="let timedata of timeDatas | orderBy: key: reverse" >
-            <td>{{timedata.user_id}}</td>
             <td>{{timedata.user_name}}</td>
+            <td>{{timedata.user_id}}</td>
             <td ><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'project')"  ><u>{{timedata.project_time}}</u></a></td>
+            <td ><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'non_project')"  ><u>{{timedata.non_project}}</u></a></td>
             <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'bench')"  ><u>{{timedata.bench}}</u></a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'total_presence')"  ><u>{{timedata.total_presence}}</u></a></td>
             <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'sl')" ><u>{{timedata.sl}}</u></a></td>
             <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'cl')"><u>{{timedata.cl}}</u></a></td>
             <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'al')"  ><u>{{timedata.al}}</u></a></td>
+            <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'total_absence')"  ><u>{{timedata.total_absence}}</u></a></td>
             <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'total')"><u>{{timedata.total_hrs}}</u></a></td>
             <td><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'unapproved')"><u>{{timedata.unapproved}}</u></a></td>
           </tr>
@@ -84,10 +100,13 @@
             <td>Total: </td>
             <td>{{totalTime['user_name']}}</td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'project')"><u>{{totalTime['total_project']}}</u></a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'non_project')"><u>{{totalTime['total_non_project']}}</u></a></td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'bench')"><u>{{totalTime['total_bench']}}</u></a></td>
+            <td></td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'sl')"><u>{{totalTime['total_sl']}}</u></a></td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'cl')"><u>{{totalTime['total_cl']}}</u></a></td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'al')"><u>{{totalTime['total_al']}}</u></a></td>
+            <td></td>
             <td></td>
             <td><a (click)="clickNumbers('total','total','unapproved')"><u>{{totalTime['total_unapproved']}}</u></a></td>
           </tr>
@@ -257,7 +276,7 @@
 
                 <th data-field="dateInfo" data-checkbox="true">Date</th>
                 <th data-field="user id" data-checkbox="true">User ID</th>
-                <th data-field="user name" data-filter-control="input" data-sortable="true">User Name</th>
+                <th data-field="user name" data-filter-control="input" data-sortable="true" >User Name</th>
                 <th data-field="time type" data-filter-control="input" data-sortable="true">Time Type</th>
                 <th data-field="hours" data-filter-control="select" data-sortable="true">Hours</th>
                 <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>

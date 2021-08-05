@@ -218,6 +218,13 @@ border: 1px solid #24a7f8;
     color: #ffffff;
     font-weight: 700;
   }
+.sub_hed{
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color:black;
+  
+
+}  
 .modal_1{
   width: 150%;
   display: grid;

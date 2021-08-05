@@ -1,23 +1,48 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
-import { CalendarOptions } from '@fullcalendar/angular';
 import {userInfo,userData,timeinfo, users} from './timeInfo';
 import {TimesummaryService} from './time-summary.service'
 import { HttpClient } from '@angular/common/http';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { ViewChild } from '@angular/core';
-import { from } from 'rxjs';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction'; 
+import { CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
+import { CalendarEvent } from 'angular-calendar';
+import { from, Subject } from 'rxjs';
+import {   startOfDay,
+  endOfDay,
+  subDays,
+  addDays,
+  endOfMonth,
+  isSameDay,
+  isSameMonth,
+  addHours, } from 'date-fns';
+import { ChangeDetectionStrategy } from '@angular/core';
+  
+  const colors: any = {
+    red: {
+      primary: '#ad2121',
+      secondary: '#FAE3E3',
+    },
+    blue: {
+      primary: '#1e90ff',
+      secondary: '#D1E8FF',
+    },
+    yellow: {
+      primary: '#e3bc08',
+      secondary: '#FDF1BA',
+    },
+  };
 
 
 @Component({
   selector: 'app-time-summary',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './time-summary.component.html',
   styleUrls: ['./time-summary.component.css']
 })
 export class TimeSummaryComponent implements OnInit {
+  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
   //calendarOptions: CalendarOptions;
   posts = [];
   data = {};
@@ -25,24 +50,30 @@ export class TimeSummaryComponent implements OnInit {
   userInfo = new userInfo();
   userData = new userData();
   timeInfo = new timeinfo();
-  view: string = 'month';
+  view1: string = 'month';
   todaysDate:any;
-  viewDate: Date = new Date();
   spec=`optionValue`;
   project_id:any
   public users:any
   roles: any
   isVisible: boolean=false;
   user_id:any;
+  date1:any
+  date:any
   
 
   public show:boolean = false;
   public buttonName:any = 'Show';
-  calendarPlugins = [dayGridPlugin, interactionPlugin];
-  
+  viewDate: Date = new Date();
+  view: CalendarView = CalendarView.Month;
+  CalendarView = CalendarView;
 
 
-  constructor(private router: Router,private modalService: NgbModal,private apiService: TimesummaryService,private http: HttpClient,private cookieService: CookieService) { }
+  modalData: {
+    action: string;
+    event: CalendarEvent;
+  };
+
   @ViewChild('content')
   private defaultTabButtonsTpl: TemplateRef<any>;
   ngOnInit(): void {
@@ -58,42 +89,175 @@ export class TimeSummaryComponent implements OnInit {
     this.apiService.onSubmit(this.userInfo)
     .subscribe(data=>{console.log("Employee Data: ",data),
     this.userData = data,
+    //this.apiService.showMessage(Object.values(data),Object.keys(data))});
+    this.apiService.getEvent().subscribe(data=>{console.log("Time Data: ",data),
+                                                this.events = data
+                                              });
     this.apiService.showMessage(Object.values(data),Object.keys(data))});
 
-    this.time=false;
-    
-    setTimeout(() => {
-     //if (this.userInfo.emp_id==this.user_id) {}
-      return this.apiService.getEvents().subscribe(res=>{
-        console.log("Result",res);
-        for (let value of res){
-          //console.log("Iteration",value)
-          this.posts.push(value);
-        }
 
-      },console.error) ;
-   
+    this.time=false;
+
+    // setTimeout(() => {
+    //   //if (this.userInfo.emp_id==this.user_id) {}
+    //    return this.apiService.getEvents().subscribe(res=>{
+    //      console.log("Result",res);
+    //      for (let value of res){
+    //        //console.log("Iteration",value)
+    //        this.posts.push(value);
+    //      }
  
-    }, 2000);
-    setTimeout(() => {
-      this.calendarOptions = {
-      initialView: 'dayGridMonth',
-      dateClick: this.handleDateClick.bind(this), // bind is important!
-      events: this.posts
-      };
-    }, 3000);
+    //    },console.error) ;
+    
   
+    //  }, 2000);
+    //  setTimeout(() => {
+    //    this.events = {
+    //    view1: string = 'month';,
+    //    dateClick: this.dayClicked.bind(this), // bind is important!
+    //    events: this.posts
+    //    };
+    //  }, 3000);
   }
 
-  calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    dateClick: this.handleDateClick.bind(this), // bind is important!
-    events: [
-      { title: 'event 1', date: '2019-04-01' },
-      { title: 'event 2', date: '2019-04-02' }
-    ] 
+  
+  setView(view: CalendarView) {
+    this.view = view;
+  }
 
-  };
+  actions: CalendarEventAction[] = [
+    {
+      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
+      a11yLabel: 'Edit',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.handleEvent('Edited', event);
+      },
+    },
+    {
+      label: '<i class="fas fa-fw fa-trash-alt"></i>',
+      a11yLabel: 'Delete',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.events = this.events.filter((iEvent) => iEvent !== event);
+        this.handleEvent('Deleted', event);
+      },
+    },
+  ];
+  getEvent(){
+    this.apiService.getEvent().subscribe(data=>{console.log("Time Data: ",data),
+                                                this.events = data,
+                                                console.log(this.events[1])
+                                                this.events[1]["start"]=addHours(startOfDay(new Date()), 2)
+                                                //this.events[0]["start"]=addHours(startOfDay(new Date()), 1)
+                                                console.log(this.events)
+    });
+  }
+
+  refresh: Subject<any> = new Subject();
+
+  events: CalendarEvent[] = [ 
+    // {
+    //   start: subDays(startOfDay(new Date()), 1),
+    //   end: addDays(new Date(), 1),
+    //   title: 'A 3 day event',
+    //   color: colors.red,
+    //   allDay: true,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true,
+    //   },
+    //   draggable: true,
+    // },
+    // {
+    //   start: startOfDay(new Date()),
+    //   title: 'An event with no end date',
+    //   color: colors.yellow,
+    // },  
+    // {
+    //   start: subDays(endOfMonth(new Date()), 3),
+    //   end: addDays(endOfMonth(new Date()), 3),
+    //   title: 'A long event that spans 2 months',
+    //   allDay: true,
+    // },
+    // {
+    //   start: addHours(startOfDay(new Date()), 2),
+    //   end: addHours(new Date(), 2),
+    //   title: 'A draggable and resizable event',
+    //   color: colors.yellow,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true,
+    //   },
+    //   draggable: true,
+    // },
+  ];
+
+  activeDayIsOpen: boolean = false;
+
+  closeOpenMonthViewDay() {
+    this.activeDayIsOpen = false;
+  }
+
+  getFormattedString(d){
+    return d.getDate() + "/"+(d.getMonth()+1) +"/"+ d.getFullYear() + ' '+d.toString().split(' ')[4]
+  }
+  constructor(private router: Router,private modalService: NgbModal,private apiService: TimesummaryService,private http: HttpClient,private cookieService: CookieService) { }
+  
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
+      this.viewDate = date;
+    }
+    console.log(date);
+    //this.openAppointmentList(date)
+    this.date1=this.getFormattedString(date)
+    console.log(this.date1.split(" ")[0])
+    this.timeInfo.date = this.date1.split(" ")[0];
+    this.open1(this.defaultTabButtonsTpl);
+    this.todaysDate=this.getFormattedString(date)
+  }
+  handleEvent(action: string, event: CalendarEvent): void {
+    this.modalData = { event, action };
+    this.modalService.open(this.modalContent, { size: 'lg' });
+  }
+
+  addEvent({ date }: { date: Date;}): void {
+    this.events = [
+      ...this.events,
+      {
+        title:this.timeInfo.time_type,
+        start:this.viewDate,
+        draggable: true,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true,
+        },
+      },
+    ];
+  }
+    // getEvents(){
+    //   this.apiService.getEvents().subscribe(res=>{    console.log("146",res)        
+    //   for (let value of res)
+    //   {
+    //     this.posts.push(value);
+    //   }
+    // },) }
+
+
+
+  timeShow(){
+    this.time = true;
+    console.log("Time Show");
+    document.getElementById("mySidenav").style.width="0px";
+    document.getElementById("main").style.marginLeft="0px";
+  }
+
   checkRoles(roles) {
     let userRoles = roles.split(",");
     console.log(userRoles);
@@ -104,25 +268,13 @@ export class TimeSummaryComponent implements OnInit {
      }
    }
   
-  timeShow(){
-    this.time = true;
-    console.log("Time Show");
-    document.getElementById("mySidenav").style.width="0px";
-    document.getElementById("main").style.marginLeft="0px";
-  }
-  handleDateClick(arg) {
-    //alert('date click! ' + arg.dateStr)
-    this.timeInfo.date = arg.dateStr;
-    this.open(this.defaultTabButtonsTpl);
-    this.todaysDate=arg.dateStr
-  
-  }
-  open(content) {
+
+  open1(content) {
 
     this.modalService.open(this.defaultTabButtonsTpl, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       console.log("Time Info",this.timeInfo);
       this.timeInfo['user_id']=this.cookieService.get('username');;
-      this.timeInfo['manager_name']=this.userData.manager_id ;
+      this.timeInfo['manager_id']=this.userData.manager_id ;
       this.project_id=this.timeInfo.project_id
 
       this.apiService.addTimeSubmissions(this.timeInfo)
@@ -130,11 +282,11 @@ export class TimeSummaryComponent implements OnInit {
       this.userData = data,
       console.log(data)
       this.apiService.showMessage(Object.values(data),Object.keys(data)),
-      this.timeShow();
-      this.apiService.getEvents().subscribe(res=>{    console.log("146",res)        
+      // this.timeShow();
+      this.apiService.getEvent().subscribe(res=>{    console.log("146",res)        
         for (let value of res){this.posts.push(value);}
       },) ;
-      this.timeShow();
+      // this.timeShow();
   
     });
   
@@ -144,14 +296,5 @@ export class TimeSummaryComponent implements OnInit {
       });
     }
 
-    toggle() {
-      this.show = !this.show;
-  
-      //CHANGE THE NAME OF THE BUTTON.
-      if(this.show)  
-        this.buttonName = "Hide";
-      else
-        this.buttonName = "Show";
-    }
     
 }

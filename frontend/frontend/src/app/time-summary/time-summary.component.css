@@ -11,6 +11,9 @@ h3 {
 
   
 }
+.cal-events {
+  display: none !important;
+}
 .mtop{
   margin-top: 50px;
   margin-bottom: 0px;
@@ -53,8 +56,8 @@ background-color: black;
   background-color:darkgray;  
 }
 .Calendar{
-  padding: 20px 0px 0px 0px ;  
-  color: #24a7f8; ;
+  padding: 20px 20px 20px 20px ;  
+  color: #0d0d0e; ;
   font-size:large ;
   font-weight: bold;
 

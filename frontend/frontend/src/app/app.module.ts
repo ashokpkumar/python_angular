@@ -49,6 +49,8 @@ import {Ng2SearchPipeModule } from "ng2-search-filter";
 import { ForgotPasswodComponent } from './forgot-passwod/forgot-passwod.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component'
 import {MatTabsModule} from '@angular/material/tabs';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -105,7 +107,11 @@ FullCalendarModule.registerPlugins([
     MatNativeDateModule,
     MatInputModule,
     PopoverModule,
-    MatTabsModule
+    MatTabsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    })
   ],
   
   providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule],
