@@ -321,7 +321,7 @@ def getTimeBy():
     #print(user_name)
     if user == 'total':
         if time_type =="project":
-            time_type_list = ['wfh','REG']
+            time_type_list = ['wfh','REG','project']
         else:
             time_type_list = [time_type]
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='approved',timesubmissions.time_type.in_(time_type_list)).all()
@@ -331,12 +331,12 @@ def getTimeBy():
         return (jsonify(serialized_obj)),200
     else:
         if time_type =="project":
-            time_type_list = ['wfh','REG']
+            time_type_list = ['wfh','REG','project']
         elif time_type=="total":
-                time_type_list=['wfh','REG','cl','sl','al','bench','non_project']
+                time_type_list=['wfh','project','REG','cl','sl','al','bench','non_project']
                 print(time_type_list)
         elif time_type=="total_presence":
-                time_type_list=['wfh','REG','bench','non_project']
+                time_type_list=['wfh','project','REG','bench','non_project']
                 print(time_type_list)
         elif time_type=="total_absence":
                 time_type_list=['cl','sl','al']
@@ -421,7 +421,7 @@ def timeData():
         for time in serialized_obj:
             #print(time)
             if time['status']=='approved':
-                if time['time_type']=='wfh' or time['time_type']=='REG':
+                if time['time_type']=='wfh' or time['time_type']=='project':
                     project_time = project_time + time['hours']
                 elif time['time_type']=='sl':
                     sl = sl + time['hours']
@@ -441,6 +441,7 @@ def timeData():
         total_absence = sl + cl + al 
         time_final.append({'user_id':user_id, 'user_name': user_name, 'project_time':project_time,'sl':sl,'cl':cl,'al':al,'non_project':non_project,'bench':bench,'unapproved':unapproved,'total_presence': total_presence,'total_absence':total_absence,'total_hrs':total_hrs})
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    print(total_absence)
     print(time_final)  
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     total_project = 0
