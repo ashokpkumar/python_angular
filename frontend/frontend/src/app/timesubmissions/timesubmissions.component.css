@@ -20,7 +20,7 @@ body {
 
   .container {
     width:auto;
-    padding: 1em;
+    padding: 0em;
     border: chartreuse;
     font-size: small;
     display: grid;
@@ -75,7 +75,7 @@ body {
   font-family: 'Times New Roman', Times, serif;
 }
 .mtop{
-  margin-top: 50px;
+  margin-top: 60px;
   margin-bottom: 0px;
 }
 .time_sub_heading{

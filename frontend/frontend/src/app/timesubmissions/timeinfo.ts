@@ -8,6 +8,9 @@ export class timeSubmissions{
     hours:string
     approved:boolean
     submission_id:string
+    project_code:string
+    description:string
+    remarks:string
   }
   export enum users{
     admin="admin",

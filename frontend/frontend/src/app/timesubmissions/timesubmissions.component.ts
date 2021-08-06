@@ -69,7 +69,7 @@ export class TimesubmissionsComponent implements OnInit {
     else{
       this.router.navigate(['/login']);
     }
-    //this.user_id = "I3186";
+    this.user_id = "I3186";
     // this.user_name = "I3228";
     this.apiService.getSubmissions(this.user_id)
     .subscribe(data=>{

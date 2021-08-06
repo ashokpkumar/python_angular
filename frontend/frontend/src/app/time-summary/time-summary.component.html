@@ -99,7 +99,7 @@
         </div>
         <div>
           <label style="padding: 30px 50px 0px 0px;" >Hours : </label>
-          <input [(ngModel)]="timeInfo.hours" style="width: 250px; padding: 6px 6px 6px 6px;"id="" number="" value="8"><br><br>
+          <input [(ngModel)]="timeInfo.hours" style="width: 250px; padding: 6px 6px 6px 6px;"type="number" id="quantity" name="quantity" min="1" max="8" placeholder="8"><br><br>
         </div>  
         <div>
           <label style="padding: 30px 10px 0px 0px;">Time Type : </label>
@@ -107,12 +107,12 @@
             <option value=CL>CL</option>
             <option value=SL>SL</option>
             <option value=AL>AL</option>
-            <hr class="dashed" style= "border-top: 3px dashed #bbb">
-            <optgroup label="Work From Home">
+            <!-- <hr class="dashed" style= "border-top: 3px dashed #bbb"> -->
+            <!-- <optgroup label="Work From Home"> -->
             <option value=project>Project</option>
             <option value=non_project>Non-Project</option>
             <option value=bench>Bench</option>
-            </optgroup>
+            <!-- </optgroup> -->
           </select>
         </div>
         <!-- <button (click)="toggle()" >WFH</button>
