@@ -46,11 +46,11 @@ CORS(app)
 
 
 Base.metadata.create_all(engine)
-time_master()
-create_sample_employee()
-create_sample_project()
-create_sample_timesubmissions()
-create_sample_authUser()
+# time_master()
+# create_sample_employee()
+# create_sample_project()
+# create_sample_timesubmissions()
+# create_sample_authUser()
 
 
 @app.route("/setpassword", methods=["POST"])
