@@ -70,11 +70,11 @@ export class TimesubmissionsComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     this.user_id = "I3186";
-    // this.user_name = "I3228";
-    this.apiService.getSubmissions(this.user_id)
-    .subscribe(data=>{
-    this.submissionList = data,
-    this.apiService.showMessage(Object.values(data),Object.keys(data))});
+
+    // this.apiService.getSubmissions(this.user_id)
+    // .subscribe(data=>{
+    // this.submissionList = data,
+    // this.apiService.showMessage(Object.values(data),Object.keys(data))});
 
     this.apiService.getTimeData(this.user_id)
     .subscribe(data=>{
@@ -83,6 +83,7 @@ export class TimesubmissionsComponent implements OnInit {
                  console.log(data)                 
                     });
   }
+
   clickNumbers(user,user_name,type){
 
 console.log(user,user_name,type);

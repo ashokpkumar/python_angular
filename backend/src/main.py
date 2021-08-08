@@ -87,10 +87,13 @@ def login():
     if auth_object is None:
         return jsonify({"error": "Username or password is incorrect"}), 200
     emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
-    employee_name = "Full Name"
+    print(emp_obj.first_name)
+    print(emp_obj.last_name)
+    employee_name = (emp_obj.first_name if emp_obj.first_name else "") + (emp_obj.last_name if emp_obj.last_name else "")
     roles = auth_object.roles
     login=True
     access_token = create_access_token(identity=emp_id)
+    print(access_token,emp_id,roles,login,employee_name)
     return jsonify(access_token=access_token,username=emp_id,roles=roles,login=login,employee_name = employee_name)
 
 
@@ -122,56 +125,20 @@ def events():
     session = Session()
     time_objects = session.query(timesubmissions).all()
     serialized_obj = serialize_all(time_objects)
+    print(serialized_obj)
     events_data = []
     for event in serialized_obj:
         eve={}
         eve["title"]="*" + str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
+        print(event["date_info"])
         eve["start"]=event["date_info"]
+        eve["start"] = datetime.datetime.strptime(event["date_info"], "%d/%m/%Y").strftime("%m-%d-%Y")
+        #eve["start"]="Sun Aug 08 2021 00:00:00 GMT+0530 (India Standard Time)"
+        eve["status"]=event["status"]
+
         events_data.append(eve)   
     return jsonify(events_data)
 
-@app.route("/getsampleevents", methods=["POST"])
-def getsampleevents():
-    session = Session()
-    time_objects = session.query(timesubmissions).all()
-    serialized_obj = serialize_all(time_objects)
-    events=[
-    #     {
-    #     "title": 'Event 2',
-    #     "start": "Mon Aug 02 2021 00:00:00 GMT+0530 (India Standard Time)",
-    #     "color": "colors.red",
-    #     "draggable": True,
-    #     "resizable": {
-    #       "beforeStart": True,
-    #       "afterEnd": True,
-    #     }
-        
-    #   }
-    ]
-    for event in serialized_obj:
-        eve={        "color": "colors.red",
-        "draggable": True,
-        "resizable": {
-          "beforeStart": True,
-          "afterEnd": True,
-        }}
-        eve["title"]="*" + str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
-        eve["start"]=str(event["date_info"])
-        eve["end"]=str(event["date_info"])
-        print(eve)
-        events.append(eve) 
-    # session = Session()
-    # time_objects = session.query(timesubmissions).all()
-    # serialized_obj = serialize_all(time_objects)
-    # events = []
-    # for event in serialized_obj:
-    #     eve={}
-    #     eve["title"]="*" + str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
-    #     eve["start"]=event["date_info"]
-    #     events.append(eve)   
-    return jsonify(events)
-    
-    #return jsonify(events),200
 
 @app.route('/announcements')
 def announcement():
@@ -236,17 +203,17 @@ def addtimesubmissions():
     existing_emp = session.query(employee).filter(employee.emp_id == user_id ).first()
     if existing_emp == None:
         return jsonify({'error':'user not available in the employee table'}),200
-    sub_data = timesubmissions( date_info = data.get('date'),
-                                    hours = data.get('hours'),
-                                    user_id = data.get('user_id').lower(),
-                                    project_code = data.get('project_id'),
-                                    manager_id = data.get('manager_id'),
-                                    time_type = data.get('time_type').lower(),
-                                    status = 'Unapproved',
-                                    submission_id = data.get('user_id') + data.get('user_id') + data.get('time_type').lower(),
-                                    task_id=data.get('task_id'),
-                                    description=data.get('description'),
-                                    remarks=data.get('remarks')     
+    sub_data = timesubmissions( date_info = data.get('date',None),
+                                    hours = data.get('hours',None),
+                                    user_id = data.get('user_id',None).lower(),
+                                    project_code = data.get('project_id',None),
+                                    manager_id = data.get('manager_id',None),
+                                    time_type = data.get('time_type',None).lower(),
+                                    status = 'unapproved',
+                                    submission_id = data.get('user_id',None) + data.get('user_id',None) + data.get('time_type',None).lower(),
+                                    task_id=data.get('task_id',None),
+                                    description=data.get('description',None),
+                                    remarks=data.get('remarks',None)     
                                 )
     session = Session()
     session.add(sub_data)
@@ -575,39 +542,7 @@ def review_time():
         session.close()
         return jsonify({"info":"Time has been reviewed"})
 
-
-schema ={
-    "type": "object",
-    "properties": {
-      "emp_id":{"type":"string"},
-      "email": { "type": "string", "format": "email","pattern":"^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"},
-       "first_name": { "type": "string", "minLength": 2, "maxLength": 50 },
-       "last_name": { "type": "string", "minLength": 2, "maxLength": 50 },
-       "sur_name": { "type": "string", "minLength": 2, "maxLength": 50 },
-       "initial": { "type": "string", "minLength": 0, "maxLength": 4 },
-       "salutation": { "type": "string", "minLength": 2,  },
-       "project_code": { "type": "string", "minLength": 2, "maxLength": 50 },
-       "dept": { "type": "string", "minLength": 2, "maxLength": 50 },
-       "designation": { "type": "string", "minLength": 2, "maxLength": 100 },
-       "emp_start_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
-       "emp_last_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
-       "emp_project_assigned_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
-       "emp_project_end_date":  { "type": "string","format": "date","pattern":"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"},
-       "employment_status": {  "type": "string", "minLength": 2, "maxLength": 50},
-       "manager_name": { "type": "string", "minLength": 2, "maxLength": 50 },
-       "manager_dept": { "type": "string", "minLength": 2, "maxLength": 50 },
-       "resource-status": { "type": "string", "minLength": 1, "maxLength": 100 },
-       "delivery_type": { "type": "string", "minLength": 1, "maxLength": 50 },
-       "additional_allocation": { "type": "string", "minLength": 2, "maxLength": 100 },
-       "skills": { "type": "string", "minLength": 2, "maxLength": 100 },
-       "roles": { "type": "string", "minLength": 2, "maxLength": 100 },
-    },
-    "required": [ "emp_id", "email", "first_name","last_name","sur_name","initial","salutation","project_code",
-    "dept","designation","employment_status","manager_name","manager_dept","resource_status","delivery_type","additional_allocation","skills","roles"]
-  }
-
 @app.route('/addEmployee', methods=['POST'])
-@expects_json(schema)
 def addEmployee():
     data = request.get_json()
     emp_id=data.get("emp_id")

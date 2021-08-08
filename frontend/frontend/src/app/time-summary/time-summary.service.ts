@@ -10,13 +10,7 @@ export class TimesummaryService {
   constructor(public toastr: ToastrService,private http: HttpClient) {
   }
 
-  onSubmit(userInfo:userInfo): Observable<any> {
-    const headers = { 'content-type': 'application/json'}  
-    const body=JSON.stringify(userInfo);
-    console.log(body)
-    return this.http.post(`${API_URL}/viewEmpInfo`, body,{'headers':headers})
-  }
-  
+
   showMessage(message, title){
     if (title=='success'){
         this.toastr.success(message, title)
@@ -30,25 +24,18 @@ export class TimesummaryService {
         this.toastr.warning(message, title)
     }    
 } 
+
   addTimeSubmissions(timeInfo:timeinfo): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(timeInfo);
     console.log(body)
     return this.http.post(`${API_URL}/addtimesubmissions`, body,{'headers':headers})
   }
+
   getEvents():Observable<any>{
     return this.http.get(`${API_URL}/events`);
   }
-  getEvent(): Observable<any> {
-    const headers = { 'content-type': 'application/json'}  
-    const body="";
-    console.log(body)
-    return this.http.post(`${API_URL}/getsampleevents`, body,{'headers':headers})
-  }
-  getExams() {
-    return this.http.get(`${API_URL}/employees`);
- }
-  getProjects() {
-     return this.http.get(`${API_URL}/projects`);
-  }
+
+ 
+
 }

@@ -49,7 +49,10 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     console.log("Project",this.project)
     this.apiService.addProject(this.project)
-    .subscribe(data=>{
+    .subscribe(data=>
+      
+      {
+        console.log(data),
       console.log(Object.keys(data));
       console.log(data['error']);
       console.log((Object.keys(data).indexOf('error')>-1));
@@ -58,7 +61,8 @@ export class LoginComponent implements OnInit {
           console.log(data['error'])
           this.apiService.showMessage(Object.values(data),Object.keys(data))
 
-      }else if(Object.keys(data).indexOf('access_token')>-1){
+      }
+      else if(Object.keys(data).indexOf('access_token')>-1){
         console.log("Coming inside Success",data);
         this.apiService.showMessage('Welcome : ' + data['employee_name'],'success');
         console.log(data["access_token"]);
@@ -68,7 +72,9 @@ export class LoginComponent implements OnInit {
         this.cookieService.set('roles',data['roles']);
         this.cookieService.set('login',data['login']);
         this.router.navigate(['/']);
-      }else if(Object.keys(data).indexOf('warning')>-1){
+      }
+      
+      else if(Object.keys(data).indexOf('warning')>-1){
         this.apiService.showMessage(Object.values(data),Object.keys(data));
         this.forgotPass=true;
       }

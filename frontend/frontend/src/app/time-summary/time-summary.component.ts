@@ -32,6 +32,10 @@ import { ChangeDetectionStrategy } from '@angular/core';
       primary: '#e3bc08',
       secondary: '#FDF1BA',
     },
+    green: {
+      primary: '#2aed0c',
+      secondary: '#2aed0c',
+    },
   };
 
 
@@ -41,9 +45,10 @@ import { ChangeDetectionStrategy } from '@angular/core';
   templateUrl: './time-summary.component.html',
   styleUrls: ['./time-summary.component.css']
 })
+
 export class TimeSummaryComponent implements OnInit {
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-  //calendarOptions: CalendarOptions;
+  
+  // @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
   posts = [];
   data = {};
   public time:boolean = false;
@@ -74,56 +79,23 @@ export class TimeSummaryComponent implements OnInit {
     event: CalendarEvent;
   };
 
-  @ViewChild('content')
+  // @ViewChild('content')
   private defaultTabButtonsTpl: TemplateRef<any>;
+  constructor(private router: Router,private modal: NgbModal,private apiService: TimesummaryService,private http: HttpClient,private cookieService: CookieService) { }
   ngOnInit(): void {
     if (this.cookieService.get('login')=='true'){
       this.roles=this.cookieService.get('roles');
       this.user_id=this.cookieService.get('username')
-      this.checkRoles(this.roles)
+      // this.checkRoles(this.roles)
     }
-    else{
-      this.router.navigate(['/login']);
-    }
-    this.userInfo.emp_id = this.cookieService.get('username');
-    this.apiService.onSubmit(this.userInfo)
-    .subscribe(data=>{console.log("Employee Data: ",data),
-    this.userData = data,
-    //this.apiService.showMessage(Object.values(data),Object.keys(data))});
-    this.apiService.getEvent().subscribe(data=>{console.log("Time Data: ",data),
-                                                this.events = data
-                                              });
-    this.apiService.showMessage(Object.values(data),Object.keys(data))});
+    else{      this.router.navigate(['/login']);   }
+this.getEvents();
+// this.addEvent();
+this.dayClicked(this.date)
 
-
-    this.time=false;
-
-    // setTimeout(() => {
-    //   //if (this.userInfo.emp_id==this.user_id) {}
-    //    return this.apiService.getEvents().subscribe(res=>{
-    //      console.log("Result",res);
-    //      for (let value of res){
-    //        //console.log("Iteration",value)
-    //        this.posts.push(value);
-    //      }
- 
-    //    },console.error) ;
-    
-  
-    //  }, 2000);
-    //  setTimeout(() => {
-    //    this.events = {
-    //    view1: string = 'month';,
-    //    dateClick: this.dayClicked.bind(this), // bind is important!
-    //    events: this.posts
-    //    };
-    //  }, 3000);
   }
+  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
-  
-  setView(view: CalendarView) {
-    this.view = view;
-  }
 
   actions: CalendarEventAction[] = [
     {
@@ -142,67 +114,18 @@ export class TimeSummaryComponent implements OnInit {
       },
     },
   ];
-  getEvent(){
-    this.apiService.getEvent().subscribe(data=>{console.log("Time Data: ",data),
-                                                this.events = data,
-                                                console.log(this.events[1])
-                                                this.events[1]["start"]=addHours(startOfDay(new Date()), 2)
-                                                //this.events[0]["start"]=addHours(startOfDay(new Date()), 1)
-                                                console.log(this.events)
-    });
-  }
 
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [ 
-    // {
-    //   start: subDays(startOfDay(new Date()), 1),
-    //   end: addDays(new Date(), 1),
-    //   title: 'A 3 day event',
-    //   color: colors.red,
-    //   allDay: true,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-    // {
-    //   start: startOfDay(new Date()),
-    //   title: 'An event with no end date',
-    //   color: colors.yellow,
-    // },  
-    // {
-    //   start: subDays(endOfMonth(new Date()), 3),
-    //   end: addDays(endOfMonth(new Date()), 3),
-    //   title: 'A long event that spans 2 months',
-    //   allDay: true,
-    // },
-    // {
-    //   start: addHours(startOfDay(new Date()), 2),
-    //   end: addHours(new Date(), 2),
-    //   title: 'A draggable and resizable event',
-    //   color: colors.yellow,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
+  events: CalendarEvent[] = [
+  
   ];
 
-  activeDayIsOpen: boolean = false;
+  activeDayIsOpen: boolean = true;
 
-  closeOpenMonthViewDay() {
-    this.activeDayIsOpen = false;
-  }
 
-  getFormattedString(d){
-    return d.getDate() + "/"+(d.getMonth()+1) +"/"+ d.getFullYear() + ' '+d.toString().split(' ')[4]
-  }
-  constructor(private router: Router,private modalService: NgbModal,private apiService: TimesummaryService,private http: HttpClient,private cookieService: CookieService) { }
-  
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    // console.log("Day Clicked")
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -212,89 +135,72 @@ export class TimeSummaryComponent implements OnInit {
       } else {
         this.activeDayIsOpen = true;
       }
+      // console.log(events)
       this.viewDate = date;
     }
-    console.log(date);
-    //this.openAppointmentList(date)
-    this.date1=this.getFormattedString(date)
-    console.log(this.date1.split(" ")[0])
-    this.timeInfo.date = this.date1.split(" ")[0];
-    this.open1(this.defaultTabButtonsTpl);
-    this.todaysDate=this.getFormattedString(date)
-  }
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modalService.open(this.modalContent, { size: 'lg' });
   }
 
-  addEvent({ date }: { date: Date;}): void {
-    this.events = [
-      ...this.events,
-      {
-        title:this.timeInfo.time_type,
-        start:this.viewDate,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
-    // getEvents(){
-    //   this.apiService.getEvents().subscribe(res=>{    console.log("146",res)        
-    //   for (let value of res)
-    //   {
-    //     this.posts.push(value);
-    //   }
-    // },) }
-
-
-
-  timeShow(){
-    this.time = true;
-    console.log("Time Show");
-    document.getElementById("mySidenav").style.width="0px";
-    document.getElementById("main").style.marginLeft="0px";
-  }
-
-  checkRoles(roles) {
-    let userRoles = roles.split(",");
-    console.log(userRoles);
-     for (const role of userRoles) {
-       if ( role==users.employees,users.manager,users.projectManager) {
-         this.isVisible = true;
-       } 
-     }
-   }
-  
-
-  open1(content) {
-
-    this.modalService.open(this.defaultTabButtonsTpl, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      console.log("Time Info",this.timeInfo);
-      this.timeInfo['user_id']=this.cookieService.get('username');;
-      this.timeInfo['manager_id']=this.userData.manager_id ;
-      this.project_id=this.timeInfo.project_id
-
-      this.apiService.addTimeSubmissions(this.timeInfo)
-      .subscribe(data=>{console.log("Employee Data: ",data),
-      this.userData = data,
-      console.log(data)
-      this.apiService.showMessage(Object.values(data),Object.keys(data)),
-      // this.timeShow();
-      this.apiService.getEvent().subscribe(res=>{    console.log("146",res)        
-        for (let value of res){this.posts.push(value);}
-      },) ;
-      // this.timeShow();
-  
+  eventTimesChanged({
+    event,
+    newStart,
+    newEnd,
+  }: CalendarEventTimesChangedEvent): void {
+    this.events = this.events.map((iEvent) => {
+      if (iEvent === event) {
+        return {
+          ...event,
+          start: newStart,
+          end: newEnd,
+        };
+      }
+      return iEvent;
     });
-  
-      
-      }, (reason) => {
-  
-      });
-    }
+    this.handleEvent('Dropped or resized', event);
+  }
+
+  handleEvent(action: string, event: CalendarEvent): void {
+    // console.log("Clicked");
+    this.modalData = { event, action };
+    this.modal.open(this.modalContent, { size: 'lg' });
+  }
+
+  getEvents(): void {
+    this.apiService.getEvents()
+    .subscribe(data=>{
+                 for (let value of data){
+                   if (value.status=="unapproved"){
+                    value.color=colors.yellow
+                   }
+                   if (value.status=="approved"){
+                    value.color=colors.green
+                   }
+                   if (value.status=="rejected"){
+                    value.color=colors.red
+                   }
+
+                  // console.log(value.start)
+                  value.start = startOfDay(new Date(value.start))
+
+                  // console.log(new Date())
+                      //  console.log("",value)
+                 }
+                 this.events = data;
+                    });
+
+
+  }
+
+  deleteEvent(eventToDelete: CalendarEvent) {
+    this.events = this.events.filter((event) => event !== eventToDelete);
+  }
+
+  setView(view: CalendarView) {
+    this.view = view;
+  }
+
+  closeOpenMonthViewDay() {
+    this.activeDayIsOpen = false;
+  }
 
     
 }
