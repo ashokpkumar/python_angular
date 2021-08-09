@@ -99,7 +99,7 @@
         </div>
         <div>
           <label style="padding: 30px 50px 0px 0px;" >Hours : </label>
-          <input [(ngModel)]="timeInfo.hours" style="width: 250px; padding: 6px 6px 6px 6px;"type="number" id="quantity" name="quantity" min="1" max="8" placeholder="8"><br><br>
+          <input [(ngModel)]="timeInfo.hours" style="width: 250px; padding: 6px 6px 6px 6px;"type="number" id="quantity" name="quantity" min="1" max="8" ><br><br>
         </div>  
         <div>
           <label style="padding: 30px 10px 0px 0px;">Time Type : </label>
@@ -157,7 +157,7 @@
         </div>
           </div>
           <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');"(click)="addEvent()">Submit Time info</button> -->
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');">Submit Time info</button>
           <!-- <button type="button"  (click)="addEvent(date1)">Add Time info</button> -->
         </div>
   </ng-template>

@@ -79,9 +79,9 @@ export class TimeSummaryComponent implements OnInit {
     event: CalendarEvent;
   };
 
-  // @ViewChild('content')
+  @ViewChild('content')
   private defaultTabButtonsTpl: TemplateRef<any>;
-  constructor(private router: Router,private modal: NgbModal,private apiService: TimesummaryService,private http: HttpClient,private cookieService: CookieService) { }
+  // constructor(private router: Router,private modalService: NgbModal,private apiService: TimesummaryService,private http: HttpClient,private cookieService: CookieService) { }
   ngOnInit(): void {
     if (this.cookieService.get('login')=='true'){
       this.roles=this.cookieService.get('roles');
@@ -89,9 +89,10 @@ export class TimeSummaryComponent implements OnInit {
       // this.checkRoles(this.roles)
     }
     else{      this.router.navigate(['/login']);   }
-this.getEvents();
-// this.addEvent();
-this.refresh_page(this.date)
+  this.getEvents();
+  // this.addEvent();
+  this.dayClicked(this.date)
+  this.refresh_page(this.date)
 
   }
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
@@ -121,7 +122,7 @@ this.refresh_page(this.date)
   
   ];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
 
   refresh_page({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -139,6 +140,10 @@ this.refresh_page(this.date)
       this.viewDate = date;
     }
   }
+  getFormattedString(d){
+    return d.getDate() + "/"+(d.getMonth()+1) +"/"+ d.getFullYear() + ' '+d.toString().split(' ')[4]
+  }
+  constructor(private router: Router,private modalService: NgbModal,private apiService: TimesummaryService,private http: HttpClient,private cookieService: CookieService) { }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     // console.log("Day Clicked")
@@ -154,6 +159,14 @@ this.refresh_page(this.date)
       // console.log(events)
       this.viewDate = date;
     }
+
+    console.log(date);
+    //this.openAppointmentList(date)
+    this.date1=this.getFormattedString(date)
+    console.log(this.date1.split(" ")[0])
+    this.timeInfo.date = this.date1.split(" ")[0];
+    this.open1(this.defaultTabButtonsTpl);
+    this.todaysDate=this.getFormattedString(date)
   }
 
   eventTimesChanged({
@@ -177,7 +190,7 @@ this.refresh_page(this.date)
   handleEvent(action: string, event: CalendarEvent): void {
     // console.log("Clicked");
     this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    this.modalService.open(this.modalContent, { size: 'lg' });
   }
 
   getEvents(): void {
@@ -217,6 +230,31 @@ this.refresh_page(this.date)
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+  open1(content) {
+    this.modalService.open(this.defaultTabButtonsTpl, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      console.log("Time Info",this.timeInfo);
+      this.timeInfo['user_id']=this.cookieService.get('username');;
+      this.timeInfo['manager_id']=this.userData.manager_id ;
+      this.project_id=this.timeInfo.project_id
 
+      this.apiService.addTimeSubmissions(this.timeInfo)
+      .subscribe(data=>{console.log("Employee Data: ",data),
+      this.userData = data,
+      console.log(data)
+      this.apiService.showMessage(Object.values(data),Object.keys(data)),
+      this.router.onSameUrlNavigation = 'reload';
+      // this.timeShow();
+      this.apiService.getEvents().subscribe(res=>{    console.log("146",res)        
+        for (let value of res){this.posts.push(value);}
+      },) ;
+      // this.timeShow();
+  
+    });
+  
+      
+      }, (reason) => {
+  
+      });
+    }
     
 }

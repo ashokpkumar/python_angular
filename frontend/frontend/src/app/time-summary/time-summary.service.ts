@@ -25,6 +25,14 @@ export class TimesummaryService {
     }    
 } 
 
+onSubmit(userInfo:userInfo): Observable<any> {
+  const headers = { 'content-type': 'application/json'}  
+  const body=JSON.stringify(userInfo);
+  console.log(body)
+  return this.http.post(`${API_URL}/viewEmpInfo`, body,{'headers':headers})
+}
+
+
   addTimeSubmissions(timeInfo:timeinfo): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(timeInfo);
