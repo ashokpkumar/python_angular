@@ -322,6 +322,14 @@ def getTimeBy():
     if user == 'total':
         if time_type =="project":
             time_type_list = ['wfh','REG','project']
+        elif time_type=="total_presence":
+            time_type_list=['wfh','project','REG','bench','non_project']
+        elif time_type=="total_hrs":
+            time_type_list=['wfh','project','REG','cl','sl','al','bench','non_project']
+            print(time_type_list)
+        elif time_type=="total_absence":
+            time_type_list=['cl','sl','al']
+            print(time_type_list)
         else:
             time_type_list = [time_type]
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='approved',timesubmissions.time_type.in_(time_type_list)).all()
@@ -403,10 +411,8 @@ def timeData():
         sl = 0
         cl=0
         al=0
-        total_presence=0
         non_project=0
         bench=0
-        total_absence=0
         user_id = emp
         unapproved=0
         first_name=session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
@@ -421,7 +427,7 @@ def timeData():
         for time in serialized_obj:
             #print(time)
             if time['status']=='approved':
-                if time['time_type']=='wfh' or time['time_type']=='project':
+                if time['time_type']=='wfh' or time['time_type']=='project':  
                     project_time = project_time + time['hours']
                 elif time['time_type']=='sl':
                     sl = sl + time['hours']
@@ -448,26 +454,29 @@ def timeData():
     total_sl = 0
     total_cl = 0
     total_al = 0
-    total_total_presence=0
-    total_total_absence=0
+    total_presence=0
+    total_absence=0
     total_non_project=0
     total_bench = 0
-    total_total_hrs=0
+    total_hrs=0
     total_unapproved = 0
     first_name=session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
     for emp_data in time_final:
         total_project = total_project  + emp_data['project_time']
         total_sl = total_sl  + emp_data['sl']   
         total_cl = total_cl  + emp_data['cl']
-        total_total_presence = total_total_presence  + emp_data['total_presence']
-        total_total_absence = total_total_absence  + emp_data['total_absence']
-        total_total_hrs = total_total_hrs  + emp_data['total_hrs']
+        total_presence = total_presence  + emp_data['total_presence']
+        total_absence = total_absence  + emp_data['total_absence']
+        total_hrs = total_hrs  + emp_data['total_hrs']
         total_al = total_al  + emp_data['al']
         total_non_project=total_non_project + emp_data['non_project']
         total_bench = total_bench  + emp_data['bench']
         total_unapproved = total_unapproved + emp_data['unapproved']
-    total_time_list = {'total_project':total_project,'total_total_presence':total_total_presence,'total_total_absence':total_total_absence,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_non_project':total_non_project,'total_bench':total_bench,'total_total_hrs':total_total_hrs,'total_unapproved':total_unapproved, }
+    total_time_list = {'total_project':total_project,'total_presence':total_presence,'total_absence':total_absence,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_non_project':total_non_project,'total_bench':total_bench,'total_hrs':total_hrs,'total_unapproved':total_unapproved, }
     print(total_time_list)
+    print(total_presence)
+    print(total_absence)
+    print(total_hrs)
     #time_final.append({'total_project':total_project,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_bench':total_bench,'total_unapproved':total_unapproved, })
     return (jsonify({'result':time_final,'total':total_time_list}))
     

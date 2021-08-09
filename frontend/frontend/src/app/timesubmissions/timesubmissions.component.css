@@ -233,11 +233,13 @@ border: 1px solid #24a7f8;
   z-index: 1; 
   border-radius: 8px;
   background: #ffffff;
-  padding-top: 0px;
+  padding-top: 10px;
   left: 0;
   top: 0; 
-  overflow-wrap: scroll;
+  
+  
 }
+
   .modal-title{
       width: 120%;
       text-align: center;
@@ -246,11 +248,28 @@ border: 1px solid #24a7f8;
   .modal-body{
     width: 130%;
     padding: 10px 10px 10px 10px ; 
-    overflow-y: auto;
+    table-layout: center;  
+    max-height: 90vh;
+    overflow-y: auto;  
+  }
+  ::-webkit-scrollbar {
+    height: 0px;
+    width: 8px;
+    border: 1px solid #fff;
+  }
+  
+  ::-webkit-scrollbar-track {
+    border-radius: 0;
+    background: #eeeeee;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background: #b0b0b0;
   }
   .modal-footer{
     width: 75%;
-    padding: 15px  ;
+    padding: 15px ;
     justify-content:center;
 
   }
@@ -299,4 +318,7 @@ border: 1px solid #24a7f8;
   padding: 5px;
   overflow: auto;
 
+}
+.p{
+  font-size: 30px;
 }
