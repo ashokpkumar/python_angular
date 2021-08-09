@@ -103,14 +103,14 @@
             <td><a (click)="clickNumbers('total',this.modaluser_name,'non_project')"><u>{{totalTime['total_non_project']}}</u></a></td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'bench')"><u>{{totalTime['total_bench']}}</u></a></td>
             <!-- <td></td> -->
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'total_total_presence')"><u>{{totalTime['total_total_presence']}}</u></a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'total_presence')"><u>{{totalTime['total_presence']}}</u></a></td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'sl')"><u>{{totalTime['total_sl']}}</u></a></td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'cl')"><u>{{totalTime['total_cl']}}</u></a></td>
             <td><a (click)="clickNumbers('total',this.modaluser_name,'al')"><u>{{totalTime['total_al']}}</u></a></td>
             <!-- <td></td> -->
             <!-- <td></td> -->
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'total_total_presence')"><u>{{totalTime['total_total_absence']}}</u></a></td>
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'total_total_hrs')"><u>{{totalTime['total_total_hrs']}}</u></a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'total_absence')"><u>{{totalTime['total_absence']}}</u></a></td>
+            <td><a (click)="clickNumbers('total',this.modaluser_name,'total_hrs')"><u>{{totalTime['total_hrs']}}</u></a></td>
             <td><a (click)="clickNumbers('total','total','unapproved')"><u>{{totalTime['total_unapproved']}}</u></a></td>
           </tr>
         </tfoot>
@@ -197,7 +197,7 @@
   <ng-template #unapproved let-modal>
     <div class="modal_1">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Review Time:{{this.modaluser_name}}({{this.modaltime_type}})</h4>
+      <h4 class="modal-title" id="modal-basic-title">Review Time : {{this.modaluser_name}}({{this.modaltime_type}})</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -271,13 +271,15 @@
   <ng-template #approved let-modal>
   <div class ="modal_1">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Time Info : {{this.modaluser_name}}({{this.modaltime_type}})</h4>
+      <h4 class="modal-title" id="modal-basic-title">Time Info </h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
       <div class="containerRT" *ngIf="timeClicked?.length > 0 ">
+        <p> Submission : {{this.modaluser_name}}</p>
+        <p>Time Type : {{this.modaltime_type}}</p>
         <div class="time_submission_tableRT">
           <table>
             <thead>
