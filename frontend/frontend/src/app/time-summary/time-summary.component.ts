@@ -91,7 +91,7 @@ export class TimeSummaryComponent implements OnInit {
     else{      this.router.navigate(['/login']);   }
 this.getEvents();
 // this.addEvent();
-this.dayClicked(this.date)
+this.refresh_page(this.date)
 
   }
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
@@ -123,6 +123,22 @@ this.dayClicked(this.date)
 
   activeDayIsOpen: boolean = true;
 
+
+  refresh_page({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    // console.log("Day Clicked")
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
+      // console.log(events)
+      this.viewDate = date;
+    }
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     // console.log("Day Clicked")
