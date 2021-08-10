@@ -50,6 +50,7 @@ export class EmployeesComponent implements OnInit {
 
     if (this.cookieService.get('login') == 'true') {
     this.roles=this.cookieService.get('roles');
+    console.log("ROLES",this.cookieService.get('roles'));
     this.checkRoles(this.roles)
   }
     else {

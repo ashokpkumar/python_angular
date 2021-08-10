@@ -65,6 +65,7 @@ export class ViewProjectsComponent implements OnInit {
       this.projectListSubs = this.projectApi
         .getProjects()
         .subscribe(res => {
+          console.log(res)
           this.project_list = res;
           
           this.copyProjList = res
@@ -95,7 +96,7 @@ export class ViewProjectsComponent implements OnInit {
         },
 
         );
-
+console.log(this.project_list)
 
     } else {
 

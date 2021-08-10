@@ -18,9 +18,7 @@ export class SideBarComponent implements OnInit {
   isVisible: boolean=false;
 
   logout(){
-    
     this.cookieService.set('login','false');
-    
     this.router.navigate(['/login']);
   }
 
@@ -28,7 +26,10 @@ export class SideBarComponent implements OnInit {
     if(this.cookieService.get('login')=='true'){
       this.login=true;
     }
-
+    console.log("ACCESS TOKEN",this.cookieService.get('access_token'));
+    console.log("USERNAME",this.cookieService.get('username'));
+    console.log("ROLES",this.cookieService.get('roles'));
+    console.log("role type",typeof(this.cookieService.get('roles')));
   }
   employeeDropDown=(value,id)=>{
     this.dropDownList[value] = ! this.dropDownList[value]

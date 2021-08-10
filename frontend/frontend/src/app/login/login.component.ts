@@ -58,9 +58,9 @@ export class LoginComponent implements OnInit {
       else if(Object.keys(data).indexOf('access_token')>-1){
         
         this.apiService.showMessage('Welcome : ' + data['employee_name'],'success');
-       
         this.cookieService.set('access_token',data['access_token']);
         this.cookieService.set('username',data['username']);
+      
         this.cookieService.set('roles',data['roles']);
         this.cookieService.set('login',data['login']);
     
