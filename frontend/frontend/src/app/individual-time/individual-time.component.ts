@@ -12,10 +12,8 @@ export class IndividualTimeComponent implements OnInit {
   ngOnInit(): void {
     this.user_name = "I3186";
     this.apiService.getTimeData(this.user_name)
-    .subscribe(data=>{console.log("Time Data: ",data),
-                 this.timeDatas = data.result,
-                   console.log(typeof( this.timeDatas)),
-                   console.log(this.timeDatas)
+    .subscribe(data=>{
+                 this.timeDatas = data.result
 
 
                     

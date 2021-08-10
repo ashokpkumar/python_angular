@@ -38,7 +38,8 @@ export class AccountSummaryComponent implements OnInit {
     }
     this.userInfo.emp_id = this.cookieService.get('username');
     this.apiService.onSubmit(this.userInfo)
-    .subscribe(data=>{console.log("Employee Data: ",data),
+    .subscribe(data=>{
+      
     this.userData = data,
     this.apiService.showMessage(Object.values(data),Object.keys(data))});
 
@@ -48,9 +49,9 @@ export class AccountSummaryComponent implements OnInit {
 
     setTimeout(() => {
           return this.apiService.getEvents().subscribe(res=>{
-            console.log("Result",res);
+          
             for (let value of res){
-              console.log("Iteration",value)
+            
               this.posts.push(value);
             }
  
@@ -75,13 +76,13 @@ export class AccountSummaryComponent implements OnInit {
   }
 
   openNav(){
-    console.log("Menu is being clicked");
+  
     document.getElementById("mySidenav").style.width="250px";
     document.getElementById("main").style.marginLeft="250px";
 
   }
   closeNav(){
-    console.log("Menu is being clicked");
+ 
     document.getElementById("mySidenav").style.width="0px";
     document.getElementById("main").style.marginLeft="0px";
 
@@ -104,7 +105,7 @@ export class AccountSummaryComponent implements OnInit {
     this.professional = false;
     this.personal = false;
     this.time = true;
-    console.log("Time Show");
+ 
     document.getElementById("mySidenav").style.width="0px";
     document.getElementById("main").style.marginLeft="0px";
   }
@@ -121,16 +122,16 @@ export class AccountSummaryComponent implements OnInit {
   open(content) {
   
     this.modalService.open(this.defaultTabButtonsTpl, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      console.log("Time Info",this.timeInfo);
+     
       this.timeInfo['user_name']=this.cookieService.get('username');;
       this.timeInfo['manager_name']=this.cookieService.get('username');;
 
       this.apiService.addTimeSubmissions(this.timeInfo)
-    .subscribe(data=>{console.log("Employee Data: ",data),
+    .subscribe(data=>{
     this.userData = data,
     this.apiService.showMessage(Object.values(data),Object.keys(data)),
     this.timeShow();
-    this.apiService.getEvents().subscribe(res=>{    console.log("146",res)        
+    this.apiService.getEvents().subscribe(res=>{          
       for (let value of res){this.posts.push(value);}
     },) ;
     this.timeShow();

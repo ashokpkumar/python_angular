@@ -13,7 +13,7 @@ export class ResetPasswordService {
  resetPassword(value): Observable<any> {
     const headers = { 'content-type': 'application/json'};
     const body=JSON.stringify(value);
-    console.log(value);
+   
      return this.http.post(`${API_URL}/reset_pass`, body,{'headers':headers})
   }
 }

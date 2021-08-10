@@ -13,7 +13,7 @@ export class accountService {
   onSubmit(userInfo:userInfo): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(userInfo);
-    console.log(body)
+   
     return this.http.post(`${API_URL}/viewEmpInfo`, body,{'headers':headers})
   }
 
@@ -37,7 +37,7 @@ getEvents():Observable<any>{
 addTimeSubmissions(timeInfo:timeInfo): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(timeInfo);
-    console.log(body)
+   
     return this.http.post(`${API_URL}/addtimesubmissions`, body,{'headers':headers})
   }
 

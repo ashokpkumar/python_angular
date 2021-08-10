@@ -28,7 +28,7 @@ export class addEmployeeService{
     addEmployee(employee:employee):Observable<any>{
         const headers = { 'content-type': 'application/json'}  
         const body=JSON.stringify(employee);
-        console.log(body);
+       
         return this.http.post(`${API_URL}/addEmployee`, body,{'headers':headers})
     }
 }

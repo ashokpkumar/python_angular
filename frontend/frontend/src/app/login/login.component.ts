@@ -25,10 +25,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.forgotPass=false
-    console.log("TOKEN from ngoninit",this.cookieService.get("access_token"));
-    console.log("Username",this.cookieService.get('username'));
-    console.log("roles",this.cookieService.get('roles'));
-    console.log('login',this.cookieService.get('login'));
+    
     if(this.cookieService.get('login')=='true'){
         this.login=true;
     }else{
@@ -38,7 +35,7 @@ export class LoginComponent implements OnInit {
   }
   createPassword(){
     this.apiService.setPassword(this.project)
-    .subscribe(data=>{console.log(data);
+    .subscribe(data=>{
       this.router.navigate(['/']);
       this.login=false;
       this.apiService.showMessage(Object.values(data),Object.keys(data));
@@ -47,31 +44,29 @@ export class LoginComponent implements OnInit {
 
       }
   onSubmit() {
-    console.log("Project",this.project)
+   
     this.apiService.addProject(this.project)
     .subscribe(data=>
       
       {
-        console.log(data),
-      console.log(Object.keys(data));
-      console.log(data['error']);
-      console.log((Object.keys(data).indexOf('error')>-1));
-
+        
       if (Object.keys(data).indexOf('error')>-1){
-          console.log(data['error'])
+          
           this.apiService.showMessage(Object.values(data),Object.keys(data))
 
       }
       else if(Object.keys(data).indexOf('access_token')>-1){
-        console.log("Coming inside Success",data);
+        
         this.apiService.showMessage('Welcome : ' + data['employee_name'],'success');
-        console.log(data["access_token"]);
-        console.log(typeof(data["access_token"]));
+       
         this.cookieService.set('access_token',data['access_token']);
         this.cookieService.set('username',data['username']);
         this.cookieService.set('roles',data['roles']);
         this.cookieService.set('login',data['login']);
-        this.router.navigate(['/']);
+    
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/']);
       }
       
       else if(Object.keys(data).indexOf('warning')>-1){
@@ -79,12 +74,11 @@ export class LoginComponent implements OnInit {
         this.forgotPass=true;
       }
     })
-    console.log(this.project);
+ 
   }
   logout(){
     this.cookieService.set('login','false');
-    console.log("Logged out");
-    console.log(this.cookieService.get('login'));
+
     this.router.navigate(['/']);
     this.ngOnInit();
     this.apiService.showMessage("You have successfully logged out !","info");

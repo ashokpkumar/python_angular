@@ -17,7 +17,7 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
   this.token = this.route.snapshot.queryParams.token;
    this.email = this.route.snapshot.queryParams.email;
-   console.log(this.email)
+ 
 
 
   }
@@ -31,7 +31,7 @@ export class ResetPasswordComponent implements OnInit {
     this.apiServices.resetPassword(resetPass)
     .subscribe(data=>{
       alert("Reset password done");
-      console.log(data)
+   
     },
     err => {
     this.router.navigate(['/login']);

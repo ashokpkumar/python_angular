@@ -83,16 +83,19 @@ export class TimeSummaryComponent implements OnInit {
   private defaultTabButtonsTpl: TemplateRef<any>;
   // constructor(private router: Router,private modalService: NgbModal,private apiService: TimesummaryService,private http: HttpClient,private cookieService: CookieService) { }
   ngOnInit(): void {
+   
     if (this.cookieService.get('login')=='true'){
       this.roles=this.cookieService.get('roles');
       this.user_id=this.cookieService.get('username')
       // this.checkRoles(this.roles)
     }
     else{      this.router.navigate(['/login']);   }
+    this.getUserData(this.user_id);
   this.getEvents();
   // this.addEvent();
-  this.dayClicked(this.date)
-  this.refresh_page(this.date)
+  this.dayClicked(this.date);
+  // this.refresh_page(this.date);
+ 
 
   }
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
@@ -124,9 +127,17 @@ export class TimeSummaryComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
+  getUserData(user_id){
+    this.apiService.getUserInfo(user_id)
+    .subscribe(data=>{
+      
+      this.userData.project_code = data.project_code.split(",");
+     
+    })
+  }
 
   refresh_page({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    // console.log("Day Clicked")
+  
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -136,7 +147,7 @@ export class TimeSummaryComponent implements OnInit {
       } else {
         this.activeDayIsOpen = true;
       }
-      // console.log(events)
+  
       this.viewDate = date;
     }
   }
@@ -146,7 +157,7 @@ export class TimeSummaryComponent implements OnInit {
   constructor(private router: Router,private modalService: NgbModal,private apiService: TimesummaryService,private http: HttpClient,private cookieService: CookieService) { }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    // console.log("Day Clicked")
+ 
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -156,14 +167,13 @@ export class TimeSummaryComponent implements OnInit {
       } else {
         this.activeDayIsOpen = true;
       }
-      // console.log(events)
+    
       this.viewDate = date;
     }
 
-    console.log(date);
-    //this.openAppointmentList(date)
+   
     this.date1=this.getFormattedString(date)
-    console.log(this.date1.split(" ")[0])
+  
     this.timeInfo.date = this.date1.split(" ")[0];
     this.open1(this.defaultTabButtonsTpl);
     this.todaysDate=this.getFormattedString(date)
@@ -188,7 +198,7 @@ export class TimeSummaryComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    // console.log("Clicked");
+  
     this.modalData = { event, action };
     this.modalService.open(this.modalContent, { size: 'lg' });
   }
@@ -207,11 +217,9 @@ export class TimeSummaryComponent implements OnInit {
                     value.color=colors.red
                    }
 
-                  // console.log(value.start)
+               
                   value.start = startOfDay(new Date(value.start))
 
-                  // console.log(new Date())
-                      //  console.log("",value)
                  }
                  this.events = data;
                     });
@@ -232,19 +240,19 @@ export class TimeSummaryComponent implements OnInit {
   }
   open1(content) {
     this.modalService.open(this.defaultTabButtonsTpl, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      console.log("Time Info",this.timeInfo);
+  
       this.timeInfo['user_id']=this.cookieService.get('username');;
       this.timeInfo['manager_id']=this.userData.manager_id ;
       this.project_id=this.timeInfo.project_id
 
       this.apiService.addTimeSubmissions(this.timeInfo)
-      .subscribe(data=>{console.log("Employee Data: ",data),
+      .subscribe(data=>{
       this.userData = data,
-      console.log(data)
+    
       this.apiService.showMessage(Object.values(data),Object.keys(data)),
       this.router.onSameUrlNavigation = 'reload';
       // this.timeShow();
-      this.apiService.getEvents().subscribe(res=>{    console.log("146",res)        
+      this.apiService.getEvents().subscribe(res=>{          
         for (let value of res){this.posts.push(value);}
       },) ;
       // this.timeShow();

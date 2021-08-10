@@ -26,7 +26,7 @@ export class addProjectResourceApiService {
 onSubmit(projectResource:projectResource): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(projectResource);
-    console.log(body)
+   
     return this.http.post(`${API_URL}/addProjectResource`, body,{'headers':headers})
   }
  

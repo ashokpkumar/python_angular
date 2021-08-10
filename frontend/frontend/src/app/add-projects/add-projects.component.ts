@@ -43,7 +43,7 @@ export class AddProjectsComponent implements OnInit {
   }
   checkRoles(roles) {
     let userRoles = roles.split(",");
-    console.log(userRoles);
+  
      for (const role of userRoles) {
       if ( role==users.admin,users.rmgadmin,users.sales_team) {
         this.isVisible = true;
@@ -53,10 +53,11 @@ export class AddProjectsComponent implements OnInit {
 
   onSubmit() {
 
-    console.log(this.project)
+    
 
     this.apiService.addProject(this.project)
-    .subscribe(data=>{console.log(data),this.apiService.showMessage(Object.values(data),Object.keys(data))});
+    .subscribe(data=>{
+      this.apiService.showMessage(Object.values(data),Object.keys(data))});
     this.router.navigate(["/project"]);
     }
 }

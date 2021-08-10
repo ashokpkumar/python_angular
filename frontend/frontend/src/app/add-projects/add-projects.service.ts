@@ -28,7 +28,7 @@ export class addProjectApiService {
   addProject(project:project): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(project);
-    console.log(body)
+   
     return this.http.post(`${API_URL}/addProject`, body,{'headers':headers})
   }
  

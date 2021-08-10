@@ -13,14 +13,14 @@ export class timeService {
   getSubmissions(user_name): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(user_name);
-    console.log(body)
+   
     return this.http.post(`${API_URL}/view_submissions`, body,{'headers':headers})
   }
 
   getTimeData(user_name): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(user_name);
-    console.log(body)
+   
     return this.http.post(`${API_URL}/timeData`, body,{'headers':headers})
   }
 

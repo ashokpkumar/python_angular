@@ -24,7 +24,7 @@ export class ExamsComponent implements OnInit {
       console.error
     );
 
-    console.log("This is Exam", this.examsList);
+    
   }
 
 }

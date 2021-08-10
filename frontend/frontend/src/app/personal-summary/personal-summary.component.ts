@@ -24,7 +24,7 @@ export class PersonalSummaryComponent implements OnInit {
     }
     this.userInfo.emp_id = this.cookieService.get('username');
     this.apiService.onSubmit(this.userInfo)
-    .subscribe(data=>{console.log("Employee Data: ",data),
+    .subscribe(data=>{
     this.userData = data,
     this.apiService.showMessage(Object.values(data),Object.keys(data))});
 

@@ -60,6 +60,7 @@ export class TimesubmissionsComponent implements OnInit {
   private defaultTabButtonsTpl2: TemplateRef<any>;  
   
   ngOnInit(): void {
+  
     this.allUserUnapproved = false;
     if (this.cookieService.get('login')=='true'){
       this.roles=this.cookieService.get('roles');
@@ -80,13 +81,13 @@ export class TimesubmissionsComponent implements OnInit {
     .subscribe(data=>{
                  this.timeDatas = data.result,
                  this.totalTime = data.total 
-                 console.log(data)                 
+                                
                     });
   }
 
   clickNumbers(user,user_name,type){
 
-console.log(user,user_name,type);
+
 if (type=='unapproved'){
   this.apiService.getSubmissionsBy(user)
   .subscribe(data=>{
@@ -104,7 +105,7 @@ if (type=='unapproved'){
 }else{
   this.apiService.getTimeBy(user,user_name,type)
   .subscribe(data=>{
-    console.log("Employee Data: ",data),
+   
     this.timeClicked = data,
     this.open(this.defaultTabButtonsTpl1),
     this.allUserapproved=true,
@@ -117,14 +118,16 @@ if (type=='unapproved'){
   }
   review(reviewd,date,user_id,time_type,hours){
  this.apiService.reviewSubmission(reviewd,date,user_id,time_type,hours)
- .subscribe(data=>{console.log(data);this.apiService.showMessage(Object.values(data),Object.keys(data))});
+ .subscribe(data=>{
+
+   this.apiService.showMessage(Object.values(data),Object.keys(data))});
  this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   this.router.onSameUrlNavigation = 'reload';
   this.router.navigate(['/timesubmission']);
   }
   checkRoles(roles) {
     let userRoles = roles.split(",");
-    console.log(userRoles);
+    
      for (const role of userRoles) {
        if ( role==users.manager,users.projectManager) {
          this.isVisible = true;
@@ -132,7 +135,7 @@ if (type=='unapproved'){
      }
    }
   open(content) {
-  console.log(this.timeClicked);
+ 
   if (this.timeClicked !=0 && this.submissionClicked !=0){
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
     
@@ -179,20 +182,11 @@ get toDate() { return this.filterForm.get('toDate'); }
     
     var from_Date = new Date(fromDate);
     var to_Date = new Date(toDate);     
-    console.log(getFormattedString(from_Date));
-    console.log(getFormattedString(to_Date));
+  
     function getFormattedString(d){
       return d.getFullYear() + "/"+(d.getMonth()+1) +"/"+d.getDate() + ' '+d.toString().split(' ')[4]
     }
-    //this.apiService.getTimeData(this.user_id, getFormattedString(from_Date).toString(),getFormattedString(to_Date).toString())
-    //.subscribe(data=>{
-    //  this.timeDatas =data
-    //  console.log(data)
-    //  this.apiService.showMessage(Object.values(data),Object.keys(data))});
-      
-      // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-      // this.router.onSameUrlNavigation = 'reload';
-      // this.router.navigate(['/timesubmission']);
+
   }
     
   download(){
@@ -206,9 +200,9 @@ get toDate() { return this.filterForm.get('toDate'); }
   }
   download_data(raw_data){
     this.apiService.rawData(raw_data)
-  .subscribe(data=>{console.log(data)
+  .subscribe(data=>{
     this.rawData=data
-    console.log(this.rawData)
+   
 
     this.apiService.download_rawdata(this.rawData , 'jsontocsv'); });
   }

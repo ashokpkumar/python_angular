@@ -13,7 +13,7 @@ export class ForgotPassService {
     const headers = { 'content-type': 'application/json'};
 
     const body=JSON.stringify({email_id:value});
-    console.log(value);
+  
      return this.http.post(`${API_URL}/forgot_pass_create_token`, body,{'headers':headers})
   }
 }

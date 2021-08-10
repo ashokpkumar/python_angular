@@ -46,7 +46,7 @@ export class EmployeesComponent implements OnInit {
 
   ngOnInit() {
     let myElement = document.getElementsByClassName("popover") as HTMLCollectionOf<HTMLElement>;
-    console.log(myElement);
+    
 
     if (this.cookieService.get('login') == 'true') {
     this.roles=this.cookieService.get('roles');
@@ -93,7 +93,7 @@ export class EmployeesComponent implements OnInit {
         this.client_name = new Set(client_name)
         this.delivery_type = new Set(delivery_type)
 
-        console.log(this.employee_list);
+       
 
 
 
@@ -103,12 +103,12 @@ export class EmployeesComponent implements OnInit {
       .getProjects()
       .subscribe(res => {
         this.project_list = res;
-        console.log(res)
+     
       },
       );
   }
   searchData() {
-    console.log(this.searchInput)
+   
     if (this.searchInput == "") {
       this.employee_list = this.copyEmployeeList.map(item => { return item })
       return this.employee_list
@@ -123,8 +123,7 @@ export class EmployeesComponent implements OnInit {
     })
   }
   addResource(projectResource) {
-    console.log(projectResource.emp_id);
-    console.log(projectResource.project_id);
+   
     this.empApi.addProjectResource(this.projectResource)
       .subscribe(data => {
 
@@ -137,7 +136,7 @@ export class EmployeesComponent implements OnInit {
   }
   open(content, project_code) {
     this.projectResource.emp_id = project_code;
-    console.log('Project Code: ', project_code);
+    
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.addResource(this.projectResource);
     }, (reason) => {
@@ -146,7 +145,7 @@ export class EmployeesComponent implements OnInit {
   }
   checkRoles(roles) {
    let userRoles = roles.split(",");
-   console.log(userRoles);
+  
     for (const role of userRoles) {
       if ( role==users.admin,users.manager,users.rmgadmin) {
         this.isVisible = true;

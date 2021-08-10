@@ -65,7 +65,7 @@ export class AddEmployeeComponent implements OnInit {
   }
   checkRoles(roles) {
    let userRoles = roles.split(",");
-   console.log(userRoles);
+
     for (const role of userRoles) {
       if ( role==users.admin,users.rmgadmin) {
         this.isVisible = true;
@@ -74,7 +74,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   onSubmit(data) {
-    console.log(this.employee)
+  
     this.isValidFormSubmitted = false;
 
     if (data.email.invalid) {
@@ -82,10 +82,11 @@ export class AddEmployeeComponent implements OnInit {
     }
 
     this.isValidFormSubmitted = true;
-    console.log(this.employee)
+  
     this.apiService.addEmployee(this.employee)
-    .subscribe(data=>{console.log(data),this.apiService.showMessage(Object.values(data),Object.keys(data))})
-    console.log(this.employee)
+    .subscribe(data=>{
+      this.apiService.showMessage(Object.values(data),Object.keys(data))})
+ 
 
     // this.router.navigate(["/employee"]);
   }

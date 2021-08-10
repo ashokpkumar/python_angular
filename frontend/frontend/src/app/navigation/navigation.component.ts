@@ -37,10 +37,10 @@ export class NavigationComponent implements OnInit {
   public ngOnInit(): void {
     this.cookieService.set('cookie-name','our cookie value');
     this.cookieValue = this.cookieService.get('cookie-name');
-    console.log("Cookie value", this.cookieValue);
+    
   }
   logout(){
-    console.log("Logging out ")
+  
     this.cookieService.set('login','false');
     
     this.router.navigate(['/login']);

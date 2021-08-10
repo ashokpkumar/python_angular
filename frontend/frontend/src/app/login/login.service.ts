@@ -9,7 +9,7 @@ export class loginService {
   constructor(public toastr: ToastrService,private http: HttpClient) {
   }
   showMessage(message, title){
-    console.log("Title : ",title);
+  
     if (title=='success'){
         this.toastr.success(message, title)
     }else if (title=='error'){
@@ -25,14 +25,14 @@ export class loginService {
   addProject(login:login): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(login);
-    console.log(body)
+    
     return this.http.post(`${API_URL}/login`, body,{'headers':headers})
   }
 
   setPassword(login:login):Observable<any>{
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(login);
-    console.log(body)
+
     return this.http.post(`${API_URL}/setpassword`, body,{'headers':headers})
   }
  

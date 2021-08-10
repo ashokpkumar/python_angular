@@ -1,6 +1,6 @@
 <div class="Calendar" >
   <div class="container mtop" >
-    <p class="time_sub_heading">Calendar : {{this.user_id}}</p> 
+    <p class="time_sub_heading">Time info for :- {{this.user_id}}</p> 
     <div class="navbar">
       <div class="col-md-4">
           <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
@@ -119,13 +119,14 @@
         <div *ngIf="show"> -->
         <ng-container *ngIf="spec == 'project'">
           <div>
-            <label style="padding: 30px 11px 0px 0px;">project_id : </label>
+            <label style="padding: 30px 11px 0px 0px;">Project ID: </label>
             <select name="" id="" [(ngModel)]="timeInfo.project_id" style="width: 250px;padding: 6px 6px 6px 6px; ">  
-                <option >{{this.userData.project_code}}</option>
+              <option *ngFor="let item of this.userData.project_code" [value]='item'>{{item}}</option>
+              <!-- <option >{{this.userData.project_code}}</option> -->
             </select>
           </div>
           <div>
-              <label style="padding: 30px 35px 0px 0px;">Task ID:</label>
+              <label style="padding: 30px 35px 0px 0px;">Task ID (optional):</label>
               <input name="text" id="input" [(ngModel)]="timeInfo.task_id"style="width: 250px; padding: 6px 6px 6px 6px;"/></div>
           <div>
               <label style="padding: 30px 11px 0px 0px;">Description (optional):</label>
@@ -134,7 +135,7 @@
         </ng-container>
         <ng-container *ngIf="spec == 'non_project'">
           <div>
-              <label style="padding: 30px 35px 0px 0px;">Task ID:</label>
+              <label style="padding: 30px 35px 0px 0px;">Task ID (optional):</label>
               <input name="text" id="input" [(ngModel)]="timeInfo.task_id"style="width: 250px; padding: 6px 6px 6px 6px;"/></div>
           <div>
               <label style="padding: 30px 11px 0px 0px;">Description (optional):</label>
@@ -143,7 +144,7 @@
         </ng-container>
         <ng-container *ngIf="spec == 'bench'">
           <div>
-              <label style="padding: 30px 35px 0px 0px;">Task ID:</label>
+              <label style="padding: 30px 35px 0px 0px;">Task ID (optional):</label>
               <input name="text" id="input" style="width: 250px; padding: 6px 6px 6px 6px;"/></div>
           <div>
               <label style="padding: 30px 11px 0px 0px;">Description (optional):</label>
@@ -152,12 +153,12 @@
         </ng-container>
         <!-- </div> -->
         <div>
-          <label style="padding: 30px 11px 0px 0px;">Remarks :</label>
+          <label style="padding: 30px 11px 0px 0px;">Remarks (optional):</label>
           <div><textarea rows="3" cols="46" [(ngModel)]="timeInfo.remarks"style="width: 400px; padding: 10px;"></textarea></div>
         </div>
           </div>
           <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');">Submit Time info</button>
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');">Submit</button>
           <!-- <button type="button"  (click)="addEvent(date1)">Add Time info</button> -->
         </div>
   </ng-template>

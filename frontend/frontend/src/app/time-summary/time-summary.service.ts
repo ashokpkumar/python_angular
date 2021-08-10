@@ -28,7 +28,7 @@ export class TimesummaryService {
 onSubmit(userInfo:userInfo): Observable<any> {
   const headers = { 'content-type': 'application/json'}  
   const body=JSON.stringify(userInfo);
-  console.log(body)
+
   return this.http.post(`${API_URL}/viewEmpInfo`, body,{'headers':headers})
 }
 
@@ -36,7 +36,7 @@ onSubmit(userInfo:userInfo): Observable<any> {
   addTimeSubmissions(timeInfo:timeinfo): Observable<any> {
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(timeInfo);
-    console.log(body)
+
     return this.http.post(`${API_URL}/addtimesubmissions`, body,{'headers':headers})
   }
 
@@ -44,6 +44,11 @@ onSubmit(userInfo:userInfo): Observable<any> {
     return this.http.get(`${API_URL}/events`);
   }
 
+  getUserInfo(user_id):Observable<any>{
+    const headers = { 'content-type': 'application/json'}  
+    const body=JSON.stringify({"emp_id":user_id});
  
+    return this.http.post(`${API_URL}/viewEmpInfo`, body,{'headers':headers});
+  }
 
 }

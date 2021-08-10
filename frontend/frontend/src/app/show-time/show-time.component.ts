@@ -34,7 +34,8 @@ export class ShowTimeComponent implements OnInit {
     }
     this.userInfo.emp_id = this.cookieService.get('username');
     this.apiService.onSubmit(this.userInfo)
-    .subscribe(data=>{console.log("Employee Data: ",data),
+    .subscribe(data=>{
+      
     this.userData = data,
     this.apiService.showMessage(Object.values(data),Object.keys(data))});
  
@@ -48,7 +49,7 @@ export class ShowTimeComponent implements OnInit {
  }
  checkRoles(roles) {
   let userRoles = roles.split(",");
-  console.log(userRoles);
+ 
    for (const role of userRoles) {
      if ( role=="RMG Admin") {
        this.isVisible = true;

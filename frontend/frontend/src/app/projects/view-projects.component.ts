@@ -66,7 +66,7 @@ export class ViewProjectsComponent implements OnInit {
         .getProjects()
         .subscribe(res => {
           this.project_list = res;
-          console.log("project_list",this.project_list)
+          
           this.copyProjList = res
           let project_name = []
           let project_id = []
@@ -129,7 +129,7 @@ export class ViewProjectsComponent implements OnInit {
      this.modalService.open(contentPM, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
        this.closeResult = `Closed with: ${result}`;
 
-       console.log("Project Manager", this.projectManager);
+       
        this.addmanager(this.projectManager);
      }, (reason) => {
        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -139,7 +139,7 @@ export class ViewProjectsComponent implements OnInit {
 
    checkRoles(roles) {
    let userRoles = roles.split(",");
-   console.log(userRoles);
+
     for (const role of userRoles) {
       if ( role==users.delivery_head,users.manager) {
         this.isVisible = true;
@@ -175,7 +175,6 @@ export class ViewProjectsComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
 
-      console.log("Project resource", this.projectResource);
       this.addResource(this.projectResource);
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -204,19 +203,18 @@ export class ViewProjectsComponent implements OnInit {
   }
 
   removeResource(emp_id){
-    console.log(emp_id)
-    console.log(this.projectCodeRemoval)
+  
     this.projectListSubs = this.projectApi.removeProjectResource(emp_id,this.projectCodeRemoval)
     .subscribe(data => {      
       this.projectApi.showMessage(Object.values(data), Object.keys(data))
-      console.log(data)
+  
 
     });
     this.projectListSubs = this.projectApi.removeProjectResource(emp_id,this.projectCodeRemoval)
     .subscribe(res => {
       this.project_resource_list = res;
       this.copyResList=res
-      console.log(res)
+  
       
       
     },
@@ -229,11 +227,10 @@ this.projectCodeRemoval = project_code
     this.projectListSubs = this.projectApi    .getResourceInfo(project_code)
     .subscribe(res => {
       this.project_resource_list = res
-      console.log(res)
+ 
    this.modalService.open(contentRL, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
     this.closeResult = `Closed with: ${result}`;
 
-    console.log("Project resource", this.projectResource);
     this.addResource(this.projectResource);
   }, (reason) => {
     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

@@ -18,7 +18,7 @@ export class SideBarComponent implements OnInit {
   isVisible: boolean=false;
 
   logout(){
-    console.log("Logging out ")
+    
     this.cookieService.set('login','false');
     
     this.router.navigate(['/login']);
