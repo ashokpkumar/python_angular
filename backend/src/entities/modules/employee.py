@@ -24,16 +24,45 @@ def employees():
             if proj_item["project_code"]==emp_id:
                 proj_item["project_code"] = [emp_id] #Project id should return list instead of string in employee
                 dictionary.update(proj_item)
+                print(dictionary)
                 break
     session.close()
     return (jsonify(serialed_out))
 
+@employee_module.route('/getprojectid')
+def getproject():
+    project_id=[]
+    session = Session()
+    emp_projectid = session.query(project.project_code).all()
+    print(emp_projectid)
+    projectid_list=emp_projectid
+    print(projectid_list)
+    print('>>>>>>')
+    session.close()
+    return (jsonify(projectid_list))
+    
+    
+# @employee_module.route('/managercheck', methods=['POST'])
+# def managerCheck():
+#     data=request.get_json()
+#     manager_id=data.get("manager_id")
+#     print(data.get("manager_id"))
+#     # manager_name=data.get('manager_name')
+#     session=Session()
+#     existing_manager=session.query(employee).filter(employee.manager_id==manager_id).first()
+#     if existing_manager == None:
+#         session.close()
+#         return jsonify({'warning':'Manager ID does not exist !'})
+#     # existing_manager_name =session.query(employee.manager_name).filter(employee.manager_id==manager_id)).first()
+#     return jsonify(manager_id)
+    
 @employee_module.route('/addEmployee', methods=['POST'])
 def addEmployee():
     data = request.get_json()
     emp_id=data.get("emp_id")
     email=data.get("email")
     project_code=data.get("project_code")
+    manager_id=data.get("manager_id")
     session = Session()
     existing_emp = session.query(employee).filter(employee.emp_id==emp_id).first()
     if existing_emp:
@@ -47,46 +76,50 @@ def addEmployee():
     existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project==None:
         return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
+    
+    existing_manager=session.query(employee).filter(employee.manager_id==manager_id).first()
+    if existing_manager == None:
+        session.close()
+        return jsonify({'warning':'Manager ID does not exist !'})
 
-    try: 
-        emp_data = employee(emp_id=data.get("emp_id").lower() , 
-                            manager_id = data.get("manager_id"),
-                            email = data.get("email").lower(), 
-                            first_name = data.get("first_name").lower(), 
-                            last_name= data.get("last_name").lower(), 
-                            sur_name= data.get("sur_name").lower(), 
-                            initial= data.get("initial").lower(), 
-                            salutation= data.get("salutation").lower(), 
-                            project_code= data.get("project_code").lower(), 
-                            dept= data.get("dept").lower(),
-                            designation = data.get("designation").lower(),
-                            emp_start_date= data.get("emp_start_date",None),
-                            emp_last_working_date=data.get("emp_last_date",None),
-                            emp_project_assigned_date=data.get("emp_project_assigned_date",None),
-                            emp_project_end_date=data.get("emp_project_end",None),
+    emp_data = employee(emp_id=data.get("emp_id").lower() , 
+                        manager_id = data.get("manager_id"),
+                        email = data.get("email").lower(), 
+                        first_name = data.get("first_name").lower(), 
+                        last_name= data.get("last_name").lower(), 
+                        sur_name= data.get("sur_name").lower(), 
+                        initial= data.get("initial").lower(), 
+                        salutation= data.get("salutation").lower(), 
+                        project_code= data.get("project_code").lower(), 
+                        dept= data.get("dept").lower(),
+                        designation = data.get("designation").lower(),
+                        emp_start_date= data.get("emp_start_date",None),
+                        emp_last_working_date=data.get("emp_last_date",None),
+                        emp_project_assigned_date=data.get("emp_project_assigned_date",None),
+                        emp_project_end_date=data.get("emp_project_end",None),
 
-                            employment_status=data.get("employment_status").lower(), 
-                            manager_name=data.get("manager_name").lower(), 
-                            manager_dept=data.get("manager_dept").lower(), 
-                            resource_status=data.get("resource_status").lower(),
-                            delivery_type=data.get("delivery_type").lower(),
-                            additional_allocation=data.get("additional_allocation").lower(),
-                            skills=data.get("skills").lower(),
-                            roles=data.get("roles").lower(),
+                        employment_status=data.get("employment_status").lower(), 
+                        manager_name=data.get("manager_name").lower(), 
+                        manager_dept=data.get("manager_dept").lower(), 
+                        resource_status=data.get("resource_status").lower(),
+                        delivery_type=data.get("delivery_type").lower(),
+                        additional_allocation=data.get("additional_allocation").lower(),
+                        skills=data.get("skills").lower(),
+                        roles=data.get("roles"),
 
-                            )
-        session = Session()
-        session.add(emp_data)
-        session.commit()
-        auth_data = authUser(emp_id = data.get("emp_id").lower(),
-                            email=data.get("email").lower(),
-                            roles=data.get("roles").lower())
-        session = Session()
-        session.add(auth_data)
-        session.commit()     
-        return jsonify({"success":"successfully added employee {}".format(data.get("emp_id"))}),200     
-    except:
-        return jsonify({"error":"Some error happened in adding the employee"}),500
+                        )
+    session = Session()
+    session.add(emp_data)
+    session.commit()
+    auth_data = authUser(emp_id = data.get("emp_id").lower(),
+                        email=data.get("email").lower(),
+                        roles=data.get("roles").lower())
+    session = Session()
+    session.add(auth_data)
+    session.commit()     
+    return jsonify({"success":"successfully added employee {}".format(data.get("emp_id"))}),200     
+    # except:
+    #     return jsonify({"error":"Some error happened in adding the employee"}),500
 
 @employee_module.route("/viewEmpInfo", methods=["POST"])
 def viewEmpInfo():

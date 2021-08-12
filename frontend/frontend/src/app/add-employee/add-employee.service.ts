@@ -31,4 +31,7 @@ export class addEmployeeService{
         console.log(body);
         return this.http.post(`${API_URL}/addEmployee`, body,{'headers':headers})
     }
+    getprojectid(){
+        return this.http.get(`${API_URL}/getprojectid`);
+    }
 }

@@ -5,6 +5,7 @@ import { addEmployeeService } from './add-employee.service';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
 import {MatCalendarCellClassFunction,MatDatepickerModule} from '@angular/material/datepicker';
+import { subscribeOn } from 'rxjs/operators';
 
 //https://www.itsolutionstuff.com/post/how-to-use-toaster-notification-in-angular-8example.html
 @Component({
@@ -16,6 +17,7 @@ import {MatCalendarCellClassFunction,MatDatepickerModule} from '@angular/materia
 
 
 export class AddEmployeeComponent implements OnInit {
+  [x: string]: any;
   durationInSeconds = 5;
   employee = new employee();
   emailPattern =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -23,6 +25,9 @@ export class AddEmployeeComponent implements OnInit {
   public users:any
   roles: any
   isVisible: boolean=false;
+  manager_id:any
+  manager_name:any
+  public projectid_list: any;
   // employee = new FormGroup({
   //   emp_id : new FormControl(),
   //   email : new FormControl(),
@@ -62,6 +67,11 @@ export class AddEmployeeComponent implements OnInit {
     else{
       this.router.navigate(['/login']);
     }
+    this.apiService.getprojectid()
+    .subscribe(res=>{
+      this.projectid_list = res,
+      console.log(res)                 
+        });
   }
   checkRoles(roles) {
    let userRoles = roles.split(",");
@@ -72,6 +82,14 @@ export class AddEmployeeComponent implements OnInit {
       } 
     }
   }
+  // checkManger(manager_id){
+  //   this.manager_id=this.employee.manager_id
+  //   console.log(this.employee.manager_id)
+  //   this.apiService.checkmanager(this.manager_id)
+  //   .subscribe(data=>{console.log(data),this.apiService.showMessage(Object.values(data),Object.keys(data))})
+  // }
+
+  
 
   onSubmit(data) {
     console.log(this.employee)
@@ -86,6 +104,8 @@ export class AddEmployeeComponent implements OnInit {
     this.apiService.addEmployee(this.employee)
     .subscribe(data=>{console.log(data),this.apiService.showMessage(Object.values(data),Object.keys(data))})
     console.log(this.employee)
+
+    
 
     // this.router.navigate(["/employee"]);
   }

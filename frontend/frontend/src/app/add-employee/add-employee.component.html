@@ -6,7 +6,7 @@
       <form class="add_employee_align" #employeeForm = "ngForm" ngSubmit="onSubmit(employeeForm.value)">
       <div class="form-group parent_div">
         <p>Employee ID: </p>
-        <input required #empID="ngModel" class="form-control" [(ngModel)]="employee.emp_id" name="emp_id" />
+        <input required #empID="ngModel" class="form-control" required minlength="5" [(ngModel)]="employee.emp_id" name="emp_id" />
         <span *ngIf="empID.invalid && empID.touched" class="error">Employee ID is required</span>
       </div>
       <div>
@@ -20,7 +20,8 @@
       </div>
       <div>
         <p>Manager ID: </p>
-        <input required #empManagerID="ngModel" class="form-control" [(ngModel)]="employee.manager_id" name="manager_id" />
+        <!-- <input #inputSearch required #empManagerID="ngModel" class="form-control" [(ngModel)]="searchInput" [(ngModel)]="employee.manager_id"name="manager_id"  type="text" (input)="searchData()"> -->
+        <input required #empManagerID="ngModel" class="form-control" [(ngModel)]="employee.manager_id" name="manager_id"  />
         <span *ngIf="empManagerID.invalid && empManagerID.touched" class="error">Manager ID is required</span>
       </div>
       <div>
@@ -45,7 +46,13 @@
       </div>
       <div>
         <p>Salutation: </p>
-        <input required #empSalutation="ngModel" class="form-control" [(ngModel)]="employee.salutation" name="salutation" />
+        <!-- <input required #empSalutation="ngModel" class="form-control" [(ngModel)]="employee.salutation" name="salutation" /> -->
+        <select required #empSalutation="ngModel"  class="form-control" [(ngModel)]="employee.salutation" name="salutation">  
+          <option >Mr</option>
+          <option >Miss</option>
+          <option >Mrs</option>
+          <option >M/S</option>
+        </select>
         <span *ngIf="empSalutation.invalid && empSalutation.touched" class="error">Salutation is required</span>
       </div>
        <div>
@@ -56,6 +63,9 @@
       <div>
         <p>Project Code: </p>
         <input required #empProjectCode="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="projectCode" />
+        <!-- <select required #empProjectCode="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="projectCode">
+          <option *ngFor="let item of project_id" value={{item.project_code}}>{{item.project_id}}</option>
+        </select> -->
         <span *ngIf="empProjectCode.invalid && empProjectCode.touched" class="error">Project Code is required</span>
       </div>
       <!-- <div>
@@ -104,12 +114,18 @@
       </div>
       <div>
         <p>Resource Status: </p>
-        <input required #empResourceStatus="ngModel" class="form-control" [(ngModel)]="employee.resource_status" name="resourceStatus" />
+        <select required #empResourceStatus="ngModel" class="form-control" [(ngModel)]="employee.resource_status" name="resourceStatus">
+          <option>Billable</option>
+          <option>Non-Billable</option>
+        </select>
         <span *ngIf="empResourceStatus.invalid && empResourceStatus.touched" class="error">Resource Status is required</span>
       </div>
       <div>
         <p>Delivery Type: </p>
-        <input required #empDeliveryType="ngModel" class="form-control" [(ngModel)]="employee.delivery_type" name="deliveryType" />
+        <select required #empDeliveryType="ngModel" class="form-control" [(ngModel)]="employee.delivery_type" name="deliveryType" >
+          <option>Delevery 1</option>
+          <option>Delevery 2</option>
+        </select>
         <span *ngIf="empDeliveryType.invalid && empDeliveryType.touched" class="error">Delivery Type is required</span>
       </div>
       <div>
@@ -124,9 +140,16 @@
       </div>
       <div>
         <p>Roles: </p>
-        <input required #empRoles="ngModel" class="form-control" [(ngModel)]="employee.roles" name="roles" />
+        <input required #empRoles="ngModel" class="form-control" [(ngModel)]="employee.roles" name="roles" >
+        <!-- <mat-select required #empRoles="ngModel" class="form-control" [(ngModel)]="employee.roles" name="roles" multiple>
+          <mat-option >RMG admin</mat-option> 
+          <mat-option>Employee</mat-option> 
+          <mat-option>Project Manager</mat-option>
+          <mat-option>Sales Team</mat-option>
+          <mat-option>Finance Team</mat-option> 
+        </mat-select> -->
         <span *ngIf="empRoles.invalid && empRoles.touched" class="error">Roles is required</span>
-      </div>
+      </div>  
       <div class="add_btn-emp">
         <button (click)="onSubmit(employeeForm.value)" type="submit" class="btn ">Add</button>
       </div>
