@@ -62,10 +62,10 @@
       </div>
       <div>
         <p>Project Code: </p>
-        <input required #empProjectCode="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="projectCode" />
-        <!-- <select required #empProjectCode="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="projectCode">
-          <option *ngFor="let item of project_id" value={{item.project_code}}>{{item.project_id}}</option>
-        </select> -->
+        <!-- <input required #empProjectCode="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="projectCode" /> -->
+        <select required #empProjectCode="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="projectCode">
+          <option *ngFor="let item of project_code" value={{item.project_code}}>{{item.project_code}}</option>
+        </select> 
         <span *ngIf="empProjectCode.invalid && empProjectCode.touched" class="error">Project Code is required</span>
       </div>
       <!-- <div>

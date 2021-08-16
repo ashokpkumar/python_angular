@@ -1,5 +1,5 @@
 from entities.database import Session, engine, Base, serialize_all
-from entities.database import employee,project,authUser,TimeMaster,timesubmissions
+from entities.database import employee,project,authUser,TimeMaster,timesubmissions,department,designation
 import datetime
 
 emp_list = [
@@ -171,6 +171,33 @@ authUser_list=[
     {"emp_id":"I3122","email":"chandrasekara.v@gmail.com","password":"chandrasekara@123","roles":"Employee"},
 
 ]
+designation_list=[{"designation_name":"Developer"}]
+department_list=[
+    {"department_name":"Digital"}
+]
+def sample_department():
+    for dept in department_list:
+        session=Session()
+        dept_obj= session.query(department).filter(department.department_name==dept['department_name']).first()
+        if dept_obj == None:
+            dept_data = department(department_name =dept['department_name'].lower(),
+                        )
+        
+            session.add(dept_data)
+            session.commit()
+        session.close()
+
+def sample_designation():
+    for dept in designation_list:
+        session=Session()
+        dept_obj= session.query(designation).filter(designation.designation==dept['designation_name']).first()
+        if dept_obj == None:
+            dept_data = designation(designation=dept['designation_name'].lower(),
+                        )
+        
+            session.add(dept_data)
+            session.commit()
+        session.close()
 
 def create_sample_employee(): 
     for emp in emp_list:

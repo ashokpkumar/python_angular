@@ -17,7 +17,7 @@ from entities.modules.login import login_module
 from entities.modules.employee import employee_module
 from entities.modules.projects import project_module
 from entities.modules.announcements import announcement_module
-
+from entities.sample_data import create_sample_employee,create_sample_project,create_sample_timesubmissions,sample_department,sample_designation
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
@@ -52,6 +52,13 @@ app.register_blueprint(employee_module, url_prefix="/")
 app.register_blueprint(project_module, url_prefix="/")
 app.register_blueprint(announcement_module, url_prefix="/")
 Base.metadata.create_all(engine)
+
+create_sample_employee()
+create_sample_project()
+create_sample_timesubmissions()
+sample_department()
+sample_designation()
+
 
 @app.route('/rawDataDownload', methods=['POST'])
 def rawDataDownload():

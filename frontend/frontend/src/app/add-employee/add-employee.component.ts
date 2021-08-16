@@ -27,7 +27,7 @@ export class AddEmployeeComponent implements OnInit {
   isVisible: boolean=false;
   manager_id:any
   manager_name:any
-  public projectid_list: any;
+  project_code=[]
   // employee = new FormGroup({
   //   emp_id : new FormControl(),
   //   email : new FormControl(),
@@ -69,7 +69,9 @@ export class AddEmployeeComponent implements OnInit {
     }
     this.apiService.getprojectid()
     .subscribe(res=>{
-      this.projectid_list = res,
+      console.log(res) 
+      this.project_id = res,
+      this.project_code=this.project_id
       console.log(res)                 
         });
   }
@@ -82,6 +84,14 @@ export class AddEmployeeComponent implements OnInit {
       } 
     }
   }
+  // projectid(){
+  //   this.apiService.getprojectid()
+  //   .subscribe(res=>{
+  //     console.log(res) 
+  //     this.project_code = res,
+  //     console.log(res)                 
+  //       });
+  // }
   // checkManger(manager_id){
   //   this.manager_id=this.employee.manager_id
   //   console.log(this.employee.manager_id)

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 import datetime
-from entities.database import employee,project,authUser,timesubmissions
+from entities.database import employee,project,authUser,timesubmissions,department,designation
 from entities.database import Session
 from entities.database import serialize_all
 
@@ -41,7 +41,45 @@ def getproject():
     session.close()
     return (jsonify(projectid_list))
     
-    
+
+@employee_module.route('/addDepartment', methods=['POST'])
+def addDepartment():    
+    data = request.get_json()
+    department_name=data.get("department_name")
+    print(type(department_name))
+    session = Session()
+    existing_dept = session.query(department).filter(department.department_name==data.get("department_name")).first()
+    if existing_dept:
+        session.close()
+        return jsonify({'warning':'{} Department is already exist !'.format(data.get("department_name"))})
+    dept_data=department(department_name=data.get("department_name")
+                         )
+    session = Session()
+    session.add(dept_data)
+    session.commit()
+    session.close()
+    return jsonify({"success":"{} Department is created successfully".format(department_name)}), 201
+
+@employee_module.route('/addDesignation', methods=['POST'])
+def addDesignation():    
+    data = request.get_json()
+    desig= data.get('designation')
+    print(type(desig))
+    session = Session()
+    existing_designation = session.query(designation).filter(designation.designation==desig).first()
+    if existing_designation:
+        session.close()
+        return jsonify({'warning':'{} designation is already exist !'.format(desig)})
+    designation_data=designation(designation =data.get("designation").lower())
+    print(type(designation_data))
+    session = Session()
+    session.add(designation_data)
+    session.commit()
+    session.close()
+    return jsonify({"success":"{} Designation is created successfully".format(desig)}), 201
+
+
+
 # @employee_module.route('/managercheck', methods=['POST'])
 # def managerCheck():
 #     data=request.get_json()

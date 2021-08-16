@@ -35,6 +35,15 @@ class timesubmissions(Base):
     description=Column(String)
     remarks=Column(String)
 
+class designation(Base):
+    __tablename__="designation"
+    id=Column(Integer,primary_key=True)
+    designation=Column(String)
+
+class department(Base):
+    __tablename__="department"
+    id=Column(Integer,primary_key=True)
+    department_name=Column(String)
 
 class announcements(Base):
     __tablename__="announcements"
