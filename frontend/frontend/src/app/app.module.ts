@@ -53,6 +53,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { AddDesignationComponent } from './add-designation/add-designation.component';
+import { SortDirective } from './directive/sort.directive';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -83,7 +84,8 @@ FullCalendarModule.registerPlugins([
     ForgotPasswodComponent,
     ResetPasswordComponent,
     AddDepartmentComponent,
-    AddDesignationComponent
+    AddDesignationComponent,
+    SortDirective
    
   ],
 

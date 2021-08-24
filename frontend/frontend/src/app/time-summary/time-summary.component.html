@@ -92,18 +92,18 @@
               <span aria-hidden="true">&times;</span>
           </button>
       </div>
-      <div class="modal-body">   
+      <div class="modal-body"> 
         <div>
-          <label style="padding: 0px 60px 0px 0px;">Date : </label>
-          <input [(ngModel)]="timeInfo.date" style="width: 250px;padding: 6px 6px 6px 6px;"/>
+          <label style="padding: 0px 60px 0px 0px;">Date </label>
+          <input [(ngModel)]="timeInfo.date" />
         </div>
         <div>
-          <label style="padding: 30px 50px 0px 0px;" >Hours : </label>
-          <input [(ngModel)]="timeInfo.hours" style="width: 250px; padding: 6px 6px 6px 6px;"type="number" id="quantity" name="quantity" min="1" max="8" ><br><br>
+          <label style="padding: 30px 50px 0px 0px;" >Hours </label>
+          <input [(ngModel)]="timeInfo.hours" [(ngModel)]="this.hour" type="number" id="quantity" name="quantity" min="1" max="8" ><br><br>
         </div>  
         <div>
-          <label style="padding: 30px 10px 0px 0px;">Time Type : </label>
-          <select name="" id="" [(ngModel)]="timeInfo.time_type" style="width: 250px;padding: 6px 6px 6px 6px;"[(ngModel)]="spec">
+          <label style="padding: 30px 10px 0px 0px;">Time Type</label>
+          <select name="" id="" [(ngModel)]="timeInfo.time_type" [(ngModel)]="spec">
             <option value=CL>CL</option>
             <option value=SL>SL</option>
             <option value=AL>AL</option>
@@ -119,41 +119,41 @@
         <div *ngIf="show"> -->
         <ng-container *ngIf="spec == 'project'">
           <div>
-            <label style="padding: 30px 11px 0px 0px;">project_id : </label>
-            <select name="" id="" [(ngModel)]="timeInfo.project_id" style="width: 250px;padding: 6px 6px 6px 6px; ">  
-                <option >{{this.userData.project_code}}</option>
+            <label style="padding: 30px 16px 0px 0px;">Project Id</label>
+            <select name="" id="" [(ngModel)]="timeInfo.project_id" style="width: 250px;padding: 5px 5px 5px 5px; ">  
+                <option >{{userData.project_code}}</option>
             </select>
           </div>
           <div>
-              <label style="padding: 30px 35px 0px 0px;">Task ID:</label>
+              <label style="padding: 30px 35px 0px 0px;">Task ID</label>
               <input name="text" id="input" [(ngModel)]="timeInfo.task_id"style="width: 250px; padding: 6px 6px 6px 6px;"/></div>
           <div>
-              <label style="padding: 30px 11px 0px 0px;">Description (optional):</label>
+              <label style="padding: 30px 11px 0px 0px;">Description (optional)</label>
               <div><textarea rows="5" cols="46"[(ngModel)]="timeInfo.description"style="width: 400px; padding: 10px;"></textarea></div>
           </div>
         </ng-container>
         <ng-container *ngIf="spec == 'non_project'">
           <div>
-              <label style="padding: 30px 35px 0px 0px;">Task ID:</label>
+              <label style="padding: 30px 35px 0px 0px;">Task ID</label>
               <input name="text" id="input" [(ngModel)]="timeInfo.task_id"style="width: 250px; padding: 6px 6px 6px 6px;"/></div>
           <div>
-              <label style="padding: 30px 11px 0px 0px;">Description (optional):</label>
+              <label style="padding: 30px 11px 0px 0px;">Description (optional)</label>
               <div><textarea rows="5" cols="46"[(ngModel)]="timeInfo.description" style="width: 400px; padding: 10px;"></textarea></div>
           </div>
         </ng-container>
         <ng-container *ngIf="spec == 'bench'">
           <div>
-              <label style="padding: 30px 35px 0px 0px;">Task ID:</label>
-              <input name="text" id="input" style="width: 250px; padding: 6px 6px 6px 6px;"/></div>
+              <label style="padding: 30px 35px 0px 0px;">Task ID</label>
+              <input name="text" id="input" style="width: 250px; padding: 4px 4px 4px 4px;"/></div>
           <div>
-              <label style="padding: 30px 11px 0px 0px;">Description (optional):</label>
-              <div><textarea rows="5" cols="46"[(ngModel)]="timeInfo.description"style="width: 400px; padding: 10px;"></textarea></div>
+              <label style="padding: 30px 11px 0px 0px;">Description (optional)</label>
+              <div><textarea rows="5" cols="46"[(ngModel)]="timeInfo.description"style="width: 400px; height: 60px; padding: 10px;"></textarea></div>
           </div>
         </ng-container>
         <!-- </div> -->
         <div>
-          <label style="padding: 30px 11px 0px 0px;">Remarks :</label>
-          <div><textarea rows="3" cols="46" [(ngModel)]="timeInfo.remarks"style="width: 400px; padding: 10px;"></textarea></div>
+          <label style="padding: 30px 11px 0px 0px;">Remarks</label>
+          <div><textarea rows="3" cols="46" [(ngModel)]="timeInfo.remarks"style="width: 400px;height: 60px; padding: 10px;"></textarea></div>
         </div>
           </div>
           <div class="modal-footer">

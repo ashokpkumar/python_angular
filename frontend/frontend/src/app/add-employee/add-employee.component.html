@@ -47,25 +47,30 @@
       <div>
         <p>Salutation: </p>
         <!-- <input required #empSalutation="ngModel" class="form-control" [(ngModel)]="employee.salutation" name="salutation" /> -->
-        <select required #empSalutation="ngModel"  class="form-control" [(ngModel)]="employee.salutation" name="salutation">  
-          <option >Mr</option>
-          <option >Miss</option>
-          <option >Mrs</option>
-          <option >M/S</option>
-        </select>
+        <mat-select required #empSalutation="ngModel"  class="form-control" [(ngModel)]="employee.salutation" name="salutation" style="width: 225px;">  
+          <mat-option value="Mr">Mr</mat-option>
+          <mat-option value="Miss">Miss</mat-option>
+          <mat-option value="Mrs">Mrs</mat-option>
+          <mat-option value="M/s">M/S</mat-option>
+        </mat-select>
         <span *ngIf="empSalutation.invalid && empSalutation.touched" class="error">Salutation is required</span>
       </div>
        <div>
         <p>Designation: </p>
-        <input required #empDesignation="ngModel" class="form-control" [(ngModel)]="employee.designation" name="designation" />
+        <mat-select required #empDesignation="ngModel" class="form-control" [(ngModel)]="employee.designation" name="designation" style="width: 225px;">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let item of this.desig_list" value={{item.designation}}>{{item.designation}}</mat-option>
+        </mat-select> 
+        <!-- <input required #empDesignation="ngModel" class="form-control" [(ngModel)]="employee.designation" name="designation" /> -->
         <span *ngIf="empDesignation.invalid && empDesignation.touched" class="error">Designation is required</span>
       </div>
       <div>
         <p>Project Code: </p>
         <!-- <input required #empProjectCode="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="projectCode" /> -->
-        <select required #empProjectCode="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="projectCode">
-          <option *ngFor="let item of project_code" value={{item.project_code}}>{{item.project_code}}</option>
-        </select> 
+        <mat-select required #empProjectCode="ngModel" class="form-control" [(ngModel)]="employee.project_code" name="projectCode" style="width: 225px;">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let item of proj_list" value={{item.project_code}}>{{item.project_code}}</mat-option>
+        </mat-select> 
         <span *ngIf="empProjectCode.invalid && empProjectCode.touched" class="error">Project Code is required</span>
       </div>
       <!-- <div>
@@ -75,7 +80,11 @@
       </div> -->
       <div>
         <p>Department: </p>
-        <input required #empDepartment="ngModel" class="form-control" [(ngModel)]="employee.dept" name="department" />
+        <mat-select required #empDepartment="ngModel" class="form-control" [(ngModel)]="employee.dept" name="department" style="width: 225px;">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let item of this.dept_list" value={{item.department_name}}>{{item.department_name}}</mat-option>
+        </mat-select> 
+        <!-- <input required #empDepartment="ngModel" class="form-control" [(ngModel)]="employee.dept" name="department" /> -->
         <span *ngIf="empDepartment.invalid && empDepartment.touched" class="error">Department is required</span>
       </div>
       <div>
@@ -114,18 +123,20 @@
       </div>
       <div>
         <p>Resource Status: </p>
-        <select required #empResourceStatus="ngModel" class="form-control" [(ngModel)]="employee.resource_status" name="resourceStatus">
-          <option>Billable</option>
-          <option>Non-Billable</option>
-        </select>
+        <mat-select required #empResourceStatus="ngModel" class="form-control" [(ngModel)]="employee.resource_status" name="resourceStatus" style="width: 225px;">
+          <mat-option>None</mat-option>
+          <mat-option value="Billable">Billable</mat-option>
+          <mat-option value="Non-Billable">Non-Billable</mat-option>
+        </mat-select>
         <span *ngIf="empResourceStatus.invalid && empResourceStatus.touched" class="error">Resource Status is required</span>
       </div>
       <div>
         <p>Delivery Type: </p>
-        <select required #empDeliveryType="ngModel" class="form-control" [(ngModel)]="employee.delivery_type" name="deliveryType" >
-          <option>Delevery 1</option>
-          <option>Delevery 2</option>
-        </select>
+        <mat-select required #empDeliveryType="ngModel" class="form-control" [(ngModel)]="employee.delivery_type" name="deliveryType" style="width: 225px;">
+          <mat-option>None</mat-option>
+          <mat-option value="delivery 1">Delivery 1</mat-option>
+          <mat-option value="delivery 2">Delivery 2</mat-option>
+        </mat-select>
         <span *ngIf="empDeliveryType.invalid && empDeliveryType.touched" class="error">Delivery Type is required</span>
       </div>
       <div>
@@ -140,14 +151,14 @@
       </div>
       <div>
         <p>Roles: </p>
-        <input required #empRoles="ngModel" class="form-control" [(ngModel)]="employee.roles" name="roles" >
-        <!-- <mat-select required #empRoles="ngModel" class="form-control" [(ngModel)]="employee.roles" name="roles" multiple>
-          <mat-option >RMG admin</mat-option> 
-          <mat-option>Employee</mat-option> 
-          <mat-option>Project Manager</mat-option>
-          <mat-option>Sales Team</mat-option>
-          <mat-option>Finance Team</mat-option> 
-        </mat-select> -->
+        <!-- <input required #empRoles="ngModel" class="form-control" [(ngModel)]="employee.roles" name="roles" > -->
+        <mat-select required #empRoles="ngModel" class="form-control" [(ngModel)]="employee.roles" name="roles" multiple style="width: 225px;">
+          <mat-option value="rmg admin">RMG admin</mat-option> 
+          <mat-option value="employee">Employee</mat-option> 
+          <mat-option value="project manager">Project Manager</mat-option>
+          <mat-option value="sales team">Sales Team</mat-option>
+          <mat-option value="finance team">Finance Team</mat-option> 
+        </mat-select>
         <span *ngIf="empRoles.invalid && empRoles.touched" class="error">Roles is required</span>
       </div>  
       <div class="add_btn-emp">

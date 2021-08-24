@@ -34,4 +34,10 @@ export class addEmployeeService{
     getprojectid(){
         return this.http.get(`${API_URL}/getprojectid`);
     }
+    getdepartment(){
+        return this.http.get(`${API_URL}/getdepartment`);
+    }
+    getdesignation(){
+        return this.http.get(`${API_URL}/getdesignation`);
+    }
 }

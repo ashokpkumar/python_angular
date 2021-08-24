@@ -78,10 +78,30 @@ export class timeSubmissionsService {
         this.toastr.warning(message, title)
     }    
 } 
+//summary data
 downloadFile(data, filename='data') {
   console.log(data)
-  let csvData = this.ConvertToCSV(data, ['user_id','user_name','project_time','bench','SL','CL','AL','total_hrs','Unapproved'
+  let csvData = this.ConvertToCSV(data, ['user_id','user_name','project_time','non_project','total_presence','bench','SL','CL','AL','total_absence','total_hrs','Unapproved'
   ]);
+  console.log(csvData)
+  let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
+  let dwldLink = document.createElement("a");
+  let url = URL.createObjectURL(blob);
+  let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+  if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+      dwldLink.setAttribute("target", "_blank");
+  }
+  dwldLink.setAttribute("href", url);
+  dwldLink.setAttribute("download", filename + ".csv");
+  dwldLink.style.visibility = "hidden";
+  document.body.appendChild(dwldLink);
+  dwldLink.click();
+  document.body.removeChild(dwldLink);
+}
+//raw data
+download_rawdata(data, filename='data') {
+  console.log(data)
+  let csvData = this.ConvertToCSV(data,["date_info","user_id","hours","manager_id","project_code","status","submission_id","time_type","task_id","description","remarks"]);
   console.log(csvData)
   let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
   let dwldLink = document.createElement("a");
@@ -99,7 +119,7 @@ downloadFile(data, filename='data') {
 }
 download_timeinfo(data, filename='data') {
   console.log(data)
-  let csvData = this.ConvertToCSV(data, ['date_info','user_id','time_type','hours','status' ]);
+  let csvData = this.ConvertToCSV(data, ['date_info','user_id','project_code','time_type','hours',"description","remarks",'status' ]);
   console.log(csvData)
   let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
   let dwldLink = document.createElement("a");
@@ -117,7 +137,7 @@ download_timeinfo(data, filename='data') {
 }
 download_timeinfoRawData(data, filename='data') {
   console.log(data)
-  let csvData = this.ConvertToCSV(data, ["date_info","hours","id","manager_id","project_code","status","submission_id","time_type","user_id"]);
+  let csvData = this.ConvertToCSV(data,["date_info","user_id","hours","manager_id","project_code","status","submission_id","time_type","task_id","description","remarks"]);
   console.log(csvData)
   let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
   let dwldLink = document.createElement("a");
@@ -136,7 +156,7 @@ download_timeinfoRawData(data, filename='data') {
 
 download_reviewtime(data, filename='data') {
   console.log(data)
-  let csvData = this.ConvertToCSV(data, ['date_info','user_id','time_type','hours','status' ]);
+  let csvData = this.ConvertToCSV(data, ['date_info','user_id','project_code','time_type','hours',"description","remarks",'status' ]);
   console.log(csvData)
   let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
   let dwldLink = document.createElement("a");
@@ -154,7 +174,7 @@ download_reviewtime(data, filename='data') {
 }
 download_reviewtimeRawData(data, filename='data') {
   console.log(data)
-  let csvData = this.ConvertToCSV(data, ["date_info","hours","id","manager_id","project_code","status","submission_id","time_type","user_id"]);
+  let csvData = this.ConvertToCSV(data,["date_info","user_id","hours","manager_id","project_code","status","submission_id","time_type","task_id","description","remarks"]);
   console.log(csvData)
   let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
   let dwldLink = document.createElement("a");
@@ -170,24 +190,7 @@ download_reviewtimeRawData(data, filename='data') {
   dwldLink.click();
   document.body.removeChild(dwldLink);
 }
-download_rawdata(data, filename='data') {
-  console.log(data)
-  let csvData = this.ConvertToCSV(data,["date_info","hours","id","manager_id","project_code","status","submission_id","time_type","user_id"]);
-  console.log(csvData)
-  let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
-  let dwldLink = document.createElement("a");
-  let url = URL.createObjectURL(blob);
-  let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
-  if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
-      dwldLink.setAttribute("target", "_blank");
-  }
-  dwldLink.setAttribute("href", url);
-  dwldLink.setAttribute("download", filename + ".csv");
-  dwldLink.style.visibility = "hidden";
-  document.body.appendChild(dwldLink);
-  dwldLink.click();
-  document.body.removeChild(dwldLink);
-}
+
 
 ConvertToCSV(objArray, headerList) {
   console.log(objArray)

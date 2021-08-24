@@ -65,6 +65,7 @@ export class TimeSummaryComponent implements OnInit {
   user_id:any;
   date1:any
   date:any
+  hour:string="8"
   
 
   public show:boolean = false;
@@ -124,7 +125,7 @@ export class TimeSummaryComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
-
+  
   refresh_page({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     // console.log("Day Clicked")
     if (isSameMonth(date, this.viewDate)) {

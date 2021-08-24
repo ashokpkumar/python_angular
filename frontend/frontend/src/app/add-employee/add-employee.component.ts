@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit,ViewEncapsulation } from '@angular/core';
 import {  FormGroup,FormControl, Validators } from '@angular/forms';
-import {employee,users} from './employees';
+import {employee,users,project} from './employees';
 import { addEmployeeService } from './add-employee.service';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
@@ -25,9 +25,16 @@ export class AddEmployeeComponent implements OnInit {
   public users:any
   roles: any
   isVisible: boolean=false;
+  project= new project();
   manager_id:any
   manager_name:any
-  project_code=[]
+  public proj_list:any;
+  public dept_List: any
+  public desig_List: any
+  project_code:any
+  department_name:any
+  designation:any
+
   // employee = new FormGroup({
   //   emp_id : new FormControl(),
   //   email : new FormControl(),
@@ -70,10 +77,17 @@ export class AddEmployeeComponent implements OnInit {
     this.apiService.getprojectid()
     .subscribe(res=>{
       console.log(res) 
-      this.project_id = res,
-      this.project_code=this.project_id
+      this.proj_list = res,
       console.log(res)                 
         });
+    this.apiService.getdepartment().subscribe(res=>{
+      console.log(res)
+      this.dept_list=res
+    });
+    this.apiService.getdesignation().subscribe(res=>{
+      console.log(res)
+      this.desig_list=res
+    });
   }
   checkRoles(roles) {
    let userRoles = roles.split(",");

@@ -80,7 +80,7 @@ class employee(Base):
     delivery_type = Column(String)
     additional_allocation =  Column(String)
     skills =  Column(String)
-    roles =  Column(String)
+    roles =  Column(VARCHAR(2000))
     # def __init__(self, created_by):
     #     self.created_at = datetime.now()
     #     self.updated_at = datetime.now()

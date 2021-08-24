@@ -32,7 +32,6 @@ export class TimesubmissionsComponent implements OnInit {
   pipe: DatePipe;
   from_Date:any;
   to_Date:any;
-  sortDir = 1;//1= 'ASE' -1= DSC
 
 
 
@@ -194,16 +193,11 @@ get toDate() { return this.filterForm.get('toDate'); }
       // this.router.onSameUrlNavigation = 'reload';
       // this.router.navigate(['/timesubmission']);
   }
-    
-  download(){
+  //overall_summary data  
+  download_overall_summary(){
     this.apiService.downloadFile(this.timeDatas, 'jsontocsv');
-  }   
-  download_approved(){
-    this.apiService.download_timeinfo(this.timeClicked, 'jsontocsv');
-  } 
-  download_unapproved(){
-    this.apiService.download_reviewtime(this.submissionClicked, 'jsontocsv'); 
-  }
+  }  
+  //overall raw data 
   download_data(raw_data){
     this.apiService.rawData(raw_data)
   .subscribe(data=>{console.log(data)
@@ -212,19 +206,20 @@ get toDate() { return this.filterForm.get('toDate'); }
 
     this.apiService.download_rawdata(this.rawData , 'jsontocsv'); });
   }
+  download_approved(){
+    this.apiService.download_timeinfo(this.timeClicked, 'jsontocsv');
+  } 
+  download_unapproved(){
+    this.apiService.download_reviewtime(this.submissionClicked, 'jsontocsv'); 
+  }
   download_modalApprovedData(){
     this.apiService.download_timeinfoRawData(this.timeClicked, 'jsontocsv');
   }
   download_modalUnapprovedData(){  
-    this.apiService.download_reviewtimeRawData(this.timeClicked, 'jsontocsv');
+    this.apiService.download_reviewtimeRawData(this.submissionClicked, 'jsontocsv');
   }
 
-  key:string ='userid';
-  reverse:boolean=false;
-  sort(key){
-    this.key=key;
-    this.reverse=!this.reverse;
-  }
+
 
 
  

@@ -31,16 +31,34 @@ def employees():
 
 @employee_module.route('/getprojectid')
 def getproject():
-    project_id=[]
+    # project_id=[]
     session = Session()
-    emp_projectid = session.query(project.project_code).all()
-    print(emp_projectid)
-    projectid_list=emp_projectid
-    print(projectid_list)
-    print('>>>>>>')
+    project_objects = session.query(project).all()
+    serialized_obj = serialize_all(project_objects)
     session.close()
-    return (jsonify(projectid_list))
-    
+    return (jsonify(serialized_obj))
+    # session = Session()
+    # emp_projectid = session.query(project.project_code).all()
+    # print(emp_projectid)
+    # projectid_list=emp_projectid
+    # print(projectid_list)
+    # print('>>>>>>')
+    # session.close()
+    # return (jsonify(projectid_list))
+@employee_module.route('/getdepartment')
+def getdepartment():
+    session = Session()
+    department_objects = session.query(department).all()
+    serialized_obj = serialize_all(department_objects)
+    session.close()
+    return (jsonify(serialized_obj))
+@employee_module.route('/getdesignation')
+def getdesignation():
+    session = Session()
+    designation_objects = session.query(designation).all()
+    serialized_obj = serialize_all(designation_objects)
+    session.close()
+    return (jsonify(serialized_obj))
 
 @employee_module.route('/addDepartment', methods=['POST'])
 def addDepartment():    
