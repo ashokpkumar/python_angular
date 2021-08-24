@@ -13,6 +13,8 @@ import { FormControl } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { faSearch, faSlidersH, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
+import {Sort} from '@angular/material/sort';
+
 @Component({
   selector: 'app-view-projects',
   templateUrl: './view-projects.component.html',
@@ -52,7 +54,9 @@ export class ViewProjectsComponent implements OnInit {
     selectedProject: "All",
     projectID: "All",
     clientName: "All",
+
   }
+  
   constructor(private modalService: NgbModal, private router: Router, private projectApi: projectsApiService, private cookieService: CookieService) { }
 
   ngOnInit(): void {

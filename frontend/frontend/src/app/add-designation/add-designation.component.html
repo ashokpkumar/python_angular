@@ -1,0 +1,15 @@
+<div class="add_employee_bg" *ngIf="isVisible">
+    <div class="container card" style="padding: 100px;">
+      <p class="add_emp_heading"> Add Designation</p>
+      <div class="ps" style="position: relative; max-height: calc(100vh - 173px);" ></div>
+      <div class="container_bg">
+        <div class="add_employee_align" ngSubmit="onSubmit(designation.designation)">
+        <p class="add">Designation :</p>
+        <input [(ngModel)]="designation.designation" type="text" >
+        <div class="add_btn-emp">
+            <button (click)="onSubmit(designation.designation)" type="submit" class="btn ">Add</button>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>

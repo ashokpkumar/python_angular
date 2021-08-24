@@ -1,5 +1,5 @@
 from entities.database import Session, engine, Base, serialize_all
-from entities.database import employee,project,authUser,TimeMaster,timesubmissions
+from entities.database import employee,project,authUser,TimeMaster,timesubmissions,department,designation
 import datetime
 
 emp_list = [
@@ -16,16 +16,16 @@ emp_list = [
 ]
 
 project_list = [
-    {"clientname":"Indium/Pilit","projectcode":"IND123","projectname":"RMG Web Application ","project_start_date":"14/11/2020","projectstatus":"Submitted","billingtype":"F","segment":"Managed Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3228,I3186","financialyear":"2021","resource_info":"I31288,I2668,I3050"},
+    {"clientname":"Indium/Pilit","projectcode":"IND123","projectname":"RMG Web Application ","project_start_date":"14/11/2020","projectstatus":"Submitted","billingtype":"F","segment":"Managed Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3228","financialyear":"2021","resource_info":"I31288,I2668,I3050"},
     {"clientname":"AB Martin","projectcode":"ABMPPSW_FCUD20","projectname":"Port from Powershell to Web Application","project_start_date":"04/01/2021","projectstatus":"In Progress","billingtype":"F","segment":"Consulting Services","geography":"US","solution_category":"Data Analytics","project_manager_id":"I3186","financialyear":"2019","resource_info":'I31288,I2668'},
-    {"clientname":"GNQ/IND","projectcode":"AWLD_TMIN12","projectname":"RMG Application for Management","project_start_date":"01/02/2019","projectstatus":"Submitted","billingtype":"T","segment":"Managed Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3228,I3186","financialyear":"2020","resource_info":"I3122,I2668"},
+    {"clientname":"GNQ/IND","projectcode":"AWLD_TMIN12","projectname":"RMG Application for Management","project_start_date":"01/02/2019","projectstatus":"Submitted","billingtype":"T","segment":"Managed Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3228","financialyear":"2020","resource_info":"I3122,I2668"},
     {"clientname":"Pi/Lit","projectcode":"AQTFDHW_TMIN18","projectname":"RMG Application for Management ","project_start_date":"22/08/2020","projectstatus":"Submitted/pending request ","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3186","financialyear":"2019","resource_info":"I3228,I31288,I3050"},
     {"clientname":"ACT Fibernet","projectcode":"BKMPPSW_F202","projectname":"Hadoop Data Platform Consulting","project_start_date":"12/06/2019","projectstatus":"Not Approved","billingtype":"T","segment":"Managed Services","geography":"US","solution_category":"Analytics","project_manager_id":"I2013","financialyear":"2019","resource_info":"I3050,I1666"},
     {"clientname":"Adqvest","projectcode":"MPPSWB_FCUD203","projectname":"Financial data Harvesting from web sources","project_start_date":"09/12/2019","projectstatus":"In Progress","billingtype":"T","segment":"Consulting Services","geography":"US","solution_category":"Product Developement","project_manager_id":"I3228","financialyear":"2021","resource_info":"I3122,I31288"},
     {"clientname":"Bharath","projectcode":"BMKPPSW_FCUD204","projectname":"Client Insurance Source and Services ","project_start_date":"01/07/2019","projectstatus":"Submitted/pending request","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Big Data Analytics","project_manager_id":"I3186","financialyear":"2021","resource_info":"I3228,I2013"},
     {"clientname":"AppTech","projectcode":"SWRRP_FUD205","projectname":"ARDAMS Powershell Web Application","project_start_date":"10/03/2021","projectstatus":"In Progress","billingtype":"F","segment":"Consulting Services","geography":"US","solution_category":"Product Developement","project_manager_id":"I3252","financialyear":"2019","resource_info":"I3186,I3228"},
     {"clientname":"ABB Technology","projectcode":"PPSWFF_FCUD206","projectname":"Production Based Data Platform","project_start_date":"18/05/2020","projectstatus":"Approval Rejected","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Big Data Analytics","project_manager_id":"I3252","financialyear":"2020","resource_info":"I1891,I1666,I3050"},
-    {"clientname":"VNN Softcore","projectcode":"QWWST_HPPR24","projectname":"Data Corelation from Web Application","project_start_date":"28/11/2020","projectstatus":"In Progress","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3281,I3252","financialyear":"2018","resource_info":"I3252,I3186"},
+    {"clientname":"VNN Softcore","projectcode":"QWWST_HPPR24","projectname":"Data Corelation from Web Application","project_start_date":"28/11/2020","projectstatus":"In Progress","billingtype":"F","segment":"Consulting Services","geography":"INDIA","solution_category":"Product Developement","project_manager_id":"I3281,","financialyear":"2018","resource_info":"I3252,I3186"},
     {"clientname":"INB services","projectcode":"PQQE_XGGL21","projectname":"Resource Management for INB","project_start_date":"02/03/2021","projectstatus":"In Progress","billingtype":"T","segment":"Consulting Services","geography":"US","solution_category":"Product Developement","project_manager_id":"I3228","financialyear":"2021","resource_info":"I2668,I3122"},
     {"clientname":"Airbnb","projectcode":"WGLOR_LMNV03","projectname":"Frimware Developement","project_start_date":"09/03/2019","projectstatus":"Pending Request","billingtype":"F","segment":"Managed Services","geography":"INDIA","solution_category":"Big Data Analytics","project_manager_id":"I2013","financialyear":"2020","resource_info":"I3050,I1666"},
 
@@ -171,6 +171,33 @@ authUser_list=[
     {"emp_id":"I3122","email":"chandrasekara.v@gmail.com","password":"chandrasekara@123","roles":"Employee"},
 
 ]
+designation_list=[{"designation_name":"Developer"}]
+department_list=[
+    {"department_name":"Digital"}
+]
+def sample_department():
+    for dept in department_list:
+        session=Session()
+        dept_obj= session.query(department).filter(department.department_name==dept['department_name']).first()
+        if dept_obj == None:
+            dept_data = department(department_name =dept['department_name'].lower(),
+                        )
+        
+            session.add(dept_data)
+            session.commit()
+        session.close()
+
+def sample_designation():
+    for dept in designation_list:
+        session=Session()
+        dept_obj= session.query(designation).filter(designation.designation==dept['designation_name']).first()
+        if dept_obj == None:
+            dept_data = designation(designation=dept['designation_name'].lower(),
+                        )
+        
+            session.add(dept_data)
+            session.commit()
+        session.close()
 
 def create_sample_employee(): 
     for emp in emp_list:

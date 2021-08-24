@@ -28,6 +28,15 @@ export class employee{
     roles:string
 
   }
+  export class project{
+    project_code:string
+  }
+  export class department{
+    department_name:string
+  }
+  export class designation{
+    designation:string
+  }
   export enum users{
     admin="admin",
     manager="manager",

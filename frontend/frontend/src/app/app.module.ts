@@ -15,6 +15,7 @@ import { ExamsApiService } from './exams/exams.service';
 import { EmployeesComponent } from './employees/employees.component';
 import { employeesApiService } from './employees/employees.service';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { AddDepartmentComponent } from './add-department/add-department.component';
 import { ViewProjectsComponent } from './projects/view-projects.component';
 import { AddProjectsComponent } from './add-projects/add-projects.component';
 import { AssignProjectResourceComponent } from './assign-project-resource/assign-project-resource.component';
@@ -51,6 +52,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import {MatTabsModule} from '@angular/material/tabs';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { AddDesignationComponent } from './add-designation/add-designation.component';
+import { SortDirective } from './directive/sort.directive';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -80,6 +83,9 @@ FullCalendarModule.registerPlugins([
     SideBarComponent,
     ForgotPasswodComponent,
     ResetPasswordComponent,
+    AddDepartmentComponent,
+    AddDesignationComponent,
+    SortDirective
    
   ],
 

@@ -1,16 +1,16 @@
-import {employee} from './employees';
 import {API_URL} from '../env';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { designation } from './designation-info';
+
 
 @Injectable({providedIn:'root'})
 
-export class addEmployeeService{
+export class addDesignationService{
     constructor(public toastr: ToastrService, private http: HttpClient) {
     }
-   
     showMessage(message, title){
         if (title=='success'){
             this.toastr.success(message, title)
@@ -24,20 +24,10 @@ export class addEmployeeService{
             this.toastr.warning(message, title)
         }    
     } 
-    
-    addEmployee(employee:employee):Observable<any>{
+    addDesignation(designation:designation):Observable<any>{
         const headers = { 'content-type': 'application/json'}  
-        const body=JSON.stringify(employee);
+        const body=JSON.stringify(designation);
         console.log(body);
-        return this.http.post(`${API_URL}/addEmployee`, body,{'headers':headers})
-    }
-    getprojectid(){
-        return this.http.get(`${API_URL}/getprojectid`);
-    }
-    getdepartment(){
-        return this.http.get(`${API_URL}/getdepartment`);
-    }
-    getdesignation(){
-        return this.http.get(`${API_URL}/getdesignation`);
+        return this.http.post(`${API_URL}/addDesignation`, body,{'headers':headers})
     }
 }

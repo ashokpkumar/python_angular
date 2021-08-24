@@ -1,10 +1,11 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit,ViewEncapsulation } from '@angular/core';
 import {  FormGroup,FormControl, Validators } from '@angular/forms';
-import {employee,users} from './employees';
+import {employee,users,project} from './employees';
 import { addEmployeeService } from './add-employee.service';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from "@angular/router"
 import {MatCalendarCellClassFunction,MatDatepickerModule} from '@angular/material/datepicker';
+import { subscribeOn } from 'rxjs/operators';
 
 //https://www.itsolutionstuff.com/post/how-to-use-toaster-notification-in-angular-8example.html
 @Component({
@@ -16,6 +17,7 @@ import {MatCalendarCellClassFunction,MatDatepickerModule} from '@angular/materia
 
 
 export class AddEmployeeComponent implements OnInit {
+  [x: string]: any;
   durationInSeconds = 5;
   employee = new employee();
   emailPattern =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -23,6 +25,16 @@ export class AddEmployeeComponent implements OnInit {
   public users:any
   roles: any
   isVisible: boolean=false;
+  project= new project();
+  manager_id:any
+  manager_name:any
+  public proj_list:any;
+  public dept_List: any
+  public desig_List: any
+  project_code:any
+  department_name:any
+  designation:any
+
   // employee = new FormGroup({
   //   emp_id : new FormControl(),
   //   email : new FormControl(),
@@ -62,6 +74,20 @@ export class AddEmployeeComponent implements OnInit {
     else{
       this.router.navigate(['/login']);
     }
+    this.apiService.getprojectid()
+    .subscribe(res=>{
+      console.log(res) 
+      this.proj_list = res,
+      console.log(res)                 
+        });
+    this.apiService.getdepartment().subscribe(res=>{
+      console.log(res)
+      this.dept_list=res
+    });
+    this.apiService.getdesignation().subscribe(res=>{
+      console.log(res)
+      this.desig_list=res
+    });
   }
   checkRoles(roles) {
    let userRoles = roles.split(",");
@@ -72,6 +98,22 @@ export class AddEmployeeComponent implements OnInit {
       } 
     }
   }
+  // projectid(){
+  //   this.apiService.getprojectid()
+  //   .subscribe(res=>{
+  //     console.log(res) 
+  //     this.project_code = res,
+  //     console.log(res)                 
+  //       });
+  // }
+  // checkManger(manager_id){
+  //   this.manager_id=this.employee.manager_id
+  //   console.log(this.employee.manager_id)
+  //   this.apiService.checkmanager(this.manager_id)
+  //   .subscribe(data=>{console.log(data),this.apiService.showMessage(Object.values(data),Object.keys(data))})
+  // }
+
+  
 
   onSubmit(data) {
     console.log(this.employee)
@@ -86,6 +128,8 @@ export class AddEmployeeComponent implements OnInit {
     this.apiService.addEmployee(this.employee)
     .subscribe(data=>{console.log(data),this.apiService.showMessage(Object.values(data),Object.keys(data))})
     console.log(this.employee)
+
+    
 
     // this.router.navigate(["/employee"]);
   }

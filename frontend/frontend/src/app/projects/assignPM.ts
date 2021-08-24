@@ -3,3 +3,11 @@ export class projectManager{
     manager_id:string
   
   }
+export interface projectsort{
+  billing_type:string
+  segment:string
+  geography:string
+  financial_year:number
+  solution_category:string
+  project_code:string
+}

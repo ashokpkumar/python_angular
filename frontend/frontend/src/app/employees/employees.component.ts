@@ -24,6 +24,7 @@ export class EmployeesComponent implements OnInit {
   faTimesCircle =faTimesCircle
   faSlidersH = faSlidersH
   project_name : any
+  salutation :any
   project_id : any
   resource_status : any
   manager_name : any
@@ -39,7 +40,8 @@ export class EmployeesComponent implements OnInit {
     resourceStatus:"All",
     managerName:"All",
     clientName:"All",
-    deliveryType:"All"
+    deliveryType:"All",
+    salutation:"ALL"
   }
 
   constructor(private modalService: NgbModal, private empApi: employeesApiService, private router: Router, private cookieService: CookieService) { }
@@ -63,6 +65,7 @@ export class EmployeesComponent implements OnInit {
         let project_name = []
         let project_id = []
         let resource_status = []
+        let salutation=[]
         let manager_name = []
         let client_name = []
         let delivery_type = []
@@ -75,6 +78,9 @@ export class EmployeesComponent implements OnInit {
           }
           if(item['resource_status'] != ""){
             resource_status.push(item['resource_status'])
+          }
+          if(item['salutation'] != ""){
+            salutation.push(item['salutation'])
           }
           if(item['manager_name'] != ""){
             manager_name.push(item['manager_name'])
@@ -89,6 +95,7 @@ export class EmployeesComponent implements OnInit {
         this.project_name= new Set(project_name)
         this.project_id= new Set(project_id)
         this.resource_status = new Set(resource_status)
+        this.salutation= new Set(salutation)
         this.manager_name = new Set(manager_name)
         this.client_name = new Set(client_name)
         this.delivery_type = new Set(delivery_type)
@@ -164,7 +171,7 @@ export class EmployeesComponent implements OnInit {
     }
   }
   applyFilter(){
-    let {selectedProject,projectID,resourceStatus,managerName,clientName,deliveryType} = this.dataForFilter
+    let {selectedProject,projectID,resourceStatus,managerName,clientName,deliveryType,salutation} = this.dataForFilter
       this.employee_list = this.copyEmployeeList.filter(item =>
       ( item['manager_name'] === managerName  || managerName === "All") &&
       ( item['project_code'] === projectID  || projectID === "All") &&
@@ -172,7 +179,9 @@ export class EmployeesComponent implements OnInit {
       ( item['project_name'] === selectedProject  || selectedProject === "All") &&
       ( item['client_name'] === clientName  || clientName === "All") &&
       ( item['delivery_type'] === deliveryType  || deliveryType === "All") &&
-      ( item['project_name'] === selectedProject  || selectedProject === "All")
+      ( item['project_name'] === selectedProject  || selectedProject === "All")&&
+      ( item['salutation'] === salutation  || salutation === "All")
+
      )
      Object.entries(this.dataForFilter).map(([key,value])=>{
       this.dataForFilter[key] = 'All'
