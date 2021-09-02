@@ -25,14 +25,14 @@ export class ShowTimeComponent implements OnInit {
   @ViewChild('content')
   private defaultTabButtonsTpl: TemplateRef<any>;
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){
-      this.roles=this.cookieService.get('roles');
+    if (window.sessionStorage.getItem('login')=='true'){
+      this.roles=window.sessionStorage.getItem('roles');
       this.checkRoles(this.roles)
     }
     else{
       this.router.navigate(['/login']);
     }
-    this.userInfo.emp_id = this.cookieService.get('username');
+    this.userInfo.emp_id = window.sessionStorage.getItem('username');
     this.apiService.onSubmit(this.userInfo)
     .subscribe(data=>{console.log("Employee Data: ",data),
     this.userData = data,

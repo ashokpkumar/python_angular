@@ -94,3 +94,10 @@ justify-content: center;
   border-color: #0895ec;
   color: #fff;
 }
+.error{
+  color: red;
+  animation-name: erroranimation;
+  animation-duration: 1s;
+  opacity: 3s;
+  animation-iteration-count: infinite;
+}  

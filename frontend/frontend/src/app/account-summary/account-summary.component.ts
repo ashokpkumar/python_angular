@@ -32,11 +32,11 @@ export class AccountSummaryComponent implements OnInit {
   private defaultTabButtonsTpl: TemplateRef<any>;
 
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){}
+    if (window.sessionStorage.getItem('login')=='true'){}
     else{
       this.router.navigate(['/login']);
     }
-    this.userInfo.emp_id = this.cookieService.get('username');
+    this.userInfo.emp_id = window.sessionStorage.getItem('username');
     this.apiService.onSubmit(this.userInfo)
     .subscribe(data=>{console.log("Employee Data: ",data),
     this.userData = data,
@@ -109,7 +109,7 @@ export class AccountSummaryComponent implements OnInit {
     document.getElementById("main").style.marginLeft="0px";
   }
   logout(){
-    this.cookieService.set('login','false');
+    window.sessionStorage.setItem('login','false');
     document.getElementById("mySidenav").style.width="0px";
     document.getElementById("main").style.marginLeft="0px";
     this.router.navigate(['/login']);
@@ -122,8 +122,8 @@ export class AccountSummaryComponent implements OnInit {
   
     this.modalService.open(this.defaultTabButtonsTpl, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       console.log("Time Info",this.timeInfo);
-      this.timeInfo['user_name']=this.cookieService.get('username');;
-      this.timeInfo['manager_name']=this.cookieService.get('username');;
+      this.timeInfo['user_name']=window.sessionStorage.getItem('username');;
+      this.timeInfo['manager_name']=window.sessionStorage.getItem('username');;
 
       this.apiService.addTimeSubmissions(this.timeInfo)
     .subscribe(data=>{console.log("Employee Data: ",data),

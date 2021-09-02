@@ -31,4 +31,20 @@ export class addEmployeeService{
         console.log(body);
         return this.http.post(`${API_URL}/addEmployee`, body,{'headers':headers})
     }
+    getprojectid(){
+        return this.http.get(`${API_URL}/getprojectid`);
+    }
+    getdepartment(){
+        return this.http.get(`${API_URL}/getdepartment`);
+    }
+    getdesignation(){
+        return this.http.get(`${API_URL}/getdesignation`);
+    }
 }
+
+// const httpOptions = {
+//     headers: new HttpHeaders({
+//       'Content-Type':  'application/json',
+//       Authorization: 'my-auth-token'
+//     })
+//   };

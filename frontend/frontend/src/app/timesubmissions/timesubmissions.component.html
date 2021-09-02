@@ -31,7 +31,7 @@
       </mat-form-field>
       <ng-container *ngIf="downloadAs == 'Summary as Csv'">
       <div class="filter_reset_btn">
-        <i class="fa fa-download fa-2x" aria-hidden="true"(click)="download()" style="color: #24a7f8;"></i>
+        <i class="fa fa-download fa-2x" aria-hidden="true"(click)="download_overall_summary()" style="color: #24a7f8;"></i>
         <!-- <button (click)="download()">Download</button> -->
       </div>
       </ng-container>
@@ -49,38 +49,38 @@
       </div>
   </div>
 </div>
-<div class="container" *ngIf="timeDatas?.length > 0">
+<div class="container_table" *ngIf="timeDatas?.length > 0">
     <div class="table_border">
     <div class="time_submission_table">
       <table>
         <thead>
           <tr class="time_sub_row" >
             <!-- <tr> -->
-            <th data-field="username" data-checkbox="true" rowspan="1" >User Name <i class="fa fa-sort" aria-hidden="true"(click)="sort('username')"></i></th>
-            <th data-field="dateInfo" data-checkbox="true"rowspan="1">User ID <i class="fa fa-sort" aria-hidden="true" (click)="sort('userid')"></i></th>
-            <th data-field="presence" data-filter-control="input" data-sortable="true" colspan="4">Presence 
+            <th data-field="username" data-checkbox="true" rowspan="1" >User Name <i class="fa fa-sort" aria-hidden="true"[appSort]="timeDatas" data-order="desc" data-name="user_name" scope="col"></i></th>
+            <th data-field="dateInfo" data-checkbox="true"rowspan="1">User ID <i class="fa fa-sort" aria-hidden="true" [appSort]="timeDatas" data-order="desc" data-name="user_id" scope="col"></i></th>
+            <th data-field="presence" data-sortable="true" colspan="4">Presence 
               <tr class="sub_hed">
-                <th data-field="Project Time" data-filter-control="input" data-sortable="true" >Project Time <i class="fa fa-sort" aria-hidden="true"(click)="sort('projectTime')"></i></th>
-                <th>Non Project<i class="fa fa-sort" aria-hidden="true"(click)="sort('al')"></i></th>
-                <th data-field="Time Type" data-filter-control="input" data-sortable="true">Bench Time <i class="fa fa-sort" aria-hidden="true"(click)="sort('benchTime')"></i></th>
-                <th>Total Presence<i class="fa fa-sort" aria-hidden="true"(click)="sort('al')"></i></th>
+                <th data-field="Project Time" data-sortable="true" >Project Time <i class="fa fa-sort" aria-hidden="true"[appSort]="timeDatas" data-order="desc" data-name="project_time" scope="col"></i></th>
+                <th>Non Project<i class="fa fa-sort" aria-hidden="true"[appSort]="timeDatas" data-order="desc" data-name="non_project" scope="col"></i></th>
+                <th data-field="Time Type" data-sortable="true">Bench Time <i class="fa fa-sort" aria-hidden="true"[appSort]="timeDatas" data-order="desc" data-name="bench" scope="col"></i></th>
+                <th>Total Presence<i class="fa fa-sort" aria-hidden="true"[appSort]="timeDatas" data-order="desc" data-name="total_presence" scope="col"></i></th>
               </tr>  
             </th>
             <th data-field="Absence" data-filter-control="input" data-sortable="true" colspan="4">Absence
-              <tr class = "sub header">
-                <th data-field="Sl" data-filter-control="select" data-sortable="true" style="align-self: auto;">SL Type <i class="fa fa-sort" aria-hidden="true"(click)="sort('sl')"></i>  </th>
-                <th data-field="Cl" data-filter-control="select" data-sortable="true">CL Type<i class="fa fa-sort" aria-hidden="true"(click)="sort('cl')"></i>  </th>
-                <th data-field="Al" data-filter-control="select" data-sortable="true">AL Type<i class="fa fa-sort" aria-hidden="true"(click)="sort('al')"></i>   </th>
-                <th>Total Absence<i class="fa fa-sort" aria-hidden="true"(click)="sort('al')"></i></th>
+              <tr class="sub_hed">
+                <th data-field="Sl" data-filter-control="select" data-sortable="true" style="align-self: auto;">SL Type <i class="fa fa-sort" aria-hidden="true"[appSort]="timeDatas" data-order="desc" data-name="sl" scope="col"></i>  </th>
+                <th data-field="Cl" data-filter-control="select" data-sortable="true">CL Type<i class="fa fa-sort" aria-hidden="true"[appSort]="timeDatas" data-order="desc" data-name="cl" scope="col"></i>  </th>
+                <th data-field="Al" data-filter-control="select" data-sortable="true">AL Type<i class="fa fa-sort" aria-hidden="true"[appSort]="timeDatas" data-order="desc" data-name="al" scope="col"></i>   </th>
+                <th>Total Absence<i class="fa fa-sort" aria-hidden="true"[appSort]="timeDatas" data-order="desc" data-name="total_absence" scope="col"></i></th>
               </tr>
-            </th>
-            <th data-field="Total" data-filter-control="select" data-sortable="true"rowspan="1">Grand Total <i class="fa fa-sort" aria-hidden="true"(click)="sort('total')"></i></th>
-            <th data-field="Review" data-filter-control="select" data-sortable="true"rowspan="1">Unapproved <i class="fa fa-sort" aria-hidden="true"(click)="sort('unapproved')"></i></th>
+              </th>
+            <th data-field="Total" data-filter-control="select" data-sortable="true"rowspan="1">Grand Total <i class="fa fa-sort" aria-hidden="true"[appSort]="timeDatas" data-order="desc" data-name="total_hrs" scope="col"></i></th>
+            <th data-field="Review" data-filter-control="select" data-sortable="true"rowspan="1">Unapproved <i class="fa fa-sort" aria-hidden="true"[appSort]="timeDatas" data-order="desc" data-name="unapproved" scope="col"></i></th>
           </tr>
         </thead>
 
         <tbody>
-          <tr class="time_sub_row" *ngFor="let timedata of timeDatas | orderBy: key: reverse" >
+          <tr class="time_sub_row" *ngFor="let timedata of timeDatas" >
             <td>{{timedata.user_name}}</td>
             <td>{{timedata.user_id}}</td>
             <td ><a (click)="clickNumbers(timedata.user_id,timedata.user_name,'project')"  ><u>{{timedata.project_time}}</u></a></td>
@@ -99,18 +99,18 @@
           <tr class="time_sub_row bg_color_total" >
             <td>Total: </td>
             <td>{{totalTime['user_name']}}</td>
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'project')"><u>{{totalTime['total_project']}}</u></a></td>
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'non_project')"><u>{{totalTime['total_non_project']}}</u></a></td>
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'bench')"><u>{{totalTime['total_bench']}}</u></a></td>
+            <td><a (click)="clickNumbers('total','total','project')"><u>{{totalTime['total_project']}}</u></a></td>
+            <td><a (click)="clickNumbers('total','total','non_project')"><u>{{totalTime['total_non_project']}}</u></a></td>
+            <td><a (click)="clickNumbers('total','total','bench')"><u>{{totalTime['total_bench']}}</u></a></td>
             <!-- <td></td> -->
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'total_total_presence')"><u>{{totalTime['total_total_presence']}}</u></a></td>
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'sl')"><u>{{totalTime['total_sl']}}</u></a></td>
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'cl')"><u>{{totalTime['total_cl']}}</u></a></td>
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'al')"><u>{{totalTime['total_al']}}</u></a></td>
+            <td><a (click)="clickNumbers('total','total','total_presence')"><u>{{totalTime['total_total_presence']}}</u></a></td>
+            <td><a (click)="clickNumbers('total','total','sl')"><u>{{totalTime['total_sl']}}</u></a></td>
+            <td><a (click)="clickNumbers('total','total','cl')"><u>{{totalTime['total_cl']}}</u></a></td>
+            <td><a (click)="clickNumbers('total','total','al')"><u>{{totalTime['total_al']}}</u></a></td>
             <!-- <td></td> -->
             <!-- <td></td> -->
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'total_total_presence')"><u>{{totalTime['total_total_absence']}}</u></a></td>
-            <td><a (click)="clickNumbers('total',this.modaluser_name,'total_total_hrs')"><u>{{totalTime['total_total_hrs']}}</u></a></td>
+            <td><a (click)="clickNumbers('total','total','total_absence')"><u>{{totalTime['total_total_absence']}}</u></a></td>
+            <td><a (click)="clickNumbers('total','total','total_hrs')"><u>{{totalTime['total_total_hrs']}}</u></a></td>
             <td><a (click)="clickNumbers('total','total','unapproved')"><u>{{totalTime['total_unapproved']}}</u></a></td>
           </tr>
         </tfoot>
@@ -196,8 +196,28 @@
 
   <ng-template #unapproved let-modal>
     <div class="modal_1">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Review Time:{{this.modaluser_name}}({{this.modaltime_type}})</h4>
+    <div class="modal-header modal-fixed-footer">
+      <h4 class="modal-title" id="modal-basic-title">Review Time:{{this.modaluser_name}}({{this.modaltime_type}})
+        <br>
+        <div class="download_modal">
+          <button class="download" type="button" (click)='download_unapproved()'>Summary Data        
+            <i class="fa fa-download fa-x" aria-hidden="true" style="color: #e9e9f1;"></i>
+          </button>
+          <button class="download" type="button"(click)='download_modalUnapprovedData()'>Raw Data
+            <i class="fa fa-download fa-x" aria-hidden="true" style="color: #dde4e9;"></i>
+          </button>
+        </div>
+      </h4>
+      <!-- <div class="modalfooter" >
+        <mat-form-field appearance="fill">
+        <mat-label>Download As</mat-label>
+          <mat-select [(ngModel)]="downloadAs" disableRipple>
+            <mat-option value="Summary as Csv"(click)='download_unapproved()'>Summary as Csv</mat-option>
+            <mat-option value="Raw Data as Csv" (click)='download_modalUnapprovedData()'>Raw Data as Csv </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="download" type="button" (click)='download_modalUnapprovedData()'>Download</button>
+      </div> -->
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -251,16 +271,6 @@
 
             </tbody>
           </table>
-          <div class="modal-footer" >
-            <mat-form-field appearance="fill">
-            <mat-label>Download As</mat-label>
-              <mat-select [(ngModel)]="downloadAs" disableRipple>
-                <mat-option value="Summary as Csv"(click)='download_unapproved()'>Summary as Csv</mat-option>
-                <mat-option value="Raw Data as Csv" (click)='download_modalUnapprovedData()'>Raw Data as Csv </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <button class="download" type="button" (click)='download_modalUnapprovedData()'>Download</button>
-          </div>
         </div>
       </div>
     </div>
@@ -270,11 +280,33 @@
 
   <ng-template #approved let-modal>
   <div class ="modal_1">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Time Info : {{this.modaluser_name}}({{this.modaltime_type}})</h4>
+    <div class="modal-header modal-fixed-footer">
+      <h4 class="modal-title" id="modal-basic-title">Time Info : {{this.modaluser_name}}({{this.modaltime_type}})
+      <br>
+      <div class="download_modal">
+        <button class="download" type="button" (click)='download_approved()'>Summary Data        
+          <i class="fa fa-download fa-x" aria-hidden="true" style="color: #24a7f8;"></i>
+        </button>
+        <button class="download" type="button" (click)="download_modalApprovedData()">Raw Data
+          <i class="fa fa-download fa-x" aria-hidden="true" style="background: #ffffff;
+    border-color: #0895ec;
+    color: #0895ec;"></i>
+        </button>
+      </div>
+    </h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
-      </button>
+      </button><br>
+      <!-- <div class="modalfooter">
+        <mat-form-field appearance="fill">
+        <mat-label>Download As</mat-label>
+          <mat-select [(ngModel)]="downloadAs" disableRipple>
+            <mat-option value="Summary as Csv" (click)='download_approved()'>Summary as Csv</mat-option>
+            <mat-option value="Raw Data as Csv" (click)='download_modalUnapprovedData()'>Raw Data as Csv </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button  class="download" type="button" (click)='download_modalUnapprovedData()'>Download</button>
+      </div> -->
     </div>
     <div class="modal-body">
       <div class="containerRT" *ngIf="timeClicked?.length > 0 ">
@@ -313,16 +345,6 @@
 
             </tbody>
           </table>
-          <div class="modal-footer">
-            <mat-form-field appearance="fill">
-            <mat-label>Download As</mat-label>
-              <mat-select [(ngModel)]="downloadAs" disableRipple>
-                <mat-option value="Summary as Csv" (click)='download_approved()'>Summary as Csv</mat-option>
-                <mat-option value="Raw Data as Csv" (click)='download_modalUnapprovedData()'>Raw Data as Csv </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <button  class="download" type="button" (click)='download_modalUnapprovedData()'>Download</button>
-          </div>
         </div>
       </div>
     </div>

@@ -4,8 +4,8 @@
 <app-view-projects></app-view-projects> -->
 
 <app-navigation></app-navigation>
-<div class="side_main_content">
-    <app-side-bar></app-side-bar>
+<div class="side_main_content" >
+    <app-side-bar *ngIf="isVisible"></app-side-bar>
     <router-outlet></router-outlet>
 </div>
 
