@@ -35,13 +35,13 @@ export class NavigationComponent implements OnInit {
   constructor(private router: Router,public toastr: ToastrService,private cookieService: CookieService) { }
 
   public ngOnInit(): void {
-    this.cookieService.set('cookie-name','our cookie value');
-    this.cookieValue = this.cookieService.get('cookie-name');
+    window.sessionStorage.setItem('cookie-name','our cookie value');
+    this.cookieValue = window.sessionStorage.getItem('cookie-name');
     console.log("Cookie value", this.cookieValue);
   }
   logout(){
     console.log("Logging out ")
-    this.cookieService.set('login','false');
+    window.sessionStorage.setItem('login','false');
     
     this.router.navigate(['/login']);
   }

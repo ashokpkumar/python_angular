@@ -19,13 +19,13 @@ export class SideBarComponent implements OnInit {
 
   logout(){
     console.log("Logging out ")
-    this.cookieService.set('login','false');
+    window.sessionStorage.setItem('login','false');
     
     this.router.navigate(['/login']);
   }
 
   ngOnInit(): void {
-    if(this.cookieService.get('login')=='true'){
+    if(window.sessionStorage.getItem('login')=='true'){
       this.login=true;
     }
 

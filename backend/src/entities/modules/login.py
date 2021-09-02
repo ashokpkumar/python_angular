@@ -1,12 +1,18 @@
 from flask import Blueprint, jsonify, request
 import datetime
+from env.config import Config 
 from flask import request, render_template
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
-from flask_jwt_extended import JWTManager
+#from flask_jwt_extended import create_access_token
+# from flask_jwt_extended import get_jwt_identity
+# from flask_jwt_extended import jwt_required
+# from flask_jwt_extended import JWTManager
 from flask_expects_json import expects_json
 from flask_mail import Mail, Message
+from entities.modules.auth import jwtvalidate
+import json
+import jwt
+import logging
+
 
 from flask_mail import Mail, Message
 
@@ -55,9 +61,30 @@ def login():
     emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
     employee_name = (emp_obj.first_name if emp_obj.first_name else "") + (emp_obj.last_name if emp_obj.last_name else "")
     roles = auth_object.roles
-    login=True
-    access_token = create_access_token(identity=emp_id)
-    return jsonify(access_token=access_token,username=emp_id,roles=roles,login=login,employee_name = employee_name)
+    try:
+        payload = {
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=Config.AUTH_TOKEN_EXPIRY_DAYS, seconds=Config.AUTH_TOKEN_EXPIRY_SECS),
+            'iat': datetime.datetime.utcnow(),
+            'emp_id': emp_id,
+            'roles':roles
+            # 'username':input_user_id
+        }
+        print(payload)
+
+        jwt_info = jwt.encode(
+            payload,
+            Config.JWT_SECRET_KEY,
+            algorithm='HS256'
+        )
+        print(jwt_info)
+        login=True
+        return jsonify(access_token=jwt_info,username=emp_id,roles=roles,login=login,employee_name = employee_name)
+
+    except Exception as e:
+        return e
+    # login=True
+    # access_token = create_access_token(identity=emp_id)
+    # return jsonify(access_token=access_token,username=emp_id,roles=roles,login=login,employee_name = employee_name)
 
 
 @login_module.route("/forgot_pass_create_token", methods=["POST"])

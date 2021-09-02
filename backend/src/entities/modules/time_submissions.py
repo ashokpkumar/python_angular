@@ -3,6 +3,8 @@ import datetime
 from entities.database import employee,project,authUser,timesubmissions
 from entities.database import Session
 from entities.database import serialize_all
+from entities.modules.auth import jwtvalidate
+
 
 time_module = Blueprint(name="time", import_name=__name__)
 
@@ -70,6 +72,7 @@ def viewsubmissions():
   
 
 @time_module.route('/timesubmissions')
+# @jwtvalidate
 def timesubmission():
     session = Session()
     sub_objects = session.query(timesubmissions).all()
@@ -141,6 +144,7 @@ def getTimeBy():
       
 
 @time_module.route('/timeData', methods=['POST'])
+# @jwtvalidate
 def timeData():
     session = Session()
     data = request.get_json()

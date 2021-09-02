@@ -3,7 +3,8 @@ import datetime
 from entities.database import employee,project,authUser,timesubmissions,department,designation
 from entities.database import Session
 from entities.database import serialize_all
-
+from entities.modules.auth import jwtvalidate
+from entities.helper import listToString
 employee_module = Blueprint(name="employee", import_name=__name__)
 
 @employee_module.route('/employees')
@@ -161,7 +162,7 @@ def addEmployee():
                         delivery_type=data.get("delivery_type").lower(),
                         additional_allocation=data.get("additional_allocation").lower(),
                         skills=data.get("skills").lower(),
-                        roles=data.get("roles"),
+                        roles=listToString(data.get("roles")),
 
                         )
     session = Session()
@@ -169,7 +170,7 @@ def addEmployee():
     session.commit()
     auth_data = authUser(emp_id = data.get("emp_id").lower(),
                         email=data.get("email").lower(),
-                        roles=data.get("roles").lower())
+                        roles=listToString(data.get("roles")))
     session = Session()
     session.add(auth_data)
     session.commit()     

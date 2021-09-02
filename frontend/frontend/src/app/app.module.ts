@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -54,6 +54,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { AddDesignationComponent } from './add-designation/add-designation.component';
 import { SortDirective } from './directive/sort.directive';
+import { AuthInterceptor } from './AuthInterceptor';
+//import { TokenInterceptor } from './auth/token.interceptor';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -120,7 +122,8 @@ FullCalendarModule.registerPlugins([
     })
   ],
   
-  providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule],
+  providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

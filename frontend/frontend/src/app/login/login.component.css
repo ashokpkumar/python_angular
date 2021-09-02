@@ -1,7 +1,7 @@
 .login_page_bg{
     height: 91vh;
     width: 100%;
-    background: #DFE1E1;
+    background: #ffffff;
     display: grid;
     justify-content: center;
     align-items: center;
@@ -15,7 +15,8 @@
     display: grid;
     justify-content: center;
     align-items: start;
-}
+    padding-left: 1000px;
+    }
 .sign_reset{
     font-size: 20px;
     font-weight: bold;

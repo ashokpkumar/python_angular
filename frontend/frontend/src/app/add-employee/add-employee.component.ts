@@ -67,8 +67,8 @@ export class AddEmployeeComponent implements OnInit {
   constructor(private apiService:addEmployeeService,private router: Router,private cookieService: CookieService) { }
 
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){
-    this.roles=this.cookieService.get('roles');
+    if (window.sessionStorage.getItem('login')=='true'){
+    this.roles=window.sessionStorage.getItem('roles');
      this.checkRoles(this.roles);
     }
     else{

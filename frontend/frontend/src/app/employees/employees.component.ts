@@ -50,8 +50,8 @@ export class EmployeesComponent implements OnInit {
     let myElement = document.getElementsByClassName("popover") as HTMLCollectionOf<HTMLElement>;
     console.log(myElement);
 
-    if (this.cookieService.get('login') == 'true') {
-    this.roles=this.cookieService.get('roles');
+    if (window.sessionStorage.getItem('login') == 'true') {
+    this.roles=window.sessionStorage.getItem('roles');
     this.checkRoles(this.roles)
   }
     else {

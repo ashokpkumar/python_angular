@@ -20,8 +20,8 @@ export class AddDesignationComponent implements OnInit {
 constructor(private router: Router,private cookieService: CookieService,private apiService:addDesignationService) { }
 
 ngOnInit(): void {
-  if (this.cookieService.get('login')=='true'){
-  this.roles=this.cookieService.get('roles');
+  if (window.sessionStorage.getItem('login')=='true'){
+  this.roles=window.sessionStorage.getItem('roles');
   this.checkRoles(this.roles)
   }
   else{

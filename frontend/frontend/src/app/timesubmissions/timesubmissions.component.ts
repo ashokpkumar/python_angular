@@ -60,9 +60,9 @@ export class TimesubmissionsComponent implements OnInit {
   
   ngOnInit(): void {
     this.allUserUnapproved = false;
-    if (this.cookieService.get('login')=='true'){
-      this.roles=this.cookieService.get('roles');
-      this.user_id=this.cookieService.get('username')
+    if (window.sessionStorage.getItem('login')=='true'){
+      this.roles=window.sessionStorage.getItem('roles');
+      this.user_id=window.sessionStorage.getItem('username')
       this.checkRoles(this.roles)
     }
     else{

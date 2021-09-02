@@ -84,9 +84,9 @@ export class TimeSummaryComponent implements OnInit {
   private defaultTabButtonsTpl: TemplateRef<any>;
   // constructor(private router: Router,private modalService: NgbModal,private apiService: TimesummaryService,private http: HttpClient,private cookieService: CookieService) { }
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){
-      this.roles=this.cookieService.get('roles');
-      this.user_id=this.cookieService.get('username')
+    if (window.sessionStorage.getItem('login')=='true'){
+      this.roles=window.sessionStorage.getItem('roles');
+      this.user_id=window.sessionStorage.getItem('username')
       // this.checkRoles(this.roles)
     }
     else{      this.router.navigate(['/login']);   }
@@ -234,7 +234,7 @@ export class TimeSummaryComponent implements OnInit {
   open1(content) {
     this.modalService.open(this.defaultTabButtonsTpl, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       console.log("Time Info",this.timeInfo);
-      this.timeInfo['user_id']=this.cookieService.get('username');;
+      this.timeInfo['user_id']=window.sessionStorage.getItem('username');;
       this.timeInfo['manager_id']=this.userData.manager_id ;
       this.project_id=this.timeInfo.project_id
 

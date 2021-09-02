@@ -41,3 +41,10 @@ export class addEmployeeService{
         return this.http.get(`${API_URL}/getdesignation`);
     }
 }
+
+// const httpOptions = {
+//     headers: new HttpHeaders({
+//       'Content-Type':  'application/json',
+//       Authorization: 'my-auth-token'
+//     })
+//   };
