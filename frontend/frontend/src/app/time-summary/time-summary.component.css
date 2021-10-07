@@ -61,7 +61,7 @@ max-height: calc(100vh - 220px) !important;
   box-sizing: border-box;
   padding: 6px 12px;
   border-radius: 4px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #f8f8f8;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
 }

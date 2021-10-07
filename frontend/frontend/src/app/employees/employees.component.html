@@ -131,8 +131,14 @@
         <td>{{item.full_name}}</td>
         <td>{{item.project_name}}</td>
         <td>
-          <button (click)="open(content,item.emp_id)" type="button" class="add_employess">Add</button>
-          {{item.project_code}}
+          <fa-icon class="fa fa-plus-circle fa-lg" aria-hidden="true" (click)="open(content,item.emp_id)"  style="color:white;  background: rgb(36, 167, 248);
+                border-radius: 50%;
+                line-height: normal;
+                width: 1em;
+                ">
+                </fa-icon>
+          <!-- <button (click)="open(content,item.emp_id)" type="button" class="add_employess">Add</button> -->
+          <div>{{item.project_code}}</div>
         </td>
 
         <td>{{item.emp_project_assigned_date}}</td>
