@@ -287,3 +287,4 @@ def time_master():
         session.add(time_objects)
         session.commit()
         session.close()
+        
