@@ -54,7 +54,6 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { AddDesignationComponent } from './add-designation/add-designation.component';
 import { SortDirective } from './directive/sort.directive';
-import { AuthInterceptor } from './AuthInterceptor';
 //import { TokenInterceptor } from './auth/token.interceptor';
 
 FullCalendarModule.registerPlugins([ 
@@ -122,8 +121,7 @@ FullCalendarModule.registerPlugins([
     })
   ],
   
-  providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
