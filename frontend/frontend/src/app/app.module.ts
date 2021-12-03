@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { ExamsApiService } from './exams/exams.service';
 import { EmployeesComponent } from './employees/employees.component';
 import { employeesApiService } from './employees/employees.service';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { AddDepartmentComponent } from './add-department/add-department.component';
 import { ViewProjectsComponent } from './projects/view-projects.component';
 import { AddProjectsComponent } from './add-projects/add-projects.component';
 import { AssignProjectResourceComponent } from './assign-project-resource/assign-project-resource.component';
@@ -51,6 +52,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import {MatTabsModule} from '@angular/material/tabs';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { AddDesignationComponent } from './add-designation/add-designation.component';
+import { SortDirective } from './directive/sort.directive';
+//import { TokenInterceptor } from './auth/token.interceptor';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -80,6 +84,9 @@ FullCalendarModule.registerPlugins([
     SideBarComponent,
     ForgotPasswodComponent,
     ResetPasswordComponent,
+    AddDepartmentComponent,
+    AddDesignationComponent,
+    SortDirective
    
   ],
 
@@ -114,7 +121,7 @@ FullCalendarModule.registerPlugins([
     })
   ],
   
-  providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule],
+  providers: [ExamsApiService,employeesApiService,projectsApiService,loginService,MatDatepickerModule,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

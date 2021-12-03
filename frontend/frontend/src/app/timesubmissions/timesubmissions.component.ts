@@ -32,7 +32,6 @@ export class TimesubmissionsComponent implements OnInit {
   pipe: DatePipe;
   from_Date:any;
   to_Date:any;
-  sortDir = 1;//1= 'ASE' -1= DSC
 
 
 
@@ -61,20 +60,20 @@ export class TimesubmissionsComponent implements OnInit {
   
   ngOnInit(): void {
     this.allUserUnapproved = false;
-    if (this.cookieService.get('login')=='true'){
-      this.roles=this.cookieService.get('roles');
-      this.user_id=this.cookieService.get('username')
+    if (window.sessionStorage.getItem('login')=='true'){
+      this.roles=window.sessionStorage.getItem('roles');
+      this.user_id=window.sessionStorage.getItem('username')
       this.checkRoles(this.roles)
     }
     else{
       this.router.navigate(['/login']);
     }
     this.user_id = "I3186";
-    // this.user_name = "I3228";
-    this.apiService.getSubmissions(this.user_id)
-    .subscribe(data=>{
-    this.submissionList = data,
-    this.apiService.showMessage(Object.values(data),Object.keys(data))});
+
+    // this.apiService.getSubmissions(this.user_id)
+    // .subscribe(data=>{
+    // this.submissionList = data,
+    // this.apiService.showMessage(Object.values(data),Object.keys(data))});
 
     this.apiService.getTimeData(this.user_id)
     .subscribe(data=>{
@@ -83,6 +82,7 @@ export class TimesubmissionsComponent implements OnInit {
                  console.log(data)                 
                     });
   }
+
   clickNumbers(user,user_name,type){
 
 console.log(user,user_name,type);
@@ -193,16 +193,11 @@ get toDate() { return this.filterForm.get('toDate'); }
       // this.router.onSameUrlNavigation = 'reload';
       // this.router.navigate(['/timesubmission']);
   }
-    
-  download(){
+  //overall_summary data  
+  download_overall_summary(){
     this.apiService.downloadFile(this.timeDatas, 'jsontocsv');
-  }   
-  download_approved(){
-    this.apiService.download_timeinfo(this.timeClicked, 'jsontocsv');
-  } 
-  download_unapproved(){
-    this.apiService.download_reviewtime(this.submissionClicked, 'jsontocsv'); 
-  }
+  }  
+  //overall raw data 
   download_data(raw_data){
     this.apiService.rawData(raw_data)
   .subscribe(data=>{console.log(data)
@@ -211,19 +206,20 @@ get toDate() { return this.filterForm.get('toDate'); }
 
     this.apiService.download_rawdata(this.rawData , 'jsontocsv'); });
   }
+  download_approved(){
+    this.apiService.download_timeinfo(this.timeClicked, 'jsontocsv');
+  } 
+  download_unapproved(){
+    this.apiService.download_reviewtime(this.submissionClicked, 'jsontocsv'); 
+  }
   download_modalApprovedData(){
     this.apiService.download_timeinfoRawData(this.timeClicked, 'jsontocsv');
   }
   download_modalUnapprovedData(){  
-    this.apiService.download_reviewtimeRawData(this.timeClicked, 'jsontocsv');
+    this.apiService.download_reviewtimeRawData(this.submissionClicked, 'jsontocsv');
   }
 
-  key:string ='userid';
-  reverse:boolean=false;
-  sort(key){
-    this.key=key;
-    this.reverse=!this.reverse;
-  }
+
 
 
  

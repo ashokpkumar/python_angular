@@ -1,56 +1,81 @@
 <div class="add_project_bg" *ngIf="isVisible">
   <div class="container card">
     <p class="add_project_heading"> Add Project</p>
-    <div class="add_project_align container_bg">
+    <div class="ps" style="position: relative; max-height: calc(100vh - 173px);" ></div>
+      <form class="add_project_align container_bg" #projectForm = "ngForm" ngSubmit="onSubmit()">
       <div>
         <p>Client Name: </p>
-        <input [(ngModel)]="project.clientname" />
+        <input requied #clientID="ngModel" required minlength="10" class="form-control" [(ngModel)]="project.clientname" />
+        <br><span *ngIf="clientID.invalid && clientID.touched" class="error">Client ID is required</span>
       </div>
       <div>
         <p>ProjectCode: </p>
-        <input [(ngModel)]="project.projectcode" />
+        <input requied #projectID="ngModel" required minlength="10" class="form-control" [(ngModel)]="project.projectcode" />
+        <br><span *ngIf="projectID.invalid && projectID.touched" class="error">Project code is required</span>
       </div>
       <div>
         <p>Project Name: </p>
-        <input [(ngModel)]="project.projectname" />
+        <input requied #projectName="ngModel" required minlength="10"class="form-control" [(ngModel)]="project.projectname" />
+        <br><span *ngIf="projectName.invalid && projectName.touched" class="error">Project name is required</span>
       </div>
       <div>
         <p>Project Start Date: </p>
         <mat-form-field>
-          <input matInput [matDatepicker] = "projStartDate" placeholder="Select Date">
+          <input matInput [matDatepicker] = "projStartDate" class="form-control" placeholder="Select Date">
           <mat-datepicker-toggle matSuffix [for]="projStartDate"></mat-datepicker-toggle>
           <mat-datepicker #projStartDate></mat-datepicker>
         </mat-form-field>
 
       </div>
-      <div>
+      <!-- <div>
         <p>Project Status: </p>
         <input [(ngModel)]="project.projectstatus" />
-      </div>
+      </div> -->
       <div>
         <p>Billing Type: </p>
-        <input [(ngModel)]="project.billingtype" />
-      </div>
+        <!-- <input [(ngModel)]="project.billingtype" /> -->
+        <mat-select  class="form-control" [(ngModel)]="project.billingtype" name="billing" style="width:225px">
+          <mat-option >None</mat-option>
+          <mat-option value="Billable">Billable</mat-option>
+          <mat-option value="Non-Billable">Non-Billable</mat-option>
+        </mat-select>
+        <!-- <input [(ngModel)]="project.billingtype" /> -->
+      </div>  
       <div>
         <p>Segment: </p>
-        <input [(ngModel)]="project.segment" />
+        <mat-select   class="form-control" [(ngModel)]="project.billingtype" name="segment" style="width:225px" >
+          <mat-option>None</mat-option>
+          <mat-option value="Consulting Service">Counsulting Service</mat-option>
+          <mat-option value="Managed Service">Managed Service</mat-option>
+        </mat-select>
+        <!-- <input [(ngModel)]="project.segment" /> -->
       </div>
       <div>
         <p>Geography: </p>
-        <input [(ngModel)]="project.geography" />
+        <mat-select  class="form-control" [(ngModel)]="project.billingtype" name="geography" style="width:225px">
+          <mat-option >None</mat-option>
+          <mat-option value="India">India</mat-option>
+          <mat-option value="United State">United State</mat-option>
+        </mat-select>
+        <!-- <input [(ngModel)]="project.geography" /> -->
       </div>
       <div>
         <p>Solution category: </p>
-        <input [(ngModel)]="project.solutioncategory" />
+        <mat-select  class="form-control"  [(ngModel)]="project.billingtype" name='solutioncategory' style="width:225px">
+          <mat-option >None</mat-option>
+          <mat-option value="Product Developement">Product Developement</mat-option>
+          <mat-option value="Data Analytics">Data Analytics</mat-option>
+        </mat-select>
+        <!-- <input [(ngModel)]="project.solutioncategory" /> -->
       </div>
       <div>
         <p>Financial year: </p>
-        <input [(ngModel)]="project.financialyear" />
+        <input  class="form-control"[(ngModel)]="project.financialyear" />
       </div>
       <div class="add_project_btn">
         <button type="button" class="btn btn-success" (click)="onSubmit()">Save</button>
       </div>
-    </div>
+    </form>
   </div>
 </div>
 

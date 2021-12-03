@@ -11,7 +11,7 @@
         </div>
         <div>
           <p>Password: </p>
-          <input [(ngModel)]="project.password" type="password"/>
+          <input [(ngModel)]="project.password" type="password" (keyup.enter)="onSubmit()"/>
           <div class="forgot_password">
             <p (click)="forgot()">
               Forgot Password?

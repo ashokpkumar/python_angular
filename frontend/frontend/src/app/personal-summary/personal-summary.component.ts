@@ -18,11 +18,11 @@ export class PersonalSummaryComponent implements OnInit {
   constructor(private router: Router,private apiService: PersonalsummaryService,private cookieService: CookieService) { }
 
   ngOnInit(): void {
-    if (this.cookieService.get('login')=='true'){}
+    if (window.sessionStorage.getItem('login')=='true'){}
     else{
       this.router.navigate(['/login']);
     }
-    this.userInfo.emp_id = this.cookieService.get('username');
+    this.userInfo.emp_id = window.sessionStorage.getItem('username');
     this.apiService.onSubmit(this.userInfo)
     .subscribe(data=>{console.log("Employee Data: ",data),
     this.userData = data,

@@ -35,6 +35,15 @@ class timesubmissions(Base):
     description=Column(String)
     remarks=Column(String)
 
+class designation(Base):
+    __tablename__="designation"
+    id=Column(Integer,primary_key=True)
+    designation=Column(String)
+
+class department(Base):
+    __tablename__="department"
+    id=Column(Integer,primary_key=True)
+    department_name=Column(String)
 
 class announcements(Base):
     __tablename__="announcements"
@@ -71,7 +80,7 @@ class employee(Base):
     delivery_type = Column(String)
     additional_allocation =  Column(String)
     skills =  Column(String)
-    roles =  Column(String)
+    roles =  Column(VARCHAR(2000))
     # def __init__(self, created_by):
     #     self.created_at = datetime.now()
     #     self.updated_at = datetime.now()
