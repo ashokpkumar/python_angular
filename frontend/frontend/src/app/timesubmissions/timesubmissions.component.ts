@@ -125,7 +125,7 @@ if (type=='unapproved'){
     let userRoles = roles.split(",");
     console.log(userRoles);
      for (const role of userRoles) {
-       if ( role==users.manager,users.projectManager) {
+       if ( role==users.manager,users.projectManager,users.rmgadmin) {
          this.isVisible = true;
        } 
      }

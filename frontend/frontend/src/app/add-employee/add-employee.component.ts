@@ -31,6 +31,7 @@ export class AddEmployeeComponent implements OnInit {
   public proj_list:any;
   public dept_List: any
   public desig_List: any
+  public managerid_list:any
   project_code:any
   department_name:any
   designation:any
@@ -87,6 +88,10 @@ export class AddEmployeeComponent implements OnInit {
     this.apiService.getdesignation().subscribe(res=>{
       console.log(res)
       this.desig_list=res
+    });
+    this.apiService.getmanagerdata().subscribe(res=>{
+      console.log(res)
+      this.managerid_list=res
     });
   }
   checkRoles(roles) {

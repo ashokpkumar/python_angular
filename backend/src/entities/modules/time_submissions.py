@@ -189,13 +189,12 @@ def timeData():
                 elif time['time_type']=='bench':
                     bench = bench + time['hours']
             else:
-                unapproved = unapproved + time['hours']   
-        
+                unapproved =time['hours']
+        print(unapproved)
         total_hrs = project_time + sl + cl + al + bench + non_project
         total_presence = project_time + non_project + bench 
         total_absence = sl + cl + al 
         time_final.append({'user_id':user_id, 'user_name': user_name, 'project_time':project_time,'sl':sl,'cl':cl,'al':al,'non_project':non_project,'bench':bench,'unapproved':unapproved,'total_presence': total_presence,'total_absence':total_absence,'total_hrs':total_hrs})
-
     total_project = 0
     total_sl = 0
     total_cl = 0

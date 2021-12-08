@@ -30,12 +30,24 @@ def employees():
     session.close()
     return (jsonify(serialed_out))
 
+@employee_module.route('/getmanagerdata') 
+def managerdata():
+    session = Session()
+    emp_objects = session.query(employee).all()
+    serialized_obj = serialize_all(emp_objects)
+    session.close()
+    print(serialized_obj)
+    return (jsonify(serialized_obj))
+
+
+
 @employee_module.route('/getprojectid')
 def getproject():
     # project_id=[]
     session = Session()
     project_objects = session.query(project).all()
     serialized_obj = serialize_all(project_objects)
+    print(serialized_obj)
     session.close()
     return (jsonify(serialized_obj))
     # session = Session()
@@ -134,10 +146,10 @@ def addEmployee():
     if existing_project==None:
         return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
     
-    existing_manager=session.query(employee).filter(employee.manager_id==manager_id).first()
-    if existing_manager == None:
-        session.close()
-        return jsonify({'warning':'Manager ID does not exist !'})
+    # existing_manager=session.query(employee).filter(employee.manager_id==manager_id).first()
+    # if existing_manager == None:
+    #     session.close()
+    #     return jsonify({'warning':'Manager ID does not exist !'})
 
     emp_data = employee(emp_id=data.get("emp_id").lower() , 
                         manager_id = data.get("manager_id"),

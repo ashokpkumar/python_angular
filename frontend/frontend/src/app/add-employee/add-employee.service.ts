@@ -40,6 +40,9 @@ export class addEmployeeService{
     getdesignation(){
         return this.http.get(`${API_URL}/getdesignation`);
     }
+    getmanagerdata(){
+        return this.http.get(`${API_URL}/getmanagerdata`);
+    }
 }
 
 // const httpOptions = {
