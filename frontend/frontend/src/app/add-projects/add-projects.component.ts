@@ -57,6 +57,6 @@ export class AddProjectsComponent implements OnInit {
 
     this.apiService.addProject(this.project)
     .subscribe(data=>{console.log(data),this.apiService.showMessage(Object.values(data),Object.keys(data))});
-    this.router.navigate(["/project"]);
+    // this.router.navigate(["/project"]);
     }
 }

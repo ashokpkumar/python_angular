@@ -172,24 +172,23 @@ def addProjectmanager():
 @project_module.route('/addProject', methods=['POST'])
 def addProject():
     data = request.get_json()
-
+    project_code=data.get("projectcode")
     session = Session()
-    existing_project = session.query(project).filter(project.project_code==data.get("projectcode")).first()
+    existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project:
         session.close()
         return jsonify({'warning':'Project with ID: {} already exist !'.format(data.get("projectcode"))})
-    try:     
-        project_data = project(client_name = data.get("clientname").lower(),
-                                project_code=data.get("projectcode").lower(),
-                                project_name=data.get("projectname").lower(),
-                                project_start_date=data.get("project_start_date",None),                                
-                                project_status=data.get("projectstatus").lower(),
-                                billing_type=data.get("billingtype").lower(),
-                                segment=data.get("segment").lower(),
-                                geography=data.get("geography").lower(),
-                                solution_category =data.get("solutioncategory").lower(),
-                                financial_year = data.get("financialyear").lower()
-        
+    try:
+        project_data = project(client_name = data.get("clientname"),
+                            project_code=data.get("projectcode"),
+                            project_name=data.get("projectname"),
+                            project_start_date=data.get("project_start_date",None),                                
+                            project_status=data.get("projectstatus"),
+                            billing_type=data.get("billingtype"),
+                            segment=data.get("segment"),
+                            geography=data.get("geography"),
+                            solution_category =data.get("solutioncategory"),
+                            financial_year = data.get("financialyear")
         )
         session = Session()
         session.add(project_data)
@@ -198,4 +197,25 @@ def addProject():
         return jsonify({"success":"added data to the table successfully"}), 201
     except:
         return jsonify({"error":"Something happened while adding the data to the table, please check the data and try again"}), 500
+
+    # try:     
+    #     project_data = project(client_name = data.get("clientname").lower(),
+    #                             project_code=data.get("projectcode").lower(),
+    #                             project_name=data.get("projectname").lower(),
+    #                             project_start_date=data.get("project_start_date",None),                                
+    #                             project_status=data.get("projectstatus").lower(),
+    #                             billing_type=data.get("billingtype").lower(),
+    #                             segment=data.get("segment").lower(),
+    #                             geography=data.get("geography").lower(),
+    #                             solution_category =data.get("solutioncategory").lower(),
+    #                             financial_year = data.get("financialyear").lower()
+        
+    #     )
+    #     session = Session()
+    #     session.add(project_data)
+    #     session.commit()
+    #     session.close()
+    #     return jsonify({"success":"added data to the table successfully"}), 201
+    # except:
+    #     return jsonify({"error":"Something happened while adding the data to the table, please check the data and try again"}), 500
     
