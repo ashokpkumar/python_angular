@@ -189,8 +189,7 @@ def timeData():
                 elif time['time_type']=='bench':
                     bench = bench + time['hours']
             else:
-                unapproved =time['hours']
-        print(unapproved)
+                unapproved = unapproved + time['hours']
         total_hrs = project_time + sl + cl + al + bench + non_project
         total_presence = project_time + non_project + bench 
         total_absence = sl + cl + al 
