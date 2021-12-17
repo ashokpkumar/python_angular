@@ -204,7 +204,7 @@ def timeData():
     total_bench = 0
     total_total_hrs=0
     total_unapproved = 0
-    first_name=session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
+    # first_name=session.query(employee.first_name).filter(employee.emp_id==emp).first()[0]
     for emp_data in time_final:
         total_project = total_project  + emp_data['project_time']
         total_sl = total_sl  + emp_data['sl']   
