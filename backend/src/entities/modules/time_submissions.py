@@ -84,7 +84,11 @@ def timesubmission():
 @time_module.route('/getSubmissionsBy', methods=['POST'])
 def getSubmissionsBy():
     session = Session()
-    user = request.get_json()
+    # user= request.get_json()
+    data= request.get_json()
+    user=data['user_id']
+    print(user,">>>>>>>>>>>")
+    time_type=data['type']
     if user == 'total':
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='unapproved').all()
         serialized_obj = serialize_all(sub_objects)
@@ -103,7 +107,9 @@ def getTimeBy():
     session = Session()
     data = request.get_json()
     time_type = data['type']
+    print(time_type,">>>>>>>>")
     user = data['user']
+    print(user,">>>>>>>>>")
 
     if user == 'total':
         if time_type =="project":
@@ -139,6 +145,7 @@ def getTimeBy():
             time_type_list = [time_type]
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='approved',timesubmissions.time_type.in_(time_type_list),timesubmissions.user_id==user).all()
         serialized_obj = serialize_all(sub_objects)
+        print("submissions",serialized_obj)
         session.close()
         return (jsonify(serialized_obj)),200
       
@@ -217,13 +224,14 @@ def timeData():
         total_bench = total_bench  + emp_data['bench']
         total_unapproved = total_unapproved + emp_data['unapproved']
     total_time_list = {'total_project':total_project,'total_total_presence':total_total_presence,'total_total_absence':total_total_absence,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_non_project':total_non_project,'total_bench':total_bench,'total_total_hrs':total_total_hrs,'total_unapproved':total_unapproved, }
-    
+    print(">>>>>>>>>>",time_final)
     return (jsonify({'result':time_final,'total':total_time_list}))
     
 
 @time_module.route('/review_time', methods=['POST'])
 def review_time():
     data = request.get_json()
+    print(data,"data")
     if data['reviewd']==True:
         session = Session()
         username = data['user_name']
