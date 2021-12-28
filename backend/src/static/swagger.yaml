@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  description: RMG project
+  version: 1.0.0
+  title: RMG-Python-Flask-Rest-Boilerplate
+  license:
+    name: Deepak G
+    url: 'https://opensource.org/licenses/MIT'
+servers:
+  - url: / 
+paths:
+  #user module=====================================================================
+  #get user list
+  /timeData:
+    post:
+      tags:
+        - timeData
+      security:
+        - jwt: ['secret']  
+      summary: Returns TimeData
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/components/schemas/timeData'
+      requestBody:
+        description: "Time sheet"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/timeData'
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                payload:     # <--- form field that contains the JSON message
+                  $ref: '#/components/schemas/timeData'
+            encoding:
+              payload:
+                contentType: application/json
+
+#component
+components:
+  schemas:
+    timeData:
+      type: object
+      properties:
+        emp_id:
+          type: string
+          description: user_id
+          example: "I3201"
+        required:
+          - emp_id
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: app.decode_token

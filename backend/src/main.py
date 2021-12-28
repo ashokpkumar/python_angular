@@ -39,6 +39,7 @@ import entities.mail
 from flask import request, render_template
 import os
 from env.config import Config
+from flask_swagger_ui import get_swaggerui_blueprint
 
 template_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
@@ -52,6 +53,18 @@ app.register_blueprint(login_module, url_prefix="/")
 app.register_blueprint(employee_module, url_prefix="/")
 app.register_blueprint(project_module, url_prefix="/")
 app.register_blueprint(announcement_module, url_prefix="/")
+
+SWAGGER_URL = '/api-documentation' 
+API_URL = '/static/swagger.yaml'   
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "RMG Application"
+    }
+)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+
 Base.metadata.create_all(engine)
 
 create_sample_employee()
@@ -60,6 +73,7 @@ create_sample_authUser()
 # create_sample_timesubmissions()
 # sample_department()
 # sample_designation()
+
 
 
 @app.route('/rawDataDownload', methods=['POST'])

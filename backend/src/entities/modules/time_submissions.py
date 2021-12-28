@@ -4,12 +4,15 @@ from entities.database import employee,project,authUser,timesubmissions
 from entities.database import Session
 from entities.database import serialize_all
 from entities.modules.auth import jwtvalidate
+from sqlalchemy import or_,and_
+from sqlalchemy import func
 
 
 time_module = Blueprint(name="time", import_name=__name__)
 
 @time_module.route('/events')
-def events():
+@jwtvalidate
+def events(res):
     session = Session()
     time_objects = session.query(timesubmissions).all()
     serialized_obj = serialize_all(time_objects)
@@ -157,13 +160,21 @@ def timeData():
     manager_id = data.get("user_id")
     date_submission_obj = session.query(timesubmissions.date_info).all()
     date_info=date_submission_obj
-    # min_date=min(date_info)
-    # max_date=max(date_info)
-    
-    emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_id).all()
-    emp_final = [emp[0].lower() for emp in emp_list]
+    searchstring = request.args.get('search', default = None, type = str)
+    # base_query= base_query.filter(or_(func.lower(Courses.course_title).contains(searchstring.lower()) , func.lower(Courses.course_category).contains(searchstring.lower()) , func.lower(Courses.course_subcategory).contains(searchstring.lower()),func.lower(Courses.course_subcategory2).contains(searchstring.lower()),func.lower(Courses.keywords).contains(searchstring.lower())))
+    # base_query= base_query.filter(or_(func.lower(timesubmissions.user_id).contains(searchstring.lower()) ))
+
+    if searchstring != None:
+        base_query =session.query(timesubmissions.user_id).filter(func.lower(timesubmissions.user_id).contains(searchstring.lower())).distinct(timesubmissions.user_id).all()
+        base_final=[emp[0].lower() for emp in base_query]
+        emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_id).all()
+        emp_final = [emp[0].lower() for emp in emp_list]
+        emp_final_list=list(set(base_final).intersection(emp_final))
+    else:
+        emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_id).all()
+        emp_final_list = [emp[0].lower() for emp in emp_list]
     time_final = []
-    for emp in emp_final:
+    for emp in emp_final_list:
         project_time = 0
         sl = 0
         cl=0

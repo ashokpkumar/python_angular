@@ -58,7 +58,7 @@ def login():
         return jsonify({"warning": "Password Not set Please set password"}), 200
 
     if auth_object is None:
-        return jsonify({"error": "Username or password is incorrect"}), 200
+        return jsonify({"error": "Username or password is incorrect"}), 400
     emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
     employee_name =(emp_obj.first_name if emp_obj.first_name else "")
     # employee_name = (emp_obj.first_name if emp_obj.first_name else "") + (emp_obj.last_name if emp_obj.last_name else "")
