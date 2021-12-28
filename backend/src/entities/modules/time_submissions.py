@@ -160,7 +160,7 @@ def timeData():
     manager_id = data.get("user_id")
     date_submission_obj = session.query(timesubmissions.date_info).all()
     date_info=date_submission_obj
-    searchstring = request.args.get('search', default = None, type = str)
+    searchstring = data.get('search')
     # base_query= base_query.filter(or_(func.lower(Courses.course_title).contains(searchstring.lower()) , func.lower(Courses.course_category).contains(searchstring.lower()) , func.lower(Courses.course_subcategory).contains(searchstring.lower()),func.lower(Courses.course_subcategory2).contains(searchstring.lower()),func.lower(Courses.keywords).contains(searchstring.lower())))
     # base_query= base_query.filter(or_(func.lower(timesubmissions.user_id).contains(searchstring.lower()) ))
 
