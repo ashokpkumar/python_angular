@@ -151,7 +151,6 @@ def getTimeBy():
       
 
 @time_module.route('/timeData', methods=['POST'])
-# @jwtvalidate
 def timeData():
     session = Session()
     data = request.get_json()

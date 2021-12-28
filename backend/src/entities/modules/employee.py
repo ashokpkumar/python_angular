@@ -8,7 +8,8 @@ from entities.helper import listToString
 employee_module = Blueprint(name="employee", import_name=__name__)
 
 @employee_module.route('/employees')
-def employees():
+@jwtvalidate
+def employees(res):
     session = Session()
     emp_objects = session.query(employee).all()
     serialized_obj = serialize_all(emp_objects)
@@ -126,7 +127,8 @@ def addDesignation():
 #     return jsonify(manager_id)
     
 @employee_module.route('/addEmployee', methods=['POST'])
-def addEmployee():
+@jwtvalidate
+def addEmployee(res):
     data = request.get_json()
     emp_id=data.get("emp_id")
     email=data.get("email")

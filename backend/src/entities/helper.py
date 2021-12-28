@@ -1,3 +1,4 @@
+import hashlib
 # convert string to list  
 def stringToList(string):
     li = list(string.split(","))
@@ -16,3 +17,7 @@ def listToString(list):
             string = i + "," + string
     string[:-1]
     return string
+
+def hash_password(input_raw_password):
+    sha_signature = hashlib.sha256(input_raw_password.encode()).hexdigest()
+    return sha_signature

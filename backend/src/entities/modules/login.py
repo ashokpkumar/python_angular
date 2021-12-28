@@ -9,6 +9,7 @@ from flask import request, render_template
 from flask_expects_json import expects_json
 from flask_mail import Mail, Message
 from entities.modules.auth import jwtvalidate
+from entities.helper import hash_password
 import json
 import jwt
 import logging
@@ -32,7 +33,7 @@ def setpassword():
     auth_object = session.query(authUser).filter(authUser.emp_id == emp_id).first()
     if auth_object is None:
         return jsonify({'error':'User not found, This user is not added yet'}), 200
-    auth_object.password=password
+    auth_object.password=hash_password(password)
     session.add(auth_object)
     session.commit()
     session.close()
@@ -49,9 +50,9 @@ def login():
     session = Session()
     # we can use both emp_id and email as a user id.
     if emp_id.find("@") != -1:
-        auth_object = session.query(authUser).filter(authUser.email == emp_id, authUser.password == password).first()
+        auth_object = session.query(authUser).filter(authUser.email == emp_id, authUser.password == hash_password(password)).first()
     else:
-        auth_object = session.query(authUser).filter(authUser.emp_id == emp_id, authUser.password == password).first()
+        auth_object = session.query(authUser).filter(authUser.emp_id == emp_id, authUser.password == hash_password(password)).first()
 
     if auth_object and auth_object.password==None:
         return jsonify({"warning": "Password Not set Please set password"}), 200
@@ -70,7 +71,7 @@ def login():
             'roles':roles
             # 'username':input_user_id
         }
-        print(payload)
+        # print(payload)
 
         jwt_info = jwt.encode(
             payload,
@@ -144,7 +145,7 @@ def reset_pass():
         auth_object = session.query(authUser).filter(authUser.email == email).first()
         if auth_object is None:
             return jsonify({'error': 'User not found, This user is not added yet'}), 401
-        auth_object.password = password
+        auth_object.password = hash_password(password)
         session.add(auth_object)
         session.commit()
 
