@@ -1,4 +1,5 @@
 import hashlib
+import datetime
 # convert string to list  
 def stringToList(string):
     li = list(string.split(","))
@@ -21,3 +22,10 @@ def listToString(list):
 def hash_password(input_raw_password):
     sha_signature = hashlib.sha256(input_raw_password.encode()).hexdigest()
     return sha_signature
+    
+def date_validation(date):
+    try:
+        return datetime.datetime.strptime(date, "%d/%m/%Y").date()
+    except:
+        pass
+    return ""

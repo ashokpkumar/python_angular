@@ -9,8 +9,7 @@ info:
 servers:
   - url: / 
 paths:
-  #user module=====================================================================
-  #get user list
+  #timesubmissionmodule=====================================================================
   /timeData:
     post:
       tags:
@@ -39,6 +38,79 @@ paths:
             encoding:
               payload:
                 contentType: application/json
+  /events:
+    get:
+      tags:
+        - Events
+      security:
+      - jwt: ['secret']
+      summary: Returns Events
+      responses:
+        '200':
+          description: OK
+          # schema:
+          #   $ref: '#/components/schemas/Events'
+  #auth modules=====================================================================
+  #login
+  /login:
+    post:
+      tags:
+        - Login
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - jwt: [ 'secret' ]
+      requestBody:
+        description: "Login"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login'
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                payload:     # <--- form field that contains the JSON message
+                  $ref: '#/components/schemas/login'
+            encoding:
+              payload:
+                contentType: application/json
+      responses:
+        '200':
+          description: OK
+  #Add password-login 
+  /setpassword:
+    post:
+      tags:
+        - Login
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - jwt: [ 'secret' ]
+      requestBody:
+        description: "Add password"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Add_password'
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                payload:     # <--- form field that contains the JSON message
+                  $ref: '#/components/schemas/Add_password'
+            encoding:
+              payload:
+                contentType: application/json
+      responses:
+        '200':
+          description: OK
 
 #component
 components:
@@ -46,12 +118,35 @@ components:
     timeData:
       type: object
       properties:
-        emp_id:
+        user_id:
           type: string
           description: user_id
           example: "I3201"
         required:
-          - emp_id
+          - user_id
+    #Login-Module==================================================================
+    login:
+      type: object
+      properties:
+        emp_id:
+          type: string
+          format: string
+          example : "i3201"
+        password:
+          type: string
+          format: string
+          example : "natraj@123"
+    Add_password:
+      type: object
+      properties:
+        emp_id:
+          type: string
+          format: string
+          example : "i3201"
+        password:
+          type: string
+          format: string
+          example : "natraj@123"
   securitySchemes:
     jwt:
       type: http

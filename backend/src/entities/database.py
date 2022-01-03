@@ -23,7 +23,7 @@ class authUser(Base):
 class timesubmissions(Base):
     __tablename__="timesubmissions"
     id = Column(Integer, primary_key=True)
-    date_info = Column(VARCHAR(2000))
+    date_info = Column(DateTime)
     user_id = Column(String)
     manager_id = Column(String)
     time_type = Column(String)

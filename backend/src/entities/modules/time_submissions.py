@@ -4,15 +4,17 @@ from entities.database import employee,project,authUser,timesubmissions
 from entities.database import Session
 from entities.database import serialize_all
 from entities.modules.auth import jwtvalidate
-from sqlalchemy import or_,and_
+from entities.helper import date_validation
+from sqlalchemy import or_,and_, cast, Date
 from sqlalchemy import func
+# from datetime import datetime
 
 
 time_module = Blueprint(name="time", import_name=__name__)
 
 @time_module.route('/events')
-@jwtvalidate
-def events(res):
+# @jwtvalidate
+def events():
     session = Session()
     time_objects = session.query(timesubmissions).all()
     serialized_obj = serialize_all(time_objects)
@@ -21,9 +23,10 @@ def events(res):
         eve={}
         eve["title"]="*" + str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
         eve["start"]=event["date_info"]
-        eve["start"] = datetime.datetime.strptime(event["date_info"], "%d/%m/%Y").strftime("%m-%d-%Y")
+        # eve["start"] = datetime.datetime.strptime(event["date_info"], "%d/%m/%Y").strftime("%d/%m/%Y")
         eve["status"]=event["status"]
-        events_data.append(eve)   
+        events_data.append(eve)
+        print(event["date_info"],"events_data")   
     return jsonify(events_data)
 
 
@@ -92,17 +95,49 @@ def getSubmissionsBy():
     user=data['user_id']
     print(user,">>>>>>>>>>>")
     time_type=data['type']
-    if user == 'total':
+    if user == 'total' and time_type=='total_unapproved':
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='unapproved').all()
-        serialized_obj = serialize_all(sub_objects)
+        submit_list=list()
+        for sub in sub_objects:
+            submits=dict()
+            submits["date_info"]= sub.date_info.strftime("%d/%m/%Y")
+            submits["description"]= sub.description
+            submits["hours"]= sub.hours
+            submits["manager_id"]= sub.manager_id
+            submits["project_code"]= sub.project_code
+            submits["user_id"]= sub.user_id
+            submits["time_type"]= sub.time_type
+            submits["status"]= sub.status
+            submits["remarks"]= sub.remarks
+            submits["submission_id"]= sub.submission_id
+            submits["task_id"]= sub.task_id
+            submit_list.append(submits)
+        # serialized_obj = serialize_all(sub_objects)
+        print(submit_list,"sub")
         session.close()
-        return (jsonify(serialized_obj)),200
+        return (jsonify(submit_list)),200
         
     else:
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='unapproved', timesubmissions.user_id==user).all()
-        serialized_obj = serialize_all(sub_objects)
+        submit_list=list()
+        for sub in sub_objects:
+            submits=dict()
+            submits["date_info"]= sub.date_info.strftime("%d/%m/%Y")
+            submits["description"]= sub.description
+            submits["hours"]= sub.hours
+            submits["manager_id"]= sub.manager_id
+            submits["project_code"]= sub.project_code
+            submits["user_id"]= sub.user_id
+            submits["time_type"]= sub.time_type
+            submits["status"]= sub.status
+            submits["remarks"]= sub.remarks
+            submits["submission_id"]= sub.submission_id
+            submits["task_id"]= sub.task_id
+            submit_list.append(submits)
+        # serialized_obj = serialize_all(sub_objects)
+        print(submit_list,"sub")
         session.close()
-        return (jsonify(serialized_obj)),200
+        return (jsonify(submit_list)),200
 
 
 @time_module.route('/getTimeBy', methods=['POST'])
@@ -147,10 +182,25 @@ def getTimeBy():
         else:
             time_type_list = [time_type]
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='approved',timesubmissions.time_type.in_(time_type_list),timesubmissions.user_id==user).all()
-        serialized_obj = serialize_all(sub_objects)
-        print("submissions",serialized_obj)
+        submit_list=list()
+        for sub in sub_objects:
+            submits=dict()
+            submits["date_info"]= sub.date_info.strftime("%d/%m/%Y"),
+            submits["description"]= sub.description
+            submits["hours"]= sub.hours
+            submits["manager_id"]= sub.manager_id
+            submits["project_code"]= sub.project_code
+            submits["user_id"]= sub.user_id
+            submits["time_type"]= sub.time_type
+            submits["status"]= sub.status
+            submits["remarks"]= sub.remarks
+            submits["submission_id"]= sub.submission_id
+            submits["task_id"]= sub.task_id
+            submit_list.append(submits)
+        # serialized_obj = serialize_all(sub_objects)
+        print("submissions",submit_list)
         session.close()
-        return (jsonify(serialized_obj)),200
+        return (jsonify(submit_list)),200
       
 
 @time_module.route('/timeData', methods=['POST'])
@@ -161,10 +211,18 @@ def timeData():
     date_submission_obj = session.query(timesubmissions.date_info).all()
     date_info=date_submission_obj
     searchstring = data.get('search')
-    # base_query= base_query.filter(or_(func.lower(Courses.course_title).contains(searchstring.lower()) , func.lower(Courses.course_category).contains(searchstring.lower()) , func.lower(Courses.course_subcategory).contains(searchstring.lower()),func.lower(Courses.course_subcategory2).contains(searchstring.lower()),func.lower(Courses.keywords).contains(searchstring.lower())))
-    # base_query= base_query.filter(or_(func.lower(timesubmissions.user_id).contains(searchstring.lower()) ))
 
-    if searchstring != None:
+    from_date = data.get("from_date")
+    to_date = data.get("to_date")
+
+    if from_date !=None and to_date!=None:
+        query = session.query(timesubmissions.user_id).filter(and_(cast(timesubmissions.date_info, Date) >= from_date, cast(timesubmissions.date_info, Date) <= to_date)).all()
+        date_final_list = [q[0].lower() for q in query]
+        emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_id).all()
+        emp_final = [emp[0].lower() for emp in emp_list]
+        emp_final_list=list(set(date_final_list).intersection(emp_final))
+        print(emp_final_list,"empl")
+    elif searchstring != None:
         base_query =session.query(timesubmissions.user_id).filter(func.lower(timesubmissions.user_id).contains(searchstring.lower())).distinct(timesubmissions.user_id).all()
         base_final=[emp[0].lower() for emp in base_query]
         emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_id).all()
@@ -245,12 +303,10 @@ def review_time():
     if data['reviewd']==True:
         session = Session()
         username = data['user_name']
-        date = data['date']
+        date = date_validation(data['date'])
         time_type = data['time_type']
         hours = data['hours']
-        datee = datetime.datetime.strptime(date, "%d/%m/%Y")
-        month = datee.month
-        year = datee.year
+        print(date,"ddd")
         time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
         time_obj.status = "approved"
         session.add(time_obj)
@@ -261,15 +317,12 @@ def review_time():
     elif data['reviewd']==False:
         session = Session()
         username = data['user_name']
-        date = data['date']
+        date =date_validation(data['date'])
         time_type = data['time_type']
         hours = data['hours']
-        datee = datetime.datetime.strptime(date,  "%d/%m/%Y")
-        month = datee.month
-        year = datee.year
         time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
         time_obj.status = "denied"
-        session.add(time_obj)
+        session.delete(time_obj)
         session.commit()
         session.close()
         return jsonify({"info":"Time has been reviewed"})
