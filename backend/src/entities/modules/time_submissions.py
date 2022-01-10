@@ -16,7 +16,11 @@ time_module = Blueprint(name="time", import_name=__name__)
 # @jwtvalidate
 def events():
     session = Session()
-    time_objects = session.query(timesubmissions).all()
+    data= request.get_json()
+    user_id=data['user_id']
+    current_month=data["month"]
+    
+    time_objects = session.query(timesubmissions).filter(timesubmissions.user_id==user_id).all()
     serialized_obj = serialize_all(time_objects)
     events_data = []
     for event in serialized_obj:
@@ -327,3 +331,21 @@ def review_time():
         session.close()
         return jsonify({"info":"Time has been reviewed"})
 
+@time_module.route('/calendar_data', methods=['POST'])
+def calendar_data():
+    session = Session()
+    data = request.get_json()
+    user_id = data.get("user_id")
+    base_query=session.query(timesubmissions)
+    base_query1 = base_query.filter(timesubmissions.user_id==user_id).all()
+    submissions=serialize_all(base_query1)
+    total_submissions=len(submissions)
+    approved_data= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.status=='approved').all()
+    approved_data=len(serialize_all(approved_data))
+    unapproved_data= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.status=='unapproved').all()
+    unapproved_data=len(serialize_all(unapproved_data))
+    project_type= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.time_type=='project').all()
+    project_type=len(serialize_all(project_type))
+
+
+    return(jsonify({'submissions':submissions,'Total_submissions':total_submissions,'Total_approved':approved_data,"unapproved_data":unapproved_data}))
