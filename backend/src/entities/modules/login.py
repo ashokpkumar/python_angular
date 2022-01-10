@@ -52,11 +52,14 @@ def login():
     if emp_id.find("@") != -1:
         auth_object = session.query(authUser).filter(authUser.email == emp_id, authUser.password == hash_password(password)).first()
         emp_obj = session.query(employee).filter(employee.email == emp_id).first()
+        print("emp_obj",emp_obj)
         employee_name =(emp_obj.first_name if emp_obj.first_name else "")
+        emp_id=(emp_obj.emp_id)
 
     else:
         auth_object = session.query(authUser).filter(authUser.emp_id == emp_id, authUser.password == hash_password(password)).first()
         emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
+        print("emp_obj",emp_obj)
         employee_name =(emp_obj.first_name if emp_obj.first_name else "")
 
 
