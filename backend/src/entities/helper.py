@@ -1,5 +1,7 @@
 import hashlib
 import datetime
+from datetime import datetime,timedelta
+import calendar
 # convert string to list  
 def stringToList(string):
     li = list(string.split(","))
@@ -29,3 +31,10 @@ def date_validation(date):
     except:
         pass
     return ""
+
+firstweekday = 6
+def weeks_in_month(year, month):
+        c = calendar.Calendar(firstweekday)
+        for weekstart in filter(lambda d: d.weekday() == firstweekday, c.itermonthdates(year, month)):
+            weekend = weekstart + timedelta(6)
+            yield (weekstart, weekend)

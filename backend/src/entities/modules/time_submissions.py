@@ -4,10 +4,12 @@ from entities.database import employee,project,authUser,timesubmissions
 from entities.database import Session
 from entities.database import serialize_all
 from entities.modules.auth import jwtvalidate
-from entities.helper import date_validation
+from entities.helper import date_validation,weeks_in_month
 from sqlalchemy import or_,and_, cast, Date
-from sqlalchemy import func
-# from datetime import datetime
+from sqlalchemy import func 
+from calendar import monthrange
+from datetime import datetime,timedelta
+import calendar
 
 
 time_module = Blueprint(name="time", import_name=__name__)
@@ -336,16 +338,57 @@ def calendar_data():
     session = Session()
     data = request.get_json()
     user_id = data.get("user_id")
+    current_date=datetime.today()
+    
+    start_day_of_month = current_date.replace(day=1) 
+    last_day_of_month=current_date.replace(day = monthrange(current_date.year, current_date.month)[1])
+
+    #user_data
     base_query=session.query(timesubmissions)
-    base_query1 = base_query.filter(timesubmissions.user_id==user_id).all()
-    submissions=serialize_all(base_query1)
-    total_submissions=len(submissions)
-    approved_data= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.status=='approved').all()
-    approved_data=len(serialize_all(approved_data))
-    unapproved_data= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.status=='unapproved').all()
-    unapproved_data=len(serialize_all(unapproved_data))
-    project_type= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.time_type=='project').all()
-    project_type=len(serialize_all(project_type))
+    base_query2 = base_query.filter(and_(timesubmissions.user_id==user_id,cast(timesubmissions.date_info, Date) >= start_day_of_month, cast(timesubmissions.date_info, Date) <= last_day_of_month)).all()
+    submissions=serialize_all(base_query2)
+    
+    #Monthly submissions
+    events_data = []
+    for event in submissions:
+        eve={}
+        eve["title"]="*" + str(event["time_type"]) + " : "+ str(event["hours"]) + " Hours"
+        eve["start"]=event["date_info"]
+        # eve["start"] = datetime.datetime.strptime(event["date_info"], "%d/%m/%Y").strftime("%d/%m/%Y")
+        eve["status"]=event["status"]
+        events_data.append(eve)
+        print(events_data,"events_data") 
+    
+    currentMonth = datetime.now().month
+    currentYear = datetime.now().year
+
+    #Weekly_submissions
+    data=[]
+    for weekstart, weekend in weeks_in_month(currentYear,currentMonth):
+        print(weekstart, '-', weekend)
+        #weekdata
+        base_query2 = base_query.filter(and_(timesubmissions.user_id==user_id,cast(timesubmissions.date_info, Date) >= weekstart, cast(timesubmissions.date_info, Date) <= weekend)).all()
+        weekly_submission=serialize_all(base_query2)
+        weekly_submissions=len(weekly_submission)
+        #week_approved
+        base_query3 = base_query.filter(and_(timesubmissions.user_id==user_id,timesubmissions.status=='approved',cast(timesubmissions.date_info, Date) >= weekstart, cast(timesubmissions.date_info, Date) <= weekend)).all()
+        approved_Weekly_submissions=serialize_all(base_query3)
+        approved_submissions=len(approved_Weekly_submissions)
+        #week_unapproved
+        base_query4 = base_query.filter(and_(timesubmissions.user_id==user_id,timesubmissions.status=='unapproved',cast(timesubmissions.date_info, Date) >= weekstart, cast(timesubmissions.date_info, Date) <= weekend)).all()
+        unapproved_Weekly_submissions=serialize_all(base_query4)
+        unapproved_submissions=len(unapproved_Weekly_submissions)
+        weekly_data={"weekly_submissions":weekly_submissions,"approved_submissions":approved_submissions,"unapproved_submissions":unapproved_submissions}    
+        data.append(weekly_data)
+        print(data,"data")
+           
+    return(jsonify({'submissions':events_data,"week_data":data}))
 
 
-    return(jsonify({'submissions':submissions,'Total_submissions':total_submissions,'Total_approved':approved_data,"unapproved_data":unapproved_data}))
+
+    # approved_data= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.status=='approved').all()
+    # approved_data=len(serialize_all(approved_data))
+    # unapproved_data= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.status=='unapproved').all()
+    # unapproved_data=len(serialize_all(unapproved_data))
+    # project_type= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.time_type=='project').all()
+    # project_type=len(serialize_all(project_type))
