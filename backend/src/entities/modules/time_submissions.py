@@ -309,12 +309,12 @@ def review_time():
     if data['reviewd']==True:
         session = Session()
         username = data['user_name']
-        date = date_validation(data['date'])
+        date = datetime.strptime(data['date'], "%d/%m/%Y").date()
         time_type = data['time_type']
         hours = data['hours']
         print(date,"ddd")
         time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
-        time_obj.status = "approved"
+        time_obj.status="approved"
         session.add(time_obj)
         session.commit()
         session.close()
@@ -323,7 +323,7 @@ def review_time():
     elif data['reviewd']==False:
         session = Session()
         username = data['user_name']
-        date =date_validation(data['date'])
+        date =datetime.strptime(data['date'], "%d/%m/%Y").date()
         time_type = data['time_type']
         hours = data['hours']
         time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
@@ -339,13 +339,14 @@ def calendar_data():
     data = request.get_json()
     user_id = data.get("user_id")
     current_date=datetime.today()
+    last_day_of_prev_month =current_date.replace(day=1) - timedelta(days=1)
     
     start_day_of_month = current_date.replace(day=1) 
     last_day_of_month=current_date.replace(day = monthrange(current_date.year, current_date.month)[1])
-
+    print("D",start_day_of_month,last_day_of_month)
     #user_data
     base_query=session.query(timesubmissions)
-    base_query2 = base_query.filter(and_(timesubmissions.user_id==user_id,cast(timesubmissions.date_info, Date) >= start_day_of_month, cast(timesubmissions.date_info, Date) <= last_day_of_month)).all()
+    base_query2 = base_query.filter(and_(timesubmissions.user_id==user_id,last_day_of_prev_month <= cast(timesubmissions.date_info, Date) , cast(timesubmissions.date_info, Date) <= last_day_of_month)).all()
     submissions=serialize_all(base_query2)
     
     #Monthly submissions
@@ -357,7 +358,7 @@ def calendar_data():
         # eve["start"] = datetime.datetime.strptime(event["date_info"], "%d/%m/%Y").strftime("%d/%m/%Y")
         eve["status"]=event["status"]
         events_data.append(eve)
-        print(events_data,"events_data") 
+        print(event["date_info"],"events_data") 
     
     currentMonth = datetime.now().month
     currentYear = datetime.now().year
@@ -365,7 +366,7 @@ def calendar_data():
     #Weekly_submissions
     data=[]
     for weekstart, weekend in weeks_in_month(currentYear,currentMonth):
-        print(weekstart, '-', weekend)
+        # print(weekstart, '-', weekend)
         #weekdata
         base_query2 = base_query.filter(and_(timesubmissions.user_id==user_id,cast(timesubmissions.date_info, Date) >= weekstart, cast(timesubmissions.date_info, Date) <= weekend)).all()
         weekly_submission=serialize_all(base_query2)
@@ -380,7 +381,7 @@ def calendar_data():
         unapproved_submissions=len(unapproved_Weekly_submissions)
         weekly_data={"weekly_submissions":weekly_submissions,"approved_submissions":approved_submissions,"unapproved_submissions":unapproved_submissions}    
         data.append(weekly_data)
-        print(data,"data")
+        # print(data,"data")
            
     return(jsonify({'submissions':events_data,"week_data":data}))
 
