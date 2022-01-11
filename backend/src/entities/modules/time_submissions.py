@@ -308,7 +308,7 @@ def review_time():
     print(data,"data")
     if data['reviewd']==True:
         session = Session()
-        username = data['user_name']
+        username = data['user_id']
         date = datetime.strptime(data['date'], "%d/%m/%Y").date()
         time_type = data['time_type']
         hours = data['hours']
