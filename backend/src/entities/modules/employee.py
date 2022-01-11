@@ -27,8 +27,6 @@ def employees():
     print("seriali",serialized_obj)
     for dictionary in serialized_obj:
         dictionary['full_name'] = dictionary['first_name'] + dictionary['last_name']
-        serialed_out.append(dictionary)
-    for dictionary in serialized_obj:
         dictionary['project_code'] = stringToList(dictionary['project_code'])
         serialed_out.append(dictionary)
     project_objects = session.query(project).all()
