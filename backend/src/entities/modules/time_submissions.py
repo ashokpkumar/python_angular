@@ -14,21 +14,6 @@ import calendar
 
 time_module = Blueprint(name="time", import_name=__name__)
 
-@time_module.route('/delete_submission', methods=['POST'])
-def delete():
-    data=request.get_json()
-    session = Session()
-    date=data.get("date")
-    user_id=data.get("user_id")
-    time_type=data.get("time_type")
-    hours=data.get("hours") 
-    time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == user_id,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
-    session.delete(time_obj)
-    session.commit()
-    session.close()
-    return jsonify({"info": "Submission deleted successfully"})
-    
-
 @time_module.route('/events')
 # @jwtvalidate
 def events():
@@ -411,3 +396,19 @@ def calendar_data():
     # project_type=len(serialize_all(project_type))
     
     
+@time_module.route('/delete_submission', methods=['POST'])
+def delete():
+    data=request.get_json()
+    session = Session()
+    # date=data.get("date")
+    id_=data.get("id")
+    print("i",id_)
+    # user_id=data.get("user_id")
+    # time_type=data.get("time_type")
+    # hours=data.get("hours") 
+    # time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == user_id,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
+    time_obj = session.query(timesubmissions).filter(timesubmissions.id==id_).first()
+    session.delete(time_obj)
+    session.commit()
+    session.close()
+    return jsonify({"info": "Submission deleted successfully"})
