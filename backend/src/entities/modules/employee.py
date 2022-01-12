@@ -46,10 +46,18 @@ def employees():
 def managerdata():
     session = Session()
     emp_objects = session.query(employee).all()
+    # emp_objects=emp_objects.manager_id
     serialized_obj = serialize_all(emp_objects)
+    li=[]
+    for i in serialized_obj:
+        manager_ids=i['manager_id']
+        li.append(manager_ids)
+    print("i",li)
+    data=list(set(li))
+
     session.close()
-    print(serialized_obj)
-    return (jsonify(serialized_obj))
+    # print(serialized_obj)
+    return (jsonify({"manager_id":data,"serialized_data":serialized_obj}))
 
 
 
