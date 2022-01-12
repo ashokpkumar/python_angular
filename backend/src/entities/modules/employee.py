@@ -4,20 +4,31 @@ from entities.database import employee,project,authUser,timesubmissions,departme
 from entities.database import Session
 from entities.database import serialize_all
 from entities.modules.auth import jwtvalidate
-from entities.helper import listToString
+from entities.helper import listToString,stringToList
+from sqlalchemy import func 
 employee_module = Blueprint(name="employee", import_name=__name__)
 
 @employee_module.route('/employees')
-@jwtvalidate
-def employees(res):
+def employees():
     session = Session()
-    emp_objects = session.query(employee).all()
-    serialized_obj = serialize_all(emp_objects)
-    serialed_out = []
+    data = request.get_json()
+    searchstring = request.args.get('search')
+    print(searchstring)
+    base_query = session.query(employee)
+    search_results=0
+    if searchstring!= None:
+        base_query =base_query.filter(func.lower(employee.emp_id).contains(searchstring.lower())).all()
+        serialized_obj = serialize_all(base_query)
+        serialed_out = []
+    else:
+        emp_objects = session.query(employee).all()
+        serialized_obj = serialize_all(emp_objects)
+        serialed_out = []
+    print("seriali",serialized_obj)
     for dictionary in serialized_obj:
         dictionary['full_name'] = dictionary['first_name'] + dictionary['last_name']
+        dictionary['project_code'] = stringToList(dictionary['project_code'])
         serialed_out.append(dictionary)
-
     project_objects = session.query(project).all()
     serialized_project = serialize_all(project_objects)
     for dictionary in serialed_out:
@@ -35,10 +46,18 @@ def employees(res):
 def managerdata():
     session = Session()
     emp_objects = session.query(employee).all()
+    # emp_objects=emp_objects.manager_id
     serialized_obj = serialize_all(emp_objects)
+    li=[]
+    for i in serialized_obj:
+        manager_ids=i['manager_id']
+        li.append(manager_ids)
+    print("i",li)
+    data=list(set(li))
+
     session.close()
-    print(serialized_obj)
-    return (jsonify(serialized_obj))
+    # print(serialized_obj)
+    return (jsonify({"manager_id":data,"serialized_data":serialized_obj}))
 
 
 
@@ -127,8 +146,7 @@ def addDesignation():
 #     return jsonify(manager_id)
     
 @employee_module.route('/addEmployee', methods=['POST'])
-@jwtvalidate
-def addEmployee(res):
+def addEmployee():
     data = request.get_json()
     emp_id=data.get("emp_id")
     email=data.get("email")

@@ -51,16 +51,25 @@ def login():
     # we can use both emp_id and email as a user id.
     if emp_id.find("@") != -1:
         auth_object = session.query(authUser).filter(authUser.email == emp_id, authUser.password == hash_password(password)).first()
+        emp_obj = session.query(employee).filter(employee.email == emp_id).first()
+        print("emp_obj",emp_obj)
+        employee_name =(emp_obj.first_name if emp_obj.first_name else "")
+        emp_id=(emp_obj.emp_id)
+
     else:
         auth_object = session.query(authUser).filter(authUser.emp_id == emp_id, authUser.password == hash_password(password)).first()
+        emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
+        print("emp_obj",emp_obj)
+        employee_name =(emp_obj.first_name if emp_obj.first_name else "")
+
 
     if auth_object and auth_object.password==None:
         return jsonify({"warning": "Password Not set Please set password"}), 200
 
     if auth_object is None:
         return jsonify({"error": "Username or password is incorrect"}), 400
-    emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
-    employee_name =(emp_obj.first_name if emp_obj.first_name else "")
+    # emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
+    # employee_name =(emp_obj.first_name if emp_obj.first_name else "")
     # employee_name = (emp_obj.first_name if emp_obj.first_name else "") + (emp_obj.last_name if emp_obj.last_name else "")
     roles = auth_object.roles
     try:
