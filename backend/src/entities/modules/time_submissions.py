@@ -372,6 +372,8 @@ def calendar_data():
         eve["start"]=event["date_info"]
         # eve["start"] = datetime.datetime.strptime(event["date_info"], "%d/%m/%Y").strftime("%d/%m/%Y")
         eve["status"]=event["status"]
+        eve["time_type"]=event["time_type"]
+        eve["hours"]=event["hours"]
         events_data.append(eve)
         print(event["date_info"],"events_data") 
     

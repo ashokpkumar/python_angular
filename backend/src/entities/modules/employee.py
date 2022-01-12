@@ -42,22 +42,27 @@ def employees():
     session.close()
     return (jsonify(serialed_out))
 
-@employee_module.route('/getmanagerdata') 
+@employee_module.route('/getmanagerdata')#get unique mangerid data from employee table 
 def managerdata():
     session = Session()
     emp_objects = session.query(employee).all()
-    # emp_objects=emp_objects.manager_id
-    serialized_obj = serialize_all(emp_objects)
-    li=[]
-    for i in serialized_obj:
-        manager_ids=i['manager_id']
-        li.append(manager_ids)
-    print("i",li)
-    data=list(set(li))
-
+    serialized_obj1 = serialize_all(emp_objects)
+    managerid=[]#list to store unique managerid
+    userdata=[]#list to store first user which have unique managers
+    for i in serialized_obj1:
+        data=i['manager_id']
+        managerid.append(data)
+    data=list(set(managerid))
+    for i in data:    
+        emp_objects1 = session.query(employee.emp_id).filter(employee.manager_id==i).first()#get userids for managerslist
+        for i in emp_objects1:
+            emp_objects = session.query(employee).filter(employee.emp_id==i).all()
+            serialized_obj=serialize_all(emp_objects)
+            userdata.append(serialized_obj)
+    print("d",userdata)
     session.close()
     # print(serialized_obj)
-    return (jsonify({"manager_id":data,"serialized_data":serialized_obj}))
+    return (jsonify(serialized_obj1))
 
 
 
