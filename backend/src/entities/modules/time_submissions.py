@@ -191,6 +191,7 @@ def getTimeBy():
         submit_list=list()
         for sub in sub_objects:
             submits=dict()
+            submits["id"]=sub.id
             submits["date_info"]= sub.date_info.strftime("%d/%m/%Y"),
             submits["description"]= sub.description
             submits["hours"]= sub.hours
