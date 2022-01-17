@@ -8,14 +8,14 @@ from env.config import Config
 
 URI=f'mysql+pymysql://{Config.USER_DB}:{Config.PWD_DB}@{Config.HOST_DB}:{Config.PORT_DB}/{Config.NAME_DB}'
 
-engine = create_engine(URI,pool_size=10, max_overflow=20)
+engine = create_engine(URI,pool_size=20, max_overflow=30)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
 
 class authUser(Base):
     __tablename__ = 'authUser'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True,autoincrement=True)
     emp_id = Column(String)
     email = Column(String)
     password = Column(String)
@@ -23,7 +23,7 @@ class authUser(Base):
 
 class timesubmissions(Base):
     __tablename__="timesubmissions"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True,autoincrement=True)
     date_info = Column(DateTime)
     user_id = Column(String)
     manager_id = Column(String)
@@ -38,17 +38,17 @@ class timesubmissions(Base):
 
 class designation(Base):
     __tablename__="designation"
-    id=Column(Integer,primary_key=True)
+    id=Column(Integer,primary_key=True,autoincrement=True)
     designation=Column(String)
 
 class department(Base):
     __tablename__="department"
-    id=Column(Integer,primary_key=True)
+    id=Column(Integer,primary_key=True,autoincrement=True)
     department_name=Column(String)
 
 class announcements(Base):
     __tablename__="announcements"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True,autoincrement=True)
     user_id = Column(String)
     announcement_info = Column(String)
     announcement_category = Column(String)
@@ -56,7 +56,7 @@ class announcements(Base):
     
 class employee(Base):
     __tablename__ = 'employee'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True,autoincrement=True)
     emp_id = Column(String)
     manager_id = Column(String)
     email = Column(String)
@@ -199,19 +199,19 @@ class employee(Base):
 
 class project(Base):
     __tablename__ = 'project'
-    id = Column(Integer, primary_key=True)
-    client_name = Column(String)
-    project_code = Column(String)
-    project_name = Column(String)
+    id = Column(Integer, primary_key=True,autoincrement=True)
+    client_name = Column(String(50))
+    project_code = Column(String(50))
+    project_name = Column(String(50))
     project_manager_id=Column(VARCHAR(2000))
     project_start_date = Column(DateTime)
-    project_status = Column(String)
-    billing_type = Column(String)
-    segment = Column(String)
-    geography = Column(String)
-    solution_category = Column(String)
-    financial_year = Column(String)
-    resource_info = Column(String)
+    project_status = Column(String(50))
+    billing_type = Column(String(50))
+    segment = Column(String(50))
+    geography = Column(String(50))
+    solution_category = Column(String(50))
+    financial_year = Column(String(50))
+    resource_info = Column(String(50))
 
     def to_dict(self, show=None, _hide=[], _path=None):
         """Return a dictionary representation of this model."""

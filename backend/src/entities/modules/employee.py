@@ -75,14 +75,7 @@ def getproject():
     print(serialized_obj)
     session.close()
     return (jsonify(serialized_obj))
-    # session = Session()
-    # emp_projectid = session.query(project.project_code).all()
-    # print(emp_projectid)
-    # projectid_list=emp_projectid
-    # print(projectid_list)
-    # print('>>>>>>')
-    # session.close()
-    # return (jsonify(projectid_list))
+
 @employee_module.route('/getdepartment')
 def getdepartment():
     session = Session()
@@ -199,7 +192,7 @@ def addEmployee():
                         delivery_type=data.get("delivery_type").lower(),
                         additional_allocation=data.get("additional_allocation").lower(),
                         skills=data.get("skills").lower(),
-                        roles=listToString(data.get("roles")),
+                        roles=data.get("roles"),
 
                         )
     session = Session()
@@ -207,10 +200,11 @@ def addEmployee():
     session.commit()
     auth_data = authUser(emp_id = data.get("emp_id").lower(),
                         email=data.get("email").lower(),
-                        roles=listToString(data.get("roles")))
+                        roles=data.get("roles"))
     session = Session()
     session.add(auth_data)
-    session.commit()     
+    session.commit() 
+    session.close()    
     return jsonify({"success":"successfully added employee {}".format(data.get("emp_id"))}),200     
     # except:
     #     return jsonify({"error":"Some error happened in adding the employee"}),500
@@ -245,6 +239,7 @@ def viewEmpInfo():
     initial1=initial.upper()
     user_name = (first_name1+" "+last_name +"."+ initial1)
     emp_dict['full_name'] = user_name
+    session.close()
     return jsonify(emp_dict), 201
 
 
