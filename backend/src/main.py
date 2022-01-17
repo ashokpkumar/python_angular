@@ -67,9 +67,9 @@ app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 
 Base.metadata.create_all(engine)
 
-create_sample_employee()
+# create_sample_employee()
 create_sample_project()
-create_sample_authUser()
+# create_sample_authUser()
 # create_sample_timesubmissions()
 # sample_department()
 # sample_designation()

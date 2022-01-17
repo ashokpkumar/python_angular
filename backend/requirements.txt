@@ -40,3 +40,4 @@ urllib3==1.26.4
 virtualenv==20.4.3
 virtualenv-clone==0.5.4
 Werkzeug==1.0.1
+PyMySQL==1.0.2

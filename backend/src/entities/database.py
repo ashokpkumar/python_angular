@@ -6,8 +6,9 @@ import pyodbc
 from sqlalchemy.orm.attributes import QueryableAttribute
 from env.config import Config
 
+URI=f'mysql+pymysql://{Config.USER_DB}:{Config.PWD_DB}@{Config.HOST_DB}:{Config.PORT_DB}/{Config.NAME_DB}'
 
-engine = create_engine(Config.SQLALCHEMY_DATABASE_URI,pool_size=10, max_overflow=20)
+engine = create_engine(URI,pool_size=10, max_overflow=20)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
@@ -68,10 +69,10 @@ class employee(Base):
     dept = Column(String)
     designation = Column(String)
     
-    emp_start_date = Column(VARCHAR(2000))
-    emp_last_working_date = Column(VARCHAR(2000))
-    emp_project_assigned_date = Column(VARCHAR(2000))
-    emp_project_end_date = Column(VARCHAR(2000))
+    emp_start_date = Column(DateTime)
+    emp_last_working_date = Column(DateTime)
+    emp_project_assigned_date = Column(DateTime)
+    emp_project_end_date = Column(DateTime)
 
     employment_status = Column(String) #in project, new joined, in notice, bench, relieved
     manager_name = Column(String) 
@@ -203,7 +204,7 @@ class project(Base):
     project_code = Column(String)
     project_name = Column(String)
     project_manager_id=Column(VARCHAR(2000))
-    project_start_date = Column(VARCHAR(2000))
+    project_start_date = Column(DateTime)
     project_status = Column(String)
     billing_type = Column(String)
     segment = Column(String)
@@ -363,5 +364,5 @@ class forget_pass(Base):
     user_id = Column(String)
     email_address = Column(String)
     reset_token = Column(String)
-    create_date = Column(VARCHAR(2000))
+    create_date = Column(DateTime)
 
