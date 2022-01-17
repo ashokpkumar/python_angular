@@ -65,6 +65,7 @@ Installation Steps:
     5.c vp> uname: vp@123 password: vp@123
     5.d sales> uname: sales password: sales
     5.e employee> uname: employee password: employee
+ 6. Auto Commit
 
 
 
