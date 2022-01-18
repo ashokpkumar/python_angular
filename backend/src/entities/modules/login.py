@@ -55,7 +55,7 @@ def login():
         print("emp_obj",emp_obj)
         employee_name =(emp_obj.first_name if emp_obj.first_name else "")
         emp_id=(emp_obj.emp_id)
-        roles = auth_object.roles
+        roles = emp_obj.roles
 
     else:
         auth_object = session.query(authUser).filter(authUser.emp_id == emp_id, authUser.password == hash_password(password)).first()
