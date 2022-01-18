@@ -18,7 +18,7 @@ class authUser(Base):
     id = Column(Integer, primary_key=True,autoincrement=True)
     emp_id = Column(String)
     email = Column(String)
-    password = Column(String)
+    password = Column(VARCHAR(200))
     roles = Column(VARCHAR(2000))
 
 class timesubmissions(Base):
