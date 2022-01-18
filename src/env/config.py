@@ -27,6 +27,6 @@ class Config:
     NAME_DB = os.getenv('NAME_DB','rmg_db')
     PORT_DB = os.getenv('PORT_DB','3306')
     PWD_DB = os.getenv('PWD_DB','SS12VuLmaNyLtl#123')
-    HOST_DB = os.getenv('HOST_DB','65.1.199.29')
+    HOST_DB = os.getenv('HOST_DB','localhost')
     USER_DB = os.getenv('USER_DB','lmsadmin')
     
