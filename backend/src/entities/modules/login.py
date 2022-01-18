@@ -44,6 +44,7 @@ def setpassword():
 def login():
     emp_id = request.json.get("emp_id", None)
     password = request.json.get("password", None)
+    hashed=hash_password(password)
     login=False
     if emp_id==None or password==None:
         return jsonify({"error:":"incorrect username or password"}), 200
@@ -52,29 +53,27 @@ def login():
     if emp_id.find("@") != -1:
         auth_object = session.query(authUser).filter(authUser.email == emp_id, authUser.password == hash_password(password)).first()
         emp_obj = session.query(employee).filter(employee.email == emp_id).first()
-        print("emp_obj",emp_obj)
         employee_name =(emp_obj.first_name if emp_obj.first_name else "")
         emp_id=(emp_obj.emp_id)
-        roles = emp_obj.roles
+
 
     else:
         auth_object = session.query(authUser).filter(authUser.emp_id == emp_id, authUser.password == hash_password(password)).first()
         emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
-        print("emp_obj",emp_obj)
         employee_name =(emp_obj.first_name if emp_obj.first_name else "")
-        roles = emp_obj.roles
-        print("roles",roles)
+
 
 
     if auth_object and auth_object.password==None:
         return jsonify({"warning": "Password Not set Please set password"}), 200
 
-    # if auth_object is None:
-    #     return jsonify({"error": "Username or password is incorrect"}), 400
+    if auth_object is None:
+        return jsonify({"error": "Username or password is incorrect"}), 400
     # emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
     # employee_name =(emp_obj.first_name if emp_obj.first_name else "")
     # employee_name = (emp_obj.first_name if emp_obj.first_name else "") + (emp_obj.last_name if emp_obj.last_name else "")
-    
+    roles = auth_object.roles
+
     try:
         payload = {
             'exp': datetime.datetime.utcnow() + datetime.timedelta(days=Config.AUTH_TOKEN_EXPIRY_DAYS, seconds=Config.AUTH_TOKEN_EXPIRY_SECS),
@@ -83,7 +82,6 @@ def login():
             'roles':roles
             # 'username':input_user_id
         }
-        # print(payload)
 
         jwt_info = jwt.encode(
             payload,
