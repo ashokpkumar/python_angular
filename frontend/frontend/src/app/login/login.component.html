@@ -1,0 +1,74 @@
+<div class="login_page_bg">
+  <div class="login_style">
+    <!-- <form (onsubmit)="onSubmit()" > -->
+      <p class="sign_reset" *ngIf="forgotPass === false && login === false">SIGN IN</p>
+      <p class="sign_reset" *ngIf="forgotPass === true">Please set you password Here</p>
+
+      <div class="mail_pass" *ngIf="login === false">
+        <div>
+          <p>Employee ID/Email: </p>
+          <input [(ngModel)]="project.emp_id" />
+        </div>
+        <div>
+          <p>Password: </p>
+          <input [(ngModel)]="project.password" type="password" (keyup.enter)="onSubmit()"/>
+          <div class="forgot_password">
+            <p (click)="forgot()">
+              Forgot Password?
+            </p>
+          </div>
+        </div>
+
+        <div *ngIf="forgotPass === true">
+          <p>Confirm Password: </p>
+          <input [(ngModel)]="project.confirmpass" />
+        </div>
+
+        <div>
+          <button class="login_create"  *ngIf="forgotPass === false" (click)="onSubmit()">Sign In</button>
+          <button class="login_create"  *ngIf="forgotPass === true" (click)="createPassword()">Create Password</button>
+        </div>
+      </div>
+
+      <div *ngIf="login === true">
+
+        <div>
+          <button (click)="logout()">Logout</button>
+        </div>
+      </div>
+    <!-- </form> -->
+  </div>
+</div>
+
+
+<!--<h1 *ngIf = "forgotPass === false && login === false" >Please Login to Continue</h1>-->
+<!--<h1 *ngIf = "forgotPass === true" >Please set you password Here</h1>-->
+
+<!-- <div *ngIf = "login === false">
+    <div>
+      <label>Employee ID/Email: </label>
+      <input [(ngModel)]="project.emp_id" />
+    </div>
+    <div>
+      <label>Password: </label>
+      <input type="password" [(ngModel)]="project.password" />
+    </div>
+
+    <div *ngIf = "forgotPass === true" >
+      <label>Confirm Password: </label>
+      <input [(ngModel)]="project.confirmpass" />
+    </div>
+
+    <div >
+      <button *ngIf = "forgotPass === false" (click)="onSubmit()">Login</button>
+      <button *ngIf = "forgotPass === true" (click)="createPassword()">Create Password</button>
+      <button (click)="forgot()">Forgot Password</button>
+    </div>
+</div>
+
+<div *ngIf = "login === true">
+
+  <div>
+    <button (click)="logout()">Logout</button>
+  </div>
+</div> -->

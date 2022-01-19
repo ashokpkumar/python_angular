@@ -1,0 +1,164 @@
+<div class="Calendar" >
+  <div class="container mtop" >
+    <p class="time_sub_heading">Calendar : {{this.user_id}}</p> 
+    <div class="navbar">
+      <div class="col-md-4">
+          <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+            <i class="fa fa-chevron-left " aria-hidden="true"></i>
+          </div>
+          <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+            Today
+          </div>
+          <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </div>
+      </div>
+      <div class="col-md-4">
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      </div>
+      <div class="col-md-4">
+        <div class="btn-group">
+            <div class="btn btn-primary" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+                Month
+            </div>
+            <div class="btn btn-primary" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
+                Week
+            </div>
+            <div class="btn btn-primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+                Day
+            </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- view Date-->
+  <!-- Switch -->
+
+  <div [ngSwitch]="view">
+
+    <mwl-calendar-month-view  (dayClicked)="dayClicked($event.day)"  *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+    [refresh]="refresh"
+    [activeDayIsOpen]="activeDayIsOpen"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    >
+    </mwl-calendar-month-view>
+
+    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    >
+    </mwl-calendar-week-view>
+
+    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    >
+    </mwl-calendar-day-view>
+
+  </div>
+</div>
+
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Event action occurred</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      Action:
+      <pre>{{ modalData?.action }}</pre>
+    </div>
+    <div>
+      Event:
+      <pre>{{ modalData?.event | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">
+      OK
+    </button>
+  </div>
+</ng-template>
+
+
+
+
+  <ng-template #content let-modal>
+      <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Submit Time</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" style="color: rgb(255, 255, 255);;">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body"> 
+        <div>
+          <label style="padding: 0px 60px 0px 0px;">Date </label>
+          <input [(ngModel)]="timeInfo.date" />
+        </div>
+        <div>
+          <label style="padding: 30px 50px 0px 0px;" >Hours </label>
+          <input [(ngModel)]="timeInfo.hours" [(ngModel)]="this.hour" type="number" id="quantity" name="quantity" min="1" max="8" ><br><br>
+        </div>  
+        <div>
+          <label style="padding: 30px 10px 0px 0px;">Time Type</label>
+          <select name="" id="" [(ngModel)]="timeInfo.time_type" [(ngModel)]="spec">
+            <option value=CL>CL</option>
+            <option value=SL>SL</option>
+            <option value=AL>AL</option>
+            <!-- <hr class="dashed" style= "border-top: 3px dashed #bbb"> -->
+            <!-- <optgroup label="Work From Home"> -->
+            <option value=project>Project</option>
+            <option value=non_project>Non-Project</option>
+            <option value=bench>Bench</option>
+            <!-- </optgroup> -->
+          </select>
+        </div>
+        <!-- <button (click)="toggle()" >WFH</button>
+        <div *ngIf="show"> -->
+        <ng-container *ngIf="spec == 'project'">
+          <div>
+            <label style="padding: 30px 16px 0px 0px;">Project Id</label>
+            <select name="" id="" [(ngModel)]="timeInfo.project_id" style="width: 250px;padding: 5px 5px 5px 5px; ">  
+                <option >Ind123</option>
+            </select>
+          </div>
+          <div>
+              <label style="padding: 30px 35px 0px 0px;">Task ID</label>
+              <input name="text" id="input" [(ngModel)]="timeInfo.task_id"style="width: 250px; padding: 6px 6px 6px 6px;"/></div>
+          <div>
+              <label style="padding: 30px 11px 0px 0px;">Description (optional)</label>
+              <div><textarea rows="5" cols="46"[(ngModel)]="timeInfo.description"style="width: 400px; padding: 10px;"></textarea></div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="spec == 'non_project'">
+          <div>
+              <label style="padding: 30px 35px 0px 0px;">Task ID</label>
+              <input name="text" id="input" [(ngModel)]="timeInfo.task_id"style="width: 250px; padding: 6px 6px 6px 6px;"/></div>
+          <div>
+              <label style="padding: 30px 11px 0px 0px;">Description (optional)</label>
+              <div><textarea rows="5" cols="46"[(ngModel)]="timeInfo.description" style="width: 400px; padding: 10px;"></textarea></div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="spec == 'bench'">
+          <div>
+              <label style="padding: 30px 35px 0px 0px;">Task ID</label>
+              <input name="text" id="input" style="width: 250px; padding: 4px 4px 4px 4px;"/></div>
+          <div>
+              <label style="padding: 30px 11px 0px 0px;">Description (optional)</label>
+              <div><textarea rows="5" cols="46"[(ngModel)]="timeInfo.description"style="width: 400px; height: 60px; padding: 10px;"></textarea></div>
+          </div>
+        </ng-container>
+        <!-- </div> -->
+        <div>
+          <label style="padding: 30px 11px 0px 0px;">Remarks</label>
+          <div><textarea rows="3" cols="46" [(ngModel)]="timeInfo.remarks"style="width: 400px;height: 60px; padding: 10px;"></textarea></div>
+        </div>
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');">Submit Time info</button>
+          <!-- <button type="button"  (click)="addEvent(date1)">Add Time info</button> -->
+        </div>
+  </ng-template>
+</div>

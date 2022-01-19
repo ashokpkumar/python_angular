@@ -1,0 +1,188 @@
+<!-- https://codepen.io/AurelieT/pen/JGxMgo -->
+<!-- <p>Employees List</p>    -->
+
+<div class="container" *ngIf="isVisible">
+  <p class="emp_list_heading">Employees List</p>
+  <div class="for_filter_search">
+    <div>
+      <input #inputSearch  [(ngModel)]="searchInput" type="text" (input)="searchData()">
+      <fa-icon class="home_svg_img search_icon" [icon]='faSearch'></fa-icon>
+    </div>
+    <div>
+      <ng-template #popTitle>
+        <div class="popup_headings">
+          <p>Apply Filters</p>
+          <p>
+            <fa-icon (click)="p.close()" class="home_svg_img" [icon]='faTimesCircle'>
+            </fa-icon>
+          </p>
+        </div>
+      </ng-template>
+      <ng-template #popContent>
+        <div class="align_filter_popup">
+          <mat-form-field appearance="fill">
+            <mat-label>Project Name</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['selectedProject']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option *ngFor="let item of project_name" [value]='item'>{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Project ID</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['projectID']" disableRipple>
+              <mat-option value="All">All</mat-option>
+               <mat-option *ngFor="let item of project_id" [value]='item'>{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="projAssignedDate" placeholder="Select Date">
+            <mat-datepicker-toggle matSuffix [for]="projAssignedDate"></mat-datepicker-toggle>
+            <mat-datepicker #projAssignedDate></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="projEndDate" placeholder="Select Date">
+            <mat-datepicker-toggle matSuffix [for]="projEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #projEndDate></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Resource Status</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['resourceStatus']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option *ngFor="let item of resource_status" [value]='item'>{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Manager Name</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['managerName']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option *ngFor="let item of manager_name" [value]='item'>{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Salutation</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['salutation']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option *ngFor="let item of salutation" [value]='item'>{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Client Name</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['clientName']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option *ngFor="let item of client_name" [value]='item'>{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Delivery Type</mat-label>
+            <mat-select [(ngModel)]="dataForFilter['deliveryType']" disableRipple>
+              <mat-option value="All">All</mat-option>
+              <mat-option *ngFor="let item of delivery_type" [value]='item'>{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="filter_reset_btn">
+          <button (click)="applyFilter(); p.close()" >Apply</button>
+          <button (click)="resetFilter()">Reset</button>
+        </div>
+      </ng-template>
+      <fa-icon triggers="manual"  (click)="p.open(); openFilter()" [autoClose]="false" placement="bottom" #p="ngbPopover" [ngbPopover]="popContent" [popoverTitle]="popTitle"
+        class="home_svg_img filter_icon " [icon]='faSlidersH'>
+      </fa-icon>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr class="emp_list_th">
+        <!-- <tr> -->
+        <th data-field="employee ID" data-checkbox="true" >Emp ID </th>
+        <th data-field="Salutation" data-checkbox="true">Salutation</th>
+        <th data-field="Full Name" data-filter-control="input" data-sortable="true">Full Name<i class="fa fa-sort" [appSort]="employee_list" data-order="desc" data-name="full_name" scope="col"></i></th>
+        <th data-field="Project Name" data-filter-control="input" data-sortable="true">Project Name</th>
+        <th data-field="Project ID" data-filter-control="select" data-sortable="true">Project ID</th>
+        <th data-field="assigned Date" data-filter-control="select" data-sortable="true">Project Assigned Date<i class="fa fa-sort" [appSort]="employee_list" data-order="desc" data-name="emp_project_assigned_date" scope="col"></i></th>
+        <th data-field="end Date" data-filter-control="select" data-sortable="true">Project End Date<i class="fa fa-sort" [appSort]="employee_list" data-order="desc" data-name="emp_project_end_date" scope="col"></i></th>
+        <th data-field="Resource Status" data-filter-control="input" data-sortable="true">
+
+          Resource Status</th>
+        <th data-field="Manager Name" data-filter-control="select" data-sortable="true">
+
+
+          Manager Name</th>
+        <th data-field="Client Name" data-filter-control="select" data-sortable="true">
+
+          Client Name</th>
+        <th data-field="Delivery Type" data-filter-control="select" data-sortable="true">
+
+          Delivery Type</th>
+        <th data-field="Additional Allocation" data-filter-control="select" data-sortable="true">
+
+          Additional Allocation
+        </th>
+        <th data-field="Skills" data-filter-control="select" data-sortable="true">
+          Skills<i class="fa fa-sort" [appSort]="employee_list" data-order="desc" data-name="skills" scope="col"></i></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr class="emp_list_th" *ngFor="let item of employee_list">
+        <!-- <tr *ngFor="let item of employee_list"> -->
+        <td>{{item.emp_id}}</td>
+        <td>{{item.salutation}}</td>
+        <td>{{item.full_name}}</td>
+        <td>{{item.project_name}}</td>
+        <td>
+          <fa-icon class="fa fa-plus-circle fa-lg" aria-hidden="true" (click)="open(content,item.emp_id)"  style="color:white;  background: rgb(36, 167, 248);
+                border-radius: 50%;
+                line-height: normal;
+                width: 1em;
+                ">
+                </fa-icon>
+          <!-- <button (click)="open(content,item.emp_id)" type="button" class="add_employess">Add</button> -->
+          <div>{{item.project_code}}</div>
+        </td>
+
+        <td>{{item.emp_project_assigned_date}}</td>
+        <td>{{item.emp_project_end_date}}</td>
+
+        <td>{{item.resource_status}}</td>
+        <td>{{item.manager_name}}</td>
+        <td>{{item.client_name}}</td>
+        <td>{{item.delivery_type}}</td>
+
+        <td>{{item.additional_allocation}}</td>
+        <td>{{item.skills}}</td>
+
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+
+
+<ng-template #content let-modal>
+  <div class="modal-header profile_update_header">
+    <h4 class="modal-title add_res_title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body profile_update_body">
+    <p class="model_title"> Add Project to this Resource : </p>
+    <div class="model-body-content">
+      <div class="body_content_align">
+        <label>Employee ID: </label>
+        <input [(ngModel)]="projectResource.emp_id" />
+      </div>
+      <div class="body_content_align">
+        <label>Project ID: </label>
+        <select [(ngModel)]="projectResource.project_id">
+          <option *ngFor="let item of project_list" value={{item.project_code}}>{{item.project_code}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer profile_update_header">
+    <button type="button" class="add_employess" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
