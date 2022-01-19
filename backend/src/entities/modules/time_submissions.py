@@ -300,6 +300,7 @@ def timeData():
         total_unapproved = total_unapproved + emp_data['unapproved']
     total_time_list = {'total_project':total_project,'total_total_presence':total_total_presence,'total_total_absence':total_total_absence,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_non_project':total_non_project,'total_bench':total_bench,'total_total_hrs':total_total_hrs,'total_unapproved':total_unapproved, }
     print(">>>>>>>>>>",time_final)
+    session.close()
     return (jsonify({'result':time_final,'total':total_time_list}))
     
 
@@ -384,7 +385,8 @@ def calendar_data():
         weekly_data={"weekly_submissions":weekly_submissions,"approved_submissions":approved_submissions,"unapproved_submissions":unapproved_submissions}    
         data.append(weekly_data)
         # print(data,"data")
-           
+    
+    session.close()       
     return(jsonify({'submissions':events_data,"week_data":data}))
 
 

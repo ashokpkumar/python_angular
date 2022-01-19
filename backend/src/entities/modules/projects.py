@@ -132,6 +132,7 @@ def getResourceInfo():
             project_resources_list.remove(i)
     resource_info_data = session.query(employee).filter(employee.emp_id.in_(project_resources_list)).all()
     print(serialize_all(resource_info_data))
+    session.close()
     return jsonify(serialize_all(resource_info_data))
   
 @project_module.route('/addProjectmanager', methods=['POST'])

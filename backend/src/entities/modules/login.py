@@ -44,6 +44,7 @@ def setpassword():
 def login():
     emp_id = request.json.get("emp_id", None)
     password = request.json.get("password", None)
+    hashed=hash_password(password)
     login=False
     if emp_id==None or password==None:
         return jsonify({"error:":"incorrect username or password"}), 200
@@ -52,15 +53,15 @@ def login():
     if emp_id.find("@") != -1:
         auth_object = session.query(authUser).filter(authUser.email == emp_id, authUser.password == hash_password(password)).first()
         emp_obj = session.query(employee).filter(employee.email == emp_id).first()
-        print("emp_obj",emp_obj)
         employee_name =(emp_obj.first_name if emp_obj.first_name else "")
         emp_id=(emp_obj.emp_id)
+
 
     else:
         auth_object = session.query(authUser).filter(authUser.emp_id == emp_id, authUser.password == hash_password(password)).first()
         emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
-        print("emp_obj",emp_obj)
         employee_name =(emp_obj.first_name if emp_obj.first_name else "")
+
 
 
     if auth_object and auth_object.password==None:
@@ -72,6 +73,7 @@ def login():
     # employee_name =(emp_obj.first_name if emp_obj.first_name else "")
     # employee_name = (emp_obj.first_name if emp_obj.first_name else "") + (emp_obj.last_name if emp_obj.last_name else "")
     roles = auth_object.roles
+
     try:
         payload = {
             'exp': datetime.datetime.utcnow() + datetime.timedelta(days=Config.AUTH_TOKEN_EXPIRY_DAYS, seconds=Config.AUTH_TOKEN_EXPIRY_SECS),
@@ -80,7 +82,6 @@ def login():
             'roles':roles
             # 'username':input_user_id
         }
-        # print(payload)
 
         jwt_info = jwt.encode(
             payload,
@@ -157,6 +158,7 @@ def reset_pass():
         auth_object.password = hash_password(password)
         session.add(auth_object)
         session.commit()
+        session.close()
 
         return "Password Reset successfully", 200
     else:

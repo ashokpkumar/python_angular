@@ -6,23 +6,24 @@ import pyodbc
 from sqlalchemy.orm.attributes import QueryableAttribute
 from env.config import Config
 
-SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{Config.USER_DB}:{Config.PWD_DB}@{Config.HOST_DB}:{Config.PORT_DB}/{Config.NAME_DB}'
-engine = create_engine(SQLALCHEMY_DATABASE_URI,pool_size=10, max_overflow=20)
+URI=f'mysql+pymysql://{Config.USER_DB}:{Config.PWD_DB}@{Config.HOST_DB}:{Config.PORT_DB}/{Config.NAME_DB}'
+
+engine = create_engine(URI,pool_size=20, max_overflow=30)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
 
 class authUser(Base):
     __tablename__ = 'authUser'
-    id = Column(Integer, primary_key=True)
-    emp_id = Column(String(50))
-    email = Column(String(50))
-    password = Column(String(50))
+    id = Column(Integer, primary_key=True,autoincrement=True)
+    emp_id = Column(String)
+    email = Column(String)
+    password = Column(VARCHAR(200))
     roles = Column(VARCHAR(2000))
 
 class timesubmissions(Base):
     __tablename__="timesubmissions"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True,autoincrement=True)
     date_info = Column(DateTime)
     user_id = Column(String(50))
     manager_id = Column(String(50))
@@ -37,49 +38,49 @@ class timesubmissions(Base):
 
 class designation(Base):
     __tablename__="designation"
-    id=Column(Integer,primary_key=True)
-    designation=Column(String(50))
+    id=Column(Integer,primary_key=True,autoincrement=True)
+    designation=Column(String)
 
 class department(Base):
     __tablename__="department"
-    id=Column(Integer,primary_key=True)
-    department_name=Column(String(50))
+    id=Column(Integer,primary_key=True,autoincrement=True)
+    department_name=Column(String)
 
 class announcements(Base):
     __tablename__="announcements"
-    id = Column(Integer, primary_key=True)
-    user_id = Column(String(50))
-    announcement_info = Column(String(50))
-    announcement_category = Column(String(50))
+    id = Column(Integer, primary_key=True,autoincrement=True)
+    user_id = Column(String)
+    announcement_info = Column(String)
+    announcement_category = Column(String)
     date_logged = Column(DateTime)
     
 class employee(Base):
     __tablename__ = 'employee'
-    id = Column(Integer, primary_key=True)
-    emp_id = Column(String(50))
-    manager_id = Column(String(50))
-    email = Column(String(50))
-    first_name = Column(String(50))
-    last_name = Column(String(50))
-    sur_name = Column(String(50))
-    initial = Column(String(50)) 
-    salutation = Column(String(5)) #mr,ms, Miss, Mrs
-    project_code = Column(VARCHAR(50))
-    dept = Column(String(50))
-    designation = Column(String(50))
+    id = Column(Integer, primary_key=True,autoincrement=True)
+    emp_id = Column(String)
+    manager_id = Column(String)
+    email = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
+    sur_name = Column(String)
+    initial = Column(String) 
+    salutation = Column(String) #mr,ms, Miss, Mrs
+    project_code = Column(VARCHAR(2000))
+    dept = Column(String)
+    designation = Column(String)
     
-    emp_start_date = Column(VARCHAR(50))
-    emp_last_working_date = Column(VARCHAR(50))
-    emp_project_assigned_date = Column(VARCHAR(50))
-    emp_project_end_date = Column(VARCHAR(50))
+    emp_start_date = Column(DateTime)
+    emp_last_working_date = Column(DateTime)
+    emp_project_assigned_date = Column(DateTime)
+    emp_project_end_date = Column(DateTime)
 
-    employment_status = Column(String(50)) #in project, new joined, in notice, bench, relieved
-    manager_name = Column(String(50)) 
-    manager_dept = Column(String(50))
-    resource_status = Column(String(50))
-    delivery_type = Column(String(50))
-    additional_allocation =  Column(String(50))
-    skills =  Column(String(50))
+    employment_status = Column(String) #in project, new joined, in notice, bench, relieved
+    manager_name = Column(String) 
+    manager_dept = Column(String)
+    resource_status = Column(String)
+    delivery_type = Column(String)
+    additional_allocation =  Column(String)
+    skills =  Column(String)
     roles =  Column(VARCHAR(2000))
 
     
@@ -194,12 +195,12 @@ class employee(Base):
 
 class project(Base):
     __tablename__ = 'project'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True,autoincrement=True)
     client_name = Column(String(50))
     project_code = Column(String(50))
     project_name = Column(String(50))
-    project_manager_id=Column(VARCHAR(50))
-    project_start_date = Column(VARCHAR(50))
+    project_manager_id=Column(VARCHAR(2000))
+    project_start_date = Column(DateTime)
     project_status = Column(String(50))
     billing_type = Column(String(50))
     segment = Column(String(50))
@@ -340,8 +341,8 @@ class TimeMaster(Base):
 class forget_pass(Base):
     __tablename__ = 'forget_pass'
     id = Column(Integer, primary_key=True)
-    user_id = Column(String(50))
-    email_address = Column(String(50))
-    reset_token = Column(String(50))
-    create_date = Column(VARCHAR(2000))
+    user_id = Column(String)
+    email_address = Column(String)
+    reset_token = Column(String)
+    create_date = Column(DateTime)
 

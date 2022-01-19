@@ -24,6 +24,7 @@ def add_announcements():
     session = Session()
     session.add(announcement_data)
     session.commit()    
+    session.close()
     return ({'success':'Announcements are added sucessfully '})
 
 @announcement_module.route('/get_announcements', methods=['POST'])
@@ -44,5 +45,6 @@ def delete_fn():
     data = request.get_json()
     x = data.get("x")
     delete_announcements=session.query(announcements).filter(announcements.id>=x).delete()
+    session.close()
     #delete_announcements = announcements.delete().where(announcements.c.id > x)
     return jsonify({'info':'announcements are deleted '}),200
