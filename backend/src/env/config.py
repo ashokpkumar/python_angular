@@ -4,17 +4,9 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config():
-    NAME_DB = os.environ.get('NAME_DB','rmg_db')
-    PORT_DB = os.getenv('PORT_DB','3306')
-    PWD_DB = os.getenv('PWD_DB','SS12VuLmaNyLtl#123')
-    HOST_DB = os.getenv('HOST_DB','65.1.199.29')
-    USER_DB = os.getenv('USER_DB','lmsadmin')
-    
     current_env = os.getenv('FLASK_ENV')
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY',"super-secret")
     FERNET_KEY = b'cx9VhUbmHbJMrVBtSL4Isusu7aN1lJ25bMPlS2jefJE='
-    
-    # SECRET_KEY = 'Sm9obiBTY2hyb20ga2lja3MgYXNz'
 
     JWT_SECRET_KEY = "super-secret"
     FERNET_KEY=b'cx9VhUbmHbJMrVBtSL4Isusu7aN1lJ25bMPlS2jefJE='
