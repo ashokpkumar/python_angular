@@ -10,6 +10,7 @@ from sqlalchemy import func
 from calendar import monthrange
 from datetime import datetime,timedelta
 import calendar
+from entities.mail import send_mail
 
 
 time_module = Blueprint(name="time", import_name=__name__)
@@ -411,7 +412,20 @@ def delete():
     # hours=data.get("hours") 
     # time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == user_id,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
     time_obj = session.query(timesubmissions).filter(timesubmissions.id==id_).first()
+    print("time_obj",time_obj)
     session.delete(time_obj)
     session.commit()
-    session.close()
+    #session.close()
+    
+    user_id = session.query(timesubmissions.user_id).filter(timesubmissions.id==id_).first()
+    print("user_id",user_id )
+    
+    if user_id:
+        e = session.query(employee.email).filter(employee.emp_id==user_id).first()
+        print(e,"e")
+    
+    mail_subject = "Submission Deleted"
+    to_email = e
+    mail_content = ""
+    send_mail(mail_subject,mail_content,to_email)
     return jsonify({"info": "Submission deleted successfully"})
