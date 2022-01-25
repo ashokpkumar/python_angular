@@ -32,7 +32,6 @@ def events():
         # eve["start"] = datetime.datetime.strptime(event["date_info"], "%d/%m/%Y").strftime("%d/%m/%Y")
         eve["status"]=event["status"]
         events_data.append(eve)
-        print(event["date_info"],"events_data")   
     return jsonify(events_data)
 
 
@@ -169,10 +168,26 @@ def getTimeBy():
         else:
             time_type_list = [time_type]
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='approved',timesubmissions.time_type.in_(time_type_list)).all()
-        serialized_obj = serialize_all(sub_objects)
+        submit_list=list()
+        for sub in sub_objects:
+            submits=dict()
+            submits["id"]=sub.id
+            submits["date_info"]= sub.date_info.strftime("%d/%m/%Y"),
+            submits["description"]= sub.description
+            submits["hours"]= sub.hours
+            submits["manager_id"]= sub.manager_id
+            submits["project_code"]= sub.project_code
+            submits["user_id"]= sub.user_id
+            submits["time_type"]= sub.time_type
+            submits["status"]= sub.status
+            submits["remarks"]= sub.remarks
+            submits["submission_id"]= sub.submission_id
+            submits["task_id"]= sub.task_id
+            submit_list.append(submits)
+        # serialized_obj = serialize_all(sub_objects)
 
         session.close()
-        return (jsonify(serialized_obj)),200
+        return (jsonify(submit_list)),200
     else:
         if time_type =="project":
             time_type_list = ['wfh','REG','project']
