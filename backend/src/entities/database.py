@@ -53,6 +53,17 @@ class announcements(Base):
     announcement_info = Column(String)
     announcement_category = Column(String)
     date_logged = Column(DateTime)
+class manager(Base):
+    __tablename__="manager"
+    id = Column(Integer, primary_key=True,autoincrement=True)
+    manager_id = Column(String(50))
+    manager_email = Column(String(50))
+    manager_name = Column(String(50))
+    manager_dept = Column(String(50))
+    project_code= Column(String(200))
+    resource_info=Column(String(200))
+    reports_to=Column(String(50))
+    roles=Column(String(200))
     
 class employee(Base):
     __tablename__ = 'employee'
