@@ -76,20 +76,15 @@ def removeresource():
     session=Session()
     data=request.get_json()
     emp_id=data.get("emp_id")
-    project_code=data.get("project_id")
-    print("<<<<<<<<<<<<")
-    print(emp_id)
-    print("<<<<<<<<<<<<")
-    print(project_code)
+    project_code=data.get("project_code")
     project_=session.query(project).filter(project.project_code==project_code).first()
     project_resources_list=project_.resource_info.split(",")
-    print("<<<<<<<<<<<<")
-    print(project_resources_list)
+    
     try:
         project_resources_list.remove(emp_id)
     except:
         pass
-    print(project_resources_list)
+
     out_PM =''
     for i in project_resources_list:
         out_PM = i + "," + out_PM
@@ -101,13 +96,11 @@ def removeresource():
 
     emp_=session.query(employee).filter(employee.emp_id==emp_id).first()
     emp_project_list=emp_.project_code.split(",")
-    print("<<<<<<<<<<<<<<")
-    print(emp_project_list)
+
     try:
         emp_project_list.remove(project_code)
     except:
         pass
-    print(emp_project_list)
     out_proj=""
     for i in emp_project_list:
         out_proj= i+","+out_proj
@@ -123,15 +116,13 @@ def removeresource():
 def getResourceInfo():
     session =Session()
     data =request.get_json()
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-    project_ = session.query(project).filter(project.project_code==data).first()
-  
+    project_code=data.get("project_code")
+    project_ = session.query(project).filter(project.project_code==project_code).first()
     project_resources_list = project_.resource_info.split(",")
     for i in project_resources_list:
         if i=="":
             project_resources_list.remove(i)
     resource_info_data = session.query(employee).filter(employee.emp_id.in_(project_resources_list)).all()
-    print(serialize_all(resource_info_data))
     session.close()
     return jsonify(serialize_all(resource_info_data))
   
