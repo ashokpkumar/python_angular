@@ -127,21 +127,6 @@ def addDesignation():
     session.close()
     return jsonify({"success":"{} Designation is created successfully".format(desig)}), 201
 
-
-
-# @employee_module.route('/managercheck', methods=['POST'])
-# def managerCheck():
-#     data=request.get_json()
-#     manager_id=data.get("manager_id")
-#     print(data.get("manager_id"))
-#     # manager_name=data.get('manager_name')
-#     session=Session()
-#     existing_manager=session.query(employee).filter(employee.manager_id==manager_id).first()
-#     if existing_manager == None:
-#         session.close()
-#         return jsonify({'warning':'Manager ID does not exist !'})
-#     # existing_manager_name =session.query(employee.manager_name).filter(employee.manager_id==manager_id)).first()
-#     return jsonify(manager_id)
     
 @employee_module.route('/addEmployee', methods=['POST'])
 def addEmployee():
@@ -150,6 +135,7 @@ def addEmployee():
     email=data.get("email")
     project_code=data.get("project_code")
     manager_id=data.get("manager_id")
+    roles=data.get("roles")
     session = Session()
     existing_emp = session.query(employee).filter(employee.emp_id==emp_id).first()
     if existing_emp:
@@ -198,18 +184,35 @@ def addEmployee():
     session = Session()
     session.add(emp_data)
     session.commit()
+        
     auth_data = authUser(emp_id = data.get("emp_id").lower(),
                         email=data.get("email").lower(),
                         roles=data.get("roles"))
     session = Session()
     session.add(auth_data)
+    print("auth added")
     session.commit() 
     session.close()    
+    if roles=='project manager':
+        print("dddddddd")
+        manager_data=manager(manager_id=data.get("emp_id"),
+                            manager_name=data.get('first_name'),
+                            manager_email=data.get("email"),
+                            manager_dept=data.get("dept"),
+                            project_code= data.get("project_code"),
+                            roles=data.get("roles"),
+                            reports_to=data.get("manager_id")
+                            )
+        session = Session()
+        session.add(manager_data)
+        print("manager added")
+        session.commit() 
+        session.close() 
     return jsonify({"success":"successfully added employee {}".format(data.get("emp_id"))}),200     
     # except:
     #     return jsonify({"error":"Some error happened in adding the employee"}),500
 
-@employee_module.route("/viewEmpInfo", methods=["POST"])
+@employee_module.route("/viewEmpInfo", methods=["POST"])    
 def viewEmpInfo():
     emp_id = request.json.get("emp_id", None)
     # print("????????????")
@@ -243,3 +246,16 @@ def viewEmpInfo():
     return jsonify(emp_dict), 201
 
 
+@employee_module.route('/getProjectsInfo',methods=['POST'])
+def getProjectsInfo():
+    session =Session()
+    data =request.get_json()
+    emp_id=data.get("emp_id")
+    employee_obj = session.query(employee).filter(employee.emp_id==emp_id).first()
+    employee_projects_list = employee_obj.project_code.split(",")
+    for i in employee_projects_list:
+        if i=="":
+            employee_projects_list.remove(i)
+    projects_info_data = session.query(project).filter(project.project_code.in_(employee_projects_list)).all()
+    session.close()
+    return jsonify(serialize_all(projects_info_data))
