@@ -355,7 +355,9 @@ def calendar_data():
     session = Session()
     data = request.get_json()
     user_id = data.get("user_id")
-    current_date=datetime.today()
+    current_date=data.get("current_date")
+    current_date=datetime.strptime(current_date, '%Y-%m-%d')
+    print(type(current_date),"date")
     last_day_of_prev_month =current_date.replace(day=1) - timedelta(days=1)
     
     start_day_of_month = current_date.replace(day=1) 
@@ -378,8 +380,8 @@ def calendar_data():
         events_data.append(eve)
         print(event["date_info"],"events_data") 
     
-    currentMonth = datetime.now().month
-    currentYear = datetime.now().year
+    currentMonth = current_date.month
+    currentYear = current_date.year
 
     #Weekly_submissions
     data=[]
