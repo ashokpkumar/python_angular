@@ -5,14 +5,19 @@ from entities.database import Session
 from entities.database import serialize_all
 from entities.modules.auth import jwtvalidate
 from entities.helper import listToString,stringToList
-from sqlalchemy import func 
+from sqlalchemy import func
+from sqlalchemy import or_,and_ 
 employee_module = Blueprint(name="employee", import_name=__name__)
 
-@employee_module.route('/employees')
+@employee_module.route('/employees',methods=["POST"])
 def employees():
     session = Session()
     data = request.get_json()
     searchstring = request.args.get('search')
+    filter=data.get("filter")
+    manager_name=data.get("manager_name",None)
+    status=data.get("status",None)
+    delivery_type=data.get("delivery_typr",None)
     print(searchstring)
     base_query = session.query(employee)
     search_results=0
@@ -20,9 +25,16 @@ def employees():
         base_query =base_query.filter(func.lower(employee.emp_id).contains(searchstring.lower())).all()
         serialized_obj = serialize_all(base_query)
         serialed_out = []
+    if filter!=None:
+        print("yes")
+        base_query =session.query(employee).filter(or_(employee.delivery_type==delivery_type,
+                                                        employee.manager_name==manager_name,employee.resource_status==status)).all()
+        serialized_obj = serialize_all(base_query)
+        serialed_out = []
     else:
-        emp_objects = session.query(employee).all()
-        serialized_obj = serialize_all(emp_objects)
+        print("all")
+        base_query = session.query(employee).all()
+        serialized_obj = serialize_all(base_query)
         serialed_out = []
     print("seriali",serialized_obj)
     for dictionary in serialized_obj:

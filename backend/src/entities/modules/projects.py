@@ -5,13 +5,27 @@ from entities.database import employee,project,authUser,timesubmissions
 from entities.database import Session
 from entities.database import serialize_all
 from entities.helper import stringToList,listToString
+from sqlalchemy import or_,and_ 
 project_module = Blueprint(name="projects", import_name=__name__)
 
-@project_module.route('/projects')
+@project_module.route('/projects',methods=['POST'])
 def projects():
     session = Session()
-    project_objects = session.query(project).all()
-    serialized_obj = serialize_all(project_objects)
+    data = request.get_json()
+    searchstring = request.args.get('search')
+    filter=data.get("filter")
+    manager_name=data.get("manager_name",None)
+    billing_type=data.get("billing_type",None)
+    solution_category=data.get("solution_category",None)
+    segment=data.get("segment",None)
+    geography=data.get("geography",None)
+    if filter==True:
+        base_query =session.query(project).filter(or_(project.geography==geography,project.project_manager_id==manager_name,project.segment==segment,
+                                                      project.billing_type==billing_type,project.solution_category==solution_category)).all()
+        serialized_obj = serialize_all(base_query)
+    else:
+        base_query = session.query(project).all()
+        serialized_obj = serialize_all(base_query)
     session.close()
     return (jsonify(serialized_obj))
 
