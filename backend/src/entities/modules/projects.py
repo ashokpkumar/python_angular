@@ -20,10 +20,19 @@ def projects():
     solution_category=data.get("solution_category",None)
     segment=data.get("segment",None)
     geography=data.get("geography",None)
-    if filter==True:
-        base_query =session.query(project).filter(or_(project.geography==geography,project.project_manager_id==manager_name,project.segment==segment,
-                                                      project.billing_type==billing_type,project.solution_category==solution_category)).all()
-        serialized_obj = serialize_all(base_query)
+    if filter == True:
+        query =session.query(project)       
+        if solution_category:
+            query = query.filter(project.solution_category==solution_category)   
+        if billing_type:
+            query = query.filter(project.billing_type==billing_type)
+        if segment:
+            query = query.filter(project.segment==segment)
+        if geography:
+            query = query.filter(project.geography==geography)
+            
+        filter_query = query.all()
+        serialized_obj = serialize_all(filter_query)
     else:
         base_query = session.query(project).all()
         serialized_obj = serialize_all(base_query)

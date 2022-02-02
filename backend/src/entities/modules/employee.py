@@ -35,7 +35,7 @@ def employees():
         if status:
             query = query.filter(employee.resource_status==status)
         if skills:
-            query = query.filter(employee.skills==skills)
+            query = session.query(employeeToSkill).filter(employeeToSkill.skill_id==skills)
             
         filter_query = query.all()
         
@@ -303,3 +303,10 @@ def getskills():
     session.close()
     return (jsonify(serialized_obj))
     
+@employee_module.route('/getmanagername')
+def getmanagername():
+    session = Session()
+    base_query = session.query(manager).all()
+    # manager_list=[name[0] for name in base_query]
+    serialized_obj = serialize_all(base_query)
+    return (jsonify(serialized_obj))
