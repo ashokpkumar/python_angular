@@ -294,3 +294,12 @@ def addskills():
     session.commit()
     session.close()
     return jsonify({"success":"skill added successfully"}),200    
+
+@employee_module.route('/getskills')
+def getskills():
+    session = Session()
+    skill_objects = session.query(skill).all()
+    serialized_obj = serialize_all(skill_objects)
+    session.close()
+    return (jsonify(serialized_obj))
+    
