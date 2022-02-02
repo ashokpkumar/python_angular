@@ -1,11 +1,12 @@
 
 from flask import Blueprint, jsonify, request
 import datetime
-from entities.database import employee,project,authUser,timesubmissions
+from entities.database import employee,project,authUser,timesubmissions,resourceToProject,managerToProject
 from entities.database import Session
 from entities.database import serialize_all
 from entities.helper import stringToList,listToString
 from sqlalchemy import or_,and_ 
+from datetime import datetime
 project_module = Blueprint(name="projects", import_name=__name__)
 
 @project_module.route('/projects',methods=['POST'])
@@ -41,9 +42,18 @@ def addProjectResource():
     existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project==None:
         return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
-    print("<<<<<<<<<<")
     resource_data=existing_emp.emp_id
-    print(resource_data)
+    
+    existing_mapping=session.query(resourceToProject).filter(resourceToProject.emp_id==resource_id,resourceToProject.project_code==project_code).first()
+    if existing_mapping==None:
+        resource_mapping = resourceToProject(emp_id = data.get("emp_id").lower(),
+                    project_code=data.get("project_id").lower(),
+                    assigned_date=datetime.today())
+        session.add(resource_mapping)
+        session.commit()
+    else:
+        return jsonify({"error":"Resourse is already mapped to project"}),400
+
     if existing_emp.project_code == None:
         existing_emp.project_code=project_code
         session.add(existing_emp)
@@ -56,7 +66,6 @@ def addProjectResource():
         existing_proj_list.append(project_code)
         
         existing_emp.project_code = listToString(existing_proj_list)# check if the string sanitation is required
-        print(type(existing_emp.project_code))
         session.add(existing_emp)
         session.commit()
 
@@ -70,18 +79,13 @@ def addProjectResource():
     
     else:
         existing_resource = existing_project.resource_info
-        print(existing_resource)
         existing_resource_list=stringToList(existing_resource)#stringToList fn convert str to list 
-        print(type(existing_resource_list))
-        print(existing_resource_list)
         if resource_id in existing_resource_list:
             return jsonify({'error':'resource exist already in the project'})
         existing_resource_list.append(resource_id )
         existing_project.resource_info = listToString(existing_resource_list)#listToString convert list to str 
-        print(existing_resource_list)
         session.add(existing_project)
-        session.commit()
-
+        session.commit() 
     session.close()
     return jsonify({"success":"Employee {} and Project {} Linked".format(resource_id,project_code)})
 
@@ -155,6 +159,16 @@ def addProjectmanager():
     if existing_project_manager==None:
         return jsonify({"error":"Manager ID {} Does not Exists !".format(project_manager)})
 
+    existing_mapping=session.query(managerToProject).filter(managerToProject.manager_id==project_manager,managerToProject.project_code==project_code).first()
+    if existing_mapping==None:
+        manager_mapping = managerToProject(manager_id = data.get("manager_id").lower(),
+                    project_code=data.get("project_id").lower(),
+                    assigned_date=datetime.today())
+        session.add(manager_mapping)
+        session.commit()
+    else:
+        return jsonify({"error":"Manager is already mapped to project"}),400
+    
     if existing_project.project_manager_id == None:
         existing_project.project_manager_id = project_manager
         session.add(existing_project)

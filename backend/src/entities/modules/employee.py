@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 import datetime
-from entities.database import employee,project,authUser,timesubmissions,department,designation
-from entities.database import Session
+from entities.database import employee,project,authUser,timesubmissions
+from entities.database import Session,department,designation,manager,skill,employeeToSkill
 from entities.database import serialize_all
 from entities.modules.auth import jwtvalidate
 from entities.helper import listToString,stringToList
@@ -17,7 +17,8 @@ def employees():
     filter=data.get("filter")
     manager_name=data.get("manager_name",None)
     status=data.get("status",None)
-    delivery_type=data.get("delivery_typr",None)
+    delivery_type=data.get("delivery_type",None)
+    skills = data.get("skills",None)    
     print(searchstring)
     base_query = session.query(employee)
     search_results=0
@@ -25,18 +26,26 @@ def employees():
         base_query =base_query.filter(func.lower(employee.emp_id).contains(searchstring.lower())).all()
         serialized_obj = serialize_all(base_query)
         serialed_out = []
-    if filter!=None:
-        print("yes")
-        base_query =session.query(employee).filter(or_(employee.delivery_type==delivery_type,
-                                                        employee.manager_name==manager_name,employee.resource_status==status)).all()
-        serialized_obj = serialize_all(base_query)
+    if filter == True:
+        query =session.query(employee)       
+        if manager_name:
+            query = query.filter(employee.manager_name==manager_name)   
+        if delivery_type:
+            query = query.filter(employee.delivery_type==delivery_type)
+        if status:
+            query = query.filter(employee.resource_status==status)
+        if skills:
+            query = query.filter(employee.skills==skills)
+            
+        filter_query = query.all()
+        
+        serialized_obj = serialize_all(filter_query)
         serialed_out = []
-    else:
-        print("all")
+    else:   
         base_query = session.query(employee).all()
         serialized_obj = serialize_all(base_query)
         serialed_out = []
-    print("seriali",serialized_obj)
+        
     for dictionary in serialized_obj:
         dictionary['full_name'] = dictionary['first_name'] + dictionary['last_name']
         dictionary['project_code'] = stringToList(dictionary['project_code'])
@@ -49,7 +58,6 @@ def employees():
             if proj_item["project_code"]==emp_id:
                 proj_item["project_code"] = [emp_id] #Project id should return list instead of string in employee
                 dictionary.update(proj_item)
-                print(dictionary)
                 break
     session.close()
     return (jsonify(serialed_out))
@@ -75,8 +83,6 @@ def managerdata():
     session.close()
     # print(serialized_obj)
     return (jsonify(serialized_obj1))
-
-
 
 @employee_module.route('/getprojectid')
 def getproject():
@@ -139,7 +145,6 @@ def addDesignation():
     session.close()
     return jsonify({"success":"{} Designation is created successfully".format(desig)}), 201
 
-    
 @employee_module.route('/addEmployee', methods=['POST'])
 def addEmployee():
     data = request.get_json()
@@ -148,12 +153,12 @@ def addEmployee():
     project_code=data.get("project_code")
     manager_id=data.get("manager_id")
     roles=data.get("roles")
+    skills=data.get("skills")
     session = Session()
     existing_emp = session.query(employee).filter(employee.emp_id==emp_id).first()
     if existing_emp:
         session.close()
         return jsonify({'warning':'User ID: {} already exist !'.format(emp_id)})
-    #print(emp_id)
     existing_emp = session.query(employee).filter(employee.email==email).first()
     if existing_emp:
         session.close()
@@ -161,12 +166,6 @@ def addEmployee():
     existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project==None:
         return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
-    
-    # existing_manager=session.query(employee).filter(employee.manager_id==manager_id).first()
-    # if existing_manager == None:
-    #     session.close()
-    #     return jsonify({'warning':'Manager ID does not exist !'})
-
     emp_data = employee(emp_id=data.get("emp_id").lower() , 
                         manager_id = data.get("manager_id"),
                         email = data.get("email").lower(), 
@@ -204,9 +203,18 @@ def addEmployee():
     session.add(auth_data)
     print("auth added")
     session.commit() 
-    session.close()    
-    if roles=='project manager':
-        print("dddddddd")
+
+    if skills!=None:
+        exisisting_skill=session.query(skill).filter(skill.skill_name==skills).first()
+        skill_id=exisisting_skill.id
+        print("skill_id",skill_id)
+        if exisisting_skill:
+            emp_data=employeeToSkill(emp_id=data.get("emp_id"),
+                                     skill_id=skill_id)
+            session.add(emp_data)
+            session.commit()
+            print("skill mapped to employee")
+    if roles=='project manager' or roles=='rmg admin':
         manager_data=manager(manager_id=data.get("emp_id"),
                             manager_name=data.get('first_name'),
                             manager_email=data.get("email"),
@@ -257,7 +265,6 @@ def viewEmpInfo():
     session.close()
     return jsonify(emp_dict), 201
 
-
 @employee_module.route('/getProjectsInfo',methods=['POST'])
 def getProjectsInfo():
     session =Session()
@@ -271,3 +278,19 @@ def getProjectsInfo():
     projects_info_data = session.query(project).filter(project.project_code.in_(employee_projects_list)).all()
     session.close()
     return jsonify(serialize_all(projects_info_data))
+
+
+@employee_module.route('/addskills',methods=['POST'])
+def addskills():
+    data=request.get_json()
+    emp_skills=data.get("skill")
+    session=Session()
+    exisiting_skills=session.query(skill).filter(skill.skill_name==emp_skills).first()
+    if exisiting_skills:
+        return jsonify({'warning':' {} skill already exist !'.format(emp_skills)}),400
+    
+    skill_data=skill(skill_name=emp_skills)
+    session.add(skill_data)
+    session.commit()
+    session.close()
+    return jsonify({"success":"skill added successfully"}),200    

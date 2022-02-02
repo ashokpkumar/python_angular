@@ -357,3 +357,38 @@ class forget_pass(Base):
     reset_token = Column(String)
     create_date = Column(DateTime)
 
+class resourceToProject(Base):
+    __tablename__='resourceToProject'
+    id = Column(Integer, primary_key=True)
+    emp_id = Column(String(50))
+    project_code=Column(String(50))
+    assigned_date=Column(DateTime)
+
+
+class managerToResource(Base):
+    __tablename__="managerToResource"
+    id = Column(Integer, primary_key=True)
+    manager_id=Column(String(50))
+    resource_id=Column(String(50))
+    assigned_date=Column(DateTime)
+
+class managerToProject(Base):
+    __tablename__="managerToProject"
+    id = Column(Integer, primary_key=True)
+    manager_id=Column(String(50))
+    project_code=Column(String(50))
+    assigned_date=Column(DateTime)
+    
+class skill(Base):
+    __tablename__="skills"
+    skill_name=Column(String(50))
+    id = Column(Integer, primary_key=True)
+    
+class employeeToSkill(Base):
+    __tablename__="employeeToSkill"
+    id = Column(Integer, primary_key=True)
+    emp_id=Column(String(50))
+    skill_id=Column(String(50))
+
+    
+    
