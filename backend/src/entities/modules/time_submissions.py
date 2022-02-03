@@ -39,13 +39,36 @@ def events():
 def addtimesubmissions():    
     data = request.get_json() 
     user_id = data.get('user_id')
+    date_info=data.get('date')
+    confirm_sub=data.get("confirm_sub")
     session = Session()
     existing_emp = session.query(employee).filter(employee.emp_id == user_id ).first()
     if existing_emp == None:
         return jsonify({'error':'user not available in the employee table'}),200
-    # if existing_emp:
-    #     existing_type=session.query(timesubmissions.date_info==data.get('date')).filter(timesubmissions.time_type==data.get('time_type'),timesubmissions.hours!=data.get('hours')).first()
-    #     return({'error':'Hours is already filled'})
+    existing_submission=session.query(timesubmissions.hours).filter(timesubmissions.user_id==data.get('user_id'),timesubmissions.date_info==date_info).all()
+    hours_list=[emp[0] for emp in existing_submission]
+    total_hrs=sum(hours_list)
+    print(total_hrs,"total")
+    if total_hrs>=8:
+        if confirm_sub== False:   
+            return jsonify({"warning":True})
+        else:
+            sub_data = timesubmissions( date_info = data.get('date',None),
+                                hours = data.get('hours',None),
+                                user_id = data.get('user_id',None).lower(),
+                                project_code = data.get('project_id',None),
+                                manager_id = data.get('manager_id',None),
+                                time_type = data.get('time_type',None).lower(),
+                                status = 'unapproved',
+                                submission_id = data.get('user_id',None) + data.get('user_id',None) + data.get('time_type',None).lower(),
+                                task_id=data.get('task_id',None),
+                                description=data.get('description',None),
+                                remarks=data.get('remarks',None)     
+                            )
+        session = Session()
+        session.add(sub_data)
+        session.commit()
+        return jsonify({'success':'Your Time has been  submitted for: {}'.format(data.get('date'))}),200              
     else:
         sub_data = timesubmissions( date_info = data.get('date',None),
                                         hours = data.get('hours',None),
@@ -59,9 +82,6 @@ def addtimesubmissions():
                                         description=data.get('description',None),
                                         remarks=data.get('remarks',None)     
                                     )
-    # existing_type=session.query(timesubmissions.date_info==data.get('date')).filter(timesubmissions.time_type==data.get('time_type')).all
-    # if existing_type:
-    #     return jsonify({'error':"same time type"})
     session = Session()
     session.add(sub_data)
     session.commit()
@@ -355,7 +375,9 @@ def calendar_data():
     session = Session()
     data = request.get_json()
     user_id = data.get("user_id")
-    current_date=datetime.today()
+    current_date=data.get("current_date")
+    current_date=datetime.strptime(current_date, '%Y-%m-%d')
+    print(type(current_date),"date")
     last_day_of_prev_month =current_date.replace(day=1) - timedelta(days=1)
     
     start_day_of_month = current_date.replace(day=1) 
@@ -378,28 +400,29 @@ def calendar_data():
         events_data.append(eve)
         print(event["date_info"],"events_data") 
     
-    currentMonth = datetime.now().month
-    currentYear = datetime.now().year
+    currentMonth = current_date.month
+    currentYear = current_date.year
 
     #Weekly_submissions
     data=[]
     for weekstart, weekend in weeks_in_month(currentYear,currentMonth):
-        # print(weekstart, '-', weekend)
         #weekdata
-        base_query2 = base_query.filter(and_(timesubmissions.user_id==user_id,cast(timesubmissions.date_info, Date) >= weekstart, cast(timesubmissions.date_info, Date) <= weekend)).all()
-        weekly_submission=serialize_all(base_query2)
-        weekly_submissions=len(weekly_submission)
+        base_query2 = session.query(timesubmissions.hours).filter(and_(timesubmissions.user_id==user_id,cast(timesubmissions.date_info, Date) >= weekstart, cast(timesubmissions.date_info, Date) <= weekend)).all()
+        hours_list=[hours[0] for hours in base_query2]
+        total_hrs=sum(hours_list)
+        weekly_submissions=total_hrs
         #week_approved
-        base_query3 = base_query.filter(and_(timesubmissions.user_id==user_id,timesubmissions.status=='approved',cast(timesubmissions.date_info, Date) >= weekstart, cast(timesubmissions.date_info, Date) <= weekend)).all()
-        approved_Weekly_submissions=serialize_all(base_query3)
-        approved_submissions=len(approved_Weekly_submissions)
+        base_query3 = session.query(timesubmissions.hours).filter(and_(timesubmissions.user_id==user_id,timesubmissions.status=='approved',cast(timesubmissions.date_info, Date) >= weekstart, cast(timesubmissions.date_info, Date) <= weekend)).all()
+        hours_list=[hours[0] for hours in base_query3]
+        total_hrs=sum(hours_list)
+        approved_submissions=total_hrs
         #week_unapproved
-        base_query4 = base_query.filter(and_(timesubmissions.user_id==user_id,timesubmissions.status=='unapproved',cast(timesubmissions.date_info, Date) >= weekstart, cast(timesubmissions.date_info, Date) <= weekend)).all()
-        unapproved_Weekly_submissions=serialize_all(base_query4)
-        unapproved_submissions=len(unapproved_Weekly_submissions)
+        base_query4 = session.query(timesubmissions.hours).filter(and_(timesubmissions.user_id==user_id,timesubmissions.status=='unapproved',cast(timesubmissions.date_info, Date) >= weekstart, cast(timesubmissions.date_info, Date) <= weekend)).all()
+        hours_list=[hours[0] for hours in base_query4]
+        total_hrs=sum(hours_list)
+        unapproved_submissions=total_hrs
         weekly_data={"weekly_submissions":weekly_submissions,"approved_submissions":approved_submissions,"unapproved_submissions":unapproved_submissions}    
         data.append(weekly_data)
-        # print(data,"data")
     
     session.close()       
     return(jsonify({'submissions':events_data,"week_data":data}))
