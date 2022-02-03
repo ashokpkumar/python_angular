@@ -341,34 +341,34 @@ def timeData():
 
 @time_module.route('/review_time', methods=['POST'])
 def review_time():
-    data = request.get_json()
-    print(data,"data")
-    if data['reviewd']==True:
-        session = Session()
-        username = data['user_id']
-        date = datetime.strptime(data['date'], "%d/%m/%Y").date()
-        time_type = data['time_type']
-        hours = data['hours']
-        print(date,"ddd")
-        time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
-        time_obj.status="approved"
-        session.add(time_obj)
-        session.commit()
-        session.close()
-        return jsonify({"info":"Time has been reviewed"})
-
-    elif data['reviewd']==False:
-        session = Session()
-        username = data['user_id']
-        date =datetime.strptime(data['date'], "%d/%m/%Y").date()
-        time_type = data['time_type']
-        hours = data['hours']
-        time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
-        time_obj.status = "denied"
-        session.delete(time_obj)
-        session.commit()
-        session.close()
-        return jsonify({"info":"Time has been reviewed"})
+    review_data = request.get_json()
+    print(review_data)
+    for data in review_data:
+        if data['reviewd']==True:
+            session = Session()
+            username = data['user_id']
+            date = datetime.strptime(data['date'], "%d/%m/%Y").date()
+            time_type = data['time_type']
+            hours = data['hours']
+            submission_id=data['submission_id']
+            print(date,"ddd")
+            time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours,timesubmissions.submission_id == submission_id).first()
+            time_obj.status="approved"
+            session.add(time_obj)
+            session.commit()
+            
+        elif data['reviewd']==False:
+            session = Session()
+            username = data['user_id']
+            date =datetime.strptime(data['date'], "%d/%m/%Y").date()
+            time_type = data['time_type']
+            hours = data['hours']
+            time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
+            time_obj.status = "denied"
+            session.delete(time_obj)
+            session.commit()
+            session.close()
+    return jsonify({"info":"Time has been reviewed"})
 
 @time_module.route('/calendar_data', methods=['POST'])
 def calendar_data():
