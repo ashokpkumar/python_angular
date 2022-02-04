@@ -2,7 +2,7 @@
 from flask import Blueprint, jsonify, request
 import datetime
 from entities.database import employee,project,authUser,timesubmissions,resourceToProject,managerToProject
-from entities.database import Session
+from entities.database import Session,manager
 from entities.database import serialize_all
 from entities.helper import stringToList,listToString
 from sqlalchemy import or_,and_ 
@@ -106,9 +106,11 @@ def removeresource():
     project_code=data.get("project_code")
     project_=session.query(project).filter(project.project_code==project_code).first()
     project_resources_list=project_.resource_info.split(",")
-    
+    mapping=session.query(resourceToProject).filter(resourceToProject.emp_id==emp_id,resourceToProject.project_code==project_code).all()
     try:
         project_resources_list.remove(emp_id)
+        session.delete(mapping)
+        print("removed")
     except:
         pass
 
@@ -164,7 +166,7 @@ def addProjectmanager():
     if existing_project==None:
         return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
     
-    existing_project_manager= session.query(employee).filter(employee.manager_id==project_manager).first()
+    existing_project_manager= session.query(manager).filter(manager.manager_id==project_manager).first()
     if existing_project_manager==None:
         return jsonify({"error":"Manager ID {} Does not Exists !".format(project_manager)})
 
@@ -183,18 +185,19 @@ def addProjectmanager():
         session.add(existing_project)
         session.commit()
     else:
-        existing_PM = existing_project.project_manager_id
+        return  jsonify({'error':'Manager is already allocated to this project'}),400
+        # existing_PM = existing_project.project_manager_id
   
-        existing_PM_list = stringToList(existing_PM)
+        # existing_PM_list = stringToList(existing_PM)
 
-        if project_manager in existing_PM_list:
-            return  jsonify({'error':'Project Manager already Exists in the project'})
-        existing_PM_list.append(project_manager)
+        # if project_manager in existing_PM_list:
+        #     return  jsonify({'error':'Project Manager already Exists in the project'})
+        # existing_PM_list.append(project_manager)
    
-        existing_project.project_manager_id=listToString(existing_PM_list)
+        # existing_project.project_manager_id=listToString(existing_PM_list)
 
-        session.add(existing_project)
-        session.commit()
+        # session.add(existing_project)
+        # session.commit()
     session.close()
     return jsonify({"success":"Manager {} and Project {} Linked".format(project_manager,project_code)})
         
