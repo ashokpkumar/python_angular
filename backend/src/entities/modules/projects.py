@@ -8,7 +8,7 @@ from entities.helper import stringToList,listToString
 from sqlalchemy import or_,and_ 
 from datetime import datetime
 project_module = Blueprint(name="projects", import_name=__name__)
-
+            
 @project_module.route('/projects',methods=['POST'])
 def projects():
     session = Session()
@@ -251,3 +251,11 @@ def addProject():
     # except:
     #     return jsonify({"error":"Something happened while adding the data to the table, please check the data and try again"}), 500
     
+    
+@project_module.route('/projectdata')
+def projectdata():
+    session = Session()
+    base_query = session.query(project).all()
+    serialized_obj = serialize_all(base_query)
+    session.close()
+    return (jsonify(serialized_obj))

@@ -317,3 +317,11 @@ def getmanagername():
     # manager_list=[name[0] for name in base_query]
     serialized_obj = serialize_all(base_query)
     return (jsonify(serialized_obj))
+
+@employee_module.route('/employeedata')
+def employeedata():
+    session = Session()
+    base_query = session.query(employee).all()
+    serialized_obj = serialize_all(base_query)
+    session.close()
+    return (jsonify(serialized_obj))
