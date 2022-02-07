@@ -42,7 +42,7 @@ def employees():
                 skill_data.append(data_list)
             data=sum(skill_data,[])
             joined_str=",".join(data)
-            query = query.filter(employee.skills==joined_str)
+            query = query.filter((employee.skills).contains(joined_str))
         
         filter_query = query.all()
         
