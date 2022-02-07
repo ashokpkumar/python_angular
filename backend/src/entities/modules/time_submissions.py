@@ -4,11 +4,11 @@ from entities.database import employee,project,authUser,timesubmissions
 from entities.database import Session
 from entities.database import serialize_all
 from entities.modules.auth import jwtvalidate
-from entities.helper import date_validation,weeks_in_month
+from entities.helper import date_validation,weeks_in_month,daterange
 from sqlalchemy import or_,and_, cast, Date
 from sqlalchemy import func 
 from calendar import monthrange
-from datetime import datetime,timedelta
+from datetime import datetime,timedelta,date
 import calendar
 
 
@@ -39,53 +39,87 @@ def events():
 def addtimesubmissions():    
     data = request.get_json() 
     user_id = data.get('user_id')
-    date_info=data.get('date')
+    startdate=data.get('startdate')
+    enddate=data.get("enddate")
     confirm_sub=data.get("confirm_sub")
     session = Session()
+    date_list=list()
     existing_emp = session.query(employee).filter(employee.emp_id == user_id ).first()
     if existing_emp == None:
         return jsonify({'error':'user not available in the employee table'}),200
-    existing_submission=session.query(timesubmissions.hours).filter(timesubmissions.user_id==data.get('user_id'),timesubmissions.date_info==date_info).all()
-    hours_list=[emp[0] for emp in existing_submission]
-    total_hrs=sum(hours_list)
-    print(total_hrs,"total")
-    if total_hrs>=8:
-        if confirm_sub== False:   
-            return jsonify({"warning":True})
+    if startdate==None and enddate==None:
+        return jsonify({"Warning":"Please give Date to add submission"}) 
+    if startdate!=None and enddate!=None:
+        existing_submission=session.query(timesubmissions.hours).filter(and_(timesubmissions.user_id==data.get('user_id'),cast(timesubmissions.date_info, Date) >= startdate, cast(timesubmissions.date_info, Date) <= enddate)).all()
+        hours_list=[emp[0] for emp in existing_submission]
+        total_hrs=sum(hours_list)
+        s_date=datetime.strptime(startdate, "%Y-%m-%d")
+        e_date=datetime.strptime(enddate, "%Y-%m-%d")
+        for dt in daterange(s_date, e_date):
+            dates=dt.strftime("%Y-%m-%d")
+            date_list.append(dates)
+        if total_hrs>0:
+            if confirm_sub== False:   
+                return jsonify({"warning":True})
         else:
-            sub_data = timesubmissions( date_info = data.get('date',None),
-                                hours = data.get('hours',None),
-                                user_id = data.get('user_id',None).lower(),
-                                project_code = data.get('project_id',None),
-                                manager_id = data.get('manager_id',None),
-                                time_type = data.get('time_type',None).lower(),
-                                status = 'unapproved',
-                                submission_id = data.get('user_id',None) + data.get('user_id',None) + data.get('time_type',None).lower(),
-                                task_id=data.get('task_id',None),
-                                description=data.get('description',None),
-                                remarks=data.get('remarks',None)     
-                            )
+            for dates in date_list:
+                sub_data = timesubmissions( date_info = dates,
+                    hours = data.get('hours',None),
+                    user_id = data.get('user_id',None).lower(),
+                    project_code = data.get('project_id',None),
+                    manager_id = data.get('manager_id',None),
+                    time_type = data.get('time_type',None).lower(),
+                    status = 'unapproved',
+                    submission_id = data.get('user_id',None) + data.get('user_id',None) + data.get('time_type',None).lower(),
+                    task_id=data.get('task_id',None),
+                    description=data.get('description',None),
+                    remarks=data.get('remarks',None)     
+                )
+                session = Session()
+                session.add(sub_data)
+                session.commit()
+        return jsonify({'success':'Your Time has been  submitted '})        
+    if startdate!=None and enddate==None:
+        existing_submission=session.query(timesubmissions.hours).filter(timesubmissions.user_id==data.get('user_id'),timesubmissions.date_info==startdate).all()
+        hours_list=[emp[0] for emp in existing_submission]
+        total_hrs=sum(hours_list)
+        if total_hrs>=8:
+            if confirm_sub== False:   
+                return jsonify({"warning":True})
+            else:
+                sub_data = timesubmissions( date_info = data.get('startdate',None),
+                                    hours = data.get('hours',None),
+                                    user_id = data.get('user_id',None).lower(),
+                                    project_code = data.get('project_id',None),
+                                    manager_id = data.get('manager_id',None),
+                                    time_type = data.get('time_type',None).lower(),
+                                    status = 'unapproved',
+                                    submission_id = data.get('user_id',None) + data.get('user_id',None) + data.get('time_type',None).lower(),
+                                    task_id=data.get('task_id',None),
+                                    description=data.get('description',None),
+                                    remarks=data.get('remarks',None)     
+                                )
+            session = Session()
+            session.add(sub_data)
+            session.commit()
+            return jsonify({'success':'Your Time has been  submitted for: {}'.format(data.get('date'))}),200              
+        else:
+            sub_data = timesubmissions( date_info = data.get('startdate',None),
+                                            hours = data.get('hours',None),
+                                            user_id = data.get('user_id',None).lower(),
+                                            project_code = data.get('project_id',None),
+                                            manager_id = data.get('manager_id',None),
+                                            time_type = data.get('time_type',None).lower(),
+                                            status = 'unapproved',
+                                            submission_id = data.get('user_id',None) + data.get('user_id',None) + data.get('time_type',None).lower(),
+                                            task_id=data.get('task_id',None),
+                                            description=data.get('description',None),
+                                            remarks=data.get('remarks',None)     
+                                        )
         session = Session()
         session.add(sub_data)
         session.commit()
-        return jsonify({'success':'Your Time has been  submitted for: {}'.format(data.get('date'))}),200              
-    else:
-        sub_data = timesubmissions( date_info = data.get('date',None),
-                                        hours = data.get('hours',None),
-                                        user_id = data.get('user_id',None).lower(),
-                                        project_code = data.get('project_id',None),
-                                        manager_id = data.get('manager_id',None),
-                                        time_type = data.get('time_type',None).lower(),
-                                        status = 'unapproved',
-                                        submission_id = data.get('user_id',None) + data.get('user_id',None) + data.get('time_type',None).lower(),
-                                        task_id=data.get('task_id',None),
-                                        description=data.get('description',None),
-                                        remarks=data.get('remarks',None)     
-                                    )
-    session = Session()
-    session.add(sub_data)
-    session.commit()
-    return jsonify({'success':'Your Time has been  submitted for: {}'.format(data.get('date'))}),200
+        return jsonify({'success':'Your Time has been  submitted for: {}'.format(data.get('date'))}),200
 
 
 @time_module.route('/view_submissions', methods=['POST'])
@@ -115,10 +149,8 @@ def timesubmission():
 @time_module.route('/getSubmissionsBy', methods=['POST'])
 def getSubmissionsBy():
     session = Session()
-    # user= request.get_json()
     data= request.get_json()
     user=data['user_id']
-    print(user,">>>>>>>>>>>")
     time_type=data['type']
     if user == 'total' and time_type=='total_unapproved':
         sub_objects = session.query(timesubmissions).filter(timesubmissions.status=='unapproved').all()
@@ -137,8 +169,6 @@ def getSubmissionsBy():
             submits["submission_id"]= sub.submission_id
             submits["task_id"]= sub.task_id
             submit_list.append(submits)
-        # serialized_obj = serialize_all(sub_objects)
-        print(submit_list,"sub")
         session.close()
         return (jsonify(submit_list)),200
         
@@ -159,8 +189,6 @@ def getSubmissionsBy():
             submits["submission_id"]= sub.submission_id
             submits["task_id"]= sub.task_id
             submit_list.append(submits)
-        # serialized_obj = serialize_all(sub_objects)
-        print(submit_list,"sub")
         session.close()
         return (jsonify(submit_list)),200
 
@@ -170,9 +198,7 @@ def getTimeBy():
     session = Session()
     data = request.get_json()
     time_type = data['type']
-    print(time_type,">>>>>>>>")
     user = data['user']
-    print(user,">>>>>>>>>")
 
     if user == 'total':
         if time_type =="project":
@@ -204,8 +230,6 @@ def getTimeBy():
             submits["submission_id"]= sub.submission_id
             submits["task_id"]= sub.task_id
             submit_list.append(submits)
-        # serialized_obj = serialize_all(sub_objects)
-
         session.close()
         return (jsonify(submit_list)),200
     else:
@@ -239,8 +263,6 @@ def getTimeBy():
             submits["submission_id"]= sub.submission_id
             submits["task_id"]= sub.task_id
             submit_list.append(submits)
-        # serialized_obj = serialize_all(sub_objects)
-        print("submissions",submit_list)
         session.close()
         return (jsonify(submit_list)),200
       
@@ -263,7 +285,6 @@ def timeData():
         emp_list = session.query(employee.emp_id).filter(employee.manager_id==manager_id).all()
         emp_final = [emp[0].lower() for emp in emp_list]
         emp_final_list=list(set(date_final_list).intersection(emp_final))
-        print(emp_final_list,"empl")
     elif searchstring != None:
         base_query =session.query(timesubmissions.user_id).filter(func.lower(timesubmissions.user_id).contains(searchstring.lower())).distinct(timesubmissions.user_id).all()
         base_final=[emp[0].lower() for emp in base_query]
@@ -334,7 +355,6 @@ def timeData():
         total_bench = total_bench  + emp_data['bench']
         total_unapproved = total_unapproved + emp_data['unapproved']
     total_time_list = {'total_project':total_project,'total_total_presence':total_total_presence,'total_total_absence':total_total_absence,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_non_project':total_non_project,'total_bench':total_bench,'total_total_hrs':total_total_hrs,'total_unapproved':total_unapproved, }
-    print(">>>>>>>>>>",time_final)
     session.close()
     return (jsonify({'result':time_final,'total':total_time_list}))
     
@@ -351,7 +371,6 @@ def review_time():
             time_type = data['time_type']
             hours = data['hours']
             submission_id=data['submission_id']
-            print(date,"ddd")
             time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == username,timesubmissions.time_type == time_type,timesubmissions.hours == hours,timesubmissions.submission_id == submission_id).first()
             time_obj.status="approved"
             session.add(time_obj)
@@ -377,12 +396,10 @@ def calendar_data():
     user_id = data.get("user_id")
     current_date=data.get("current_date")
     current_date=datetime.strptime(current_date, '%Y-%m-%d')
-    print(type(current_date),"date")
     last_day_of_prev_month =current_date.replace(day=1) - timedelta(days=1)
     
     start_day_of_month = current_date.replace(day=1) 
     last_day_of_month=current_date.replace(day = monthrange(current_date.year, current_date.month)[1])
-    print("D",start_day_of_month,last_day_of_month)
     #user_data
     base_query=session.query(timesubmissions)
     base_query2 = base_query.filter(and_(timesubmissions.user_id==user_id,last_day_of_prev_month <= cast(timesubmissions.date_info, Date) , cast(timesubmissions.date_info, Date) <= last_day_of_month)).all()
@@ -425,29 +442,12 @@ def calendar_data():
         data.append(weekly_data)
     
     session.close()       
-    return(jsonify({'submissions':events_data,"week_data":data}))
-
-
-
-    # approved_data= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.status=='approved').all()
-    # approved_data=len(serialize_all(approved_data))
-    # unapproved_data= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.status=='unapproved').all()
-    # unapproved_data=len(serialize_all(unapproved_data))
-    # project_type= base_query.filter(timesubmissions.user_id==user_id,timesubmissions.time_type=='project').all()
-    # project_type=len(serialize_all(project_type))
-    
-    
+    return(jsonify({'submissions':events_data,"week_data":data}))    
 @time_module.route('/delete_submission', methods=['POST'])
 def delete():
     data=request.get_json()
     session = Session()
-    # date=data.get("date")
     id_=data.get("id")
-    print("i",id_)
-    # user_id=data.get("user_id")
-    # time_type=data.get("time_type")
-    # hours=data.get("hours") 
-    # time_obj = session.query(timesubmissions).filter(timesubmissions.date_info == date,timesubmissions.user_id == user_id,timesubmissions.time_type == time_type,timesubmissions.hours == hours).first()
     time_obj = session.query(timesubmissions).filter(timesubmissions.id==id_).first()
     session.delete(time_obj)
     session.commit()

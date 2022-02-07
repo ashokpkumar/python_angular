@@ -1,6 +1,6 @@
 import hashlib
 import datetime
-from datetime import datetime,timedelta
+from datetime import datetime,timedelta,date
 import calendar
 # convert string to list  
 def stringToList(string):
@@ -38,3 +38,7 @@ def weeks_in_month(year, month):
         for weekstart in filter(lambda d: d.weekday() == firstweekday, c.itermonthdates(year, month)):
             weekend = weekstart + timedelta(6)
             yield (weekstart, weekend)
+            
+def daterange(date1, date2):
+    for n in range(int ((date2 - date1).days)+1):
+        yield date1 + timedelta(n)
