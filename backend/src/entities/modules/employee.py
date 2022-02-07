@@ -7,6 +7,7 @@ from entities.modules.auth import jwtvalidate
 from entities.helper import listToString,stringToList
 from sqlalchemy import func
 from sqlalchemy import or_,and_ 
+from functools import reduce
 employee_module = Blueprint(name="employee", import_name=__name__)
 
 @employee_module.route('/employees',methods=["POST"])
@@ -15,12 +16,12 @@ def employees():
     data = request.get_json()
     searchstring = request.args.get('search')
     filter=data.get("filter")
-    manager_name=data.get("manager_name",None)
+    manager_id=data.get("manager_name",None)
     status=data.get("status",None)
     delivery_type=data.get("delivery_type",None)
     skills = data.get("skills",None)    
-    print(searchstring)
     base_query = session.query(employee)
+    skill_data=list()
     search_results=0
     if searchstring!= None:
         base_query =base_query.filter(func.lower(employee.emp_id).contains(searchstring.lower())).all()
@@ -28,15 +29,21 @@ def employees():
         serialed_out = []
     if filter == True:
         query =session.query(employee)       
-        if manager_name:
-            query = query.filter(employee.manager_name==manager_name)   
+        if manager_id:
+            query = query.filter(employee.manager_id==manager_id) 
         if delivery_type:
             query = query.filter(employee.delivery_type==delivery_type)
         if status:
             query = query.filter(employee.resource_status==status)
         if skills:
-            query = session.query(employeeToSkill).filter(employeeToSkill.skill_id==skills)
-            
+            for i in skills:
+                query_mapping = session.query(skill.skill_name).filter(skill.id==i).all()
+                data_list=[i[0] for i in query_mapping]
+                skill_data.append(data_list)
+            data=sum(skill_data,[])
+            joined_str=",".join(data)
+            query = query.filter(employee.skills==joined_str)
+        
         filter_query = query.all()
         
         serialized_obj = serialize_all(filter_query)
@@ -192,28 +199,18 @@ def addEmployee():
                         roles=data.get("roles"),
 
                         )
-    session = Session()
-    session.add(emp_data)
-    session.commit()
-        
-    auth_data = authUser(emp_id = data.get("emp_id").lower(),
-                        email=data.get("email").lower(),
-                        roles=data.get("roles"))
-    session = Session()
-    session.add(auth_data)
-    print("auth added")
-    session.commit() 
-
     if skills!=None:
-        exisisting_skill=session.query(skill).filter(skill.skill_name==skills).first()
-        skill_id=exisisting_skill.id
-        print("skill_id",skill_id)
-        if exisisting_skill:
-            emp_data=employeeToSkill(emp_id=data.get("emp_id"),
-                                     skill_id=skill_id)
-            session.add(emp_data)
-            session.commit()
-            print("skill mapped to employee")
+        skill_list=skills.split(",")
+        print("skills",skill_list)
+        for i in skill_list:
+            exisisting_skill=session.query(skill.id).filter(skill.skill_name==i).all()
+            skill_list=[skill[0] for skill in exisisting_skill]
+            if exisisting_skill==None:
+                return jsonify({"Warning":"skill is not available"})
+            skill_data=employeeToSkill(emp_id=data.get("emp_id"),
+                                        skill_id=skill_list)
+            session.add(skill_data)
+        session.commit()
     if roles=='project manager' or roles=='rmg admin':
         manager_data=manager(manager_id=data.get("emp_id"),
                             manager_name=data.get('first_name'),
@@ -225,9 +222,19 @@ def addEmployee():
                             )
         session = Session()
         session.add(manager_data)
-        print("manager added")
         session.commit() 
         session.close() 
+    session = Session()
+    session.add(emp_data)
+    session.commit()
+    
+    auth_data = authUser(emp_id = data.get("emp_id").lower(),
+                        email=data.get("email").lower(),
+                        roles=data.get("roles"))
+    session = Session()
+    session.add(auth_data)
+    print("auth added")
+    session.commit() 
     return jsonify({"success":"successfully added employee {}".format(data.get("emp_id"))}),200     
     # except:
     #     return jsonify({"error":"Some error happened in adding the employee"}),500
