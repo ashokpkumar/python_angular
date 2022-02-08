@@ -16,8 +16,8 @@ Base = declarative_base()
 class authUser(Base):
     __tablename__ = 'authUser'
     id = Column(Integer, primary_key=True,autoincrement=True)
-    emp_id = Column(String)
-    email = Column(String)
+    emp_id = Column(String(50))
+    email = Column(String(50))
     password = Column(VARCHAR(200))
     roles = Column(VARCHAR(2000))
 
@@ -39,19 +39,19 @@ class timesubmissions(Base):
 class designation(Base):
     __tablename__="designation"
     id=Column(Integer,primary_key=True,autoincrement=True)
-    designation=Column(String)
+    designation=Column(String(50))
 
 class department(Base):
     __tablename__="department"
     id=Column(Integer,primary_key=True,autoincrement=True)
-    department_name=Column(String)
+    department_name=Column(String(50))
 
 class announcements(Base):
     __tablename__="announcements"
     id = Column(Integer, primary_key=True,autoincrement=True)
-    user_id = Column(String)
-    announcement_info = Column(String)
-    announcement_category = Column(String)
+    user_id = Column(String(50))
+    announcement_info = Column(String(50))
+    announcement_category = Column(String(50))
     date_logged = Column(DateTime)
 class manager(Base):
     __tablename__="manager"
@@ -68,30 +68,30 @@ class manager(Base):
 class employee(Base):
     __tablename__ = 'employee'
     id = Column(Integer, primary_key=True,autoincrement=True)
-    emp_id = Column(String)
-    manager_id = Column(String)
-    email = Column(String)
-    first_name = Column(String)
-    last_name = Column(String)
-    sur_name = Column(String)
-    initial = Column(String) 
-    salutation = Column(String) #mr,ms, Miss, Mrs
+    emp_id = Column(String(50))
+    manager_id = Column(String(50))
+    email = Column(String(50))
+    first_name = Column(String(50))
+    last_name = Column(String(50))
+    sur_name = Column(String(50))
+    initial = Column(String(50)) 
+    salutation = Column(String(50)) #mr,ms, Miss, Mrs
     project_code = Column(VARCHAR(2000))
-    dept = Column(String)
-    designation = Column(String)
+    dept = Column(String(50))
+    designation = Column(String(50))
     
     emp_start_date = Column(DateTime)
     emp_last_working_date = Column(DateTime)
     emp_project_assigned_date = Column(DateTime)
     emp_project_end_date = Column(DateTime)
 
-    employment_status = Column(String) #in project, new joined, in notice, bench, relieved
-    manager_name = Column(String) 
-    manager_dept = Column(String)
-    resource_status = Column(String)
-    delivery_type = Column(String)
-    additional_allocation =  Column(String)
-    skills =  Column(String)
+    employment_status = Column(String(50)) #in project, new joined, in notice, bench, relieved
+    manager_name = Column(String(50)) 
+    manager_dept = Column(String(50))
+    resource_status = Column(String(50))
+    delivery_type = Column(String(50))
+    additional_allocation =  Column(String(50))
+    skills =  Column(String(50))
     roles =  Column(VARCHAR(2000))
 
     
@@ -211,6 +211,7 @@ class project(Base):
     project_code = Column(String(50))
     project_name = Column(String(50))
     project_manager_id=Column(VARCHAR(2000))
+    project_manager_name=Column(VARCHAR(2000))
     project_start_date = Column(DateTime)
     project_status = Column(String(50))
     billing_type = Column(String(50))

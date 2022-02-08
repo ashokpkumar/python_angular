@@ -70,7 +70,7 @@ def addtimesubmissions():
                     manager_id = data.get('manager_id',None),
                     time_type = data.get('time_type',None).lower(),
                     status = 'unapproved',
-                    submission_id = data.get('user_id',None) + data.get('user_id',None) + data.get('time_type',None).lower(),
+                    submission_id = data.get('user_id',None) + data.get('time_type',None) + data.get('hours',None).lower(),
                     task_id=data.get('task_id',None),
                     description=data.get('description',None),
                     remarks=data.get('remarks',None)     
