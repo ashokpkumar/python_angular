@@ -170,9 +170,9 @@ def addEmployee():
     if existing_emp:
         session.close()
         return jsonify({'warning':'Email ID: {} already exist !'.format(email)})
-    existing_project = session.query(project).filter(project.project_code==project_code).first()
-    if existing_project==None:
-        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
+    # existing_project = session.query(project).filter(project.project_code==project_code).first()
+    # if existing_project==None:
+    #     return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
     emp_data = employee(emp_id=data.get("emp_id").lower() , 
                         manager_id = data.get("manager_id"),
                         email = data.get("email").lower(), 
@@ -191,46 +191,50 @@ def addEmployee():
 
                         employment_status=data.get("employment_status").lower(), 
                         manager_name=data.get("manager_name").lower(), 
-                        manager_dept=data.get("manager_dept").lower(), 
+                        manager_dept=data.get("manager_dept",None).lower(), 
                         resource_status=data.get("resource_status").lower(),
                         delivery_type=data.get("delivery_type").lower(),
                         additional_allocation=data.get("additional_allocation").lower(),
                         skills=data.get("skills").lower(),
-                        roles=data.get("roles"),
+                        roles=listToString(data.get("roles")),
 
                         )
+    session.add(emp_data)
+    session.commit()
+    session.close()
+    
     if skills!=None:
         skill_list=skills.split(",")
         print("skills",skill_list)
+        session = Session()
         for i in skill_list:
             exisisting_skill=session.query(skill.id).filter(skill.skill_name==i).all()
             skill_list=[skill[0] for skill in exisisting_skill]
+            print("1",skill_list)
             if exisisting_skill==None:
                 return jsonify({"Warning":"skill is not available"})
-            skill_data=employeeToSkill(emp_id=data.get("emp_id"),
-                                        skill_id=skill_list)
-            session.add(skill_data)
+            for i in skill_list:
+                skill_data=employeeToSkill(emp_id=data.get("emp_id"),
+                                            skill_id=i)
+                session.add(skill_data)
         session.commit()
-    if roles=='project manager' or roles=='rmg admin':
+    if "project manager" in roles:
         manager_data=manager(manager_id=data.get("emp_id"),
                             manager_name=data.get('first_name'),
                             manager_email=data.get("email"),
                             manager_dept=data.get("dept"),
                             project_code= data.get("project_code"),
-                            roles=data.get("roles"),
+                            roles=listToString(data.get("roles")),
                             reports_to=data.get("manager_id")
                             )
         session = Session()
         session.add(manager_data)
+        print("manageradded")
         session.commit() 
-        session.close() 
-    session = Session()
-    session.add(emp_data)
-    session.commit()
-    
+        session.close()     
     auth_data = authUser(emp_id = data.get("emp_id").lower(),
                         email=data.get("email").lower(),
-                        roles=data.get("roles"))
+                        roles=listToString(data.get("roles")))
     session = Session()
     session.add(auth_data)
     print("auth added")

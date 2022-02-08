@@ -20,6 +20,9 @@ def projects():
     solution_category=data.get("solution_category",None)
     segment=data.get("segment",None)
     geography=data.get("geography",None)
+    if searchstring!= None:
+        base_query =base_query.filter(func.lower(project.project_code).contains(searchstring.lower())).all()
+        serialized_obj = serialize_all(base_query)
     if filter == True:
         query =session.query(project)       
         if solution_category:
@@ -109,8 +112,6 @@ def removeresource():
     mapping=session.query(resourceToProject).filter(resourceToProject.emp_id==emp_id,resourceToProject.project_code==project_code).all()
     try:
         project_resources_list.remove(emp_id)
-        session.delete(mapping)
-        print("removed")
     except:
         pass
 
@@ -138,7 +139,7 @@ def removeresource():
     session.add(emp_)
     session.commit()   
     session.close()
-
+    session.delete(mapping)
     return jsonify({"success":"Resource {} removed from project".format(emp_id)})
 
 @project_module.route('/getResourceInfo',methods=['POST'])
@@ -156,7 +157,7 @@ def getResourceInfo():
     return jsonify(serialize_all(resource_info_data))
   
 @project_module.route('/addProjectmanager', methods=['POST'])
-def addProjectmanager():
+def addProjectmanager():    
     session = Session()
     data = request.get_json()
     project_code = data.get("project_id")
