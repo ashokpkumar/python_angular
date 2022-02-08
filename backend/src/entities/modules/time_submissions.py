@@ -308,8 +308,8 @@ def timeData():
         last_name=session.query(employee.last_name).filter(employee.emp_id==emp).first()[0]                
         initial=session.query(employee.initial).filter(employee.emp_id==emp).first()[0]
         first_name1=first_name.capitalize()
-        initial1=initial.upper()
-        user_name = (first_name1+" "+last_name +"."+ initial1)
+        # initial1=initial.upper()
+        user_name = (first_name1+" "+last_name)
         submission_obj = session.query(timesubmissions).filter(timesubmissions.user_id==emp).all()#timesubmissions.date_info == datee,
         serialized_obj = serialize_all(submission_obj)
         for time in serialized_obj:
