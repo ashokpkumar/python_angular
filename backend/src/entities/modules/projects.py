@@ -5,7 +5,7 @@ from entities.database import employee,project,authUser,timesubmissions,resource
 from entities.database import Session,manager
 from entities.database import serialize_all
 from entities.helper import stringToList,listToString
-from sqlalchemy import or_,and_ 
+from sqlalchemy import or_,and_,func 
 from datetime import datetime
 project_module = Blueprint(name="projects", import_name=__name__)
             
@@ -21,9 +21,10 @@ def projects():
     segment=data.get("segment",None)
     geography=data.get("geography",None)
     if searchstring!= None:
-        base_query =base_query.filter(func.lower(project.project_code).contains(searchstring.lower())).all()
+        base_query =session.query(project).filter(func.lower(project.project_code).contains(searchstring.lower())).all()
         serialized_obj = serialize_all(base_query)
-    if filter == True:
+        print(serialized_obj)
+    elif filter == True:
         query =session.query(project)       
         if solution_category:
             query = query.filter(project.solution_category==solution_category)   
@@ -65,11 +66,11 @@ def addProjectResource():
         session.commit()
     else:
         return jsonify({"error":"Resourse is already mapped to project"}),400
-
     if existing_emp.project_code == None:
         existing_emp.project_code=project_code
         session.add(existing_emp)
         session.commit()
+        print("code added")
     else:
         existing_proj_code= existing_emp.project_code
         existing_proj_list = stringToList(existing_proj_code)
@@ -109,7 +110,6 @@ def removeresource():
     project_code=data.get("project_code")
     project_=session.query(project).filter(project.project_code==project_code).first()
     project_resources_list=project_.resource_info.split(",")
-    mapping=session.query(resourceToProject).filter(resourceToProject.emp_id==emp_id,resourceToProject.project_code==project_code).all()
     try:
         project_resources_list.remove(emp_id)
     except:
@@ -137,9 +137,11 @@ def removeresource():
     
     emp_.project_code=out_proj
     session.add(emp_)
-    session.commit()   
-    session.close()
+    session=Session()  
+    mapping=session.query(resourceToProject).filter(resourceToProject.emp_id==emp_id,resourceToProject.project_code==project_code).first()
     session.delete(mapping)
+    session.commit()
+    session.close()
     return jsonify({"success":"Resource {} removed from project".format(emp_id)})
 
 @project_module.route('/getResourceInfo',methods=['POST'])
@@ -147,7 +149,11 @@ def getResourceInfo():
     session =Session()
     data =request.get_json()
     project_code=data.get("project_code")
+    if project_code==None:
+        return jsonify({"warning":"no resources added to projects"})
     project_ = session.query(project).filter(project.project_code==project_code).first()
+    # if project_.resource_info==None:
+    #     return jsonify({"warning":"no resources added to projects"})
     project_resources_list = project_.resource_info.split(",")
     for i in project_resources_list:
         if i=="":
@@ -260,3 +266,19 @@ def projectdata():
     serialized_obj = serialize_all(base_query)
     session.close()
     return (jsonify(serialized_obj))
+
+@project_module.route('/removeprojectmanager',methods=['POST'])
+def removemanager():
+    session=Session()
+    data=request.get_json()
+    manager_id=data.get("manager_id")
+    project_code=data.get("project_code")
+    if manager_id!=None:
+        existing_obj=session.query(project).filter(project.project_manager_id==manager_id,project.project_code==project_code).first()
+        session.delete(existing_obj)
+        mapping=session.query(managerToProject).filter(managerToProject.manager_id==manager_id,managerToProject.project_code==project_code).first()
+        session.delete(mapping)
+        session.commit()
+        return jsonify({"Success":"Manager is successfully removed from project"})
+    else:
+        return jsonify({"error":"Manger Id is not selected"})
