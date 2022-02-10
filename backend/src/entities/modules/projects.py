@@ -13,7 +13,7 @@ project_module = Blueprint(name="projects", import_name=__name__)
 def projects():
     session = Session()
     data = request.get_json()
-    searchstring = request.args.get('search')
+    searchstring = data.get('search')
     filter=data.get("filter")
     manager_name=data.get("manager_name",None)
     billing_type=data.get("billing_type",None)
@@ -21,9 +21,9 @@ def projects():
     segment=data.get("segment",None)
     geography=data.get("geography",None)
     if searchstring!= None:
-        base_query =session.query(project).filter(func.lower(project.project_code).contains(searchstring.lower())).all()
+        base_query =session.query(project).filter(or_(func.lower(project.project_name).contains(searchstring.lower()),
+                                                  func.lower(project.project_code).contains(searchstring.lower())))
         serialized_obj = serialize_all(base_query)
-        print(serialized_obj)
     elif filter == True:
         query =session.query(project)       
         if solution_category:

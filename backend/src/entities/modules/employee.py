@@ -14,7 +14,7 @@ employee_module = Blueprint(name="employee", import_name=__name__)
 def employees():
     session = Session()
     data = request.get_json()
-    searchstring = request.args.get('search')
+    searchstring = data.get('search')
     filter=data.get("filter")
     manager_id=data.get("manager_name",None)
     status=data.get("status",None)
@@ -24,10 +24,11 @@ def employees():
     skill_data=list()
     search_results=0
     if searchstring!= None:
-        base_query =base_query.filter(func.lower(employee.emp_id).contains(searchstring.lower())).all()
+        base_query =base_query.filter(or_(func.lower(employee.emp_id).contains(searchstring.lower()),
+                                      func.lower(employee.first_name).contains(searchstring.lower())))
         serialized_obj = serialize_all(base_query)
         serialed_out = []
-    if filter == True:
+    elif filter == True:
         query =session.query(employee)       
         if manager_id:
             query = query.filter(employee.manager_id==manager_id) 
@@ -52,7 +53,6 @@ def employees():
         base_query = session.query(employee).all()
         serialized_obj = serialize_all(base_query)
         serialed_out = []
-        
     for dictionary in serialized_obj:
         dictionary['full_name'] = dictionary['first_name'] + dictionary['last_name']
         dictionary['project_code'] = stringToList(dictionary['project_code'])
