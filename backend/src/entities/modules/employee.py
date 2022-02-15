@@ -67,7 +67,7 @@ def employees():
                 dictionary.update(proj_item)
                 break
     session.close()
-    return (jsonify(serialed_out))
+    return (jsonify(serialed_out)),200
 
 @employee_module.route('/getmanagerdata')#get unique mangerid data from employee table 
 def managerdata():
@@ -89,7 +89,7 @@ def managerdata():
     print("d",userdata)
     session.close()
     # print(serialized_obj)
-    return (jsonify(serialized_obj1))
+    return (jsonify(serialized_obj1)),200
 
 @employee_module.route('/getprojectid')
 def getproject():
@@ -99,7 +99,7 @@ def getproject():
     serialized_obj = serialize_all(project_objects)
     print(serialized_obj)
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj)),200
 
 @employee_module.route('/getdepartment')
 def getdepartment():
@@ -107,14 +107,15 @@ def getdepartment():
     department_objects = session.query(department).all()
     serialized_obj = serialize_all(department_objects)
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj)),200
+
 @employee_module.route('/getdesignation')
 def getdesignation():
     session = Session()
     designation_objects = session.query(designation).all()
     serialized_obj = serialize_all(designation_objects)
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj)),200
 
 @employee_module.route('/addDepartment', methods=['POST'])
 def addDepartment():    
@@ -125,14 +126,14 @@ def addDepartment():
     existing_dept = session.query(department).filter(department.department_name==data.get("department_name")).first()
     if existing_dept:
         session.close()
-        return jsonify({'warning':'{} Department is already exist !'.format(data.get("department_name"))})
+        return jsonify({'warning':'{} Department is already exist !'.format(data.get("department_name"))}),400
     dept_data=department(department_name=data.get("department_name")
                          )
     session = Session()
     session.add(dept_data)
     session.commit()
     session.close()
-    return jsonify({"success":"{} Department is created successfully".format(department_name)}), 201
+    return jsonify({"success":"{} Department is created successfully".format(department_name)}),200
 
 @employee_module.route('/addDesignation', methods=['POST'])
 def addDesignation():    
@@ -143,14 +144,14 @@ def addDesignation():
     existing_designation = session.query(designation).filter(designation.designation==desig).first()
     if existing_designation:
         session.close()
-        return jsonify({'warning':'{} designation is already exist !'.format(desig)})
+        return jsonify({'warning':'{} designation is already exist !'.format(desig)}),400
     designation_data=designation(designation =data.get("designation").lower())
     print(type(designation_data))
     session = Session()
     session.add(designation_data)
     session.commit()
     session.close()
-    return jsonify({"success":"{} Designation is created successfully".format(desig)}), 201
+    return jsonify({"success":"{} Designation is created successfully".format(desig)}),200
 
 @employee_module.route('/addEmployee', methods=['POST'])
 def addEmployee():
@@ -165,11 +166,11 @@ def addEmployee():
     existing_emp = session.query(employee).filter(employee.emp_id==emp_id).first()
     if existing_emp:
         session.close()
-        return jsonify({'warning':'User ID: {} already exist !'.format(emp_id)})
+        return jsonify({'warning':'User ID: {} already exist !'.format(emp_id)}),400
     existing_emp = session.query(employee).filter(employee.email==email).first()
     if existing_emp:
         session.close()
-        return jsonify({'warning':'Email ID: {} already exist !'.format(email)})
+        return jsonify({'warning':'Email ID: {} already exist !'.format(email)}),400
     # existing_project = session.query(project).filter(project.project_code==project_code).first()
     # if existing_project==None:
     #     return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
@@ -212,7 +213,7 @@ def addEmployee():
             skill_list=[skill[0] for skill in exisisting_skill]
             print("1",skill_list)
             if exisisting_skill==None:
-                return jsonify({"Warning":"skill is not available"})
+                return jsonify({"Warning":"skill is not available"}),400
             for i in skill_list:
                 skill_data=employeeToSkill(emp_id=data.get("emp_id"),
                                             skill_id=i)
@@ -249,14 +250,14 @@ def viewEmpInfo():
     # print("????????????")
     # print(emp_id)
     if emp_id is None:
-        return jsonify({"error":"Employee ID is empty"}), 201
+        return jsonify({"error":"Employee ID is empty"}),400
     session = Session()
     # print(emp_id)
     emp_objects = session.query(employee).filter(employee.emp_id==emp_id).all()
     # print(">>>>>>>>>>>>")
     # print(emp_objects)
     if emp_objects == []:
-        return jsonify({"error":"Employee Not found !"}), 201
+        return jsonify({"error":"Employee Not found !"}),400
     emp_serialized = serialize_all(emp_objects)
     # print(emp_serialized)
     emp_dict = emp_serialized[0]
@@ -274,7 +275,7 @@ def viewEmpInfo():
     user_name = (first_name1+" "+last_name +"."+ initial1)
     emp_dict['full_name'] = user_name
     session.close()
-    return jsonify(emp_dict), 201
+    return jsonify(emp_dict),200
 
 @employee_module.route('/getProjectsInfo',methods=['POST'])
 def getProjectsInfo():
@@ -288,7 +289,7 @@ def getProjectsInfo():
             employee_projects_list.remove(i)
     projects_info_data = session.query(project).filter(project.project_code.in_(employee_projects_list)).all()
     session.close()
-    return jsonify(serialize_all(projects_info_data))
+    return jsonify(serialize_all(projects_info_data)),200
 
 
 @employee_module.route('/addskills',methods=['POST'])
@@ -304,7 +305,7 @@ def addskills():
     session.add(skill_data)
     session.commit()
     session.close()
-    return jsonify({"success":"skill added successfully"}),200    
+    return jsonify({"success":"skill added successfully"}),200
 
 @employee_module.route('/getskills')
 def getskills():
@@ -312,7 +313,7 @@ def getskills():
     skill_objects = session.query(skill).all()
     serialized_obj = serialize_all(skill_objects)
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj)),200
     
 @employee_module.route('/getmanagername')
 def getmanagername():
@@ -320,7 +321,7 @@ def getmanagername():
     base_query = session.query(manager).all()
     # manager_list=[name[0] for name in base_query]
     serialized_obj = serialize_all(base_query)
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj)),200
 
 @employee_module.route('/employeedata')
 def employeedata():
@@ -328,4 +329,4 @@ def employeedata():
     base_query = session.query(employee).all()
     serialized_obj = serialize_all(base_query)
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj)),200

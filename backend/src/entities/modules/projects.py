@@ -41,7 +41,7 @@ def projects():
         base_query = session.query(project).all()
         serialized_obj = serialize_all(base_query)
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj)),200
 
 @project_module.route('/addProjectResource', methods=['POST'])
 def addProjectResource():
@@ -51,10 +51,10 @@ def addProjectResource():
     project_code = data.get("project_id")
     existing_emp = session.query(employee).filter(employee.emp_id==resource_id).first()
     if existing_emp==None:
-        return jsonify({'success':'Employee with ID: {} Does not Exist !'.format(resource_id)})
+        return jsonify({'success':'Employee with ID: {} Does not Exist !'.format(resource_id)}),400
     existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project==None:
-        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
+        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)}),400
     resource_data=existing_emp.emp_id
     
     existing_mapping=session.query(resourceToProject).filter(resourceToProject.emp_id==resource_id,resourceToProject.project_code==project_code).first()
@@ -75,7 +75,7 @@ def addProjectResource():
         existing_proj_code= existing_emp.project_code
         existing_proj_list = stringToList(existing_proj_code)
         if project_code in existing_proj_list:
-            return jsonify({'error':'resource exist already in the project'})
+            return jsonify({'error':'resource exist already in the project'}),400
         existing_proj_list.append(project_code)
         
         existing_emp.project_code = listToString(existing_proj_list)# check if the string sanitation is required
@@ -94,13 +94,13 @@ def addProjectResource():
         existing_resource = existing_project.resource_info
         existing_resource_list=stringToList(existing_resource)#stringToList fn convert str to list 
         if resource_id in existing_resource_list:
-            return jsonify({'error':'resource exist already in the project'})
+            return jsonify({'error':'resource exist already in the project'}),400
         existing_resource_list.append(resource_id )
         existing_project.resource_info = listToString(existing_resource_list)#listToString convert list to str 
         session.add(existing_project)
         session.commit() 
     session.close()
-    return jsonify({"success":"Employee {} and Project {} Linked".format(resource_id,project_code)})
+    return jsonify({"success":"Employee {} and Project {} Linked".format(resource_id,project_code)}),200
 
 @project_module.route('/removeProjectResource',methods=['POST'])
 def removeresource():
@@ -142,7 +142,7 @@ def removeresource():
     session.delete(mapping)
     session.commit()
     session.close()
-    return jsonify({"success":"Resource {} removed from project".format(emp_id)})
+    return jsonify({"success":"Resource {} removed from project".format(emp_id)}),200
 
 @project_module.route('/getResourceInfo',methods=['POST'])
 def getResourceInfo():
@@ -150,7 +150,7 @@ def getResourceInfo():
     data =request.get_json()
     project_code=data.get("project_code")
     if project_code==None:
-        return jsonify({"warning":"no resources added to projects"})
+        return jsonify({"warning":"no resources added to projects"}),400
     project_ = session.query(project).filter(project.project_code==project_code).first()
     # if project_.resource_info==None:
     #     return jsonify({"warning":"no resources added to projects"})
@@ -160,7 +160,7 @@ def getResourceInfo():
             project_resources_list.remove(i)
     resource_info_data = session.query(employee).filter(employee.emp_id.in_(project_resources_list)).all()
     session.close()
-    return jsonify(serialize_all(resource_info_data))
+    return jsonify(serialize_all(resource_info_data)),200
   
 @project_module.route('/addProjectmanager', methods=['POST'])
 def addProjectmanager():    
@@ -171,11 +171,11 @@ def addProjectmanager():
 
     existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project==None:
-        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)})
+        return jsonify({'error':'Project with ID: {} Does not Exist !'.format(project_code)}),400
     
     existing_project_manager= session.query(manager).filter(manager.manager_id==project_manager).first()
     if existing_project_manager==None:
-        return jsonify({"error":"Manager ID {} Does not Exists !".format(project_manager)})
+        return jsonify({"error":"Manager ID {} Does not Exists !".format(project_manager)}),400
 
     existing_mapping=session.query(managerToProject).filter(managerToProject.manager_id==project_manager,managerToProject.project_code==project_code).first()
     if existing_mapping==None:
@@ -206,7 +206,7 @@ def addProjectmanager():
         # session.add(existing_project)
         # session.commit()
     session.close()
-    return jsonify({"success":"Manager {} and Project {} Linked".format(project_manager,project_code)})
+    return jsonify({"success":"Manager {} and Project {} Linked".format(project_manager,project_code)}),200
         
 @project_module.route('/addProject', methods=['POST'])
 def addProject():
@@ -216,7 +216,7 @@ def addProject():
     existing_project = session.query(project).filter(project.project_code==project_code).first()
     if existing_project:
         session.close()
-        return jsonify({'warning':'Project with ID: {} already exist !'.format(data.get("projectcode"))})
+        return jsonify({'warning':'Project with ID: {} already exist !'.format(data.get("projectcode"))}),400
     try:
         project_data = project(client_name = data.get("clientname"),
                             project_code=data.get("projectcode"),
@@ -233,7 +233,7 @@ def addProject():
         session.add(project_data)
         session.commit()
         session.close()
-        return jsonify({"success":"added data to the table successfully"}), 201
+        return jsonify({"success":"added data to the table successfully"}), 200
     except:
         return jsonify({"error":"Something happened while adding the data to the table, please check the data and try again"}), 500
 
@@ -265,7 +265,7 @@ def projectdata():
     base_query = session.query(project).all()
     serialized_obj = serialize_all(base_query)
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj)),200
 
 @project_module.route('/removeprojectmanager',methods=['POST'])
 def removemanager():
@@ -279,6 +279,6 @@ def removemanager():
         mapping=session.query(managerToProject).filter(managerToProject.manager_id==manager_id,managerToProject.project_code==project_code).first()
         session.delete(mapping)
         session.commit()
-        return jsonify({"Success":"Manager is successfully removed from project"})
+        return jsonify({"Success":"Manager is successfully removed from project"}),200
     else:
-        return jsonify({"error":"Manger Id is not selected"})
+        return jsonify({"error":"Manger Id is not selected"}),400

@@ -11,7 +11,7 @@ def announcement():
     announcement_objects = session.query(announcements).all()
     serialized_obj = serialize_all(announcement_objects)
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj)),200
 
 @announcement_module.route('/add_announcements', methods=['POST'])
 def add_announcements():
@@ -25,7 +25,7 @@ def add_announcements():
     session.add(announcement_data)
     session.commit()    
     session.close()
-    return ({'success':'Announcements are added sucessfully '})
+    return ({'success':'Announcements are added sucessfully '}),200
 
 @announcement_module.route('/get_announcements', methods=['POST'])
 def get_announcements():
@@ -36,7 +36,7 @@ def get_announcements():
     if existing_announcements:
         serialized_obj = serialize_all(existing_announcements)
         #print(serialized_obj)
-        return jsonify(serialized_obj),200  
+        return jsonify(serialized_obj),200
     return jsonify({'info':'No announcements are available for you'}),200
 
 @announcement_module.route('/del_fn',methods=['POST'])

@@ -32,7 +32,7 @@ def events():
         # eve["start"] = datetime.datetime.strptime(event["date_info"], "%d/%m/%Y").strftime("%d/%m/%Y")
         eve["status"]=event["status"]
         events_data.append(eve)
-    return jsonify(events_data)
+    return jsonify(events_data),200
 
 
 @time_module.route('/addtimesubmissions', methods=['POST'])
@@ -46,9 +46,9 @@ def addtimesubmissions():
     date_list=list()
     existing_emp = session.query(employee).filter(employee.emp_id == user_id ).first()
     if existing_emp == None:
-        return jsonify({'error':'user not available in the employee table'}),200
+        return jsonify({'error':'user not available in the employee table'}),400
     if startdate==None and enddate==None:
-        return jsonify({"Warning":"Please give Date to add submission"}) 
+        return jsonify({"Warning":"Please give Date to add submission"}),400
     if startdate!=None and enddate!=None:
         existing_submission=session.query(timesubmissions.hours).filter(and_(timesubmissions.user_id==data.get('user_id'),cast(timesubmissions.date_info, Date) >= startdate, cast(timesubmissions.date_info, Date) <= enddate)).all()
         hours_list=[emp[0] for emp in existing_submission]
@@ -60,7 +60,7 @@ def addtimesubmissions():
             date_list.append(dates)
         if total_hrs>0:
             if confirm_sub== False:   
-                return jsonify({"warning":True})
+                return jsonify({"warning":True}),200
         else:
             for dates in date_list:
                 sub_data = timesubmissions( date_info = dates,
@@ -73,19 +73,19 @@ def addtimesubmissions():
                     submission_id = data.get('user_id',None) + data.get('time_type',None) + data.get('hours',None).lower(),
                     task_id=data.get('task_id',None),
                     description=data.get('description',None),
-                    remarks=data.get('remarks',None)     
+                    remarks=data.get('remarks',None)
                 )
                 session = Session()
                 session.add(sub_data)
                 session.commit()
-        return jsonify({'success':'Your Time has been  submitted '})        
+        return jsonify({'success':'Your Time has been  submitted '}),200
     if startdate!=None and enddate==None:
         existing_submission=session.query(timesubmissions.hours).filter(timesubmissions.user_id==data.get('user_id'),timesubmissions.date_info==startdate).all()
         hours_list=[emp[0] for emp in existing_submission]
         total_hrs=sum(hours_list)
         if total_hrs>=8:
             if confirm_sub== False:   
-                return jsonify({"warning":True})
+                return jsonify({"warning":True}),200
             else:
                 sub_data = timesubmissions( date_info = data.get('startdate',None),
                                     hours = data.get('hours',None),
@@ -143,7 +143,7 @@ def timesubmission():
     sub_objects = session.query(timesubmissions).all()
     serialized_obj = serialize_all(sub_objects)
     session.close()
-    return (jsonify(serialized_obj))
+    return (jsonify(serialized_obj)),200
 
 
 @time_module.route('/getSubmissionsBy', methods=['POST'])
@@ -356,7 +356,7 @@ def timeData():
         total_unapproved = total_unapproved + emp_data['unapproved']
     total_time_list = {'total_project':total_project,'total_total_presence':total_total_presence,'total_total_absence':total_total_absence,'total_sl':total_sl,'total_cl':total_cl,'total_al':total_al,'total_non_project':total_non_project,'total_bench':total_bench,'total_total_hrs':total_total_hrs,'total_unapproved':total_unapproved, }
     session.close()
-    return (jsonify({'result':time_final,'total':total_time_list}))
+    return (jsonify({'result':time_final,'total':total_time_list})),200
     
 
 @time_module.route('/review_time', methods=['POST'])
@@ -387,7 +387,7 @@ def review_time():
             session.delete(time_obj)
             session.commit()
             session.close()
-    return jsonify({"info":"Time has been reviewed"})
+    return jsonify({"info":"Time has been reviewed"}),200
 
 @time_module.route('/calendar_data', methods=['POST'])
 def calendar_data():
@@ -442,7 +442,7 @@ def calendar_data():
         data.append(weekly_data)
     
     session.close()       
-    return(jsonify({'submissions':events_data,"week_data":data}))    
+    return(jsonify({'submissions':events_data,"week_data":data})),200
 @time_module.route('/delete_submission', methods=['POST'])
 def delete():
     data=request.get_json()
@@ -452,4 +452,4 @@ def delete():
     session.delete(time_obj)
     session.commit()
     session.close()
-    return jsonify({"info": "Submission deleted successfully"})
+    return jsonify({"info": "Submission deleted successfully"}),200

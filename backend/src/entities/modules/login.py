@@ -32,7 +32,7 @@ def setpassword():
     password = request.json.get("password", None)
     auth_object = session.query(authUser).filter(authUser.emp_id == emp_id).first()
     if auth_object is None:
-        return jsonify({'error':'User not found, This user is not added yet'}), 200
+        return jsonify({'error':'User not found, This user is not added yet'}),400
     auth_object.password=hash_password(password)
     session.add(auth_object)
     session.commit()
@@ -47,7 +47,7 @@ def login():
     hashed=hash_password(password)
     login=False
     if emp_id==None or password==None:
-        return jsonify({"error:":"incorrect username or password"}), 200
+        return jsonify({"error:":"incorrect username or password"}),400
     session = Session()
     # we can use both emp_id and email as a user id.
     if emp_id.find("@") != -1:
@@ -56,19 +56,17 @@ def login():
         employee_name =(emp_obj.first_name if emp_obj.first_name else "")
         emp_id=(emp_obj.emp_id)
 
-
     else:
         auth_object = session.query(authUser).filter(authUser.emp_id == emp_id, authUser.password == hash_password(password)).first()
         emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
         employee_name =(emp_obj.first_name if emp_obj.first_name else "")
-
-
+        
 
     if auth_object and auth_object.password==None:
-        return jsonify({"warning": "Password Not set Please set password"}), 200
+        return jsonify({"warning": "Password Not set Please set password"}),400
 
     if auth_object is None:
-        return jsonify({"error": "Username or password is incorrect"}), 400
+        return jsonify({"error": "Username or password is incorrect"}),400
     # emp_obj = session.query(employee).filter(employee.emp_id == emp_id).first()
     # employee_name =(emp_obj.first_name if emp_obj.first_name else "")
     # employee_name = (emp_obj.first_name if emp_obj.first_name else "") + (emp_obj.last_name if emp_obj.last_name else "")
@@ -90,7 +88,7 @@ def login():
         )
         print(jwt_info)
         login=True
-        return jsonify(access_token=jwt_info,username=emp_id,roles=roles,login=login,employee_name = employee_name)
+        return jsonify(access_token=jwt_info,username=emp_id,roles=roles,login=login,employee_name = employee_name),200
 
     except Exception as e:
         return e
@@ -105,7 +103,7 @@ def forgot_pass_create_token():
     email_id = request.json.get("email_id")
     emp_objects = session.query(employee).filter(employee.email == email_id).first()
     if emp_objects == None:
-        return jsonify({"error":" Please enter Valid employee Email Id"})
+        return jsonify({"error":" Please enter Valid employee Email Id"}),400
 
     emp_id = emp_objects.emp_id
     forget_pass_data = session.query(forget_pass).filter(forget_pass.user_id == emp_id,
@@ -132,7 +130,7 @@ def forgot_pass_create_token():
         text_body = "http://localhost:4200/" + 'resetpassword/?token='+access_token +'&'+'email='+email_id
         send_mail("Forgot password setup", Config.MAIL_USERNAME, email_id, html_body, text_body)
 
-        return jsonify(text_body), 201
+        return jsonify(text_body),200
 
 
 @login_module.route("/reset_pass", methods=["POST", "GET"])
@@ -154,7 +152,7 @@ def reset_pass():
         # update auth table password
         auth_object = session.query(authUser).filter(authUser.email == email).first()
         if auth_object is None:
-            return jsonify({'error': 'User not found, This user is not added yet'}), 401
+            return jsonify({'error': 'User not found, This user is not added yet'}), 400
         auth_object.password = hash_password(password)
         session.add(auth_object)
         session.commit()
@@ -162,11 +160,7 @@ def reset_pass():
 
         return "Password Reset successfully", 200
     else:
-        return "Please generate token for reset password  token expired"
-
-
-
-
+        return "Please generate token for reset password  token expired", 400
 
 
 def send_mail(subject, sender, recipients, body, html_body):
